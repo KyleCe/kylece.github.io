@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>冻结帧 | KyleCe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="Android冻结帧" />
+  
+  
+  
+  
+  <meta name="description" content="概要基本知识准备 认识冻结帧FrozenFrame（FF） Google Play Console（GPC）针对FF的各项指标含义 FF所属大类——SlowRendering testing UI performance  GPC FF告警解决办法手动测试、自动测试、解决关键问题——后续输出指南/标准  手动测试重要场景，找到问题场景，解决痛点 自动化测试——搭建自动化测试、完善UI测试标准、足够">
+<meta name="keywords" content="Android,冻结帧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="冻结帧">
+<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/Android/冻结帧/index.html">
+<meta property="og:site_name" content="KyleCe">
+<meta property="og:description" content="概要基本知识准备 认识冻结帧FrozenFrame（FF） Google Play Console（GPC）针对FF的各项指标含义 FF所属大类——SlowRendering testing UI performance  GPC FF告警解决办法手动测试、自动测试、解决关键问题——后续输出指南/标准  手动测试重要场景，找到问题场景，解决痛点 自动化测试——搭建自动化测试、完善UI测试标准、足够">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/frame_dump_example.jpg">
+<meta property="og:updated_time" content="2018-03-09T15:32:43.092Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="冻结帧">
+<meta name="twitter:description" content="概要基本知识准备 认识冻结帧FrozenFrame（FF） Google Play Console（GPC）针对FF的各项指标含义 FF所属大类——SlowRendering testing UI performance  GPC FF告警解决办法手动测试、自动测试、解决关键问题——后续输出指南/标准  手动测试重要场景，找到问题场景，解决痛点 自动化测试——搭建自动化测试、完善UI测试标准、足够">
+<meta name="twitter:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/frame_dump_example.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/avatar.jpg">
+  <link rel="apple-touch-icon" href="/css/images/avatar.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/avatar.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-技术/Android/冻结帧" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      冻结帧
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/冻结帧/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><h4 id="基本知识准备"><a href="#基本知识准备" class="headerlink" title="基本知识准备"></a>基本知识准备</h4><ul>
+<li>认识冻结帧FrozenFrame（FF）</li>
+<li>Google Play Console（GPC）针对FF的各项指标含义</li>
+<li>FF所属大类——SlowRendering</li>
+<li>testing UI performance</li>
+</ul>
+<h4 id="GPC-FF告警解决办法"><a href="#GPC-FF告警解决办法" class="headerlink" title="GPC FF告警解决办法"></a>GPC FF告警解决办法</h4><p>手动测试、自动测试、解决关键问题——后续输出指南/标准</p>
+<ul>
+<li>手动测试重要场景，找到问题场景，解决痛点</li>
+<li>自动化测试——搭建自动化测试、完善UI测试标准、足够好用的情况下考虑加入到后续新入UI的考量手段中</li>
+<li>主动防御——对UI的实现标准化操作进行总结、输出至业务开发人员，提高UI质量</li>
+</ul>
+<h3 id="基本知识"><a href="#基本知识" class="headerlink" title="基本知识"></a>基本知识</h3><h4 id="认识冻结帧FrozenFrame（FF）"><a href="#认识冻结帧FrozenFrame（FF）" class="headerlink" title="认识冻结帧FrozenFrame（FF）"></a>认识冻结帧FrozenFrame（FF）</h4><ul>
+<li>定义</li>
+<li>why 60 fps</li>
+<li>16.67ms</li>
+</ul>
+<h4 id="Google-Play-Console（GPC）针对FF的各项指标含义"><a href="#Google-Play-Console（GPC）针对FF的各项指标含义" class="headerlink" title="Google Play Console（GPC）针对FF的各项指标含义"></a>Google Play Console（GPC）针对FF的各项指标含义</h4><blockquote>
+<h4 id="Data-collection-details"><a href="#Data-collection-details" class="headerlink" title="Data collection details"></a>Data collection details</h4><p>Google collects the render time of each frame rendered by your app when using the UI Toolkit framework, <strong>not when using OpenGL directly.</strong></p>
+</blockquote>
+<p>控制面板</p>
+<ul>
+<li>Impacted sessions——每日会话中，绘制时间&gt;700ms的帧总数超过所有会话帧0.1%的用户占比</li>
+<li>Number of sessions——被记录的帧数量</li>
+<li>90th/99th percentile(ms)——90%/99%的用户的所有帧绘制时间都低于这一值</li>
+</ul>
+<p>图表指标（比率均是针对所有绘制超过16.67ms的帧）</p>
+<ul>
+<li>Missed Vsync——<a href="https://stackoverflow.com/questions/27947848/understanding-necessity-of-android-vsync-signals" target="_blank" rel="noopener">丢失系统Vsync</a>信号的占比（理解<a href="https://www.youtube.com/watch?v=1iaHxmfZGGc&amp;list=PLOU2XLYxmsIKEOXh5TwZEv89aofHzNCiu&amp;index=23" target="_blank" rel="noopener">VSYNC</a>）</li>
+<li>High input latency——这些超过16.67ms的帧中输入法用时超过24ms的帧占比</li>
+<li>Slow UI thread——UI thread用时超过8ms</li>
+<li>Slow draw commands——给GPU发送绘制指令用时超过12ms</li>
+<li>Slow bitmap uploads——bitmap上传至GPU用时超过3.2ms</li>
+</ul>
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p>ORG Google play console data</p>
+<h4 id="FF所属大类——SlowRendering"><a href="#FF所属大类——SlowRendering" class="headerlink" title="FF所属大类——SlowRendering"></a>FF所属大类——<a href="https://developer.android.com/topic/performance/vitals/render.html" target="_blank" rel="noopener">SlowRendering</a></h4><ul>
+<li>identifying jank<ul>
+<li><a href="https://developer.android.com/topic/performance/vitals/render.html#visual-inspection" target="_blank" rel="noopener">Visual inspection</a></li>
+<li><a href="https://developer.android.com/topic/performance/vitals/render.html#systrace" target="_blank" rel="noopener">Systrace</a></li>
+<li><a href="https://developer.android.com/topic/performance/vitals/render.html#custom-monitoring" target="_blank" rel="noopener">Custom performance monitoring</a></li>
+</ul>
+</li>
+<li>fixing jank<ul>
+<li>查看常规的反面示例</li>
+<li>如何避免——耗时操作应在非UI线程完成</li>
+<li>UI复杂时<ul>
+<li><a href="https://developer.android.com/training/testing/espresso/index.html" target="_blank" rel="noopener">写UI自动化测试代码</a></li>
+<li><a href="https://codelabs.developers.google.com/codelabs/android-perf-testing/index.html#0" target="_blank" rel="noopener">自动化性能测试UI篇</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Common sources of janks<ul>
+<li>Scrollable lists<ul>
+<li>RecycleView:notifyDataSetChanged</li>
+<li>RecycleView:Nested RecyclerViews</li>
+<li>RecyclerView: Too much inflation / Create taking too long</li>
+<li>RecyclerView: Bind taking too long</li>
+<li>RecyclerView or ListView: layout / draw taking too long</li>
+<li>ListView: Inflation</li>
+</ul>
+</li>
+<li>Layout performance<ul>
+<li>Layout performance: Cost</li>
+<li>Layout performance: Frequency</li>
+</ul>
+</li>
+<li>Rendering performance<ul>
+<li>Rendering performance: UI Thread<ul>
+<li>If <strong>Record View#draw</strong> is taking a long time, it’s often the case that a bitmap is being painted on the UI thread. Painting to a bitmap uses CPU rendering, so should generally should be avoided. 使用<a href="https://developer.android.com/studio/profile/cpu-profiler.html#method_traces" target="_blank" rel="noopener">Android CPU Profiler</a> 确诊问题</li>
+</ul>
+</li>
+<li>Rendering performance: RenderThread<ul>
+<li>Canvas.saveLayer()</li>
+<li>Animating large Paths</li>
+<li>Canvas.clipPath</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Thread scheduling delays</li>
+<li>Object allocation and garbage collection</li>
+</ul>
+</li>
+</ul>
+<h4 id="testing-UI-performance"><a href="#testing-UI-performance" class="headerlink" title="testing UI performance"></a>testing UI performance</h4><ul>
+<li>measuring UI performance</li>
+<li>automating UI performance Tests</li>
+</ul>
+<h3 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h3><p>可能诱因</p>
+<h3 id="How——定位问题"><a href="#How——定位问题" class="headerlink" title="How——定位问题"></a>How——定位问题</h3><h4 id="Visual-inspection"><a href="#Visual-inspection" class="headerlink" title="Visual inspection"></a><a href="https://developer.android.com/topic/performance/vitals/render.html#visual-inspection" target="_blank" rel="noopener">Visual inspection</a></h4><ul>
+<li>Run a <strong>==release==</strong> (or at least non-debuggable) version of your app. <strong>The ART runtime disables several important optimizations in order to support debugging features</strong>, so make sure you’re looking at something similar to what a user will see.</li>
+<li><a href="https://developer.android.com/studio/profile/dev-options-rendering.html#ProfileGPURendering" target="_blank" rel="noopener">Enable Profile GPU Rendering</a>. <strong>Profile GPU Rendering</strong> displays bars on the screen that give you a quick visual representation of how much time it takes to render the frames of a UI window relative to the 16-ms-per-frame benchmark. Each bar has colored components that map to a stage in the rendering pipeline, so you can see which portion is taking the longest. For example, if the frame spends a lot of time handling input, you should look at your app code that handles user input.</li>
+<li>There are certain components, such as <code>RecyclerView</code>, that are a <a href="https://developer.android.com/topic/performance/vitals/render.html#common-jank" target="_blank" rel="noopener">common source of jank</a>. If your app uses those components, it’s a good idea to run through those parts of the app.</li>
+<li>Sometimes, jank can be reproduced only when the app is launched from a <a href="https://developer.android.com/topic/performance/launch-time.html#cold" target="_blank" rel="noopener">cold start</a>.</li>
+<li>Try running your app on a slower device to exacerbate the problem.</li>
+</ul>
+<h4 id="Systrace"><a href="#Systrace" class="headerlink" title="Systrace"></a><a href="https://developer.android.com/topic/performance/vitals/render.html#systrace" target="_blank" rel="noopener">Systrace</a></h4><ul>
+<li>Systrace shows when each frame is drawn and color codes each frame to highlight slow render times. This helps you find individual janky frames more accurately than visual inspection. For more information, see <a href="https://developer.android.com/studio/profile/systrace.html#frames" target="_blank" rel="noopener">Inspecting Frames</a>.</li>
+<li>Systrace detects problems in your app and displays <strong>alerts</strong> both in individual frames and the <a href="https://developer.android.com/studio/profile/systrace.html#alerts" target="_blank" rel="noopener">alerts</a> panel. Following directions in the alert is your best option.</li>
+<li>Parts of the Android framework and libraries, such as <code>RecyclerView</code>, contain trace markers. So, the <strong>systrace timeline </strong>shows when those methods are executed on the UI thread and how long they take to execute.</li>
+</ul>
+<p>If systrace doesn’t show you details about why UI thread work is taking for a long time, then you’ll need to use <a href="https://developer.android.com/studio/profile/cpu-profiler.html#method_traces" target="_blank" rel="noopener">Android CPU Profiler</a> to record either a sampled or instrumented method trace. </p>
+<h4 id="Custom-performance-monitoring"><a href="#Custom-performance-monitoring" class="headerlink" title="Custom performance monitoring"></a><a href="https://developer.android.com/topic/performance/vitals/render.html#custom-monitoring" target="_blank" rel="noopener">Custom performance monitoring</a></h4><p>If you can’t reproduce jank on a local device, you can build custom performance monitoring into your app to help identify the source of jank on devices in the field.</p>
+<p>To do this, collect frame render times from specific parts of your app with <a href="https://developer.android.com/reference/android/support/v4/app/FrameMetricsAggregator.html" target="_blank" rel="noopener"><code>FrameMetricsAggregator</code></a> and record and analyze the data using <a href="https://firebase.google.com/docs/perf-mon/" target="_blank" rel="noopener">Firebase Performance Monitoring</a>.</p>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><ul>
+<li>To fix jank, inspect which frames aren’t completing in 16.7ms, and look for what is going wrong. Is <strong>Record View#draw</strong> taking abnormally long in some frames, or perhaps <strong>Layout</strong>? See the <a href="https://developer.android.com/topic/performance/vitals/render.html#common-jank" target="_blank" rel="noopener">Common sources of jank</a> below for these problems, and others.</li>
+<li>To avoid jank, long running tasks should be run asynchronously outside of the UI thread. Always be aware of what thread you’re code is running on and use caution when posting non-trivial tasks to the main thread.</li>
+<li>If you have a complex and important primary UI for your app (maybe the central scrolling list), consider <a href="https://developer.android.com/training/testing/performance.html#automate" target="_blank" rel="noopener">writing instrumentation tests</a> that can automatically detect slow render times and run the tests frequently to prevent regressions. For more information, see the <a href="https://codelabs.developers.google.com/codelabs/android-perf-testing/index.html" target="_blank" rel="noopener">Automated Performance Testing Codelab</a>.</li>
+</ul>
+<h3 id="Automated-Test-codelab"><a href="#Automated-Test-codelab" class="headerlink" title="Automated Test codelab"></a>Automated Test codelab</h3><h4 id="Topic"><a href="#Topic" class="headerlink" title="Topic"></a>Topic</h4><ul>
+<li>How to quickly navigate some Android Performance tools</li>
+<li>How the Espresso testing framework can be used to write unit and performance tests</li>
+<li>How to use MonkeyRunner and Gradle to automate the testing workflow</li>
+<li>How to review systrace output to understand your app’s performance issues</li>
+</ul>
+<h3 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h3><ul>
+<li><p><a href="https://developer.android.com/studio/profile/systrace-commandline.html" target="_blank" rel="noopener">Systrace</a>、对其说明<a href="http://blog.udinic.com/2015/09/15/speed-up-your-app" target="_blank" rel="noopener">Link</a></p>
+</li>
+<li><p>在traceView中，选中帧后，按M键，可高亮帧</p>
+<ul>
+<li><a href="https://developer.android.com/studio/profile/traceview.html" target="_blank" rel="noopener">Profiling with Traceview and dmtracedump</a></li>
+<li><a href="https://developer.android.com/studio/profile/traceview.html" target="_blank" rel="noopener">代码级traceview</a></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// start tracing to "/sdcard/calc.trace"</span></span><br><span class="line">Debug.startMethodTracing(<span class="string">"calc"</span>);</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// stop tracing</span></span><br><span class="line">Debug.stopMethodTracing();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>frame dump</p>
+<p><img src="../../pic_resource/frame_dump_example.jpg" alt=""></p>
+</li>
+<li><p><a href="https://developer.android.com/studio/profile/cpu-profiler.html#method_traces" target="_blank" rel="noopener">method trace</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/冻结帧/">冻结帧</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/09/技术/Android/【Android架构】Android架构初探/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Android架构初探
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">declare-styleable-枚举format简介</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本知识准备"><span class="nav-number">1.1.</span> <span class="nav-text">基本知识准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GPC-FF告警解决办法"><span class="nav-number">1.2.</span> <span class="nav-text">GPC FF告警解决办法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本知识"><span class="nav-number">2.</span> <span class="nav-text">基本知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#认识冻结帧FrozenFrame（FF）"><span class="nav-number">2.1.</span> <span class="nav-text">认识冻结帧FrozenFrame（FF）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Google-Play-Console（GPC）针对FF的各项指标含义"><span class="nav-number">2.2.</span> <span class="nav-text">Google Play Console（GPC）针对FF的各项指标含义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Data-collection-details"><span class="nav-number">2.3.</span> <span class="nav-text">Data collection details</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#示例"><span class="nav-number">2.3.1.</span> <span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FF所属大类——SlowRendering"><span class="nav-number">2.4.</span> <span class="nav-text">FF所属大类——SlowRendering</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#testing-UI-performance"><span class="nav-number">2.5.</span> <span class="nav-text">testing UI performance</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why"><span class="nav-number">3.</span> <span class="nav-text">Why</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How——定位问题"><span class="nav-number">4.</span> <span class="nav-text">How——定位问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Visual-inspection"><span class="nav-number">4.1.</span> <span class="nav-text">Visual inspection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Systrace"><span class="nav-number">4.2.</span> <span class="nav-text">Systrace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Custom-performance-monitoring"><span class="nav-number">4.3.</span> <span class="nav-text">Custom performance monitoring</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution"><span class="nav-number">5.</span> <span class="nav-text">Solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Automated-Test-codelab"><span class="nav-number">6.</span> <span class="nav-text">Automated Test codelab</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Topic"><span class="nav-number">6.1.</span> <span class="nav-text">Topic</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tips"><span class="nav-number">7.</span> <span class="nav-text">Tips</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://kylece.github.io/" target="_blank">KyleCe</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2015 - 2018 KyleCe All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            KyleCe
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 KyleCe All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

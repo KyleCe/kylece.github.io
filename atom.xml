@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/KyleCe/kylece.github.io/"/>
-  <updated>2018-03-09T11:53:44.731Z</updated>
+  <updated>2018-03-09T15:32:43.048Z</updated>
   <id>https://github.com/KyleCe/kylece.github.io/</id>
   
   <author>
@@ -17,30 +17,579 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>retrofit2</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/retrofit2/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/retrofit2/</id>
+    <title>【Note-PM】《项目管理修炼之道》提要</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E3%80%90Note-PM%E3%80%91%E3%80%8A%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93%E3%80%8B%E6%8F%90%E8%A6%81/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/</id>
     <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T11:53:44.731Z</updated>
+    <updated>2018-03-09T15:32:43.048Z</updated>
     
-    <content type="html"><![CDATA[<hr><blockquote><p>作者： <a href="https://twitter.com/jakewharton" target="_blank" rel="noopener">Jake Wharton</a></p><p>原文引自：<a href="https://academy.realm.io/cn/posts/droidcon-jake-wharton-simple-http-retrofit-2/" target="_blank" rel="noopener">link</a></p></blockquote><p><a href="http://square.github.io/retrofit/" target="_blank" rel="noopener">Retrofit</a> 作为简化 HTTP 请求的库，已经运行多年，2.0版本依然不辱使命的在做这些事情。不过 2.0 版本修复了一些长期影响开发者的设计，还加入了前所未有的强大特性。在 NYC 2015 的这一个分享中，<a href="https://twitter.com/jakewharton" target="_blank" rel="noopener">Jake Wharton</a> 的演讲涵盖了所有 Retrofit 2.0 的新特性，全面介绍了 Retrofit 2.0 工作原理。</p><hr><hr><p><em>Save the date for Droidcon SF in March — a conference with best-in-class presentations from leaders in all parts of the Android ecosystem.</em></p><hr><h3 id="简介-0-00"><a href="#简介-0-00" class="headerlink" title="简介 (0:00);)"></a>简介 <a href="javascript:presentz.changeChapter(0,0,true" target="_blank" rel="noopener">(0:00)</a>;)</h3><p>我叫 <a href="https://twitter.com/jakewharton" target="_blank" rel="noopener">Jake Wharton</a>，现在在 <a href="https://squareup.com/" target="_blank" rel="noopener">Square</a> 工作。一个天真的人曾经说过：”Retrofit 2 将会在今年年底前放出。”，那个人，就是去年在纽约 DroidCon 上表态的我。然而，事实是 Retrofit 2 <strong>将会在今年年底放出</strong>，这次我保证！</p><p><a href="http://square.github.io/retrofit/" target="_blank" rel="noopener">Retrofit</a> 5年前就开源了，是 Square 最早的开源项目之一。一开始的时候，Retrofit 只是我们用在各个开源项目里的福袋：比如说最早里面有晃动检测功能，HTTP Client，还有现在的 tap 库。多数功能都是 Bob Lee 完成的，我大概 3 年前开始接管这些工作。最终历经 3 年，完成了 1.0 版本，然后彻底开源。从那会儿到现在，已经 release 了 18 个版本了。</p><h3 id="Retrofit-1-不错的地方-2-23"><a href="#Retrofit-1-不错的地方-2-23" class="headerlink" title="Retrofit 1 不错的地方 (2:23);)"></a>Retrofit 1 不错的地方 <a href="javascript:presentz.changeChapter(0,11,true" target="_blank" rel="noopener">(2:23)</a>;)</h3><p>Retrofit 里已经有很多不错的特性了。Retrofit 可以利用接口，方法和注解参数（parameter annotations）来声明式定义一个请求应该如何被创建。比如说，下面是一个如何请求 GitHub API 的例子：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  List&lt;Contributor&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Retrofit 背后的 HTTP client，以及序列化机制（JSON/XML 协议）都是可替换（pluggable）的，因此你可以选择合适自己的方案。Retrofit 最早出来的时候，只支持 Apache 的 HTTP client。在 1.0 放出前，我们增加了 URL connection，以及 OkHttp 的支持。如果你想要加入的其他的 HTTP client，都可以简单的加入。这个特性非常赞，让我们有能力去支持不同的自定义 client。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">builder.setClient(new UrlConnectionClient());</span><br><span class="line">builder.setClient(new ApacheClient());</span><br><span class="line">builder.setClient(new OkClient());</span><br><span class="line"></span><br><span class="line">builder.setClient(new CustomClient());</span><br></pre></td></tr></table></figure><p>序列化功能也是可替换的。默认是用的 GSON，你当然也可以用 Jackson 来替换掉。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  List&lt;Contributor&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">builder.setConverter(new GsonConverter());</span><br><span class="line">builder.setConverter(new JacksonConverter());</span><br></pre></td></tr></table></figure><p>如果你在用某些数据交换协议，比如 protocol buffer，Retrofit 也支持 Google 的 <a href="https://github.com/google/protobuf">protobuf</a>，也包括 XML 协议的转换（如果你自己不怕折腾）。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  ContributorResponse repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">builder.setConverter(new ProtoConverter());</span><br><span class="line">builder.setConverter(new WireConverter());</span><br><span class="line"></span><br><span class="line">builder.setConverter(new SimpleXMLConverter());</span><br><span class="line"></span><br><span class="line">builder.setConverter(new CustomConverter());</span><br></pre></td></tr></table></figure><p>序列化部分跟 client 部分一样，都是可替换的。你如果想要引入或者实现自己的序列化组件，完全没有问题。</p><p>在发请求的实现上，你可以用的方法有很多，比如：同步发送请求——</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  List&lt;Contributor&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">List&lt;Contributor&gt; contributors =</span><br><span class="line">    gitHubService.repoContributors(&quot;square&quot;, &quot;retrofit&quot;);</span><br></pre></td></tr></table></figure><p>——和异步发送，他们之间的区别就是异步发送要在最后一个参数上声明一个 callback 回调函数：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  void repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo,</span><br><span class="line">      Callback&lt;List&lt;Contributor&gt;&gt; cb);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">service.repoContributors(&quot;square&quot;, &quot;retrofit&quot;, new Callback&lt;List&lt;Contributor&gt;&gt;() &#123;</span><br><span class="line">  @Override void success(List&lt;Contributor&gt; contributors, Response response) &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override void failure(RetrofitError error) &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>——再到后来 1.0 后，我们还支持了 <a href="https://github.com/ReactiveX/RxJava">RxJava</a> ，被证明真的是个非常受欢迎的功能。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Observable&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">gitHubService.repoContributors(&quot;square&quot;, &quot;retrofit&quot;)</span><br><span class="line">    .subscribe(new Action1&lt;List&lt;Contributor&gt;&gt;() &#123;</span><br><span class="line">      @Override public void call(List&lt;Contributor&gt; contributors) &#123;</span><br><span class="line">        // ...</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure><h3 id="Retrofit-1-不够好的地方-4-58"><a href="#Retrofit-1-不够好的地方-4-58" class="headerlink" title="Retrofit 1: 不够好的地方 (4:58);)"></a>Retrofit 1: 不够好的地方 <a href="javascript:presentz.changeChapter(0,28,true" target="_blank" rel="noopener">(4:58)</a>;)</h3><p>不幸的是，没有一个库是完美的，Retrofit 也不例外。为了支持可替换的功能模块，我们必须嵌套大量的组件，类的数量极多以至于成为了一个痛处，一方面是因为整个库非常的脆弱，还有就是因为我们无法修改公开的 API 接口。</p><p>Receive news and updates from Realm straight to your inbox</p><p>订阅Comments</p><p>如果你想要操作某次请求返回的数据，比如说返回的 Header 部分或者 URL，你又同时想要操作序列化后的数据部分，这是 Retrofit 1.0 上是不可能实现的。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  List&lt;Contributor&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Response repoContributors2(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在上面的这个 GitHub 的例子里，我们返回了一个 contributor 的列表，你可以用不同的 converter 去做反序列化。然而，如果说你要读取一个 reponse 的 header 部分。除非你设置一个 endpoint 来接管这个 reponse，不然你没有办法去读取这个 response。 由于 response header 数据里并没有反序列化后的对象，如果不做反序列化操作的话，那你也就无法拿到 contributor 对象了。</p><p>我刚才说过同步和异步，以及用起来非常棒的 RxJava，但是这些用起来却有些刻板。比如：我们在某些场景下既需要异步的调用，又需要同步的调用。在 Retrofit 1.0 里，你必须得声明两次这个方法，像下面这样：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  List&lt;Contributor&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  void repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo,</span><br><span class="line">      Callback&lt;List&lt;Contributor&gt;&gt; cb);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>RxJava 也有类似问题。但值得庆幸的是你在用 RxJava 的时候只用声明一次就行，为了实现这个，我们还在核心代码里增加了对 RxJava 的支持，以辅助返回 Observable 的对象。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Observable&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>我们可能已经熟悉如何在 Retrofit 里创建 Observable 对象。但是如果你需要一些其他对象呢？ 比如，我们没有计划支持用了 Guava 的 ListenableFuture，以及那些用了 Java 8 的 CompleteableFuture。毕竟，Retrofit 1 是基于还在用着 Java 6 的 Android 开发的。</p><p>Retrofit 1 里 Converter 工作的效率并不算是很高。下面是在 Retrofit 1 里创建自定义 Converter 的代码，非常简单：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">interface Converter &#123;</span><br><span class="line">  Object fromBody(TypedInput body, Type type);</span><br><span class="line">  TypedOutput toBody(Object object);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>自定义 Converter 接收一个对象，然后返回一个格式化后的 HTTP 对象。问题是在我们传入了 Response 和一个我们想要转换的格式 Type 参数后，Converter 必须得搞清楚到底应该如何去反序列化，这部分的实现很复杂，而且耗时。尽管一些库做了对象的缓存，但依然效率很低。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/search/repositories&quot;)</span><br><span class="line">  RepositoriesResponse searchRepos(</span><br><span class="line">      @Query(&quot;q&quot;) String query,</span><br><span class="line">      @Query(&quot;since&quot;) Date since);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/search/repositories?q=retrofit&amp;since=2015-08-27</span><br><span class="line">/search/repositories?q=retrofit&amp;since=20150827</span><br></pre></td></tr></table></figure><p>有时候，声明式 API 会遇到一些小问题。比如就像上面的例子一样，你有个接口需要传入一个 Date，但是一个 Date 会有多种不同的格式表示。有的接口可能需要一个字符串，有的可能需要一个分隔开的日期表示（尤其是那些比日期要复杂很多的对象，可能会有更多的表示方法）。</p><p>以上，基本上就是 Retrofit 1 无力解决的需求了，我们要如何修复呢？</p><h3 id="Retrofit-2-10-18"><a href="#Retrofit-2-10-18" class="headerlink" title="Retrofit 2 (10:18);)"></a>Retrofit 2 <a href="javascript:presentz.changeChapter(0,48,true" target="_blank" rel="noopener">(10:18)</a>;)</h3><p>开发 Retrofit2 的时候，我们希望我们定位和解决所有大家多年以来在 Retrofit 1 里遇到的那些问题。</p><h4 id="Call-10-30"><a href="#Call-10-30" class="headerlink" title="Call (10:30);)"></a>Call <a href="javascript:presentz.changeChapter(0,49,true" target="_blank" rel="noopener">(10:30)</a>;)</h4><p>首先得提到的是：Retrofit2 有了新的类型。如果你熟悉用 OkHttp 做 API 请求，你可能比较熟悉其中的一个类：<code>Call</code>。现在， Retrofit 2 里也多了一个 <code>call</code> 方法。语法和 OkHttp 基本一模一样，唯一不同是这个函数知道如何做数据的反序列化。它知道如何将 HTTP 响应转换成对象。</p><p>另外，每一个 call 对象实例只能被用一次，所以说 request 和 response 都是一一对应的。你其实可以通过 <code>Clone</code> 方法来创建一个一模一样的实例，这个开销是很小的。比如说：你可以在每次决定发请求前 <code>clone</code> 一个之前的实例。</p><p>另一个大的进步是 2.0 同时支持了在一个类型中的同步和异步。同时，一个请求也可以被<strong>真正地</strong>终止。终止操作会对底层的 http client 执行 cancel 操作。即便是正在执行的请求，也能立即切断。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Call&lt;List&lt;Contributor&gt;&gt; call =</span><br><span class="line">    gitHubService.repoContributors(&quot;square&quot;, &quot;retrofit&quot;);</span><br></pre></td></tr></table></figure><p>这个 Call 对象是从你的 API 接口返回的参数化后的对象。调用跟接口名相同的函数名，你就会得到一个实例出来。我们可以直接调用它的 execute 方法，但是得留意一下，这个方法只能调用一次。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Call&lt;List&lt;Contributor&gt;&gt; call =</span><br><span class="line">    gitHubService.repoContributors(&quot;square&quot;, &quot;retrofit&quot;);</span><br><span class="line"></span><br><span class="line">response = call.execute();</span><br><span class="line"></span><br><span class="line">// This will throw IllegalStateException:</span><br><span class="line">response = call.execute();</span><br><span class="line"></span><br><span class="line">Call&lt;List&lt;Contributor&gt;&gt; call2 = call.clone();</span><br><span class="line">// This will not throw:</span><br><span class="line">response = call2.execute();</span><br></pre></td></tr></table></figure><p>当你尝试调用第二次的时候，就会出现失败的错误。实际上，可以直接克隆一个实例，代价非常低。当你想要多次请求一个接口的时候，直接用 clone 的方法来生产一个新的，相同的可用对象吧。</p><p>想要实现异步，需要调用 <code>enqueue</code> 方法。现在，我们就能通过一次声明实现同步和异步了！</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Call&lt;List&lt;Contributor&gt;&gt; call =</span><br><span class="line">    gitHubService.repoContributors(&quot;square&quot;, &quot;retrofit&quot;);</span><br><span class="line"></span><br><span class="line">call.enqueue(new Callback&lt;List&lt;Contributor&gt;&gt;() &#123;</span><br><span class="line">  @Override void onResponse(/* ... */) &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override void onFailure(Throwable t) &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>当你将一些异步请求压入队列后，甚至你在执行同步请求的时候，你可以随时调用 <code>cancel</code> 方法来取消请求：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Call&lt;List&lt;Contributor&gt;&gt; call =</span><br><span class="line">    gitHubService.repoContributors(&quot;square&quot;, &quot;retrofit&quot;);</span><br><span class="line"></span><br><span class="line">call.enqueue(         );</span><br><span class="line">// or...</span><br><span class="line">call.execute();</span><br><span class="line"></span><br><span class="line">// later...</span><br><span class="line">call.cancel();</span><br></pre></td></tr></table></figure><h4 id="Parameterized-Response-Object-13-48"><a href="#Parameterized-Response-Object-13-48" class="headerlink" title="Parameterized Response Object (13:48);)"></a>Parameterized Response Object <a href="javascript:presentz.changeChapter(0,68,true" target="_blank" rel="noopener">(13:48)</a>;)</h4><p>另一个新的特性是参数化的 Response 类型。 Response 对象增加了曾经一直被我们忽略掉的重要元数据：响应码（the reponse code），响应消息（the response message），以及读取相应头（headers）。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Response&lt;T&gt; &#123;</span><br><span class="line">  int code();</span><br><span class="line">  String message();</span><br><span class="line">  Headers headers();</span><br><span class="line"></span><br><span class="line">  boolean isSuccess();</span><br><span class="line">  T body();</span><br><span class="line">  ResponseBody errorBody();</span><br><span class="line">  com.squareup.okhttp.Response raw();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>同时还提供了一个很方便的函数来帮助你判断请求是否成功完成，其实就是检查了下响应码是不是 200。然后就拿到了响应的 body 部分，另外有一个单独的方法获取 error body。基本上就是出现一个返回码，然后调用相对应的函数的。只有当响应成功以后，我们会去做反序列化操作，然后将反序列化的结果放到 body 回调中去。如果出现了返回了网络成功响应（返回码：200）却最终返回 false 的情况，我们实际上是无法判断返回到底是什么的，只能将 <code>ResponseBody</code>（简单封装的了 content-type，length，以及 raw body部分） 类型交给你去处理。</p><p>以上是在声明接口时候的两个重大的改变。</p><h4 id="动态-URL-Parameter-16-33"><a href="#动态-URL-Parameter-16-33" class="headerlink" title="动态 URL Parameter (16:33);)"></a>动态 URL Parameter <a href="javascript:presentz.changeChapter(0,101,true" target="_blank" rel="noopener">(16:33)</a>;)</h4><p>动态 URL 参数是让我头疼多年的一个问题，现在我们终于解决了！如果你向 GitHub 发出多个请求，收到一个响应，通常这个响应大概像下面这样：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Call&lt;List&lt;Contributor&gt;&gt; call =</span><br><span class="line">    gitHubService.repoContributors(&quot;square&quot;, &quot;retrofit&quot;);</span><br><span class="line">Response&lt;List&lt;Contributor&gt;&gt; response = call.execute();</span><br><span class="line"></span><br><span class="line">// HTTP/1.1 200 OK</span><br><span class="line">// Link: &lt;https://api.github.com/repositories/892275/contributors?</span><br><span class="line">page=2&gt;; rel=&quot;next&quot;, &lt;https://api.github.com/repositories/892275/</span><br><span class="line">contributors?page=3&gt;; rel=&quot;last&quot;</span><br><span class="line">// ...</span><br></pre></td></tr></table></figure><p>要是你想做分页，你就得自己去分析这些 URL 了。GitHub 可能将 header link 地址列表里的数据已经缓存在服务器内存里了，当你去按他们指引的地址去请求的话，他们就不必费劲去从数据库里给你拿数据了，速度上也更快。但是，在 Retrofit 1.0 的时候，我们没有办法去直接执行 GitHub Server 返回在 header 里的请求地址。</p><p>用上我们新的 response 类型后，不止是我刚才提到的那些元数据，我们还可以写一些方法来读出自定义的字段，比如上面例子里的下一页的地址：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Response&lt;List&lt;Contributor&gt;&gt; response = call.execute();</span><br><span class="line"></span><br><span class="line">// HTTP/1.1 200 OK</span><br><span class="line">// Link: &lt;https://api.github.com/repositories/892275/contributors?</span><br><span class="line">page=2&gt;; rel=&quot;next&quot;, &lt;https://api.github.com/repositories/892275/</span><br><span class="line">contributors?page=3&gt;; rel=&quot;last&quot;</span><br><span class="line">// ...</span><br><span class="line"></span><br><span class="line">String links = response.headers().get(&quot;Link&quot;);</span><br><span class="line">String nextLink = nextFromGitHubLinks(links);</span><br><span class="line"></span><br><span class="line">// https://api.github.com/repositories/892275/contributors?page=2</span><br></pre></td></tr></table></figure><p>这个可能和上面的接口生成地址略有不同。</p><p>动态 URL 地址就是用在连续请求里的。在第一个请求之后，如果返回的结果里有指明下个请求的地址的话，在之前，你可能得单独写个 interface 来处理这种情况，现在就无需那么费事了。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line"></span><br><span class="line">  @GET</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributorsPaginate(</span><br><span class="line">      @Url String url);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Retrofit 2.0 有了新的 标注：<code>@Url</code> ，允许你直接传入一个请求的 URL。</p><p>有了这个方法后，我们就可以直接把刚才取出来的下一页的地址传入，是不是一切都流畅了很多：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String nextLink = nextFromGitHubLinks(links);</span><br><span class="line"></span><br><span class="line">// https://api.github.com/repositories/892275/contributors?page=2</span><br><span class="line"></span><br><span class="line">Call&lt;List&lt;Contributor&gt;&gt; nextCall =</span><br><span class="line">    gitHubService.repoContributorsPaginate(nextLink);</span><br></pre></td></tr></table></figure><p>这样的话，我们就能通过调用 <code>repoContributorsPaginate</code> 来获取第二页内容，然后通过第二页的 header 来请求第三页。你可能很多的 API 都见到过类似的设计，这在 Retrofit 1 里确实是个困扰很多人的大麻烦。</p><h4 id="更多更有效的-Converters-19-31"><a href="#更多更有效的-Converters-19-31" class="headerlink" title="更多更有效的 Converters (19:31);)"></a>更多更有效的 Converters <a href="javascript:presentz.changeChapter(0,113,true" target="_blank" rel="noopener">(19:31)</a>;)</h4><p>Retrofit 1 里有一个 converter 的问题。多数人可能没遇到过，是库内部的一个问题。在 Retrofit 2 里，我们已经解决了这个问题，同时开始支持多种 Converter 并存。</p><p>在之前，如果你遇到这种情况：一个 API 请求返回的结果需要通过 JSON 反序列化，另一个 API 请求需要通过 proto 反序列化，唯一的解决方案就是将两个接口分离开声明。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">interface SomeProtoService &#123;</span><br><span class="line">  @GET(&quot;/some/proto/endpoint&quot;)</span><br><span class="line">  Call&lt;SomeProtoResponse&gt; someProtoEndpoint();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface SomeJsonService &#123;</span><br><span class="line">  @GET(&quot;/some/json/endpoint&quot;)</span><br><span class="line">  Call&lt;SomeJsonResponse&gt; someJsonEndpoint();</span><br></pre></td></tr></table></figure><p>之所以搞得这么麻烦是因为一个 REST adapter 只能绑定一个 Converter 对象。我们费工夫去解决这个是因为：接口的声明是要语意化的。API 接口应该通过功能实现分组，比如： account 的接口，user 的接口，或者 Twitter 相关的接口。返回格式的差异不应该成为你分组时候的阻碍。</p><p>现在，你可以把他们都放在一起了：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">interface SomeService &#123;</span><br><span class="line">  @GET(&quot;/some/proto/endpoint&quot;)</span><br><span class="line">  Call&lt;SomeProtoResponse&gt; someProtoEndpoint();</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/some/json/endpoint&quot;)</span><br><span class="line">  Call&lt;SomeJsonResponse&gt; someJsonEndpoint();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>我大概提一下这个是怎么工作起来的，因为了解 Converter 的调用原理在写代码的时候很重要。</p><p>看我们上面的代码：第一个方法返回了一个 proto 对象。</p><p><code>SomeProtoResponse</code> —&gt; Proto? <strong>Yes!</strong></p><p>原理很简单，其实就是对着每一个 converter 询问他们是否能够处理某种类型。我们问 proto 的 converter： “Hi, 你能处理 <code>SomeProtoResponse</code> 吗？”，然后它尽可能的去判断它是否可以处理这种类型。我们都知道：Protobuff 都是从一个名叫 message 或者 message lite 的类继承而来。所以，判断方法通常就是检查这个类是否继承自 message。</p><p>在面对 JSON 类型的时候，首先问 proto converter，proto converter 会发现这个不是继承子 Message 的，然后回复 no。紧接着移到下一个 JSON converter 上。JSON Converter 会回复说我可以！</p><p><code>SomeJsonResponse</code> —&gt; Proto? <strong>No!</strong> —&gt; JSON? <strong>Yes!</strong></p><p>因为 JSON 并没有什么继承上的约束。所以我们无法通过什么确切的条件来判断一个对象是否是 JSON 对象。以至于 JSON 的 converters 会对任何数据都回复说：我可以处理！这个一定要记住， JSON converter 一定要放在最后，不然会和你的预期不符。</p><p>另一个要注意的是，现在已经不提供默认的 converter 了。如果不显性的声明一个可用的 Converter 的话，Retrofit 是会报错的：提醒你没有可用的 Converter。因为核心代码已经不依赖序列化相关的第三方库了，我们依然提供对 Converter 的支持，不过你需要自己引入这些依赖，同时显性的声明 Retrofit 需要用的 Converter 有哪些。</p><h4 id="更多可替换的执行机制-22-38"><a href="#更多可替换的执行机制-22-38" class="headerlink" title="更多可替换的执行机制 (22:38);)"></a>更多可替换的执行机制 <a href="javascript:presentz.changeChapter(0,121,true" target="_blank" rel="noopener">(22:38)</a>;)</h4><p>在此之前，Retrofit 有一个死板的 execution 流程。在 Retrofit 2 里，我们调整了整个流程，让它变得可替换（pluggable），同时允许多个。跟 converter 的工作原理很像。</p><p>比如说，你有一个方法返回了一个 Call 对象，Call 是内置的 Converter 类型。比如：Retrofit 2　的执行机制：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure><p>现在，你可以自定义这些了。或者用我们提供的一个：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Observable&lt;List&lt;Contributor&gt;&gt; repoContributors2(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Future&lt;List&lt;Contributor&gt;&gt; repoContributors3(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Retrofit 2.0 依然支持 RxJava，但现在是分离的。（你如果想要一些别的特性，你也可以自己写一个）同时支持不同的 execution 是怎么实现的呢？</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(..);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Observable&lt;List&lt;Contributor&gt;&gt; repoContributors2(..);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Future&lt;List&lt;Contributor&gt;&gt; repoContributors3(..);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>通过返回类型来判断需要调用哪个 exection。比如说：返回为 Call 的类型， 我们的整个执行机制会问：“Hey，你知不知道如何处理 Call ？”　如果是 RxJava，它就会说：“我不知道，我只知道　Observable 的处理方法。”。　随后，我们又问内部的 converter，他刚好回答说：“是的！我会！”。</p><p><code>call</code> —&gt; RxJava? <strong>No!</strong> —&gt; Call? <strong>Yes!</strong></p><p>Observable 也是同样的工作原理。我们同样问 RxJava，它就说：“我能处理这个”：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(..);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Observable&lt;List&lt;Contributor&gt;&gt; repoContributors2(..);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Future&lt;List&lt;Contributor&gt;&gt; repoContributors3(..);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Observable —&gt; RxJava? <strong>Yes!</strong></p><p>如果你没装相对应的 Converter，这就意味着我们无法验证响应的类型。比如：如果询问是否有办法能处理　Future，他们两个都会说：“不行”。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(..);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Observable&lt;List&lt;Contributor&gt;&gt; repoContributors2(..);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Future&lt;List&lt;Contributor&gt;&gt; repoContributors3(..);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Future —&gt; RxJava? <strong>No!</strong> —&gt; Call? <strong>No!</strong> —&gt; Throw!</p><p>这将会返回一个 Exception，意味着这两个以及内置的机制都无法处理这种类型。关于工作原理我们随后会深入讨论。</p><h3 id="OkHttp-提供支持-24-17"><a href="#OkHttp-提供支持-24-17" class="headerlink" title="OkHttp 提供支持 (24:17);)."></a>OkHttp 提供支持 <a href="javascript:presentz.changeChapter(0,135,true" target="_blank" rel="noopener">(24:17)</a>;).</h3><p>Retrofit 2 现在开始依赖了 OkHttp 了，而且这部分不再支持替换。这是一件比较有争议的事情。但是希望我能证明为什么这是一个对的决定。</p><p>OkHttp 现在很小而且很聚焦，有很多好用的 API 接口。我们在 Retrofit 2 里都有对 OkHttp 的接口映射，也基本具备了我们需要的所有的特性，包括提到的所有的抽象类们。这些都超赞！这是压缩 Retrofit 库大小的一个法宝。我们最终减小了Retrofit 60% 的体积，同时又具有了更多的特性。</p><h3 id="OkHttp-提供支持-以及-Okio-26-20"><a href="#OkHttp-提供支持-以及-Okio-26-20" class="headerlink" title="OkHttp 提供支持 (以及 Okio!) (26:20);)"></a>OkHttp 提供支持 (以及 Okio!) <a href="javascript:presentz.changeChapter(0,141,true" target="_blank" rel="noopener">(26:20)</a>;)</h3><p>另一个用 OkHttp 的好处就是我们能够在 Retrofit 2 把 OkHttp 以公开接口的方式直接导出。你可能在 error body 方法或者响应里见到过 response body 的内容。显然，我们在 Retrofit 的 Reponse 对象里直接返回了 OkHttp 的 Response body。我们正在导出这些类型，OkHttp 的类型基本上已经以更好更简洁的 API 替代 Retrofit 1.0 的一些接口。</p><p>OkHttp 的背后是一个叫做 Okio 的库，提供的 IO 支持。我之前在 <a href="https://youtu.be/WvyScM_S88c" target="_blank" rel="noopener">Droidcon Montreal</a> 做过关于这个库的演讲。讨论过为什么它是众多 IO 库中更好的选择，还讨论了它为何极度高效，以及为什么你应该使用它们。演讲中我还提到 Retrofit 2 ，当时它还是脑海里的一个概念。现在 Retrofit 2 已经实现了。</p><h3 id="Retrofit-2-的效率-27-31"><a href="#Retrofit-2-的效率-27-31" class="headerlink" title="Retrofit 2 的效率 (27:31);)"></a>Retrofit 2 的效率 <a href="javascript:presentz.changeChapter(0,142,true" target="_blank" rel="noopener">(27:31)</a>;)</h3><p>我做了这个图表来展示 Retrofit 相比 Retrofit 1 以及其他可能的方案要高效的多，这归功于刚刚提到的硬性依赖和那些抽象。我带大家来看一下上面视频中的这个表。所以一定要看我演讲的这<a href="javascript:presentz.changeChapter(0,142,true" target="_blank" rel="noopener">部分</a>;)噢！</p><h3 id="初始化-Retrofit-类型-31-24"><a href="#初始化-Retrofit-类型-31-24" class="headerlink" title="初始化 - Retrofit 类型 (31:24);)"></a>初始化 - Retrofit 类型 <a href="javascript:presentz.changeChapter(0,164,true" target="_blank" rel="noopener">(31:24)</a>;)</h3><p>现在，让我们来看一下 Retrofit 的类型是如何替代 REST adapter 类型的，以及如何初始化。原来的方法叫做 <code>endpoint</code>, 不过现在我们称之为 <code>baseUrl</code>, <code>baseUrl</code> 就是你所请求的 Server 的 URL，下面是一个请求 GitHub Api 的例子：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">    .baseUrl(&quot;https://api.github.com&quot;)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">GitHubService gitHubService = retrofit.create(GitHubService.class);</span><br></pre></td></tr></table></figure><p>我们声明了自己的接口，我们称作创建方法，跟 Retrofit 1 里的是一致的。接下来，我们来生成一个接口的实现，以使这些接口方法可以直接被调用。</p><p>当我们调用 <code>repoContributors</code> 这个方法的时候，Retrofit 会创建这个 URL。如果我们传入 <code>Square</code> 和 <code>Retrofit</code> 字符串，分别作为 <code>owner</code> 和 <code>repo</code> 参数。我们就会得到这个 URL：<code>https://api.github.com/repos/square/retrofit/contributors</code>。在 Retrofit 内部，Retrofit 会用 OkHttp 的 HTTP URL 类型作为 基础的 URL ，然后 <code>resolve</code> 方法就会取出相对地址和 baseUrl 拼接起来，接着发起请求。接下来给你展示下改变 API 前缀，比如 V3。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">    .baseUrl(&quot;https://api.github.com/v3/&quot;)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>虽然说这不是 GitHub 真实的 API，但是真实世界里就是有很多 API 是由这样的前缀和路径组成的。调用相同的方法，被解析出来的 URL 将会是是这样的： <code>https://api.github.com/repos/square/retrofit/contributors</code>。可以看到在主机地址之后并没有<code>v3</code> ，这是因为地址的 URL 是以一个斜线开始的，而在 HTTP 里，斜线开始的地址往往是绝对地址后缀路径。Retrofit 1 会因为语义化的约束，强制你加这个前缀斜线, 然后把 baseUrl 和相对地址拼接起来。现在，考虑到规范问题，我们已经对这两种地址加以区分。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>如果有前缀 <code>/</code> 就代表着是一个绝对路径。删除了那个前缀的 <code>/</code>， 你将会得到正确的、包含了 <code>v3</code> 路径的全 URL。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">    .baseUrl(&quot;https://api.github.com/v3/&quot;)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// https://api.github.com/v3/repos/square/retrofit/contributors</span><br></pre></td></tr></table></figure><p>由于现在我们开始依赖 OkHttp， 并没有 Http Client 层的抽象。现在是可以传递一个配置好的 OkHttp 实例的。比如：配置 interceptors, 或者一个 SSL socket 工厂类， 或者 timeouts 的具体数值。 （OkHttp 有默认的超时机制，如果你不需要自定义，实际上不必进行任何设置，但是如果你想要去设置它们，下面是一个例子告诉你来怎么操作。）</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">OkHttpClient client = new OkHttpClient();</span><br><span class="line">client.interceptors().add(..);</span><br><span class="line"></span><br><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">    .baseUrl(&quot;https://api.github.com&quot;)</span><br><span class="line">    .client(client)</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure><p>如果你要指明特定的 converter 或者 execute 机制，也是在这个时候加的。比如这会儿：我们可以给 GSON 设置一个或者多个 converter。也可以给 protocol buffer 设置一个 converter。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">    .baseUrl(&quot;https://api.github.com&quot;)</span><br><span class="line">    .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">    .addConverterFactory(ProtoConverterFactory.create())</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure><p>我想要强调的是：<strong>添加 converter 的顺序很重要</strong>。按照这个顺序，我们将依次询问每一个 converter 能否处理一个类型。我上面写的其实是错的。如果我们试图反序列化一个 proto 格式，它其实会被当做 JSON 来对待。这显然不是我们想要的。我们需要调整下顺序，因为我们先要检查 proto buffer 格式，然后才是 JSON。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">    .baseUrl(&quot;https://api.github.com&quot;)</span><br><span class="line">    .addConverterFactory(ProtoConverterFactory.create())</span><br><span class="line">    .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure><p>Retrofit 的文档里可能还没这些，如果你想要使用 RxJava 来代替 call, 你需要一个 Call Adapter Factory:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">    .baseUrl(&quot;https://api.github.com&quot;)</span><br><span class="line">    .addConverterFactory(ProtoConverterFactory.create())</span><br><span class="line">    .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure><p>Call Adapter Factory 是一个知道如何将 call 实例转换成其他类型的工厂类。目前，我们只有 RxJava 的类型，也就是将 Call 类型转换成 Observable 类型。如果你了解 RxJava, 其实还有一种新的 Observable 类型（一次只发射一个 item 的类型）。你可以用这个 call adapter factory 来转换到其中任意一种 Observable。</p><h3 id="扩展性-36-50"><a href="#扩展性-36-50" class="headerlink" title="扩展性 (36:50);)"></a>扩展性 <a href="javascript:presentz.changeChapter(0,187,true" target="_blank" rel="noopener">(36:50)</a>;)</h3><p>刚才提到的 Factory，也是可扩展的。这意味着你可以写属于自己的 Call Adapter Facotry。实现起来其实就是一个方法。传递给它一个类型，返回 null 代表拒绝，或者返回一个 converter 的实例。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SomeJsonResponse</span><br><span class="line"></span><br><span class="line">class ProtoConverterFactory &#123;</span><br><span class="line">  Converter&lt;?&gt; create(Type type);null</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class GsonConverterFactory &#123;</span><br><span class="line">Converter&lt;?&gt; create(Type type);Converter&lt;?&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>看上面的例子，如果你给它传递一个 JSON 的 Respnose 类型，这个类型不是从 proto 继承而来，那么它就会说：”我不知道如何传递这个，所以我返回空值 null.』，然而，对于 GSON converter 而言，它通过返回一个实例来表明它可以处理这个类型的。这就是为什么这个类是一个工厂类，因为我们让它生产 converter 实例。</p><p>如果你想要做一些自定义，实现起来是非常容易的。Converter 的实现与之前的实现是非常相似的，尽管代替类型化的输入和输出，我们现在使用的是 OkHttp 的请求body 和相应 body。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">interface Converter&lt;T&gt; &#123;</span><br><span class="line">  interface Factory &#123;</span><br><span class="line">Converter &lt;?&gt; create(Type type);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  T fromBody(ResponseBody body);</span><br><span class="line">  RequestBody toBody(T value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>现在这已经高效的多，因为我们实际上可以查询那些 adapter。举个例子，GSON 有一个type adapter, 当我们请求 GSON Converter Factory，询问它是否可以处理某种请求的时候， converter factory 就开始查询这个 adapter, 它将以缓存的形式存在，当我们再次查询的时候，这个 adapter 就可以直接被使用了。这是一个非常小的成功，极力避免了不断地查询带来的损耗。</p><p>call adapter 有相同的模式。我们询问一个 call adapter factory 它是否可以处理某个类型，它将会以相同的方式回应。（例如：它会返回 null 来表达否）。它的API 是非常简单的。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">interface CallAdapter&lt;T&gt; &#123;</span><br><span class="line">  interface Factory &#123;</span><br><span class="line">    CallAdapter&lt;?&gt; create(Type type);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Type responseType();</span><br><span class="line">  Object adapt(Call&lt;T&gt; value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>我们有一个方法来来实现适配。传入一个 call 实例，返回了一个 observable，single 或者 future 等。 还有一种方法来获得这种 response 类型：当我们声明一系列 contributor 调用时， 我们没法自动把那些参数化的类型提取出来，因此我们基本上只是请求这个 call adapter 也返回这个 response type。如果你为这个变量创造了一个实例，我们会请求 call adapter, 它会将 contributor type 列表返回。</p><h3 id="还在建设中-40-05"><a href="#还在建设中-40-05" class="headerlink" title="还在建设中 (40:05);)"></a>还在建设中 <a href="javascript:presentz.changeChapter(0,204,true" target="_blank" rel="noopener">(40:05)</a>;)</h3><p>Retrofit 2 正在完善中！现在还不够完整，但是已经可以用了。我上面提到的点都是已经完成了的，那还有哪些未完成呢？</p><p>关于所谓的“参数 handler”我们现在还没有一个成熟的想法。我们未来想要让它有从 Guava 传递多个 map，或者数据类型及枚举类型。</p><p>日志功能还没有完成，在 Retrofit 1 里是有日志的，但是在 Retrofit 2 里面没有。依赖 OkHttp 的一个优点是你实际上可以使用一个 interceptor 来实现实际的底层的请求和响应日志。因此，对于原始请求和响应，我们并不需要它，但是我们很可能需要日志来记录 Java 类型。</p><p>如果你曾经使用过 mock 模块，你会发现它也还没被完成，但很快会完成的。</p><p>现在文档依然比较缺。</p><p>最后，在我有空的时候，我想在 Retrofit 2 里支持 WebSocket。在 2.0 里很可能无法实现，但是我想在后续的2.1 版本里会加入支持。</p><h3 id="Release-41-31"><a href="#Release-41-31" class="headerlink" title="Release? (41:31);)"></a>Release? <a href="javascript:presentz.changeChapter(0,210,true" target="_blank" rel="noopener">(41:31)</a>;)</h3><p>我保证过 Retrofit 2 今年会和大家见面，今年确实可以。至于具体哪天问世，我们不会做任何承诺。我不想再在 2016 的 DroidCons 上开相同的玩笑。因此今年一定会问世。我保证。至于2015年8月27日，我已经开放了一个2.0的测试版。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">  compile &apos;com.squareup.retrofit:retrofit:2.0.0-beta1&apos;</span><br><span class="line">  compile &apos;com.squareup.retrofit:converter-gson:2.0.0-beta1&apos;</span><br><span class="line">  compile &apos;com.squareup.retrofit:adapter-rxjava:2.0.0-beta1&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>你可以依赖它。它已经可以正常工作了，API 接口也相对稳定。Converter 和 converter 工厂方法未来可能会改变，但是总体来说是有用的。要是你有什么不喜欢或者有问题的地方，请联系我！谢谢！</p>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>第18届Jolt生产效率大奖图书<br>作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富</p></blockquote><p><a href="https://pan.baidu.com/s/1cAaOxw" target="_blank" rel="noopener">XMind文档链接</a></p><p><a href="https://pan.baidu.com/s/1mhZO5Fa" target="_blank" rel="noopener">导图PDF版链接</a></p><p><strong>导图</strong></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-d20195caa4e17ed9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第一部分：规划与日程"></p><p><strong>文本</strong></p><p> 项目管理修炼之道<br>    Johanna Rothman<br>    规划与日程<br>        启动项目<br>            0.KEY——定义项目、项目约束、决定项目关键驱动因素、章程决策<br>            章程决策<br>                远景、需求、目标、成功标准、ROI<br>        规划项目<br>            0.KEY——足以启动的规划、规划模板、制定发布条件<br>            规划模板<br>                意图<br>                记录<br>                发布条件<br>                目标<br>                项目组织<br>                日程总览<br>                人员配备<br>                建议日程<br>                制订项目风险列表<br>        使用生命周期组织项目<br>            0.KEY——理解生命周期、概览、反馈、大规模项目需要组合多种生命周期、管理架构风险、从瀑布中解脱<br>        安排项目日程<br>            0.KEY——注重实效的日程安排、可选择安排技术、用低技术含量工具安排日程<br>        估算工作<br>            0.KEY——实用估算方式、里程碑切分项目、能不做什么？、多项目时的估算、主动安排人们进行多任务、实用波浪式规划、决定迭代的持续时间、“小石子”<br>            估算<br>                对比历史数据<br>                通过Delphi和宽带Delphi估算<br>                何时不应相信团队的话<br>                    减掉每个任务的缓冲时间、要得到的是更准确的估算结果<br>                用日期范围进行估计<br>                用自信心估计<br>                用三个日期估计：最佳、可能、墨菲<br>            小石子<br>                任务不清时使用<br>                如何得到“小石子”<br>                为什么使用<br>        识别和避免日程安排游戏<br>            0.KEY——“希望”是我们最重要的策略、拒绝女王、把灰扫到地毯下面、幸福日期、分散注意力、日程等于承诺<br>    团队与节奏<br>        创建出色的项目团队<br>            0.KEY——招募需要的人、形成团队凝聚力、让组织配合你的工作、对必必需的团队规模了如指掌、知道何时应该加入、成为出色的项目经理、知道何时全身而退<br>            凝聚力<br>                好工具让团队有更好的发挥<br>                软件配置管理系统应满足的最低要求<br>                缺陷跟踪系统应满足的最低要求<br>                发展5阶段<br>            让组织配合<br>                以项目经理的方式管理单一职能团队<br>                管理矩阵式项目团队<br>                管理跨职能团队<br>            项目经理<br>                人际交往能力<br>                提升功能性技能<br>                专业领域技能<br>                工具和技术的专业技能<br>            退<br>                不适合的组织、团队、产品<br>        掌控项目<br>            0.KEY——节奏、中途回顾、为需求排序、是时间盒限定需求相关的工作、将迭代限制在4周以下、使用波浪式规划和日程安排、创建跨职能团队、根据项目风险选择生命周期模型、保持合理的工作时间、使用“小石子”、管理干扰、管理缺陷<br>            “小石子“<br>                将计划的粒度细化，能提高规划时项目的估算准确率<br>        保持项目节奏<br>            0.KEY——使用持续集成、自动化冒烟测试、按功能实现而不是按架构、盯着产品、准备重构、通过用例、用户故事、角色和场景定义需求、分离需求与GUI设计、尽可能用低保真度原型<br>            按功能而不是按框架<br>                首先实现具有最高价值的功能<br>                按功能调试、测试<br>            低保真原型<br>                “使用低保真度原型，人们可以更全面地评估要解决的问题。高保真度原型会限制反馈。”<br>        管理会议<br>            0.KEY——取消部分会议、举行必要会议、项目启动会议、发布版本规划会议、进度报告会议、向管理层报告进度、项目团队会议、迭代审查会议、会议疑难问题解答、远程电话会议<br>            取消<br>                不需要你解决问题<br>                多人参加的顺序式进度报告会议<br>        创建并使用项目仪表板<br>            0.KEY——测量有风险、根据项目完成度来衡量进度、为出资人创建项目仪表盘、使用项目气象报告<br>            衡量进度<br>                速度图表跟踪日程安排进度<br>                用迭代内容图跟踪总体进度<br>                用图表展示团队统一采用的实践<br>    非简单项目<br>        管理多地点项目<br>            0.KEY——提问成本、识别项目文化差异、团队间培养信任、团队间使用互补实践、寻找潜在问题、外包时的注意事项<br>        在项目中集成测试<br>            0.KEY——“减少技术债”、小规模测试以降低风险、TDD是集成的最简单方法、使用多种测试、确定成员在测试工作中的角色、开发人员测试人员比率、让测试与开发同步进行、为项目制定测试策略、系统测试策略模板、QA与测试的区别<br>        管理项目群<br>            0.KEY——管理项目群、将多个相关项目组织到一个发布版本中、随时间推移组织多个相关项目、管理项目经理、创建项目仪表盘<br>        结束项目<br>            0.KEY——管理发布早期版本的请求、管理beta版本、项目经理何时知道无法按时发布项目、知道项目走向完成、取消项目<br>            何时知道无法按时发布<br>                避免小偏差<br>                承诺新日期<br>                估算系统测试时间<br>        管理项目组合<br>            0.KEY——构建所有项目的组合、评估项目、决定现在为那个项目提供资金、对组合中的项目进行排序、尽快启动项目、使用产品待办事项列表管理新功能需求<br>            答疑<br>                说服管理层：“切换上下文”是个坏主意<br>                如何对多任务说不</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;hr&gt;
-&lt;blockquote&gt;
-&lt;p&gt;作者： &lt;a href=&quot;https://twitter.com/jakewharton&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Jake Wharton&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;原文引自：&lt;a href=&quot;http
+        &lt;blockquote&gt;
+&lt;p&gt;第18届Jolt生产效率大奖图书&lt;br&gt;作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://pan.baidu.com/s/1cAaOxw&quot; target=&quot;_
       
     
     </summary>
     
-      <category term="AndroidTech" scheme="https://github.com/KyleCe/kylece.github.io/categories/AndroidTech/"/>
+      <category term="阅读" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-      <category term="retrofit" scheme="https://github.com/KyleCe/kylece.github.io/tags/retrofit/"/>
+      <category term="项目管理" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
+    
+      <category term="读书" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E8%AF%BB%E4%B9%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>降低内存占用Route</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E9%99%8D%E4%BD%8E%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8Route/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/降低内存占用Route/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:32:43.089Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="已执行"><a href="#已执行" class="headerlink" title="已执行"></a>已执行</h3><ul><li>修复LeakCanary报出的问题（内网、外网）<ul><li>直接检测泄露</li><li>外网beta用户上报</li></ul></li><li>分析dumpheap文件，查内存占用（直接分析、对比分析）<ul><li>占用大户<ul><li>Bitmap</li><li>FinalizerReference</li></ul></li><li>场景分析，进出场景、发现可疑场景，查内存dumpheap文件<ul><li>已有发现：WebView、主题切换泄露</li></ul></li></ul></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;已执行&quot;&gt;&lt;a href=&quot;#已执行&quot; class=&quot;headerlink&quot; title=&quot;已执行&quot;&gt;&lt;/a&gt;已执行&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;修复LeakCanary报出的问题（内网、外网）&lt;ul&gt;
+&lt;li&gt;直接检测泄露&lt;/li&gt;
+&lt;li&gt;外网beta用户上报&lt;
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
+    
+      <category term="内存" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E5%86%85%E5%AD%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E3%80%90%E5%B7%A5%E5%85%B7-%E7%A8%8B%E5%BA%8F%E4%B8%93%E4%BE%9B%E3%80%91IntelliJ-IDEA-Android-Studio-Plugin%E6%8E%A8%E4%BB%8B/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:32:43.105Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>工欲善其事必先利其器<br>今天介绍几个plugin工具（奇淫巧技）</p></blockquote><blockquote><p><em>（适用平台：IntelliJ IDEA内核的各类IDE）</em></p></blockquote><hr><p><strong>效果图</strong></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-5b8d8a86fda8eca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ide_tools.png"></p><p>按图中标示顺序介绍：</p><p>####1.Translation<br>_ 顾名思义是中英翻译，令人意外的是自带英美两种发音（默认快捷键：ALT + 1/3，OSX 不详）_</p><p>####2.Background Image Plus<br><em>可以对IDE背景进行自定义，可以设置图片质量/明暗等，对内存有一定消耗，小霸王请绕道</em></p><p>####3.CodeGlance<br><em>提供一个代码文件的全局概览缩略图，主要可用于快速定位</em></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;工欲善其事必先利其器&lt;br&gt;今天介绍几个plugin工具（奇淫巧技）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;（适用平台：IntelliJ IDEA内核的各类IDE）&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
+    
+      <category term="Tool" scheme="https://github.com/KyleCe/kylece.github.io/tags/Tool/"/>
+    
+      <category term="AndroidStudio" scheme="https://github.com/KyleCe/kylece.github.io/tags/AndroidStudio/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>枚举enum必知必会</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E6%9E%9A%E4%B8%BEenum%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/枚举enum必知必会/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:32:43.098Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="内容大纲"><a href="#内容大纲" class="headerlink" title="内容大纲"></a>内容大纲</h3><ul><li>常规范式——替代int保安全</li><li>高阶范式——实现单例模式</li><li>复杂范式——实现方法</li><li>Android中的替代方案——IntDef/StringDef</li><li>纯 Java中的替代方案——MagicConstant</li></ul><h3 id="常规范式"><a href="#常规范式" class="headerlink" title="常规范式"></a>常规范式</h3><ul><li>取代int常量，确保类型安全性</li></ul><p><img src="../../pic_resource/enum_general.png" alt=""></p><p>可以看到，上例中，直接使用1，2之类的int值编译器是会报错的，因为enum是一种class，不止具有int值这一属性</p><p>相较于int值，enum会有类型安全检查，代码会更安全</p><h3 id="高阶范式"><a href="#高阶范式" class="headerlink" title="高阶范式"></a>高阶范式</h3><ul><li>实现单例模式</li></ul><p><img src="../../pic_resource/enum_singleton.png" alt=""></p><p>这样实现的单例模式，不需要处理线程同步的问题，相较于传统的懒汉-饿汉-doublecheck的优势显而易见</p><blockquote><p>实际上单例模式特别容易导致内存泄露，应该尽量减少使用，用更易用的架构设计模式来避免使用单例模式</p></blockquote><h3 id="复杂范式"><a href="#复杂范式" class="headerlink" title="复杂范式"></a>复杂范式</h3><ul><li>添加成员变量</li></ul><p><img src="../../pic_resource/enum_memeber.png" alt=""></p><p>在利用这一属性时，我们可以直接将enum当成一个类来使用，不一样的地方在于，enum的各项是直接给出了实例化的instance，所以带参构造函数需要我直接在定义中给出初始化参数（如上例中的hour）</p><ul><li>提供有差异的API </li></ul><p><img src="../../pic_resource/enum_method.png" alt=""></p><p>如上图所示，DayType的两个类型，各自实现了free方法，实现了差异化的API，这一属性可以用于策略模式，针对不同的类型，我们的enum可以提供不同的策略算法，满足差异化的需求</p><ul><li>实现接口</li></ul><p><img src="../../pic_resource/enum_interface.png" alt=""></p><p>上面的抽象方法free，也可以抽象成接口形式，让枚举去实现，这一特性在工程中的应用极为有利，这样一来，就与我们的“面向接口编程”对上号了</p><blockquote><p>注意API的访问级别需要升级为public</p></blockquote><h3 id="Android中的替代办法"><a href="#Android中的替代办法" class="headerlink" title="Android中的替代办法"></a>Android中的替代办法</h3><p>我们都知道Android的内存非常宝贵，纵使enum有如此多的优点，但我们有时可能只想用它的一个替代int的属性，来增强代码的安全性，有没有其它更轻量的办法的？</p><p>答案是有的，@IntDef, @StringDef就能满足这一要求（属于注解范畴），以IntDef为例:</p><p><img src="../../pic_resource/enum_replace.png" alt=""></p><p>扒一扒IntDef的源码，我们会发现它其实自己也是一个注解，我们上例中应用的是它的value域，还可以利用的有flag域，鉴于flag一般都不会使用，不做过多介绍</p><p><img src="../../pic_resource/enum_intDef.png" alt=""></p><h3 id="Java模块中的替代办法"><a href="#Java模块中的替代办法" class="headerlink" title="Java模块中的替代办法"></a>Java模块中的替代办法</h3><p>有的同学可能碰到这样的业务需要：</p><p>实际的工程是纯Java的，根本无法使用Android中的注解，这时该怎么办？</p><p>好吧，其实是我自己碰到这样的问题了，解决方案其实也很容易找到，查IntDef的设计思路，可以找到它的出处，最后的解决lib是</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.intellij.lang.annotations.MagicConstant</span><br></pre></td></tr></table></figure><p>可以看到，这一lib是intellij的注解，感谢伟大的程序员们的杰作intellij</p><p><img src="../../pic_resource/enum_magic_constant.png" alt=""></p><p>与IntDef不一样的地方在于：</p><ul><li>需要添加intValues关键字，不可以省略（IntDef中对应的可省略关键字是value）</li><li>具体的值可以相同（IntDef中不可以）</li><li>值变为String类型时只需要改关键字为 stringValues</li></ul><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>enum还有一些特性，比如ordinal()取值、初始值从0开始、用EnumSet/EnumMap代替序数</p><p>实际也不推荐使用（ordinal取值不确定性强，程序稳定性差，实在要使用可以用成员变量代替）</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;内容大纲&quot;&gt;&lt;a href=&quot;#内容大纲&quot; class=&quot;headerlink&quot; title=&quot;内容大纲&quot;&gt;&lt;/a&gt;内容大纲&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;常规范式——替代int保安全&lt;/li&gt;
+&lt;li&gt;高阶范式——实现单例模式&lt;/li&gt;
+&lt;li&gt;复杂范式——实现方法
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+      <category term="Enum" scheme="https://github.com/KyleCe/kylece.github.io/tags/Enum/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【分享】Project ANR</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%88%86%E4%BA%AB%E3%80%91Project%20ANR/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【分享】Project ANR/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:32:43.081Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>ActivityThread  waitToFinish</p><p>SharePreferenceImpl   </p><h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><blockquote><p>Project  SP操作统一到同一个进程</p></blockquote><ul><li>每次edit都直接apply（初衷— 保证所有数据都生效）</li></ul><h3 id="分析及解决"><a href="#分析及解决" class="headerlink" title="分析及解决"></a>分析及解决</h3><p>6.0 — 7.x ，6.0占比 &gt;96%，6.0及以前的读操作是阻塞的（阻塞ActivityThread）</p><p>SharePreference提交记录：</p><ul><li>第一次读操作不加锁（AndroidFramework7.0开始）</li><li>合并写（最后一次改动才写）（AndroidFramework8.0开始）<ul><li>用generation的概念区分最近的一次改动</li></ul></li></ul><h3 id="优化点"><a href="#优化点" class="headerlink" title="优化点"></a>优化点</h3><ul><li>少用</li><li>消减不必要写操作</li><li>存储是分类型的<ul><li>SP是xml文件，真的需要都写到xml文件里吗？<ul><li>2进制文件写速度快于xml文件</li></ul></li></ul></li></ul><h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ul><li>先清理无用SP写（优化了50%）</li><li>减少操作</li><li>最后才是check架构（动架构有风险，Project此例中有丢config的风险）</li></ul><h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><blockquote><p> GP后台关于ANR、Crash是基于session统计的</p><p>检查ANR、Crash时可以看看源代码，或许Android有主动修正</p><p>做应用，不看Framework</p><p>做业务，先到Framework里搜，看是否有提示</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;p&gt;ActivityThread  waitToFinish&lt;/p&gt;
+&lt;p&gt;SharePreferenceImpl   &lt;/p&gt;
+&lt;h3 id=
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
+    
+      <category term="ANR" scheme="https://github.com/KyleCe/kylece.github.io/tags/ANR/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Program】性能考量</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Program%E3%80%91%E6%80%A7%E8%83%BD%E8%80%83%E9%87%8F/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Program】性能考量/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:32:43.051Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>引：<br>《编程珠玑（续）》1.1 介绍性能监视工具；用一个计算素数程序的演进过程演示程序性能提升的非凡效果</p></blockquote><p>在平时开发中的处理一些细节时，虽然可能粗糙对待对程序的表现的影响不明显，但类似的解决方案如果积少成多，势必将程序拉入质量低劣之列，不应不引起重视。</p><p>从小处说，一些细微的编程习惯是可以培养建立的（如简单的容器初始化指定size、for循环的控制语句中避免重复调用计算…）；<br>以整体来看，修炼算法基本功底、数据结构选用熟识度训练、设计模式思路训练也是必不可少的；<br>最后效果来看，需要利用一些专用的性能监视、分析工具，改进程序表现；</p><hr><p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;引：&lt;br&gt;《编程珠玑（续）》1.1 介绍性能监视工具；用一个计算素数程序的演进过程演示程序性能提升的非凡效果&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在平时开发中的处理一些细节时，虽然可能粗糙对待对程序的表现的影响不明显，但类似的解决方案如果积
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+      <category term="编程珠玑" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E7%BC%96%E7%A8%8B%E7%8F%A0%E7%8E%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Note-程序】HashMap-Integer,-V--SparseArray--</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Note-%E7%A8%8B%E5%BA%8F%E3%80%91HashMap-Integer,-V--SparseArray--/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:32:43.079Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>众所周知，基础数组的处理效率要比集合的处理效率高出指数倍（内存寻址优势，指哪打哪，直截了当）</p></blockquote><blockquote><p>在HashMap&lt;K, V&gt; 中K为Integer类型时，简单考虑，使用K作为数组下标可以使用基础数组替代HashMap，但这样处理的话会有一个问题，那就是K值较大时，直接使用数组会导致极大的内存空间浪费（很多数组内容都由null填充）——由此想到“稀疏数组”</p></blockquote><p><strong>SparseArray</strong>就是针对这一场景设计的<br><em>数组中仅仅保存有内容的空间</em> 这样一来，就既可以利用数组高效的优势，又避免了内存空间的浪费。</p><p><strong>取android.util.SparseArray源码中的put API如下：</strong></p><pre><code>/** * Adds a mapping from the specified key to the specified value, * replacing the previous mapping from the specified key if there * was one. */public void put(int key, E value) {    int i = ContainerHelpers.binarySearch(mKeys, mSize, key);    if (i &gt;= 0) {        mValues[i] = value;    } else {        i = ~i;        if (i &lt; mSize &amp;&amp; mValues[i] == DELETED) {            mKeys[i] = key;            mValues[i] = value;            return;        }        if (mGarbage &amp;&amp; mSize &gt;= mKeys.length) {            gc();            // Search again because indices may have changed.            i = ~ContainerHelpers.binarySearch(mKeys, mSize, key);        }        mKeys = GrowingArrayUtils.insert(mKeys, mSize, i, key);        mValues = GrowingArrayUtils.insert(mValues, mSize, i, value);        mSize++;    }}</code></pre><blockquote><p><em>可以看到，在查找是否包含时使用了BinarySearch（二分搜索），在插入时又做了一次容量、size检查，有无用内存时手动gc，此gc为private函数，只是对内存进行了整理，无效内容置为null</em></p></blockquote><blockquote><p>查看DELETED定义：<br>private static final Object DELETED = new Object();<br>在删除时，只是将有效索引的内容至为DELETED，将mGarbage至为true，在下次有增/改操作时进行统一的容量整理；个人感觉这一api逻辑是经验设计，为的是避免连续删除时的频繁容量整理；</p></blockquote><p><strong>结论：</strong></p><blockquote><p>使用HashMap&lt;Integer, V&gt;时，用SparseArray替代，可以极大地提高性能</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;众所周知，基础数组的处理效率要比集合的处理效率高出指数倍（内存寻址优势，指哪打哪，直截了当）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在HashMap&amp;lt;K, V&amp;gt; 中K为Integer类型时，简单考虑，使用K
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+      <category term="HashMap-Integer" scheme="https://github.com/KyleCe/kylece.github.io/tags/HashMap-Integer/"/>
+    
+      <category term="SparseArray" scheme="https://github.com/KyleCe/kylece.github.io/tags/SparseArray/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Note-程序】变量类型</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Note-%E7%A8%8B%E5%BA%8F%E3%80%91%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Note-程序】变量类型/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:32:43.077Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>最近考了部分面试者关于变量访问的一些问题，总结一下</p></blockquote><hr><p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325" target="_blank" rel="noopener"><em>EverNote链接</em></a></p><p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325/res/b21eeb36-a66c-488e-a682-5af7f7b7a990/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B.xmind" target="_blank" rel="noopener"><em>XMind文档</em></a></p><p><strong>导图</strong></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-2e270ca767cdba41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="parameter type overview.png"></p><p><strong>文本</strong></p><p>变量类型</p><p>1 static<br>  1.1 随着类的加载而加载<br>  1.2 附注：Java 类操作流程<br>2 volitale<br>  2.1 从内存中读取（并不能保证原子性）<br>  2.2 使用原则<br>    2.2.1 写入变量不依赖此变量的值(或者只有一个线程修改此变量)<br>    2.2.2 变量的状态不需要与其它变量共同参与不变约束<br>    2.2.3 访问变量不需要加锁<br>3 Atomic<br>  3.1 原子性变量<br>  3.2 缺点<br>    3.2.1 必须用特定API对变量进行操作<br>    3.2.2 只有有限的几种类型<br>4 synchronized<br>  4.1 缺点<br>    4.1.1 性能考量<br>  4.2 注意点<br>    4.2.1 尽量减小锁的范围与程度<br>    4.2.2 多锁时保证操作顺序以防死锁<br>5 concurrent工具包<br>  5.1 CountDownLatch<br>  5.2 ConcurrentHashMap<br>  5.3 CopyOnWriteArrayList/CopyOnWriteArraySet<br>  5.4 ReadWriteLock/ReentrantReadWriteLock<br>  5.5 LinkedBlockingQueue<br>  5.6 CyclicBarrier<br>  5.7 …</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;最近考了部分面试者关于变量访问的一些问题，总结一下&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Java】神奇的内存占用大户FinalizerReference</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Java%E3%80%91%E7%A5%9E%E5%A5%87%E7%9A%84%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%A4%A7%E6%88%B7FinalizerReference/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:52:09.914Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="问题起因"><a href="#问题起因" class="headerlink" title="问题起因"></a>问题起因</h2><p>在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西</p><p>下图是项目中内存快照在AndroidStudio2.4中打开看到的样子</p><p><img src="../../pic_resource/finalizerReference.png" alt=""></p><p>可以看到，占用排名第一的类FinalizerReference占用了59M之巨（内存快照前有使用AS强制GC多次）</p><p>这就很让人好奇了</p><h2 id="FinalizerReference是什么？"><a href="#FinalizerReference是什么？" class="headerlink" title="FinalizerReference是什么？"></a>FinalizerReference是什么？</h2><p>我们来看源码：</p><p><img src="../../pic_resource/FinalizerReferenceCode.png" alt=""></p><p><a href="https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java" target="_blank" rel="noopener">https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java</a></p><p>在讲Java  虚拟机 JVM垃圾回收机制时会涉及到一个概念，即finalize方法，这是Sun公司在Java设计之初，为照顾c++程序员有写析构函数的习惯而做的一种妥协</p><p>在《深入理解Java虚拟机》一书中，讲到GC在最终回收对象之前，会去检查对象是否override了finalize方法，如果有覆盖此方法，对象就会被添加到finalize执行队列中，该书中没有指明是什么队列，实际上finalize执行队列就是我们这里讨论的FinalizerReference（书中还有提到finalize方法只会执行一次，并且有超时保护，因与本文主题无关，不做展开讨论）</p><p>也就是说，有重写Java根基类Object的finalize方法的所有对象，在被最终被GC回收之前，都会被添加到这个队列中，等待被执行</p><h2 id="为什么不能被GC"><a href="#为什么不能被GC" class="headerlink" title="为什么不能被GC"></a>为什么不能被GC</h2><p>这里要谈到JVM设计的一个基本标准</p><p>GC的finalize执行队列会在一个单独的守护线程中运行，这一线程的优先级极低；</p><p>一旦用户创建的对象速度过快，含finalize的对象速度快于finalize队列移除各元素的速度，FinalizerReference就会越来越大，而它获取CPU时间又少的可怜</p><p>测试中发现，1~2h过去后，FinalizerReference的大小并没有按照预计的回落到较低水准</p><p>这就迫使我们一定要解决这一问题，否则，随着应用开辟的内存越来越大，很容易引发喜闻乐见的OutOfMemoryError</p><h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><ol><li>不要重写finalize()方法，实在要释放资源，请到其它destroy一类函数中处理</li></ol><blockquote><p>实际上Java库中不少方法都有重写finalize方法（如Input/outputStream、Canvas、Paint）</p><p>这就引出了第二条指导原则：</p></blockquote><ol><li><p>重复利用资源（避免反复创建）</p></li><li><p>杀器FinalizerHelper</p><ul><li>此工具来源于公司同事的技术分享</li><li>指导思想：在场景退出的安全节点，利用反射强制调用FinalizerReference的remove方法，将对象从队列中移除掉</li><li>对具体实施细节的同学联系我</li></ul></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;问题起因&quot;&gt;&lt;a href=&quot;#问题起因&quot; class=&quot;headerlink&quot; title=&quot;问题起因&quot;&gt;&lt;/a&gt;问题起因&lt;/h2&gt;&lt;p&gt;在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西&lt;/p&gt;
+&lt;p&gt;
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+      <category term="FinalizerReference" scheme="https://github.com/KyleCe/kylece.github.io/tags/FinalizerReference/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Java-基础系列】Synchronized关键字</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Java-%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E3%80%91Synchronized%E5%85%B3%E9%94%AE%E5%AD%97/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.171Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="初识"><a href="#初识" class="headerlink" title="初识"></a>初识</h2><p><code>synchronize</code></p><blockquote><p> 翻译——同步（cause to occur or operate at the same time or rate.）</p></blockquote><p>一般用于多线程操作，保证操作的同步性</p><p>消除线程切换时导致的共享内存的内容不可预测性</p><h2 id="典型应用"><a href="#典型应用" class="headerlink" title="典型应用"></a>典型应用</h2><p>单例模式的<code>double-check</code></p><p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.45.47 AM.png" alt="MacGesture MacGesture, Today at 12.45.47 AM"></p><blockquote><p>题外话：单例模式很容易引发内存泄露，在项目中要少用；</p><p>另外单例模式的实现形式中，使用<code>enum</code>枚举是比较简洁的形式</p></blockquote><h2 id="常见使用形式"><a href="#常见使用形式" class="headerlink" title="常见使用形式"></a>常见使用形式</h2><ul><li><p>锁方法</p><p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p></li><li><p>锁代码段</p><ul><li>用this关键字 <code>sychronized(this)</code></li></ul><p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.21.38 AM.png" alt="MacGesture MacGesture, Today at 12.21.38 AM"></p><ul><li>用锁对象 <code>sychronized(lockObjct)</code></li></ul><p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.17.56 AM.png" alt="MacGesture MacGesture, Today at 12.17.56 AM"></p></li></ul><h2 id="官方教程"><a href="#官方教程" class="headerlink" title="官方教程"></a>官方教程</h2><p>在Oracle的Java 文档里头有对Synchronization的详细解释，分为如下五部分展开：</p><ol><li><p>线程接口（Thread Interference）</p><p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM.png" alt="【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM"></p><blockquote><p>不同线程对同一份数据的操作如果是穿插进行的，会导致不可预料的结果，这主要是因为CPU会让多个线程分片执行，各个线程对此数据的操作也是互不可知的，这样就很容易引发内存不按照预期改变的情况</p></blockquote></li><li><p>内存连续性错误（Memory Consistency Errors）<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.17 AM.png" alt=""></p><blockquote><p>例子如上图，若三步操作不仅由一个线程执行，就很有可能导致打印出的并不是1而是0</p></blockquote></li><li><p>同步方法（Synchronized Methods)<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.41 AM.png" alt=""></p><blockquote><ul><li>Java中在方法体上添加<code>synchronized</code>关键字，能够保证同一时间仅有一个线程在调用某个对象的该方法；</li></ul><ul><li>同时Java还会为该方法在与对象之间建立一个happens-before关系，保证对象的该状态对所有线程都是可见的</li></ul></blockquote></li></ol><ol><li><p>固有锁与同步（Intrinsic Locks and Synchronization)</p><p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p><blockquote><p>当一个线程调用<code>synchronized</code>方法时，它会自动获取该方法对象的固有锁，并在方法返回时释放它。即使返回是由未捕获的异常引起的，也会释放锁。</p></blockquote><p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.56 AM.png" alt="MacGesture MacGesture, Today at 12.16.56 AM"></p><blockquote><p>直接使用this当做锁的关键字时，改对象的所有使用this当关键字的操作都必须保证同时只有一个线程访问，这样做虽然简便，但时间上有效率浪费，因为该对象的所有操作并不一定要保持完全同步，👇的代码段就解决了这一问题：</p><p>通过细粒度的锁来提高并发性：</p></blockquote><p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.22.45 AM.png" alt="MacGesture MacGesture, Today at 12.22.45 AM"></p><blockquote><p>类<code>MsLunch</code>有两个实例字段，<code>c1</code>并且<code>c2</code>从不一起使用。这些字段的所有更新必须同步，但是没有理由阻止c1的更新与c2的更新进行交错 - 这样做会通过创建不必要的阻止来降低并发性。而不是使用同步方法或以其他方式使用与之关联的锁<code>this</code></p></blockquote></li><li><p>原子操作（<code>Atomic</code> Access ）</p><blockquote><p>原子操作保证了操作的完整性：要么不执行，执行的话就一定要完全执行（即使虚拟机GC也不能打断）</p></blockquote><p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.35.40 AM.png" alt="MacGesture MacGesture, Today at 12.35.40 AM"></p><p> 第一条指的是我们可以使用<code>Java</code>内附的<code>AtomicInteger</code>、<code>AtomicBoolean</code>等变量来直接利用这一特性</p><p> 第二条引出了另一个关键字<code>volatile</code>，这实际上需要另起一篇进行介绍了</p></li></ol><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>synchronize在解决多线程编程问题时有奇效，但有一定的效率牺牲</p><p>使用时应尽量减小锁定的范围</p><p>对并发性有要求的地方需要注意看是否有细化锁粒度的必要</p><h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;初识&quot;&gt;&lt;a href=&quot;#初识&quot; class=&quot;headerlink&quot; title=&quot;初识&quot;&gt;&lt;/a&gt;初识&lt;/h2&gt;&lt;p&gt;&lt;code&gt;synchronize&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt; 翻译——同步（cause to occur or
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+      <category term="Synchronized" scheme="https://github.com/KyleCe/kylece.github.io/tags/Synchronized/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Alibaba-Java开发手册】-提要</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Alibaba-Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%E3%80%91-%E6%8F%90%E8%A6%81/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Alibaba-Java开发手册】-提要/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.136Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>旨在对手册进行提要<br>关注点： 编程规约</p></blockquote><blockquote><p><a href="http://pan.baidu.com/s/1boHjvxt" target="_blank" rel="noopener">手册源文件点击下载</a></p></blockquote><p><a href="https://www.evernote.com/shard/s283/sh/a8ae54da-157b-4669-97f3-60709e798489/0ab7d45c077516e2fa9845f3acf03b64" target="_blank" rel="noopener">EverNote笔记链接（内含XMind思维导图源文件）</a></p><hr><p>#导图<br><img src="http://upload-images.jianshu.io/upload_images/1481332-f2f67a5b35ab182b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Alibaba Java overview.png"></p><hr><p>文本</p><p>Alibaba Java 开发手册</p><p>1 编程规约<br>  1.1 命名规约<br>    1.1.1 8. POJO类中的布尔型变量不要加is，否则会引起序列化错误<br>  1.2 常量定义<br>    1.2.1 1. 不允许代码中出现任何魔法数<br>        1.2.1.1 （即硬编码变量）<br>    1.2.2 3. 不要再一个常量类中维护所以常量，应按功能归类维护<br>    1.2.3 4. 常量复用有五个层次<br>        1.2.3.1 跨应用、应用内、子工程、包内、类内<br>  1.3 格式规约<br>    1.3.1 一系列Google Java编码规则，不赘述<br>  1.4 OOP规约<br>    1.4.1 1. 避免通过对象引用static域<br>    1.4.2 2. 不可使用 Deprecated方法；自己做弃用注解时也应该 注明替代的新API<br>    1.4.3 10. 序列化新增属性时不要修改serialVersionUID字段；仅在完全不兼容升级避免反序列化混乱时修改<br>    1.4.4 15. 方法排序： public/ protected &gt; private &gt; getter/setter ——为维护者关心的方法展示于前<br>    1.4.5 16. setter/getter 确定为仅有的set get方法，勿要放入业务逻辑<br>    1.4.6 17. 循环体内，字符串联接方式，使用StringBuilder的append方法扩展——String 操作编译后会生成count 个StringBuilder对象，影响程序性能<br>    1.4.7 18. final可提高程序响应效率<br>    1.4.8 20. 访问控制从严（private、protected、public）<br>  1.5 集合处理<br>    1.5.1 1. hashCode equals<br>        1.5.1.1 重写equals时必须重写hashCode<br>        1.5.1.2 Set存储的对象必须重写<br>        1.5.1.3 用作Map的键时必须重写<br>    1.5.2 9. 集合初始化时尽量指定大小<br>        1.5.2.1 注：出于优化内存占用、响应速度考虑；集合默认size为10<br>    1.5.3 10. Map 类集合 K/V 存储null可行性问题<br>        1.5.3.1 HashMap KV均可为null<br>        1.5.3.2 TreeMap仅V可为null<br>        1.5.3.3 其它Map KV一律不可为null<br>    1.5.4 11. 合理利用好集合的有序性和稳定性，避免负面影响<br>  1.6 并发处理<br>    1.6.1 2. 创建线程、线程池时指定有意义的名称，便于出错时回溯<br>    1.6.2 4. 线程池不允许使用Executors创建，而要使用ThreadPoolExecutor<br>        1.6.2.1 Executor创建的几个类型都有大量请求或线程堆积导致OOM的可能<br>    1.6.3 5. SimpleDateFormat 是线程不安全类，一般不要定义为static变量，如果定义为static，必须加锁，或者使用DateUtils工具类<br>    1.6.4 6. 高并发时的同步调用注意锁的性能损耗<br>    1.6.5 10. CountDownLatch异步转同步操作时，每个线程退出前必须调用countDown，避免await超时<br>    1.6.6 11. 避免Random实例被多线程使用，竞争同一seed会导致性能下降；（实例包括Random、Math.random()）<br>    1.6.7 14. HashMap在容量不够进行resize时由于高并发可能出现死链，导致CPU飙升，开发中注意规避<br>  1.7 控制语句<br>    1.7.1 3. if-else 勿超过3层，超过时使用状态设计模式<br>    1.7.2 5. 循环体中考虑性能问题，避免不必要的语句、避免不必要的try-catch<br>    1.7.3 7-8. 注意参数检验的必要性，尽可能提升性能<br>2 日志<br>3 MySQL<br>4 工程规约<br>5 安全规约</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;旨在对手册进行提要&lt;br&gt;关注点： 编程规约&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;http://pan.baidu.com/s/1boHjvxt&quot; target=&quot;_blank&quot; rel=&quot;noop
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>gc-pictures</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/gc-pictures/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/gc-pictures/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.168Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7061db0196475abb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Hotspot JVM components.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-1bf9a615abb8e4d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Structure.png"></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-c29f25476bbacbe2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Leak by MAT.png"></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-783169a523910316.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AppsFlyer leak and resolution.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-ca53c4d2e0fd72d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AS分析出的泄露现场.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-962ab459822c3a93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CMS运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-50f18bb588311844.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Coping Referenced Object.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a4320ea3b641d3cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Example Allocation Code.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d3f472e8f57f4507.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="G1 运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-473f69299d0029a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="GC Roots reachable analyze.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a5848042f2a13510.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="GC收集器.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-5def65145209ff4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Heap Usage ratio.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0cc80185075e1e36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Heap Structure.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-01af30bab5fb201f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Structure.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a252ca7dcb958038.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JVM Architecture.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-35782e1de1365e82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Key JVM Components.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-dffef12d27e0440c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Marking.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-facf61f82cf12b67.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MinorGC &amp; MajorGC.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-7d913bf3a474dcd0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Normal Deletion.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-3d1db4efd09b12db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Parallel Old运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-8c509f9d210e2339.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Parallel Scavenge运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0ba80f3d07039584.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ParNew运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-8927a9cb7340b35b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial Old运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0d5f648b819bd823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial收集器与CMS收集器操作线程比较.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-26a178b15d61c0d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-351394496f49338a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="static collection cause leak.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d44647bb58bf7c2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="串并行收集.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-65c85ce0940865cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="从年轻代晋升到老年代.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-242a868f2c4d6c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="写入年轻代Eden区.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-e57595176a60153f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="删除整理.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d2c22b62ee39e595.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图2.2.1 匿名内部类引发的内存泄露示例.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-099ba10858c1daac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象年龄.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-f1b583b94f371c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象年龄的增长示例.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-09da3e69c1e7de12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象空间分配.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a9b46c9c1ef158eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="收集器策略.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-2540999a7248fa74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="晋升概览图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-97d976558b387970.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="未反注册及未取消动画更新监听的泄露GC-Root引用路径.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-c09be6dd982fbba3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="部分GVM常规参数一览表.png"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/1481332-7061db0196475abb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; 
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
+    
+      <category term="GC" scheme="https://github.com/KyleCe/kylece.github.io/tags/GC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶——接口优于抽象类</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%E8%A2%AB%E7%94%A8%E7%83%82%E7%9A%84%22%E7%BB%A7%E6%89%BF%22/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶--被用烂的&quot;继承&quot;/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:52:09.918Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>继承很强大，但也有问题</p><p>确实是is-a关系时才使用继承</p><p>如果处在不同的包中，并且SuperClass不是为继承设计的，这时会导致脆弱性</p><p>可以使用复合和转发机制来代替继承来避免这种脆弱性</p><p>关键字:</p><p><strong>继承、复合、装饰者模式、包装类、转发</strong></p><blockquote><p>keywords:</p><p>继承(inheritance)、复合(composition)、装饰者模式(decorator)、包装类(WrapperClass)、转发(forwarding)</p></blockquote><p><em>为叙述方便，下文以CC代表子类，SC代表超类，也就是父类</em></p><h3 id="问题体现"><a href="#问题体现" class="headerlink" title="问题体现"></a>问题体现</h3><p><strong>继承打破了封装性</strong></p><p>CC依赖于SC的实现细节，在SC更新换代时，CC会受影响，严重的会导致错误，为了避免出现错误，时常要做的事情是跟着SC的更新而更新CC</p><p>其实你可以直接使用<strong>复合</strong>来避免这一问题出现——也就是，在原来的CC中添加一个SC的实例</p><p>这样新的类中可以直接使用SC的方法逻辑，而不用担心SC更新时要升级API的问题（概念：<strong>转发</strong>）</p><p>这样的类也被称为<strong>包装类</strong></p><p>这也引出了设计模式中的Decorator模式概念（<strong>装饰者模式</strong>）</p><h3 id="强制使用的弊端"><a href="#强制使用的弊端" class="headerlink" title="强制使用的弊端"></a>强制使用的弊端</h3><ul><li>暴露不必要的SC细节</li><li>永远地限制了CC的性能（使用复合模式则可以在需要时更换转发的具体实现）</li><li>导致语义混淆</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;摘要与关键字&quot;&gt;&lt;a href=&quot;#摘要与关键字&quot; class=&quot;headerlink&quot; title=&quot;摘要与关键字&quot;&gt;&lt;/a&gt;摘要与关键字&lt;/h3&gt;&lt;p&gt;继承很强大，但也有问题&lt;/p&gt;
+&lt;p&gt;确实是is-a关系时才使用继承&lt;/p&gt;
+&lt;p&gt;如果处在不同的包中，并且
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>LogFoQATest</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/LogFoQATest/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/LogFoQATest/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:32:43.061Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h3><ol><li>判断手机是否存在指定TXT文件。如果存在开始打印log信息进入TXT文件里面。</li><li>加入是否将ORG设置默认的log。</li><li>是否调起menu的log信息。</li><li>打印menu是否拉去广告的log信息，</li><li>其他网络请求。</li></ol><h3 id="实现记录"><a href="#实现记录" class="headerlink" title="实现记录"></a>实现记录</h3><p>所以日志以 QATestInfo 为log的TAG信息</p><ol><li><p>默认包含此功能；</p></li><li><p>SetDefaultHomeOK</p></li><li><p>InvokeMenuPopUp</p></li><li><p>RequestMenuAD</p></li><li><p>可能较耗内存的场景：</p><p>RequestNearbyApp<br>RequestCommonTool</p><p>ImageLoaderLoadImageFromNet<br>ImageLoaderLoadAdmobImageCore<br>VolleyDisplayImage<br>VolleyDecodeImage<br>VolleyDecodeImageFix</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;要求&quot;&gt;&lt;a href=&quot;#要求&quot; class=&quot;headerlink&quot; title=&quot;要求&quot;&gt;&lt;/a&gt;要求&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;判断手机是否存在指定TXT文件。如果存在开始打印log信息进入TXT文件里面。&lt;/li&gt;
+&lt;li&gt;加入是否将ORG设置默认的lo
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶——接口优于抽象类</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E6%8E%A5%E5%8F%A3%E4%BC%98%E4%BA%8E%E6%8A%BD%E8%B1%A1%E7%B1%BB/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶——接口优于抽象类/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.151Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本篇系Java进阶系列 篇4.18，介绍<strong>接口</strong>相较于<strong>抽象类</strong>的优点</p><p>跑题1——一直牢记的一点“100%的坚持比百分之九十几的坚持更容易”又一次体会到，上周跟随部门团建出去旅游，一旦停更就是将近一周，希望能把原则秉持下来</p><p>跑题2——今天看了new iPhone的发布会，依旧很精致，不知何时Android能有赶上iPhone水准的机器面世</p></blockquote><h3 id="两者区别"><a href="#两者区别" class="headerlink" title="两者区别"></a>两者区别</h3><p>抽象类可以包含部分实现，接口不可以（Java8接口中可以定义默认方法，但不推荐如此使用接口）</p><p>为了实现抽象类定义的类型，必须extends 抽象类，限制了其可扩展性</p><h3 id="接口的优势"><a href="#接口的优势" class="headerlink" title="接口的优势"></a>接口的优势</h3><ul><li>已有类可以很容易被更新，以实现新接口</li><li>接口是定义mixin（像中文“迷信”，实则取自此词，代表混合类型）的理想选择</li><li>允许我们构造非层次结构的类型框架（就像我们每个人身怀多技一样，每个类也可能有多种特性）</li><li>使得增强类的功能更加安全</li></ul><h3 id="pay-attention"><a href="#pay-attention" class="headerlink" title="pay attention"></a>pay attention</h3><ul><li><p>公共接口一旦被公开，修改起来就极其麻烦，所谓牵一发而动全身，所以设计接口时要谨慎；</p><blockquote><p>实际项目中发现这个点其实是一个经验问题，又要最小化接口，又要把接口设计得符合<strong>SOLID</strong>设计模式五大原则，就要求我们在实际工作中训练好这个技能，把握好接口设计的度</p></blockquote></li><li><p>抽象类也并非一无是处，它的改变就比接口要简易的多，实际使用时也是体验很好的一种设计方法，不过抽象类的使用也要有所衡量，只有在确实是属于一个类别的类时才好去使用抽象类，否则就违背了我们的编程原则</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;本篇系Java进阶系列 篇4.18，介绍&lt;strong&gt;接口&lt;/strong&gt;相较于&lt;strong&gt;抽象类&lt;/strong&gt;的优点&lt;/p&gt;
+&lt;p&gt;跑题1——一直牢记的一点“100%的坚持比百分之九十几的坚持更容易”又一次体会到，上周跟随部门团建出去
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶--for-each与传统for</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--for-each%E4%B8%8E%E4%BC%A0%E7%BB%9Ffor/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶--for-each与传统for/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.145Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>for-each 相较于 传统的 for-i更优</p><p>自己编写的类在代表一组元素时，即使不实现Collection也要让它实现Iterable</p><h3 id="体现"><a href="#体现" class="headerlink" title="体现"></a>体现</h3><p>for-each循环在预防bug方面与传统for循环有着无可比拟的优势</p><ul><li>传统for</li><li>for-each</li></ul><h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>implement Iterable接口，示例：</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;结论&quot;&gt;&lt;a href=&quot;#结论&quot; class=&quot;headerlink&quot; title=&quot;结论&quot;&gt;&lt;/a&gt;结论&lt;/h3&gt;&lt;p&gt;for-each 相较于 传统的 for-i更优&lt;/p&gt;
+&lt;p&gt;自己编写的类在代表一组元素时，即使不实现Collection也要让它实现It
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+      <category term="for-each" scheme="https://github.com/KyleCe/kylece.github.io/tags/for-each/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶-- 利用有限制通配符来提升API的灵活性</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20%E5%88%A9%E7%94%A8%E6%9C%89%E9%99%90%E5%88%B6%E9%80%9A%E9%85%8D%E7%AC%A6%E6%9D%A5%E6%8F%90%E5%8D%87API%E7%9A%84%E7%81%B5%E6%B4%BB%E6%80%A7/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.142Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="词条"><a href="#词条" class="headerlink" title="词条"></a>词条</h3><p>通配符— ‘?’</p><p>有限制的通配符 —</p><ul><li>? extends E</li><li>? super E</li></ul><p>PECS — producer-extends, consumer-super</p><h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>输入参数是生产者或消费者时使用’?’</p><p>所有的compare和comparator都是consumer</p><p>声明方法时，用’?’取代仅出现一次的的类型参数</p><h3 id="优势体现——论其必要性"><a href="#优势体现——论其必要性" class="headerlink" title="优势体现——论其必要性"></a>优势体现——论其必要性</h3><p>我们先看之前讲 <strong>优先考虑泛型</strong>时的一个示例：</p><p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p><p>考虑为它增加一个方法：</p><p><img src="../../pic_resource/StackPushAll.png" alt=""></p><p>这样的定义，在使用中会存在不灵活的问题：因为类型在定义之后就不可变了，如果想要将一个非E类型的Iterable  push到Stack中是不可能的，这样的事实我们显然不能接受，那么该如何修改呢？答案就在本篇的主角——通配符’?’上</p><p>将上述API的参数修改为：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Iterable&lt;? extends E&gt; src</span><br></pre></td></tr></table></figure><p>即可达到目的</p><p>说完? extends，再来看? super，同样考虑Stack的API，这一次是将Stack中的元素全部弹出到目标集合</p><p><img src="../../pic_resource/StackPopAll.png" alt=""></p><p>理想状态下，所有的子类型的Stack都可以弹出到父类型的集合，但上图的API并不能实现这一目的；我们需要这样修改：</p><p>将参数类型修改为：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collection&lt;? <span class="keyword">super</span> E&gt; dst</span><br></pre></td></tr></table></figure><p>这样一来，任意继承自父类型的Stack就都可以pop到父类型集合了，是不是很带感</p><p>有的同学可能会产生疑惑了，一会儿extends，一会儿super，好晕</p><p>还好有规律可总结：</p><p>PECS——producer-extends, consumer-super</p><p>即参数列表中  生产者总是使用? extends，而消费者则总是使用 ? super（不了解生产者、消费者设计模式的同学请自行翻书）</p><h3 id="高级应用"><a href="#高级应用" class="headerlink" title="高级应用"></a>高级应用</h3><p>原始API声明：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;T&gt;&gt; <span class="function">T <span class="title">max1</span><span class="params">(List&lt;T&gt; list)</span></span></span><br></pre></td></tr></table></figure><p>修改后的API声明：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;? <span class="keyword">super</span> T&gt;&gt; <span class="function">T <span class="title">max2</span><span class="params">(List&lt;? extends T&gt; list)</span></span></span><br></pre></td></tr></table></figure><p>这一修改后的API，pecs都用上了，真有必要弄这么复杂了？</p><p>答案是肯定的</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;ScheduleFuture&lt;?&gt;&gt; futures = ...;</span><br></pre></td></tr></table></figure><p>这一futures不能调用max1方法，原因在于ScheduleFuture扩展的是Compare接口的Delayed接口的子接口，它可以与任意Delayed进行compare；而max2方法这样的声明就不会有这问题</p><h3 id="E-与-‘-’"><a href="#E-与-‘-’" class="headerlink" title="E 与 ‘?’"></a>E 与 ‘?’</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br></pre></td></tr></table></figure><p>你看上哪个了呢？</p><p>从灵活性的角度考虑，肯定是第二种好一些，但在类型参数不止一个时，就不能用’?’ 而要用类型参数了</p><p>使用第二种时需要注意：</p><p>只能把null放入List&lt;?&gt;中，这时为了保证灵活性，就需要写一个辅助捕捉类型的方法</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">  swapTrick(list, i, j);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swapTrick</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    list.set(i, list.set(j, list.get(i)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>这一篇看起来似乎有点绕，但我们真正在项目中写公共库API时，其实是需要用到’?’的，不是为了装，是真的能提升API的适用范围，减少工作量</p><p>不过任何收获都是要付出代价的，在写出高适用度的API时，一定记得写单元测试，进行高覆盖度的验证，保证准确性</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;词条&quot;&gt;&lt;a href=&quot;#词条&quot; class=&quot;headerlink&quot; title=&quot;词条&quot;&gt;&lt;/a&gt;词条&lt;/h3&gt;&lt;p&gt;通配符— ‘?’&lt;/p&gt;
+&lt;p&gt;有限制的通配符 —&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;? extends E&lt;/li&gt;
+&lt;li&gt;? super E&lt;
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶-- 优先考虑泛型方法</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E6%B3%9B%E5%9E%8B%E6%96%B9%E6%B3%95/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.163Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h3><p>类可以从泛型中受益，静态工具API更适合泛型</p><blockquote><p>Collections 的算法方法都已泛型化(如binarySearch、sort)</p></blockquote><h3 id="优势示例"><a href="#优势示例" class="headerlink" title="优势示例"></a>优势示例</h3><ul><li>例1：精简API</li></ul><p><img src="../../pic_resource/GenericMethodEg.png" alt=""></p><p>代码所示是一个简单的设置字体的Util的static API的泛型化代码；</p><p>如果不是使用这种泛型化的API，则需要为TextView的扩展类（Button、CheckBox等等）编写数不清的函数</p><ul><li>例2：确保类型安全的情况下提升API的易用性</li></ul><p><img src="../../pic_resource/GenericMethodEg2.png" alt=""></p><p>可以看到上面的API可以轻易的操作所有以View为基类的类的集合；</p><ul><li>例3：类级别的泛型化</li></ul><p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p><blockquote><p>在配合集合使用时需要注意类型cast的警告，这些警告实际上是编译时不会有问题，但真正在运行时可能会抛出ClassCastException，我们在实际项目中应该将这些潜在的威胁清除掉；</p><p>对于十分确定不会出问题的类型操作API上，可以用@SuppressWarning(“unckecked”)消除这类警告</p></blockquote><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>赶紧用起来吧，你的小伙伴会爱上你写的极简API的</p><blockquote><p>源码里的代码有很多写的极好的点，同学们平时可以扒一扒</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;适用范围&quot;&gt;&lt;a href=&quot;#适用范围&quot; class=&quot;headerlink&quot; title=&quot;适用范围&quot;&gt;&lt;/a&gt;适用范围&lt;/h3&gt;&lt;p&gt;类可以从泛型中受益，静态工具API更适合泛型&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Collections 的算法方法都已
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶-- 以函数对象代表策略</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20%E4%BB%A5%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E4%BB%A3%E8%A1%A8%E7%AD%96%E7%95%A5/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.139Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>介绍设计模式中的策略模式（strategy）</p><p>C++、C语言中的函数指针在Java中的替代形式</p><p>面向接口编程</p><p>keywords：</p><p><strong>策略、函数对象、面向接口</strong></p><h3 id="出发点"><a href="#出发点" class="headerlink" title="出发点"></a>出发点</h3><p>函数指针，或是实现代理模式、lambda表达式</p><p>### </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;摘要与关键字&quot;&gt;&lt;a href=&quot;#摘要与关键字&quot; class=&quot;headerlink&quot; title=&quot;摘要与关键字&quot;&gt;&lt;/a&gt;摘要与关键字&lt;/h3&gt;&lt;p&gt;介绍设计模式中的策略模式（strategy）&lt;/p&gt;
+&lt;p&gt;C++、C语言中的函数指针在Java中的替代形式
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶-- volatile关键字</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20volatile%E5%85%B3%E9%94%AE%E5%AD%97/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- volatile关键字/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.153Z</updated>
+    
+    <content type="html"><![CDATA[<p>volatile含有部分synchronized的特性，效率更高，但使用时需要注意细节，不然容易出错</p><h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>Java中被volatile修饰的变量，每次读写都会直接使用“内存”介质，而不是使用CPU缓存</p><blockquote><p>音 — UK <strong> /ˈvɒl.ə.taɪl/  US </strong> /ˈvɑː.lə.t̬əl/</p><p>英 — <strong>likely to change suddenly and unexpectedly or suddenly become violent or angry</strong></p><p>中 — 易变的</p></blockquote><h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul><li>保证变量可见性</li><li>禁止指令进行重排序</li></ul><blockquote><p>基础概念：可见性、有序性、原子性</p><ol><li>可见性：对所有线程来说，任一线程对变量的改动都立即可见</li><li>有序性：代码可能会被编译器混编，有序性即指代码按顺序执行</li><li>原子性：所有操作不会被打断，谁也不行（除非断电）</li></ol></blockquote><p>实际上我们对变量的修改，虽然可能Java就一行代码（如 y=x），但被解释成汇编语言会变成多行（y=x就需要进行两步操作：读x值，写入y所在内存，学过汇编的同学应该比较清楚）</p><h3 id="与synchronized的区别"><a href="#与synchronized的区别" class="headerlink" title="与synchronized的区别"></a>与synchronized的区别</h3><p>按字面理解，volatile关键字只是标记变量为易变的，并不能保证对变量的所有操作都是同步的，即不能保证具有synchronized一样的效果</p><p>实际上，对volatile修饰的变量的读/写操作是可以保证其原子性的，但还要注意一个问题，即同时写变量的线程可能不止一个，如此一来，其中部分的写操作就有可能丢失</p><p>听起来好像volatile使用起来很危险，但它也是有它的用途的</p><h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul><li>对于写不依赖历史状态的变量，可以考虑使用volatile修饰字代替synchronized来提高程序效率</li><li>保证代码的有序性：volatile变量的读写操作之前的代码，编译器是不会进行重排序的</li></ul><h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在volatile满足不了要求的场景可以考虑使用synchronized、lock、Atomic变量来保证特性</p><p>对变量的写不依赖历史状态的变量使用volatile修饰可以提高效率</p><p>对于需要保证部分程序语句有序性的场景可以考虑使用volatile代替锁定整个代码块，提高效率</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;volatile含有部分synchronized的特性，效率更高，但使用时需要注意细节，不然容易出错&lt;/p&gt;
+&lt;h3 id=&quot;是什么&quot;&gt;&lt;a href=&quot;#是什么&quot; class=&quot;headerlink&quot; title=&quot;是什么&quot;&gt;&lt;/a&gt;是什么&lt;/h3&gt;&lt;p&gt;Java中被vo
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+      <category term="volatile" scheme="https://github.com/KyleCe/kylece.github.io/tags/volatile/"/>
     
   </entry>
   

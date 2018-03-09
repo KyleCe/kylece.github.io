@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>【alibaba-java开发手册】-提要 | KyleCe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="Java" />
+  
+  
+  
+  
+  <meta name="description" content="旨在对手册进行提要关注点： 编程规约   手册源文件点击下载  EverNote笔记链接（内含XMind思维导图源文件）  #导图  文本 Alibaba Java 开发手册 1 编程规约  1.1 命名规约    1.1.1 8. POJO类中的布尔型变量不要加is，否则会引起序列化错误  1.2 常量定义    1.2.1 1. 不允许代码中出现任何魔法数        1.2.1.1 （即">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Alibaba-Java开发手册】-提要">
+<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Alibaba-Java开发手册】-提要/index.html">
+<meta property="og:site_name" content="KyleCe">
+<meta property="og:description" content="旨在对手册进行提要关注点： 编程规约   手册源文件点击下载  EverNote笔记链接（内含XMind思维导图源文件）  #导图  文本 Alibaba Java 开发手册 1 编程规约  1.1 命名规约    1.1.1 8. POJO类中的布尔型变量不要加is，否则会引起序列化错误  1.2 常量定义    1.2.1 1. 不允许代码中出现任何魔法数        1.2.1.1 （即">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-f2f67a5b35ab182b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-03-09T15:22:18.136Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Alibaba-Java开发手册】-提要">
+<meta name="twitter:description" content="旨在对手册进行提要关注点： 编程规约   手册源文件点击下载  EverNote笔记链接（内含XMind思维导图源文件）  #导图  文本 Alibaba Java 开发手册 1 编程规约  1.1 命名规约    1.1.1 8. POJO类中的布尔型变量不要加is，否则会引起序列化错误  1.2 常量定义    1.2.1 1. 不允许代码中出现任何魔法数        1.2.1.1 （即">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1481332-f2f67a5b35ab182b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/avatar.jpg">
+  <link rel="apple-touch-icon" href="/css/images/avatar.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/avatar.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-技术/程序/【Alibaba-Java开发手册】-提要" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      【Alibaba-Java开发手册】-提要
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【Alibaba-Java开发手册】-提要/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>旨在对手册进行提要<br>关注点： 编程规约</p>
+</blockquote>
+<blockquote>
+<p><a href="http://pan.baidu.com/s/1boHjvxt" target="_blank" rel="noopener">手册源文件点击下载</a></p>
+</blockquote>
+<p><a href="https://www.evernote.com/shard/s283/sh/a8ae54da-157b-4669-97f3-60709e798489/0ab7d45c077516e2fa9845f3acf03b64" target="_blank" rel="noopener">EverNote笔记链接（内含XMind思维导图源文件）</a></p>
+<hr>
+<p>#导图<br><img src="http://upload-images.jianshu.io/upload_images/1481332-f2f67a5b35ab182b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Alibaba Java overview.png"></p>
+<hr>
+<p>文本</p>
+<p>Alibaba Java 开发手册</p>
+<p>1 编程规约<br>  1.1 命名规约<br>    1.1.1 8. POJO类中的布尔型变量不要加is，否则会引起序列化错误<br>  1.2 常量定义<br>    1.2.1 1. 不允许代码中出现任何魔法数<br>        1.2.1.1 （即硬编码变量）<br>    1.2.2 3. 不要再一个常量类中维护所以常量，应按功能归类维护<br>    1.2.3 4. 常量复用有五个层次<br>        1.2.3.1 跨应用、应用内、子工程、包内、类内<br>  1.3 格式规约<br>    1.3.1 一系列Google Java编码规则，不赘述<br>  1.4 OOP规约<br>    1.4.1 1. 避免通过对象引用static域<br>    1.4.2 2. 不可使用 Deprecated方法；自己做弃用注解时也应该 注明替代的新API<br>    1.4.3 10. 序列化新增属性时不要修改serialVersionUID字段；仅在完全不兼容升级避免反序列化混乱时修改<br>    1.4.4 15. 方法排序： public/ protected &gt; private &gt; getter/setter ——为维护者关心的方法展示于前<br>    1.4.5 16. setter/getter 确定为仅有的set get方法，勿要放入业务逻辑<br>    1.4.6 17. 循环体内，字符串联接方式，使用StringBuilder的append方法扩展——String 操作编译后会生成count 个StringBuilder对象，影响程序性能<br>    1.4.7 18. final可提高程序响应效率<br>    1.4.8 20. 访问控制从严（private、protected、public）<br>  1.5 集合处理<br>    1.5.1 1. hashCode equals<br>        1.5.1.1 重写equals时必须重写hashCode<br>        1.5.1.2 Set存储的对象必须重写<br>        1.5.1.3 用作Map的键时必须重写<br>    1.5.2 9. 集合初始化时尽量指定大小<br>        1.5.2.1 注：出于优化内存占用、响应速度考虑；集合默认size为10<br>    1.5.3 10. Map 类集合 K/V 存储null可行性问题<br>        1.5.3.1 HashMap KV均可为null<br>        1.5.3.2 TreeMap仅V可为null<br>        1.5.3.3 其它Map KV一律不可为null<br>    1.5.4 11. 合理利用好集合的有序性和稳定性，避免负面影响<br>  1.6 并发处理<br>    1.6.1 2. 创建线程、线程池时指定有意义的名称，便于出错时回溯<br>    1.6.2 4. 线程池不允许使用Executors创建，而要使用ThreadPoolExecutor<br>        1.6.2.1 Executor创建的几个类型都有大量请求或线程堆积导致OOM的可能<br>    1.6.3 5. SimpleDateFormat 是线程不安全类，一般不要定义为static变量，如果定义为static，必须加锁，或者使用DateUtils工具类<br>    1.6.4 6. 高并发时的同步调用注意锁的性能损耗<br>    1.6.5 10. CountDownLatch异步转同步操作时，每个线程退出前必须调用countDown，避免await超时<br>    1.6.6 11. 避免Random实例被多线程使用，竞争同一seed会导致性能下降；（实例包括Random、Math.random()）<br>    1.6.7 14. HashMap在容量不够进行resize时由于高并发可能出现死链，导致CPU飙升，开发中注意规避<br>  1.7 控制语句<br>    1.7.1 3. if-else 勿超过3层，超过时使用状态设计模式<br>    1.7.2 5. 循环体中考虑性能问题，避免不必要的语句、避免不必要的try-catch<br>    1.7.3 7-8. 注意参数检验的必要性，尽可能提升性能<br>2 日志<br>3 MySQL<br>4 工程规约<br>5 安全规约</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          【Java-基础系列】Synchronized关键字
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/09/技术/程序/gc-pictures/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">gc-pictures</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav">无</ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://kylece.github.io/" target="_blank">KyleCe</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2015 - 2018 KyleCe All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            KyleCe
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 KyleCe All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

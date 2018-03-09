@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>gl examplemodule memory consume test report | KyleCe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="AndroidPerformanceGL" />
+  
+  
+  
+  
+  <meta name="description" content="“GL”  test部分模块 内存占用测试 trunk 3.0 #90770 测试机型：N5 6.0  dump场景： 正常运行——静置3min 进入负一屏 进入3D时钟 进入AllApps 进入天气 进入搜索 应用3D主题之后 3D主题关屏之后 从3D切回2D  测试结论 以下结论基于N5 6.0机型，结果未与其它机器、安卓版本做横向比较   test进程内，各模块切换时未出现太大波动 但tes">
+<meta name="keywords" content="Android,Performance,GL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GL exampleModule memory consume test report">
+<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/Android/GL Launcher memory consume test report/index.html">
+<meta property="og:site_name" content="KyleCe">
+<meta property="og:description" content="“GL”  test部分模块 内存占用测试 trunk 3.0 #90770 测试机型：N5 6.0  dump场景： 正常运行——静置3min 进入负一屏 进入3D时钟 进入AllApps 进入天气 进入搜索 应用3D主题之后 3D主题关屏之后 从3D切回2D  测试结论 以下结论基于N5 6.0机型，结果未与其它机器、安卓版本做横向比较   test进程内，各模块切换时未出现太大波动 但tes">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-09T15:14:14.351Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GL exampleModule memory consume test report">
+<meta name="twitter:description" content="“GL”  test部分模块 内存占用测试 trunk 3.0 #90770 测试机型：N5 6.0  dump场景： 正常运行——静置3min 进入负一屏 进入3D时钟 进入AllApps 进入天气 进入搜索 应用3D主题之后 3D主题关屏之后 从3D切回2D  测试结论 以下结论基于N5 6.0机型，结果未与其它机器、安卓版本做横向比较   test进程内，各模块切换时未出现太大波动 但tes">
+  
+    <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/avatar.jpg">
+  <link rel="apple-touch-icon" href="/css/images/avatar.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/avatar.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-技术/Android/GL Launcher memory consume test report" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      GL exampleModule memory consume test report
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/GL Launcher memory consume test report/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="“GL”-test部分模块-内存占用测试"><a href="#“GL”-test部分模块-内存占用测试" class="headerlink" title="“GL”  test部分模块 内存占用测试"></a>“GL”  test部分模块 内存占用测试</h1><blockquote>
+<p>trunk 3.0 #90770</p>
+<p>测试机型：N5 6.0</p>
+</blockquote>
+<h3 id="dump场景："><a href="#dump场景：" class="headerlink" title="dump场景："></a>dump场景：</h3><ol>
+<li>正常运行——静置3min</li>
+<li>进入负一屏</li>
+<li>进入3D时钟</li>
+<li>进入AllApps</li>
+<li>进入天气</li>
+<li>进入搜索</li>
+<li>应用3D主题之后</li>
+<li>3D主题关屏之后</li>
+<li>从3D切回2D</li>
+</ol>
+<h2 id="测试结论"><a href="#测试结论" class="headerlink" title="测试结论"></a>测试结论</h2><blockquote>
+<p>以下结论基于N5 6.0机型，结果未与其它机器、安卓版本做横向比较</p>
+</blockquote>
+<ul>
+<li>test进程内，各模块切换时未出现太大波动</li>
+<li>但test起始值（Gfx dev）在 40000KB（~40M）左右，考虑这一点是否有改进必要、空间？</li>
+<li>3D主题相较2D，内存占用升高~17M左右（具体值未严格测试）</li>
+<li>关屏之后（静置&gt;2min），未对内存占用做优化处理——考虑是否可行？是否必要？？？</li>
+<li>从3D切回2D，内存反增11M左右（对此dump文件感兴趣的同学联系我）——此处需要分析hprof，找到问题点</li>
+</ul>
+<h2 id="实验数据"><a href="#实验数据" class="headerlink" title="实验数据"></a>实验数据</h2><h3 id="正常运行——静置3min"><a href="#正常运行——静置3min" class="headerlink" title="正常运行——静置3min"></a>正常运行——静置3min</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">16257</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">25108</span>    <span class="number">25080</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">43264</span>    <span class="number">36859</span>     <span class="number">6404</span></span><br><span class="line">  Dalvik Heap    <span class="number">42114</span>    <span class="number">42040</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">65438</span>    <span class="number">50717</span>    <span class="number">14721</span></span><br><span class="line"> Dalvik Other     <span class="number">3860</span>     <span class="number">3860</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1516</span>     <span class="number">1516</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">176</span>      <span class="number">140</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">41004</span>    <span class="number">41004</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev      <span class="number">136</span>        <span class="number">0</span>      <span class="number">136</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">8610</span>      <span class="number">320</span>      <span class="number">812</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">2555</span>        <span class="number">0</span>     <span class="number">2100</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">173</span>        <span class="number">0</span>      <span class="number">128</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">29908</span>       <span class="number">48</span>    <span class="number">23812</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">2767</span>        <span class="number">0</span>      <span class="number">900</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">1705</span>     <span class="number">1528</span>        <span class="number">4</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1078</span>        <span class="number">8</span>      <span class="number">608</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">44880</span>    <span class="number">44880</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">4924</span>     <span class="number">4924</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">210514</span>   <span class="number">165348</span>    <span class="number">28500</span>        <span class="number">0</span>   <span class="number">108702</span>    <span class="number">87576</span>    <span class="number">21125</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">43572</span></span><br><span class="line">         Native Heap:    <span class="number">25080</span></span><br><span class="line">                Code:    <span class="number">28120</span></span><br><span class="line">               Stack:     <span class="number">1516</span></span><br><span class="line">            Graphics:    <span class="number">85884</span></span><br><span class="line">       Private Other:     <span class="number">9676</span></span><br><span class="line">              System:    <span class="number">16666</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">210514</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
+<h3 id="进入负一屏"><a href="#进入负一屏" class="headerlink" title="进入负一屏"></a>进入负一屏</h3><blockquote>
+<p>未点击触发任何动画</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">16257</span> [com..test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">25583</span>    <span class="number">25548</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">43264</span>    <span class="number">37267</span>     <span class="number">5996</span></span><br><span class="line">  Dalvik Heap    <span class="number">45619</span>    <span class="number">45532</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">65017</span>    <span class="number">57890</span>     <span class="number">7127</span></span><br><span class="line"> Dalvik Other     <span class="number">3900</span>     <span class="number">3900</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1520</span>     <span class="number">1520</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">176</span>      <span class="number">140</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">42456</span>    <span class="number">42456</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev      <span class="number">136</span>        <span class="number">0</span>      <span class="number">136</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">9323</span>      <span class="number">320</span>      <span class="number">960</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">2583</span>        <span class="number">0</span>     <span class="number">2104</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">173</span>        <span class="number">0</span>      <span class="number">128</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">30308</span>       <span class="number">48</span>    <span class="number">24112</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">3297</span>        <span class="number">0</span>     <span class="number">1284</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">2015</span>     <span class="number">1540</span>      <span class="number">272</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1223</span>        <span class="number">8</span>      <span class="number">696</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">53520</span>    <span class="number">53520</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">4924</span>     <span class="number">4924</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">226756</span>   <span class="number">179456</span>    <span class="number">29692</span>        <span class="number">0</span>   <span class="number">108281</span>    <span class="number">95157</span>    <span class="number">13123</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">47344</span></span><br><span class="line">         Native Heap:    <span class="number">25548</span></span><br><span class="line">                Code:    <span class="number">28956</span></span><br><span class="line">               Stack:     <span class="number">1520</span></span><br><span class="line">            Graphics:    <span class="number">95976</span></span><br><span class="line">       Private Other:     <span class="number">9804</span></span><br><span class="line">              System:    <span class="number">17608</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">226756</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
+<h3 id="进入3D时钟"><a href="#进入3D时钟" class="headerlink" title="进入3D时钟"></a>进入3D时钟</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">16257</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">25243</span>    <span class="number">25216</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">43776</span>    <span class="number">36699</span>     <span class="number">7076</span></span><br><span class="line">  Dalvik Heap    <span class="number">42553</span>    <span class="number">42480</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">66333</span>    <span class="number">50306</span>    <span class="number">16027</span></span><br><span class="line"> Dalvik Other     <span class="number">3692</span>     <span class="number">3692</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1532</span>     <span class="number">1532</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">176</span>      <span class="number">140</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">42884</span>    <span class="number">42884</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev      <span class="number">136</span>        <span class="number">0</span>      <span class="number">136</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">8622</span>      <span class="number">320</span>      <span class="number">836</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">2549</span>        <span class="number">0</span>     <span class="number">2108</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">173</span>        <span class="number">0</span>      <span class="number">128</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">29687</span>       <span class="number">48</span>    <span class="number">23884</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">3646</span>        <span class="number">0</span>     <span class="number">1660</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">2539</span>     <span class="number">1564</span>      <span class="number">792</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1077</span>        <span class="number">8</span>      <span class="number">608</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">36240</span>    <span class="number">36240</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">4924</span>     <span class="number">4924</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">205673</span>   <span class="number">159048</span>    <span class="number">30152</span>        <span class="number">0</span>   <span class="number">110109</span>    <span class="number">87005</span>    <span class="number">23103</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">44836</span></span><br><span class="line">         Native Heap:    <span class="number">25216</span></span><br><span class="line">                Code:    <span class="number">28984</span></span><br><span class="line">               Stack:     <span class="number">1532</span></span><br><span class="line">            Graphics:    <span class="number">79124</span></span><br><span class="line">       Private Other:     <span class="number">9508</span></span><br><span class="line">              System:    <span class="number">16473</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">205673</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
+<h3 id="进入AllApps"><a href="#进入AllApps" class="headerlink" title="进入AllApps"></a>进入AllApps</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">16257</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">25539</span>    <span class="number">25512</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">43776</span>    <span class="number">37873</span>     <span class="number">5902</span></span><br><span class="line">  Dalvik Heap    <span class="number">45413</span>    <span class="number">45340</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">66146</span>    <span class="number">57815</span>     <span class="number">8331</span></span><br><span class="line"> Dalvik Other     <span class="number">3960</span>     <span class="number">3960</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1532</span>     <span class="number">1532</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">176</span>      <span class="number">140</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">39380</span>    <span class="number">39380</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev      <span class="number">136</span>        <span class="number">0</span>      <span class="number">136</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">8620</span>      <span class="number">320</span>      <span class="number">836</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">2549</span>        <span class="number">0</span>     <span class="number">2108</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">173</span>        <span class="number">0</span>      <span class="number">128</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">29887</span>       <span class="number">48</span>    <span class="number">24052</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">3646</span>        <span class="number">0</span>     <span class="number">1648</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">2558</span>     <span class="number">1584</span>      <span class="number">792</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1127</span>        <span class="number">8</span>      <span class="number">636</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">44880</span>    <span class="number">44880</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">4924</span>     <span class="number">4924</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">214500</span>   <span class="number">167628</span>    <span class="number">30336</span>        <span class="number">0</span>   <span class="number">109922</span>    <span class="number">95688</span>    <span class="number">14233</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">47716</span></span><br><span class="line">         Native Heap:    <span class="number">25512</span></span><br><span class="line">                Code:    <span class="number">29140</span></span><br><span class="line">               Stack:     <span class="number">1532</span></span><br><span class="line">            Graphics:    <span class="number">84260</span></span><br><span class="line">       Private Other:     <span class="number">9804</span></span><br><span class="line">              System:    <span class="number">16536</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">214500</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
+<h3 id="进入天气"><a href="#进入天气" class="headerlink" title="进入天气"></a>进入天气</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">16257</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">30251</span>    <span class="number">30224</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">50176</span>    <span class="number">46472</span>     <span class="number">3703</span></span><br><span class="line">  Dalvik Heap    <span class="number">56889</span>    <span class="number">56816</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">82047</span>    <span class="number">68387</span>    <span class="number">13660</span></span><br><span class="line"> Dalvik Other     <span class="number">4124</span>     <span class="number">4124</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1872</span>     <span class="number">1872</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">228</span>      <span class="number">144</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">48684</span>    <span class="number">48684</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev      <span class="number">136</span>        <span class="number">0</span>      <span class="number">136</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">9119</span>      <span class="number">320</span>     <span class="number">1216</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">2537</span>        <span class="number">0</span>     <span class="number">2096</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">261</span>        <span class="number">0</span>      <span class="number">216</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">31424</span>       <span class="number">48</span>    <span class="number">25576</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">3819</span>        <span class="number">0</span>     <span class="number">1784</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">2593</span>     <span class="number">1620</span>      <span class="number">792</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1397</span>        <span class="number">8</span>      <span class="number">852</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">39552</span>    <span class="number">39552</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">9044</span>     <span class="number">9044</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">241930</span>   <span class="number">192456</span>    <span class="number">32668</span>        <span class="number">0</span>   <span class="number">132223</span>   <span class="number">114859</span>    <span class="number">17363</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">59228</span></span><br><span class="line">         Native Heap:    <span class="number">30224</span></span><br><span class="line">                Code:    <span class="number">31256</span></span><br><span class="line">               Stack:     <span class="number">1872</span></span><br><span class="line">            Graphics:    <span class="number">88236</span></span><br><span class="line">       Private Other:    <span class="number">14308</span></span><br><span class="line">              System:    <span class="number">16806</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">241930</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
+<h3 id="进入搜索"><a href="#进入搜索" class="headerlink" title="进入搜索"></a>进入搜索</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">16257</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">30979</span>    <span class="number">30952</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">51712</span>    <span class="number">46697</span>     <span class="number">5014</span></span><br><span class="line">  Dalvik Heap    <span class="number">53559</span>    <span class="number">53488</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">78029</span>    <span class="number">62140</span>    <span class="number">15889</span></span><br><span class="line"> Dalvik Other     <span class="number">4084</span>     <span class="number">4084</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1864</span>     <span class="number">1864</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">224</span>      <span class="number">152</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">44948</span>    <span class="number">44948</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev      <span class="number">136</span>        <span class="number">0</span>      <span class="number">136</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">9092</span>      <span class="number">320</span>     <span class="number">1184</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">1214</span>        <span class="number">0</span>      <span class="number">812</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">224</span>        <span class="number">0</span>      <span class="number">204</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">31530</span>       <span class="number">48</span>    <span class="number">25696</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">4048</span>        <span class="number">0</span>     <span class="number">2056</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">2619</span>     <span class="number">1704</span>      <span class="number">732</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1449</span>        <span class="number">8</span>      <span class="number">812</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">53520</span>    <span class="number">53520</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">8700</span>     <span class="number">8700</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">248190</span>   <span class="number">199788</span>    <span class="number">31632</span>        <span class="number">0</span>   <span class="number">129741</span>   <span class="number">108837</span>    <span class="number">20903</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">55924</span></span><br><span class="line">         Native Heap:    <span class="number">30952</span></span><br><span class="line">                Code:    <span class="number">30320</span></span><br><span class="line">               Stack:     <span class="number">1864</span></span><br><span class="line">            Graphics:    <span class="number">98468</span></span><br><span class="line">       Private Other:    <span class="number">13892</span></span><br><span class="line">              System:    <span class="number">16770</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">248190</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
+<h3 id="应用3D主题之后"><a href="#应用3D主题之后" class="headerlink" title="应用3D主题之后"></a>应用3D主题之后</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">23770</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">16450</span>    <span class="number">16424</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">24832</span>    <span class="number">22375</span>     <span class="number">2456</span></span><br><span class="line">  Dalvik Heap    <span class="number">32283</span>    <span class="number">32212</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">57652</span>    <span class="number">46603</span>    <span class="number">11049</span></span><br><span class="line"> Dalvik Other     <span class="number">3352</span>     <span class="number">3352</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack      <span class="number">864</span>      <span class="number">864</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">130</span>      <span class="number">128</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">58872</span>    <span class="number">58872</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev        <span class="number">4</span>        <span class="number">0</span>        <span class="number">4</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">3563</span>      <span class="number">268</span>     <span class="number">1692</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">1359</span>        <span class="number">0</span>      <span class="number">896</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">114</span>        <span class="number">0</span>      <span class="number">112</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">24990</span>       <span class="number">32</span>    <span class="number">20756</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">3203</span>        <span class="number">0</span>     <span class="number">1672</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">1352</span>     <span class="number">1152</span>       <span class="number">16</span>        <span class="number">0</span></span><br><span class="line">   Other mmap      <span class="number">913</span>        <span class="number">8</span>      <span class="number">716</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">44880</span>    <span class="number">44880</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown      <span class="number">300</span>      <span class="number">300</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">192629</span>   <span class="number">158492</span>    <span class="number">25864</span>        <span class="number">0</span>    <span class="number">82484</span>    <span class="number">68978</span>    <span class="number">13505</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">33380</span></span><br><span class="line">         Native Heap:    <span class="number">16424</span></span><br><span class="line">                Code:    <span class="number">25428</span></span><br><span class="line">               Stack:      <span class="number">864</span></span><br><span class="line">            Graphics:   <span class="number">103752</span></span><br><span class="line">       Private Other:     <span class="number">4508</span></span><br><span class="line">              System:     <span class="number">8273</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">192629</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
+<h3 id="3D桌面——关屏"><a href="#3D桌面——关屏" class="headerlink" title="3D桌面——关屏"></a>3D桌面——关屏</h3><blockquote>
+<p>静置1min</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">23770</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">20416</span>    <span class="number">20388</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">33280</span>    <span class="number">27504</span>     <span class="number">5775</span></span><br><span class="line">  Dalvik Heap    <span class="number">34972</span>    <span class="number">34900</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">60660</span>    <span class="number">44452</span>    <span class="number">16208</span></span><br><span class="line"> Dalvik Other     <span class="number">3228</span>     <span class="number">3228</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1088</span>     <span class="number">1088</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">150</span>      <span class="number">136</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">59148</span>    <span class="number">59148</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev        <span class="number">8</span>        <span class="number">0</span>        <span class="number">8</span>        <span class="number">0</span></span><br><span class="line">     .so mmap    <span class="number">12463</span>      <span class="number">284</span>     <span class="number">9176</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">2967</span>        <span class="number">0</span>     <span class="number">2524</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">110</span>        <span class="number">0</span>      <span class="number">108</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">31520</span>       <span class="number">52</span>    <span class="number">26864</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">3170</span>        <span class="number">0</span>     <span class="number">1560</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">1701</span>     <span class="number">1348</span>       <span class="number">20</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1359</span>        <span class="number">8</span>     <span class="number">1120</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">44880</span>    <span class="number">44880</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">3652</span>     <span class="number">3652</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">220832</span>   <span class="number">169112</span>    <span class="number">41380</span>        <span class="number">0</span>    <span class="number">93940</span>    <span class="number">71956</span>    <span class="number">21983</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">36268</span></span><br><span class="line">         Native Heap:    <span class="number">20388</span></span><br><span class="line">                Code:    <span class="number">40568</span></span><br><span class="line">               Stack:     <span class="number">1088</span></span><br><span class="line">            Graphics:   <span class="number">104028</span></span><br><span class="line">       Private Other:     <span class="number">8152</span></span><br><span class="line">              System:    <span class="number">10340</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">220832</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
+<h3 id="从3D切回2D"><a href="#从3D切回2D" class="headerlink" title="从3D切回2D"></a>从3D切回2D</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">23770</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">23624</span>    <span class="number">23596</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">37376</span>    <span class="number">31068</span>     <span class="number">6307</span></span><br><span class="line">  Dalvik Heap    <span class="number">48127</span>    <span class="number">48056</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">69274</span>    <span class="number">53190</span>    <span class="number">16084</span></span><br><span class="line"> Dalvik Other     <span class="number">3368</span>     <span class="number">3368</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1256</span>     <span class="number">1256</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">150</span>      <span class="number">136</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">70896</span>    <span class="number">70896</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev        <span class="number">8</span>        <span class="number">0</span>        <span class="number">8</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">4425</span>      <span class="number">320</span>      <span class="number">968</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap      <span class="number">654</span>        <span class="number">0</span>       <span class="number">64</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">118</span>        <span class="number">0</span>      <span class="number">108</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">13328</span>       <span class="number">52</span>     <span class="number">8816</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">1996</span>        <span class="number">0</span>      <span class="number">380</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">2020</span>     <span class="number">1440</span>      <span class="number">332</span>        <span class="number">0</span></span><br><span class="line">   Other mmap       <span class="number">88</span>        <span class="number">8</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">53520</span>    <span class="number">53520</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">3668</span>     <span class="number">3668</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">227246</span>   <span class="number">206316</span>    <span class="number">10676</span>        <span class="number">0</span>   <span class="number">106650</span>    <span class="number">84258</span>    <span class="number">22391</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">49828</span></span><br><span class="line">         Native Heap:    <span class="number">23596</span></span><br><span class="line">                Code:    <span class="number">10708</span></span><br><span class="line">               Stack:     <span class="number">1256</span></span><br><span class="line">            Graphics:   <span class="number">124416</span></span><br><span class="line">       Private Other:     <span class="number">7188</span></span><br><span class="line">              System:    <span class="number">10254</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">227246</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">------------------------              </span></span><br><span class="line"><span class="function">After 5Min------------------              </span></span><br><span class="line"><span class="function">------------------------              </span></span><br><span class="line"><span class="function">** MEMINFO in pid 23770 [com.org.test] **</span></span><br><span class="line"><span class="function">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span></span><br><span class="line"><span class="function">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span></span><br><span class="line"><span class="function">                ------   ------   ------   ------   ------   ------   ------</span></span><br><span class="line"><span class="function">  Native Heap    23368    23340        0        0    37120    30598     6521</span></span><br><span class="line"><span class="function">  Dalvik Heap    43928    43856        0        0    69379    65551     3828</span></span><br><span class="line"><span class="function"> Dalvik Other     3560     3560        0        0</span></span><br><span class="line"><span class="function">        Stack     1244     1244        0        0</span></span><br><span class="line"><span class="function">       Ashmem      150      136        0        0</span></span><br><span class="line"><span class="function">      Gfx dev    72440    72440        0        0</span></span><br><span class="line"><span class="function">    Other dev        8        0        8        0</span></span><br><span class="line"><span class="function">     .so mmap     3636      320      788        0</span></span><br><span class="line"><span class="function">    .apk mmap      395        0        0        0</span></span><br><span class="line"><span class="function">    .ttf mmap       26        0        8        0</span></span><br><span class="line"><span class="function">    .dex mmap    12470       52     8176        0</span></span><br><span class="line"><span class="function">    .oat mmap     2610        0      260        0</span></span><br><span class="line"><span class="function">    .art mmap     2159     1456       28        0</span></span><br><span class="line"><span class="function">   Other mmap       58        8       20        0</span></span><br><span class="line"><span class="function">   EGL mtrack    44880    44880        0        0</span></span><br><span class="line"><span class="function">      Unknown     3668     3668        0        0</span></span><br><span class="line"><span class="function">        TOTAL   214600   194960     9288        0   106499    96149    10349</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"> App Summary</span></span><br><span class="line"><span class="function">                       <span class="title">Pss</span><span class="params">(KB)</span></span></span><br><span class="line"><span class="function">                        ------</span></span><br><span class="line"><span class="function">           Java Heap:    45340</span></span><br><span class="line"><span class="function">         Native Heap:    23340</span></span><br><span class="line"><span class="function">                Code:     9604</span></span><br><span class="line"><span class="function">               Stack:     1244</span></span><br><span class="line"><span class="function">            Graphics:   117320</span></span><br><span class="line"><span class="function">       Private Other:     7400</span></span><br><span class="line"><span class="function">              System:    10352</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">               TOTAL:   214600      TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GL/">GL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Performance/">Performance</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          AndroidAS-依赖lib建议、微信QRCode登陆
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/09/技术/Android/GL check point/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">GL check point</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#“GL”-test部分模块-内存占用测试"><span class="nav-number">1.</span> <span class="nav-text">“GL”  test部分模块 内存占用测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dump场景："><span class="nav-number">1.0.1.</span> <span class="nav-text">dump场景：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试结论"><span class="nav-number">1.1.</span> <span class="nav-text">测试结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验数据"><span class="nav-number">1.2.</span> <span class="nav-text">实验数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正常运行——静置3min"><span class="nav-number">1.2.1.</span> <span class="nav-text">正常运行——静置3min</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入负一屏"><span class="nav-number">1.2.2.</span> <span class="nav-text">进入负一屏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入3D时钟"><span class="nav-number">1.2.3.</span> <span class="nav-text">进入3D时钟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入AllApps"><span class="nav-number">1.2.4.</span> <span class="nav-text">进入AllApps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入天气"><span class="nav-number">1.2.5.</span> <span class="nav-text">进入天气</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入搜索"><span class="nav-number">1.2.6.</span> <span class="nav-text">进入搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用3D主题之后"><span class="nav-number">1.2.7.</span> <span class="nav-text">应用3D主题之后</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3D桌面——关屏"><span class="nav-number">1.2.8.</span> <span class="nav-text">3D桌面——关屏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从3D切回2D"><span class="nav-number">1.2.9.</span> <span class="nav-text">从3D切回2D</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://kylece.github.io/" target="_blank">KyleCe</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2015 - 2018 KyleCe All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            KyleCe
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 KyleCe All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

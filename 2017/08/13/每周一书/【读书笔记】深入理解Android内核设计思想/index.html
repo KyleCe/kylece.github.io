@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>【读书笔记】深入理解android内核设计思想 | KyleCe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="读书Android" />
+  
+  
+  
+  
+  <meta name="description" content="这本书太深了，不适合略读，可以在碰到相关问题时仔细研读，知识覆盖面较广  这么多大块的时间来一条条钻研这些内核实现细节其实不如学习算法来的有用，毕竟一个是形式，一个是内功   留待查阅  印象笔记链接（附带XMind文件） 图片：   #笔记文字 深入理解Android内核思想1 4 操作系统基础  1.1 4.3 进程间通信的经典实现    1.1.1 共享内存    1.1.2 管道pipe">
+<meta name="keywords" content="读书,Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【读书笔记】深入理解Android内核设计思想">
+<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2017/08/13/每周一书/【读书笔记】深入理解Android内核设计思想/index.html">
+<meta property="og:site_name" content="KyleCe">
+<meta property="og:description" content="这本书太深了，不适合略读，可以在碰到相关问题时仔细研读，知识覆盖面较广  这么多大块的时间来一条条钻研这些内核实现细节其实不如学习算法来的有用，毕竟一个是形式，一个是内功   留待查阅  印象笔记链接（附带XMind文件） 图片：   #笔记文字 深入理解Android内核思想1 4 操作系统基础  1.1 4.3 进程间通信的经典实现    1.1.1 共享内存    1.1.2 管道pipe">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-228b08c1632f933b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-03-09T15:44:28.763Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【读书笔记】深入理解Android内核设计思想">
+<meta name="twitter:description" content="这本书太深了，不适合略读，可以在碰到相关问题时仔细研读，知识覆盖面较广  这么多大块的时间来一条条钻研这些内核实现细节其实不如学习算法来的有用，毕竟一个是形式，一个是内功   留待查阅  印象笔记链接（附带XMind文件） 图片：   #笔记文字 深入理解Android内核思想1 4 操作系统基础  1.1 4.3 进程间通信的经典实现    1.1.1 共享内存    1.1.2 管道pipe">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1481332-228b08c1632f933b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/avatar.jpg">
+  <link rel="apple-touch-icon" href="/css/images/avatar.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/avatar.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-每周一书/【读书笔记】深入理解Android内核设计思想" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      【读书笔记】深入理解Android内核设计思想
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/13/每周一书/【读书笔记】深入理解Android内核设计思想/" class="article-date">
+	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a><a class="article-category-link" href="/categories/阅读/技术/">技术</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>这本书太深了，不适合略读，可以在碰到相关问题时仔细研读，知识覆盖面较广</p>
+</blockquote>
+<p>这么多大块的时间来一条条钻研这些内核实现细节其实不如学习算法来的有用，毕竟一个是形式，一个是内功</p>
+<blockquote>
+</blockquote>
+<p>留待查阅</p>
+<hr>
+<p><a href="https://www.evernote.com/l/ARvkJbs0vmxOJZn5WVExzJGV7jJHClXEVtY" target="_blank" rel="noopener">印象笔记链接（附带XMind文件）</a></p>
+<p>图片：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-228b08c1632f933b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="深入理解Android 内核设计思想 overview.png"></p>
+<hr>
+<p>#笔记文字</p>
+<p>深入理解Android内核思想<br>1 4 操作系统基础<br>  1.1 4.3 进程间通信的经典实现<br>    1.1.1 共享内存<br>    1.1.2 管道pipe<br>        1.1.2.1 管道是单向的<br>        1.1.2.2 有容量限制<br>    1.1.3 Unix domain socket<br>        1.1.3.1 专门针对单机的进程间通信，并不依赖Network socket 的那些TCP/IP协议<br>        1.1.3.2 Android上使用最多的一种IPC机制是Binder，其次就是UDS<br>    1.1.4 RPC（Remote Procedure Calls）<br>  1.2 4.4 同步机制的经典实现<br>    1.2.1 定义<br>        1.2.1.1 如果多个进程间存在时序关系，需要协同工作以完成一项任务，则称为同步<br>        1.2.1.2 如果它们并不满足协同条件，而只是因为共享具有排他性资源时所产生的关系，称为互斥<br>    1.2.2 信号量（Semaphore）<br>        1.2.2.1 信号量与PV原语操作 是使用最广泛的互斥方法之一<br>        1.2.2.2 PV原语都属于原子操作（Atomic Operations）<br>    1.2.3 Mutex（Mutual Exclusion）<br>    1.2.4 管程（Monitor）<br>        1.2.4.1 对Semaphore机制的延伸和改善，是一种控制更为简单的同步手段<br>        1.2.4.2 管程中的方法都是受Mutex保护的，意味着同一时刻只允许有一个访问者使用它们<br>  1.3 4.5 Android中的同步机制<br>    1.3.1 Mutex<br>    1.3.2 Condition<br>    1.3.3 Barrier<br>        1.3.3.1 Barrier是填充了具体条件的Condition<br>        1.3.3.2 专门为SurfaceFlinger而设计<br>  1.4 4.6 操作系统内存管理基础<br>    1.4.1 核心点：虚拟内存、内存分配与回收、内存保护<br>    1.4.2 虚拟内存<br>        1.4.2.1 地址空间<br>                1.4.2.1.1 逻辑地址，也称相对地址，是程序编译后所产生的地址<br>                1.4.2.1.1.1 组成部分： Segment Selector + Offset<br>                1.4.2.1.2 线性地址<br>                1.4.2.1.3 物理地址<br>    1.4.3 内存保护<br>    1.4.4 内存分配与内存回收<br>    1.4.5 进程间通信mmap<br>  1.5 4-7 Android中的Low Memory Killer<br>    1.5.1 OOMKiller<br>    1.5.2 策略考虑因素<br>        1.5.2.1 进程消耗的内存<br>        1.5.2.2 进程占用的CPU时间<br>        1.5.2.3 oom_adj（OOM权重）<br>    1.5.3 自己改变oom_adj？<br>        1.5.3.1 1 写文件 ： /proc/<pid>/oom_adj<br>        1.5.3.2 2 android:persistent 添加到application标签中，设置应用为常驻内存<br>  1.6 4-8 Android 匿名共享内存<br>    1.6.1 Anonymous Shared Memory<br>    1.6.2 Ashmem 设备<br>        1.6.2.1 创建时机<br>        1.6.2.2 操作函数及实现原理<br>        1.6.2.3 Linux 共享机制的区别与联系<br>    1.6.3 Ashmem应用实例<br>  1.7 4-9 JNI<br>2 5 Android 进程/线程管理<br>  2.1 5.1 Android进程和线程<br>    2.1.1 Activity启动后，除了主线程 ActivityThread之外还需要两个Binder线程<br>    2.1.2 Service与Activity一样，也寄存于ActivityThread之中，并且启动流程和Activity基本一致<br>    2.1.3 启动Service时，同样也需要两个Binder线程支持<br>    2.1.4 对于同一个AndroidManifest.xml中定义的四大组件，除非有特别声明，否则它们都运行于同一个进程中<br>    2.1.5 Android提供了特殊的方式让不是同一个包里的组件也可以运行于相同的进程中，优势是可以方便地进行资源共享<br>        2.1.5.1 针对个别组件，可以在标签中加入android:process<br>        2.1.5.2 针对整个包，直接在<application>标签中加入android:process属性来指明<br>  2.2 5.2 Handler， MessageQueue Runnable， Looper<br>    2.2.1 Handler<br>        2.2.1.1 功能：处理Message、将Message压入MessageQueue<br>        2.2.1.2 函数<br>                2.2.1.2.1 post<br>                2.2.1.2.1.1 post<br>                2.2.1.2.1.2 postAtTime<br>                2.2.1.2.1.3 postDelay<br>                2.2.1.2.2 send<br>                2.2.1.2.2.1 sendEmptyMessage<br>                2.2.1.2.2.2 sendMessageAtFrontOfQueue<br>                2.2.1.2.2.3 sendMessageAtTime<br>                2.2.1.2.2.4 sendMessageDelay<br>    2.2.2 MessageQueue<br>    2.2.3 Looper<br>        2.2.3.1 分为两种：主线程、普通线程<br>        2.2.3.2 ThreadLocal 成员变量<br>  2.3 5.3 UI主线程——ActivityThread<br>    2.3.1 prepareMainLooper<br>        2.3.1.1 prepare<br>        2.3.1.2 不允许退出<br>    2.3.2 sMainThreadHandler<br>        2.3.2.1 创建处理消息环境<br>        2.3.2.2 循环处理消息<br>  2.4 5.4 Thread类<br>    2.4.1 内部原理<br>        2.4.1.1 implements Runnable<br>        2.4.1.2 state<br>                2.4.1.2.1 NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, TERMINATED<br>    2.4.2 休眠和唤醒<br>        2.4.2.1 相关方法：wait,notify,notifyAll, interrupt,join, sleep<br>        2.4.2.2 wait和notify/notifyAll<br>        2.4.2.3 interrupt<br>        2.4.2.4 join<br>                2.4.2.4.1 保证两个线程顺序执行<br>                2.4.2.4.2 带时间参数的join，保证在规定时间没有执行完前面的线程，也会继续执行后面的语句，防止无限等待<br>        2.4.2.5 sleep<br>                2.4.2.5.1 wait等待某个object<br>                2.4.2.5.2 sleep则是等待时间<br>3 6. 进程间通信——Binder<br>  3.1 组成<br>    3.1.1 Binder驱动<br>    3.1.2 Service Manager<br>        3.1.2.1 在Binder通信中的唯一标志永远都是0<br>    3.1.3 Binder Client<br>    3.1.4 Binder Server<br>  3.2 智能指针<br>    3.2.1 引用计数器，由object自身持有<br>    3.2.2 强指针SP<br>    3.2.3 弱指针WP，主要使命是解决循环引用的问题<br>        3.2.3.1 弱指针必须升级为强指针才能访问它所指向的对象<br>  3.3 进程间的数据传递载体——Parcel<br>  3.4 Binder 驱动协议<br>  3.5 ServiceManager[Binder Server]<br>    3.5.1 类似“DNS”服务器<br>  3.6 Binder Client<br>  3.7 Android接口描述语言AIDL<br>  3.8 匿名Binder Server<br>4 7. Android启动过程简析<br>  4.1 第一个系统进程 init<br>  4.2 系统关键服务的启动简析<br>5 8. 管理Activity和组件运行状态的系统进程 Activity Manager Service（AMS）<br>  5.1 AMS功能概述<br>    5.1.1 寄存于SystemServer中。会在系统启动时创建一个线程来循环处理客户请求<br>  5.2 ActivityStack<br>    5.2.1 ActivityState<br>    5.2.2 ArrayList<br>    5.2.3 记录特殊状态下的Activity<br>  5.3 startActivity流程<br>  5.4 ActivityTask<br>    5.4.1 android:taskAffinity<br>        5.4.1.1 当启动Activity的Intent中带有FLAG_ACTIVITY_NEW_TASK标志时<br>                5.4.1.1.1 表示它希望为activity新开一个task， 如果有task的affinity与新Activity的affinity一样，则会复用此task，否则，新建task<br>        5.4.1.2 当Activity中的allowTaskReParenting属性设置为true时<br>                5.4.1.2.1 Activity具有动态转移能力<br>    5.4.2 android:alwaysRetainTaskState<br>6 9. GUI系统之SurfaceFlinger<br>7 11. View体系<br>  7.1 应用程序中的View框架<br>    7.1.1 ViewRoot是View的管理者，ViewRoot的核心任务就是与WindowManagerService进行通信<br>    7.1.2 Activity内部有一个mWindow成员变量<br>    7.1.3 Window与WindowManagerImpl的关系<br>        7.1.3.1 一个应用可能有很多个Window，不会让它们单独地与WMS通信<br>    7.1.4 ViewRoot与WindowManagerImpl的关系<br>  7.2 Activity中ViewTree的创建过程<br>    7.2.1 有了Window以后生成具体的内容由setContentView发起，设置mDecor<br>  7.3 在WMS中注册窗口<br>  7.4 ViewRoot的基本工作方式<br>  7.5 ViewTree的遍历时机<br>  7.6 ViewTree的遍历流程<br>  7.7 View 和 ViewGroup属性<br>  7.8 Canvas<br>  7.9 draw和onDraw<br>  7.10 View中的消息传递<br>  7.11 View动画<br>8 12. InputManager Service与输入事件<br>  8.1 事件分类<br>    8.1.1 KeyEvent<br>    8.1.2 TouchEvent<br>    8.1.3 MouseEvent<br>    8.1.4 TrackBallEvent<br>  8.2 事件的投递流程<br>9 13. 音频系统<br>  9.1 基础<br>  9.2 框架<br>  9.3 核心<br>  9.4 策略制定者<br>  9.5 回放<br>  9.6 数据流<br>  9.7 音量控制<br>  9.8 上层建筑<br>  9.9 支持的格式<br>  9.10 ID3简介<br>  9.11 多媒体文件管理<br>10 14. Intent匹配规则<br>  10.1 Intent 属性<br>  10.2 匹配规则<br>  10.3 源码简析<br>11 15. APK应用程序的资源适配<br>  11.1 资源类型<br>  11.2 可选资源<br>  11.3 最佳匹配流程<br>  11.4 屏幕适配<br>12 16. Android字符编码格式<br>  12.1 ISO/IEC 8859<br>  12.2 ISO/IEC 10646<br>  12.3 Unicode<br>  12.4 String类型<br>13 17. Android和OpenGL ES<br>  13.1 3D 基础<br>  13.2 OpenGL SE<br>  13.3 API-EGL<br>  13.4 GLSurfaceView<br>14 18. SystemUI<br>  14.1 组成元素<br>  14.2 实现<br>  14.3 壁纸<br>15 19. Widget<br>  15.1 AppWidgetProvider<br>  15.2 AppWidgetHost<br>16 20. 编译和打包<br>  16.1 Ant<br>  16.2 命令行<br>  16.3 编译过程<br>  16.4 信息安全<br>  16.5 签名<br>  16.6 签名源码<br>17 21. 版本控制<br>  17.1 Git<br>18 22. 调试工具<br>  18.1 Emulator<br>  18.2 ADB</application></pid></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/08/26/技术/程序/【分享】Https/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/08/13/社科/荣耀时刻——你和演讲达人之间只差一页纸/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">荣耀时刻——你和演讲达人之间只差一页纸</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav">无</ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://kylece.github.io/" target="_blank">KyleCe</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2015 - 2018 KyleCe All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            KyleCe
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 KyleCe All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

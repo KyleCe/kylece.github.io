@@ -1,499 +1,1208 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="keyword" content="">
-    <meta name="theme-color" content="#600090">
-    <meta name="msapplication-navbutton-color" content="#600090">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
-    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
-    <link rel="alternate" type="application/atom+xml" title="KyleCe" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
-    <title>
-        
-        
-        
-    </title>
+  <meta charset="utf-8">
+  
+  <title>KyleCe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  
+  <meta property="og:type" content="website">
+<meta property="og:title" content="KyleCe">
+<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/index.html">
+<meta property="og:site_name" content="KyleCe">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="KyleCe">
+  
+    <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
+  
 
-    <link rel="canonical" href="https://github.com/KyleCe/kylece.github.io/">
+  
 
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="icon" href="/css/images/avatar.jpg">
+  <link rel="apple-touch-icon" href="/css/images/avatar.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
 
-    <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/home.css" >
+  
+
+  
+
+  
+
+  
+  
+  
+
 </head>
 
-<style>
-
-    header.intro-header {
-        background-image: url('/img/BluePond.jpg')
-    }
-</style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
-<!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
-" data-ishome = "true" >
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand animated pulse" href="/">
-                <span class="brand-logo">
-                    KyleCe
-                </span>
-                's Blog
-            </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <!-- /.navbar-collapse -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-					
-                    
-                        
-							
-                        <li>
-                            <a href="/archives/">archives</a>
-                        </li>
-							
-						
-                    
-                        
-							
-                        <li>
-                            <a href="/tags/">Tags</a>
-                        </li>
-							
-						
-                    
-					
-					
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-//    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-<!-- Main Content -->
 
 
-<style>
-
-    .custom-haojen-container .post-preview:nth-of-type(1),
-    .custom-haojen-container .post-preview-poetry:nth-of-type(1) {
-        text-align: center;
-        background-repeat: no-repeat;
-        border-radius: 3px;
-        background-size: cover;
-        padding: 0;
-        height: 300px;
-        display: table;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.16);
-    }
-
-    /*去掉诗歌的背景图片*/
-    .custom-haojen-container .post-preview-poetry:nth-of-type(1) {
-        background-image: none !important;
-        background-color: rgba(255, 248, 220, 0.5);
-    }
-
-    .custom-haojen-container .post-preview:nth-child(1) h2,
-    .custom-haojen-container .post-preview:nth-child(1) .post-meta,
-    .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
-        text-shadow: 0 0 40px rgba(0, 0, 0, 1);
-        letter-spacing: 1px;
-        color: #fff;
-        margin-top: 0;
-        padding-left: 60px;
-        padding-right: 60px;
-    }
-
-    .custom-haojen-container .post-preview:nth-child(1) .post-meta {
-        font-size: .9em;
-        font-weight: 300;
-        margin-top: 0;
-    }
-
-    .custom-haojen-container .post-preview-poetry:nth-child(1) .post-subtitle {
-        letter-spacing: 6px;
-        font-size: 18px;
-        font-family: unset;
-        font-weight: 400;
-        color: rgba(0, 0, 0, .75)
-    }
-
-    /*不显示摘要*/
-    .custom-haojen-container .post-preview:nth-child(1) .post-content-preview {
-        display: none
-    }
-
-    /*只第一个显示背景图片*/
-    .custom-haojen-container .post-preview:not(:nth-child(1)) {
-        background-image: none !important;
-    }
-
-    /*第一个分界线去掉*/
-    .custom-haojen-container hr:nth-of-type(1) {
-        display: none;
-    }
-
-    /*主题*/
-    .custom-haojen-container .post-preview:nth-of-type(1) > a {
-        display: table-cell;
-        vertical-align: middle;
-    }
-
-    /*诗词标题*/
-    .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
-        font-size: 35px;
-        font-family: STKaiti;
-        color: rgba(0, 0, 0, .8);
-    }
-
-    .custom-haojen-container .post-preview-poetry:nth-of-type(1) .post-meta {
-        color: #0e2231;
-    }
-
-    @media (max-width: 768px) {
-        .custom-haojen-container .post-preview:nth-child(1) {
-            height: 240px;
-        }
-
-        .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
-            font-size: 28px !important;
-            margin-top: 0;
-        }
-
-        .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
-            font-size: 18px;
-            font-weight: 400;
-            padding-left: 0;
-            padding-right: 0;
-        }
-
-        .custom-haojen-container .post-preview:nth-of-type(1) > a {
-            padding: 20px
-        }
-    }
-
-    /*手机屏幕*/
-    @media (max-width: 400px) {
-        .custom-haojen-container .post-preview:nth-child(1) {
-            height: 195px;
-        }
-
-        .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
-            font-size: 20px !important;
-        }
-
-        .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
-            font-size: 16px;
-        }
-
-        .custom-haojen-container .post-preview:nth-child(1) a {
-            padding: 30px 20px;
-        }
-    }
-</style>
-
-<!-- Page Header -->
-<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
-    <div class="row">
-        <header class="intro-header">
-            <div class="container">
-                <div class="site-heading text-center">
-                    <div class="about-me">
-                        <!--移动端头部显示-->
-                        <img src=""/>
-                        <h5><a href="/about/">KyleCe</a></h5>
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-        </header>
-    </div>
-</div>
-<!-- Main Content -->
-<div class="container custom-haojen-container">
-    <!-- Post Container -->
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
-            <!-- Main Content -->
+  <body>
 
 
+  
+    <header id="header">
 
-<div class="post-preview "
-     style="background-image: url('/img/mobile_blog_image.jpg')">
-    <a href="/2018/03/09/retrofit2/">
-        <h2 class="post-title">
-            retrofit2
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-03-09
-        </p>
+	<!-- 背景图模式 -->
+	
+
+    
+      <div id="intrologo" class="intro-logo" style="background-position:center; background-repeat:no-repeat; background-image: url(); background-size: auto 100%;">
+
+      <!-- Support rolling -->  
         
-        <div class="post-content-preview">
-            <p>
+        <section class="awSlider">
+          <div class="carousel slide carousel-fade " data-ride="carousel">
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+               
+                  
+                    <div class="item active">
+                  
+                    <img id="carousel-img0" src="/css/images/home-bg.jpg">
+                  </div>
+
+                  <!-- 自适应大图 -->
+                  <script>
+                      var img0 = new Image();
+                      var imageTag0 = document.getElementById("carousel-img0");
+                      img0.src = imageTag0.src;
+                      img0.onload=function(){
+                        if (img0.width / img0.height <= document.body.clientWidth / document.body.clientHeight) {
+                          imageTag0.style.width = document.body.clientWidth + "px";
+                        } else {
+                          imageTag0.style.height = document.body.clientHeight + "px";
+                          imageTag0.style.marginLeft = -(document.body.clientHeight * img0.width / img0.height - document.body.clientWidth) / 2 + "px";
+                        }
+                      };
+                  </script>
                 
+                  
+                    <div class="item">
+                  
+                    <img id="carousel-img1" src="/css/images/sample.jpg">
+                  </div>
 
-作者： Jake Wharton
-原文引自：link
+                  <!-- 自适应大图 -->
+                  <script>
+                      var img1 = new Image();
+                      var imageTag1 = document.getElementById("carousel-img1");
+                      img1.src = imageTag1.src;
+                      img1.onload=function(){
+                        if (img1.width / img1.height <= document.body.clientWidth / document.body.clientHeight) {
+                          imageTag1.style.width = document.body.clientWidth + "px";
+                        } else {
+                          imageTag1.style.height = document.body.clientHeight + "px";
+                          imageTag1.style.marginLeft = -(document.body.clientHeight * img1.width / img1.height - document.body.clientWidth) / 2 + "px";
+                        }
+                      };
+                  </script>
+                
+                  
+                    <div class="item">
+                  
+                    <img id="carousel-img2" src="https://source.unsplash.com/collection/954550/1920x1080">
+                  </div>
 
-Retrofit 作为简化 HTTP 请求的库，已经运行多年，2.0版本依然不辱使命的在做这些事情。不过 2.0 版本修复了一些长期影响开发者的设计，还加入了前所未有的强大特性。在 NYC 2015 的这一个分享中，Jake Whart..
-            </p>
-        </div>
-    </a>
+                  <!-- 自适应大图 -->
+                  <script>
+                      var img2 = new Image();
+                      var imageTag2 = document.getElementById("carousel-img2");
+                      img2.src = imageTag2.src;
+                      img2.onload=function(){
+                        if (img2.width / img2.height <= document.body.clientWidth / document.body.clientHeight) {
+                          imageTag2.style.width = document.body.clientWidth + "px";
+                        } else {
+                          imageTag2.style.height = document.body.clientHeight + "px";
+                          imageTag2.style.marginLeft = -(document.body.clientHeight * img2.width / img2.height - document.body.clientWidth) / 2 + "px";
+                        }
+                      };
+                  </script>
+                
+            </div>
 
-</div>
+            <!-- Controls -->
+            <a class="left carousel-control" href=".carousel" role="button" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              <span class="sr-only">Geri</span>
+            </a>
+            <a class="right carousel-control" href=".carousel" role="button" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              <span class="sr-only">İleri</span>
+            </a>
+          </div>
+        </section>
+        <script>
+          $('section.awSlider .carousel').carousel({
+              pause: '',
+              interval: 5000
+          });
+          var startImage = $('section.awSlider .item.active > img').attr('src');
+          $('section.awSlider .carousel').on('slid.bs.carousel', function () {
+              var bscn = $(this).find('.item.active > img').attr('src');
+              $('section.awSlider > img').attr('src', bscn);
+          });
+        </script>
+      
 
-<hr>
+    
+ 
 
 
+    <canvas width="100%" height="100%"></canvas>
+    <script>
+      var c = document.getElementsByTagName('canvas')[0],
+          x = c.getContext('2d'),
+          w = window.innerWidth,
+          h = window.innerHeight,
+          pr = window.devicePixelRatio || 1,
+          f = 90,
+          q,
+          m = Math,
+          r = 0,
+          u = m.PI*2,
+          v = m.cos,
+          z = m.random
+      c.width = w*pr
+      c.height = h*pr
+      x.scale(pr, pr)
+      x.globalAlpha = 0.6
 
+      <!-- 折线Polyline背景 -->
+      
+    </script>
+    
 
-<!-- 翻页 pager -->
+    
+      <div id="homelogo" class="homelogo" style="background: rgba(255,255,255,1);"> 
+    
 
-<ul class="pager">
+        
+          <div class="homelogoback"  style="border: 1px solid #404040;" >
+            <h1><a href="#content" id="logo">KyleCe</a></h1>
+            <h3></h3>
+            <h5>KyleCe</h5>
+            <!-- <p><a href="https://github.com/iTimeTraveler" target="_blank">Github</a></p> -->
+          </div>
+        
+    
+    </div>
+  </div>
+
+  <!-- 自适应主页背景大图 -->
+  
+
+ <!-- home_logo_image居中 -->
+ 
+    <script>
+        var homelogodiv = document.getElementById("homelogo");
+        if (document.all.homelogo.offsetWidth > document.body.clientWidth) {
+          homelogodiv.style.width = document.body.clientWidth + "px";
+          homelogodiv.style.marginLeft = document.body.clientWidth * -0.5 + "px";
+        } else {
+          homelogodiv.style.width = homelogodiv.clientWidth  + "px";
+          homelogodiv.style.marginLeft = (homelogodiv.clientWidth)  * -0.5 + "px";
+        }
+    </script>
+  
+
+  <div class="intro-navigate">
+      <p class="navigater-list">
+        
+          <a id="beautifont" class="main-nav-link" href="/">首页</a>
+        
+          <a id="beautifont" class="main-nav-link" href="/archives">归档</a>
+        
+          <a id="beautifont" class="main-nav-link" href="/categories">分类</a>
+        
+          <a id="beautifont" class="main-nav-link" href="/tags">标签</a>
+        
+          <a id="beautifont" class="main-nav-link" href="/about">关于</a>
+        
+      </p>
+  </div>
+
+</header>
+  
+  <div id="container">
+    <div id="wrap">
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;">
+  
+    <article id="post-技术/【Note-PM】《项目管理修炼之道》提要"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/">【Note-PM】《项目管理修炼之道》提要</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>第18届Jolt生产效率大奖图书<br>作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富</p>
+</blockquote>
+<p><a href="https://pan.baidu.com/s/1cAaOxw" target="_blank" rel="noopener">XMind文档链接</a></p>
+<p><a href="https://pan.baidu.com/s/1mhZO5Fa" target="_blank" rel="noopener">导图PDF版链接</a></p>
+<p><strong>导图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-d20195caa4e17ed9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第一部分：规划与日程"></p>
+<p><strong>文本</strong></p>
+<p> 项目管理修炼之道<br>    Johanna Rothman<br>    规划与日程<br>        启动项目<br>            0.KEY——定义项目、项目约束、决定项目关键驱动因素、章程决策<br>            章程决策<br>                远景、需求、目标、成功标准、ROI<br>        规划项目<br>            0.KEY——足以启动的规划、规划模板、制定发布条件<br>            规划模板<br>                意图<br>                记录<br>                发布条件<br>                目标<br>                项目组织<br>                日程总览<br>                人员配备<br>                建议日程<br>                制订项目风险列表<br>        使用生命周期组织项目<br>            0.KEY——理解生命周期、概览、反馈、大规模项目需要组合多种生命周期、管理架构风险、从瀑布中解脱<br>        安排项目日程<br>            0.KEY——注重实效的日程安排、可选择安排技术、用低技术含量工具安排日程<br>        估算工作<br>            0.KEY——实用估算方式、里程碑切分项目、能不做什么？、多项目时的估算、主动安排人们进行多任务、实用波浪式规划、决定迭代的持续时间、“小石子”<br>            估算<br>                对比历史数据<br>                通过Delphi和宽带Delphi估算<br>                何时不应相信团队的话<br>                    减掉每个任务的缓冲时间、要得到的是更准确的估算结果<br>                用日期范围进行估计<br>                用自信心估计<br>                用三个日期估计：最佳、可能、墨菲<br>            小石子<br>                任务不清时使用<br>                如何得到“小石子”<br>                为什么使用<br>        识别和避免日程安排游戏<br>            0.KEY——“希望”是我们最重要的策略、拒绝女王、把灰扫到地毯下面、幸福日期、分散注意力、日程等于承诺<br>    团队与节奏<br>        创建出色的项目团队<br>            0.KEY——招募需要的人、形成团队凝聚力、让组织配合你的工作、对必必需的团队规模了如指掌、知道何时应该加入、成为出色的项目经理、知道何时全身而退<br>            凝聚力<br>                好工具让团队有更好的发挥<br>                软件配置管理系统应满足的最低要求<br>                缺陷跟踪系统应满足的最低要求<br>                发展5阶段<br>            让组织配合<br>                以项目经理的方式管理单一职能团队<br>                管理矩阵式项目团队<br>                管理跨职能团队<br>            项目经理<br>                人际交往能力<br>                提升功能性技能<br>                专业领域技能<br>                工具和技术的专业技能<br>            退<br>                不适合的组织、团队、产品<br>        掌控项目<br>            0.KEY——节奏、中途回顾、为需求排序、是时间盒限定需求相关的工作、将迭代限制在4周以下、使用波浪式规划和日程安排、创建跨职能团队、根据项目风险选择生命周期模型、保持合理的工作时间、使用“小石子”、管理干扰、管理缺陷<br>            “小石子“<br>                将计划的粒度细化，能提高规划时项目的估算准确率<br>        保持项目节奏<br>            0.KEY——使用持续集成、自动化冒烟测试、按功能实现而不是按架构、盯着产品、准备重构、通过用例、用户故事、角色和场景定义需求、分离需求与GUI设计、尽可能用低保真度原型<br>            按功能而不是按框架<br>                首先实现具有最高价值的功能<br>                按功能调试、测试<br>            低保真原型<br>                “使用低保真度原型，人们可以更全面地评估要解决的问题。高保真度原型会限制反馈。”<br>        管理会议<br>            0.KEY——取消部分会议、举行必要会议、项目启动会议、发布版本规划会议、进度报告会议、向管理层报告进度、项目团队会议、迭代审查会议、会议疑难问题解答、远程电话会议<br>            取消<br>                不需要你解决问题<br>                多人参加的顺序式进度报告会议<br>        创建并使用项目仪表板<br>            0.KEY——测量有风险、根据项目完成度来衡量进度、为出资人创建项目仪表盘、使用项目气象报告<br>            衡量进度<br>                速度图表跟踪日程安排进度<br>                用迭代内容图跟踪总体进度<br>                用图表展示团队统一采用的实践<br>    非简单项目<br>        管理多地点项目<br>            0.KEY——提问成本、识别项目文化差异、团队间培养信任、团队间使用互补实践、寻找潜在问题、外包时的注意事项<br>        在项目中集成测试<br>            0.KEY——“减少技术债”、小规模测试以降低风险、TDD是集成的最简单方法、使用多种测试、确定成员在测试工作中的角色、开发人员测试人员比率、让测试与开发同步进行、为项目制定测试策略、系统测试策略模板、QA与测试的区别<br>        管理项目群<br>            0.KEY——管理项目群、将多个相关项目组织到一个发布版本中、随时间推移组织多个相关项目、管理项目经理、创建项目仪表盘<br>        结束项目<br>            0.KEY——管理发布早期版本的请求、管理beta版本、项目经理何时知道无法按时发布项目、知道项目走向完成、取消项目<br>            何时知道无法按时发布<br>                避免小偏差<br>                承诺新日期<br>                估算系统测试时间<br>        管理项目组合<br>            0.KEY——构建所有项目的组合、评估项目、决定现在为那个项目提供资金、对组合中的项目进行排序、尽快启动项目、使用产品待办事项列表管理新功能需求<br>            答疑<br>                说服管理层：“切换上下文”是个坏主意<br>                如何对多任务说不</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-技术/程序/降低内存占用Route"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/降低内存占用Route/">降低内存占用Route</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/降低内存占用Route/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="已执行"><a href="#已执行" class="headerlink" title="已执行"></a>已执行</h3><ul>
+<li>修复LeakCanary报出的问题（内网、外网）<ul>
+<li>直接检测泄露</li>
+<li>外网beta用户上报</li>
+</ul>
+</li>
+<li>分析dumpheap文件，查内存占用（直接分析、对比分析）<ul>
+<li>占用大户<ul>
+<li>Bitmap</li>
+<li>FinalizerReference</li>
+</ul>
+</li>
+<li>场景分析，进出场景、发现可疑场景，查内存dumpheap文件<ul>
+<li>已有发现：WebView、主题切换泄露</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
-
-        </div>
-        <!-- Sidebar Container -->
-        <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
-
-            <!-- About Me -->
-            <section class="visible-md visible-lg" style="padding: 0 18px">
-                <div class="short-about">
-                    <!--侧边栏头像-->
-                    
-                    <h5><a href="/about/">KyleCe</a></h5>
-                    
-                    <hr>
-                    <!-- SNS Link 社交 -->
-                    <ul class="list-inline">
-                        
-                        
-                        
-
-                        
-                        <li>
-                            <a target="_blank" href="http://weibo.com/KyleCe">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-
-                        
-                        <li>
-                            <a target="_blank" href="https://github.com/KyleCe">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Featured Tags  标签 -->
-            
-
-            
-
-        </div>
+      
     </div>
-</div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存/">内存</a></li></ul>
 
-<!-- Footer -->
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <br>
-                <ul class="list-inline text-center">
-                
-                
-                
+    </footer>
+  </div>
+  
+</article>
 
-                
-                    <li>
-                        <a target="_blank" href="http://weibo.com/KyleCe">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
+<!-- Table of Contents -->
 
-                
+  
+    <article id="post-技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/">【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介</a>
+    </h1>
+  
 
-                
-                    <li>
-                        <a target="_blank"  href="https://github.com/KyleCe">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
 
-                
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
 
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; KyleCe 2018
-                    <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
-                    <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
-                </p>
-
-            </div>
-        </div>
+      
     </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>工欲善其事必先利其器<br>今天介绍几个plugin工具（奇淫巧技）</p>
+</blockquote>
+<blockquote>
+<p><em>（适用平台：IntelliJ IDEA内核的各类IDE）</em></p>
+</blockquote>
+<hr>
+<p><strong>效果图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5b8d8a86fda8eca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ide_tools.png"></p>
+<p>按图中标示顺序介绍：</p>
+<p>####1.Translation<br>_ 顾名思义是中英翻译，令人意外的是自带英美两种发音（默认快捷键：ALT + 1/3，OSX 不详）_</p>
+<p>####2.Background Image Plus<br><em>可以对IDE背景进行自定义，可以设置图片质量/明暗等，对内存有一定消耗，小霸王请绕道</em></p>
+<p>####3.CodeGlance<br><em>提供一个代码文件的全局概览缩略图，主要可用于快速定位</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tool/">Tool</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-技术/程序/枚举enum必知必会"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/枚举enum必知必会/">枚举enum必知必会</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/枚举enum必知必会/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="内容大纲"><a href="#内容大纲" class="headerlink" title="内容大纲"></a>内容大纲</h3><ul>
+<li>常规范式——替代int保安全</li>
+<li>高阶范式——实现单例模式</li>
+<li>复杂范式——实现方法</li>
+<li>Android中的替代方案——IntDef/StringDef</li>
+<li>纯 Java中的替代方案——MagicConstant</li>
+</ul>
+<h3 id="常规范式"><a href="#常规范式" class="headerlink" title="常规范式"></a>常规范式</h3><ul>
+<li>取代int常量，确保类型安全性</li>
+</ul>
+<p><img src="../../pic_resource/enum_general.png" alt=""></p>
+<p>可以看到，上例中，直接使用1，2之类的int值编译器是会报错的，因为enum是一种class，不止具有int值这一属性</p>
+<p>相较于int值，enum会有类型安全检查，代码会更安全</p>
+<h3 id="高阶范式"><a href="#高阶范式" class="headerlink" title="高阶范式"></a>高阶范式</h3><ul>
+<li>实现单例模式</li>
+</ul>
+<p><img src="../../pic_resource/enum_singleton.png" alt=""></p>
+<p>这样实现的单例模式，不需要处理线程同步的问题，相较于传统的懒汉-饿汉-doublecheck的优势显而易见</p>
+<blockquote>
+<p>实际上单例模式特别容易导致内存泄露，应该尽量减少使用，用更易用的架构设计模式来避免使用单例模式</p>
+</blockquote>
+<h3 id="复杂范式"><a href="#复杂范式" class="headerlink" title="复杂范式"></a>复杂范式</h3><ul>
+<li>添加成员变量</li>
+</ul>
+<p><img src="../../pic_resource/enum_memeber.png" alt=""></p>
+<p>在利用这一属性时，我们可以直接将enum当成一个类来使用，不一样的地方在于，enum的各项是直接给出了实例化的instance，所以带参构造函数需要我直接在定义中给出初始化参数（如上例中的hour）</p>
+<ul>
+<li>提供有差异的API </li>
+</ul>
+<p><img src="../../pic_resource/enum_method.png" alt=""></p>
+<p>如上图所示，DayType的两个类型，各自实现了free方法，实现了差异化的API，这一属性可以用于策略模式，针对不同的类型，我们的enum可以提供不同的策略算法，满足差异化的需求</p>
+<ul>
+<li>实现接口</li>
+</ul>
+<p><img src="../../pic_resource/enum_interface.png" alt=""></p>
+<p>上面的抽象方法free，也可以抽象成接口形式，让枚举去实现，这一特性在工程中的应用极为有利，这样一来，就与我们的“面向接口编程”对上号了</p>
+<blockquote>
+<p>注意API的访问级别需要升级为public</p>
+</blockquote>
+<h3 id="Android中的替代办法"><a href="#Android中的替代办法" class="headerlink" title="Android中的替代办法"></a>Android中的替代办法</h3><p>我们都知道Android的内存非常宝贵，纵使enum有如此多的优点，但我们有时可能只想用它的一个替代int的属性，来增强代码的安全性，有没有其它更轻量的办法的？</p>
+<p>答案是有的，@IntDef, @StringDef就能满足这一要求（属于注解范畴），以IntDef为例:</p>
+<p><img src="../../pic_resource/enum_replace.png" alt=""></p>
+<p>扒一扒IntDef的源码，我们会发现它其实自己也是一个注解，我们上例中应用的是它的value域，还可以利用的有flag域，鉴于flag一般都不会使用，不做过多介绍</p>
+<p><img src="../../pic_resource/enum_intDef.png" alt=""></p>
+<h3 id="Java模块中的替代办法"><a href="#Java模块中的替代办法" class="headerlink" title="Java模块中的替代办法"></a>Java模块中的替代办法</h3><p>有的同学可能碰到这样的业务需要：</p>
+<p>实际的工程是纯Java的，根本无法使用Android中的注解，这时该怎么办？</p>
+<p>好吧，其实是我自己碰到这样的问题了，解决方案其实也很容易找到，查IntDef的设计思路，可以找到它的出处，最后的解决lib是</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.intellij.lang.annotations.MagicConstant</span><br></pre></td></tr></table></figure>
+<p>可以看到，这一lib是intellij的注解，感谢伟大的程序员们的杰作intellij</p>
+<p><img src="../../pic_resource/enum_magic_constant.png" alt=""></p>
+<p>与IntDef不一样的地方在于：</p>
+<ul>
+<li>需要添加intValues关键字，不可以省略（IntDef中对应的可省略关键字是value）</li>
+<li>具体的值可以相同（IntDef中不可以）</li>
+<li>值变为String类型时只需要改关键字为 stringValues</li>
+</ul>
+<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>enum还有一些特性，比如ordinal()取值、初始值从0开始、用EnumSet/EnumMap代替序数</p>
+<p>实际也不推荐使用（ordinal取值不确定性强，程序稳定性差，实在要使用可以用成员变量代替）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Enum/">Enum</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-技术/程序/【分享】Project ANR"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/【分享】Project ANR/">【分享】Project ANR</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【分享】Project ANR/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>ActivityThread  waitToFinish</p>
+<p>SharePreferenceImpl   </p>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><blockquote>
+<p>Project  SP操作统一到同一个进程</p>
+</blockquote>
+<ul>
+<li>每次edit都直接apply（初衷— 保证所有数据都生效）</li>
+</ul>
+<h3 id="分析及解决"><a href="#分析及解决" class="headerlink" title="分析及解决"></a>分析及解决</h3><p>6.0 — 7.x ，6.0占比 &gt;96%，6.0及以前的读操作是阻塞的（阻塞ActivityThread）</p>
+<p>SharePreference提交记录：</p>
+<ul>
+<li>第一次读操作不加锁（AndroidFramework7.0开始）</li>
+<li>合并写（最后一次改动才写）（AndroidFramework8.0开始）<ul>
+<li>用generation的概念区分最近的一次改动</li>
+</ul>
+</li>
+</ul>
+<h3 id="优化点"><a href="#优化点" class="headerlink" title="优化点"></a>优化点</h3><ul>
+<li>少用</li>
+<li>消减不必要写操作</li>
+<li>存储是分类型的<ul>
+<li>SP是xml文件，真的需要都写到xml文件里吗？<ul>
+<li>2进制文件写速度快于xml文件</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ul>
+<li>先清理无用SP写（优化了50%）</li>
+<li>减少操作</li>
+<li>最后才是check架构（动架构有风险，Project此例中有丢config的风险）</li>
+</ul>
+<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><blockquote>
+<p> GP后台关于ANR、Crash是基于session统计的</p>
+<p>检查ANR、Crash时可以看看源代码，或许Android有主动修正</p>
+<p>做应用，不看Framework</p>
+<p>做业务，先到Framework里搜，看是否有提示</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ANR/">ANR</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-技术/程序/【Program】性能考量"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/【Program】性能考量/">【Program】性能考量</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【Program】性能考量/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>引：<br>《编程珠玑（续）》1.1 介绍性能监视工具；用一个计算素数程序的演进过程演示程序性能提升的非凡效果</p>
+</blockquote>
+<p>在平时开发中的处理一些细节时，虽然可能粗糙对待对程序的表现的影响不明显，但类似的解决方案如果积少成多，势必将程序拉入质量低劣之列，不应不引起重视。</p>
+<p>从小处说，一些细微的编程习惯是可以培养建立的（如简单的容器初始化指定size、for循环的控制语句中避免重复调用计算…）；<br>以整体来看，修炼算法基本功底、数据结构选用熟识度训练、设计模式思路训练也是必不可少的；<br>最后效果来看，需要利用一些专用的性能监视、分析工具，改进程序表现；</p>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程珠玑/">编程珠玑</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--/">【Note-程序】HashMap-Integer,-V--SparseArray--</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>众所周知，基础数组的处理效率要比集合的处理效率高出指数倍（内存寻址优势，指哪打哪，直截了当）</p>
+</blockquote>
+<blockquote>
+<p>在HashMap&lt;K, V&gt; 中K为Integer类型时，简单考虑，使用K作为数组下标可以使用基础数组替代HashMap，但这样处理的话会有一个问题，那就是K值较大时，直接使用数组会导致极大的内存空间浪费（很多数组内容都由null填充）——由此想到“稀疏数组”</p>
+</blockquote>
+<p><strong>SparseArray</strong>就是针对这一场景设计的<br><em>数组中仅仅保存有内容的空间</em> 这样一来，就既可以利用数组高效的优势，又避免了内存空间的浪费。</p>
+<p><strong>取android.util.SparseArray源码中的put API如下：</strong></p>
+<pre><code>/**
+ * Adds a mapping from the specified key to the specified value,
+ * replacing the previous mapping from the specified key if there
+ * was one.
+ */
+public void put(int key, E value) {
+    int i = ContainerHelpers.binarySearch(mKeys, mSize, key);
+
+    if (i &gt;= 0) {
+        mValues[i] = value;
+    } else {
+        i = ~i;
+
+        if (i &lt; mSize &amp;&amp; mValues[i] == DELETED) {
+            mKeys[i] = key;
+            mValues[i] = value;
+            return;
+        }
+
+        if (mGarbage &amp;&amp; mSize &gt;= mKeys.length) {
+            gc();
+
+            // Search again because indices may have changed.
+            i = ~ContainerHelpers.binarySearch(mKeys, mSize, key);
+        }
+
+        mKeys = GrowingArrayUtils.insert(mKeys, mSize, i, key);
+        mValues = GrowingArrayUtils.insert(mValues, mSize, i, value);
+        mSize++;
+    }
+}
+</code></pre><blockquote>
+<p><em>可以看到，在查找是否包含时使用了BinarySearch（二分搜索），在插入时又做了一次容量、size检查，有无用内存时手动gc，此gc为private函数，只是对内存进行了整理，无效内容置为null</em></p>
+</blockquote>
+<blockquote>
+<p>查看DELETED定义：<br>private static final Object DELETED = new Object();<br>在删除时，只是将有效索引的内容至为DELETED，将mGarbage至为true，在下次有增/改操作时进行统一的容量整理；个人感觉这一api逻辑是经验设计，为的是避免连续删除时的频繁容量整理；</p>
+</blockquote>
+<p><strong>结论：</strong></p>
+<blockquote>
+<p>使用HashMap&lt;Integer, V&gt;时，用SparseArray替代，可以极大地提高性能</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashMap-Integer/">HashMap-Integer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SparseArray/">SparseArray</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-技术/程序/【Note-程序】变量类型"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/【Note-程序】变量类型/">【Note-程序】变量类型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【Note-程序】变量类型/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近考了部分面试者关于变量访问的一些问题，总结一下</p>
+</blockquote>
+<hr>
+<p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325" target="_blank" rel="noopener"><em>EverNote链接</em></a></p>
+<p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325/res/b21eeb36-a66c-488e-a682-5af7f7b7a990/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B.xmind" target="_blank" rel="noopener"><em>XMind文档</em></a></p>
+<p><strong>导图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2e270ca767cdba41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="parameter type overview.png"></p>
+<p><strong>文本</strong></p>
+<p>变量类型</p>
+<p>1 static<br>  1.1 随着类的加载而加载<br>  1.2 附注：Java 类操作流程<br>2 volitale<br>  2.1 从内存中读取（并不能保证原子性）<br>  2.2 使用原则<br>    2.2.1 写入变量不依赖此变量的值(或者只有一个线程修改此变量)<br>    2.2.2 变量的状态不需要与其它变量共同参与不变约束<br>    2.2.3 访问变量不需要加锁<br>3 Atomic<br>  3.1 原子性变量<br>  3.2 缺点<br>    3.2.1 必须用特定API对变量进行操作<br>    3.2.2 只有有限的几种类型<br>4 synchronized<br>  4.1 缺点<br>    4.1.1 性能考量<br>  4.2 注意点<br>    4.2.1 尽量减小锁的范围与程度<br>    4.2.2 多锁时保证操作顺序以防死锁<br>5 concurrent工具包<br>  5.1 CountDownLatch<br>  5.2 ConcurrentHashMap<br>  5.3 CopyOnWriteArrayList/CopyOnWriteArraySet<br>  5.4 ReadWriteLock/ReentrantReadWriteLock<br>  5.5 LinkedBlockingQueue<br>  5.6 CyclicBarrier<br>  5.7 …</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-技术/程序/【Java】神奇的内存占用大户FinalizerReference"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/">【Java】神奇的内存占用大户FinalizerReference</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题起因"><a href="#问题起因" class="headerlink" title="问题起因"></a>问题起因</h2><p>在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西</p>
+<p>下图是项目中内存快照在AndroidStudio2.4中打开看到的样子</p>
+<p><img src="../../pic_resource/finalizerReference.png" alt=""></p>
+<p>可以看到，占用排名第一的类FinalizerReference占用了59M之巨（内存快照前有使用AS强制GC多次）</p>
+<p>这就很让人好奇了</p>
+<h2 id="FinalizerReference是什么？"><a href="#FinalizerReference是什么？" class="headerlink" title="FinalizerReference是什么？"></a>FinalizerReference是什么？</h2><p>我们来看源码：</p>
+<p><img src="../../pic_resource/FinalizerReferenceCode.png" alt=""></p>
+<p><a href="https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java" target="_blank" rel="noopener">https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java</a></p>
+<p>在讲Java  虚拟机 JVM垃圾回收机制时会涉及到一个概念，即finalize方法，这是Sun公司在Java设计之初，为照顾c++程序员有写析构函数的习惯而做的一种妥协</p>
+<p>在《深入理解Java虚拟机》一书中，讲到GC在最终回收对象之前，会去检查对象是否override了finalize方法，如果有覆盖此方法，对象就会被添加到finalize执行队列中，该书中没有指明是什么队列，实际上finalize执行队列就是我们这里讨论的FinalizerReference（书中还有提到finalize方法只会执行一次，并且有超时保护，因与本文主题无关，不做展开讨论）</p>
+<p>也就是说，有重写Java根基类Object的finalize方法的所有对象，在被最终被GC回收之前，都会被添加到这个队列中，等待被执行</p>
+<h2 id="为什么不能被GC"><a href="#为什么不能被GC" class="headerlink" title="为什么不能被GC"></a>为什么不能被GC</h2><p>这里要谈到JVM设计的一个基本标准</p>
+<p>GC的finalize执行队列会在一个单独的守护线程中运行，这一线程的优先级极低；</p>
+<p>一旦用户创建的对象速度过快，含finalize的对象速度快于finalize队列移除各元素的速度，FinalizerReference就会越来越大，而它获取CPU时间又少的可怜</p>
+<p>测试中发现，1~2h过去后，FinalizerReference的大小并没有按照预计的回落到较低水准</p>
+<p>这就迫使我们一定要解决这一问题，否则，随着应用开辟的内存越来越大，很容易引发喜闻乐见的OutOfMemoryError</p>
+<h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><ol>
+<li>不要重写finalize()方法，实在要释放资源，请到其它destroy一类函数中处理</li>
+</ol>
+<blockquote>
+<p>实际上Java库中不少方法都有重写finalize方法（如Input/outputStream、Canvas、Paint）</p>
+<p>这就引出了第二条指导原则：</p>
+</blockquote>
+<ol>
+<li><p>重复利用资源（避免反复创建）</p>
+</li>
+<li><p>杀器FinalizerHelper</p>
+<ul>
+<li>此工具来源于公司同事的技术分享</li>
+<li>指导思想：在场景退出的安全节点，利用反射强制调用FinalizerReference的remove方法，将对象从队列中移除掉</li>
+<li>对具体实施细节的同学联系我</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FinalizerReference/">FinalizerReference</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-技术/程序/【Java-基础系列】Synchronized关键字"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/">【Java-基础系列】Synchronized关键字</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="初识"><a href="#初识" class="headerlink" title="初识"></a>初识</h2><p><code>synchronize</code></p>
+<blockquote>
+<p> 翻译——同步（cause to occur or operate at the same time or rate.）</p>
+</blockquote>
+<p>一般用于多线程操作，保证操作的同步性</p>
+<p>消除线程切换时导致的共享内存的内容不可预测性</p>
+<h2 id="典型应用"><a href="#典型应用" class="headerlink" title="典型应用"></a>典型应用</h2><p>单例模式的<code>double-check</code></p>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.45.47 AM.png" alt="MacGesture MacGesture, Today at 12.45.47 AM"></p>
+<blockquote>
+<p>题外话：单例模式很容易引发内存泄露，在项目中要少用；</p>
+<p>另外单例模式的实现形式中，使用<code>enum</code>枚举是比较简洁的形式</p>
+</blockquote>
+<h2 id="常见使用形式"><a href="#常见使用形式" class="headerlink" title="常见使用形式"></a>常见使用形式</h2><ul>
+<li><p>锁方法</p>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p>
+</li>
+<li><p>锁代码段</p>
+<ul>
+<li>用this关键字 <code>sychronized(this)</code></li>
+</ul>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.21.38 AM.png" alt="MacGesture MacGesture, Today at 12.21.38 AM"></p>
+<ul>
+<li>用锁对象 <code>sychronized(lockObjct)</code></li>
+</ul>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.17.56 AM.png" alt="MacGesture MacGesture, Today at 12.17.56 AM"></p>
+</li>
+</ul>
+<h2 id="官方教程"><a href="#官方教程" class="headerlink" title="官方教程"></a>官方教程</h2><p>在Oracle的Java 文档里头有对Synchronization的详细解释，分为如下五部分展开：</p>
+<ol>
+<li><p>线程接口（Thread Interference）</p>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM.png" alt="【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM"></p>
+<blockquote>
+<p>不同线程对同一份数据的操作如果是穿插进行的，会导致不可预料的结果，这主要是因为CPU会让多个线程分片执行，各个线程对此数据的操作也是互不可知的，这样就很容易引发内存不按照预期改变的情况</p>
+</blockquote>
+</li>
+<li><p>内存连续性错误（Memory Consistency Errors）<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.17 AM.png" alt=""></p>
+<blockquote>
+<p>例子如上图，若三步操作不仅由一个线程执行，就很有可能导致打印出的并不是1而是0</p>
+</blockquote>
+</li>
+<li><p>同步方法（Synchronized Methods)<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.41 AM.png" alt=""></p>
+<blockquote>
+<ul>
+<li>Java中在方法体上添加<code>synchronized</code>关键字，能够保证同一时间仅有一个线程在调用某个对象的该方法；</li>
+</ul>
+<ul>
+<li>同时Java还会为该方法在与对象之间建立一个happens-before关系，保证对象的该状态对所有线程都是可见的</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<ol>
+<li><p>固有锁与同步（Intrinsic Locks and Synchronization)</p>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p>
+<blockquote>
+<p>当一个线程调用<code>synchronized</code>方法时，它会自动获取该方法对象的固有锁，并在方法返回时释放它。即使返回是由未捕获的异常引起的，也会释放锁。</p>
+</blockquote>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.56 AM.png" alt="MacGesture MacGesture, Today at 12.16.56 AM"></p>
+<blockquote>
+<p>直接使用this当做锁的关键字时，改对象的所有使用this当关键字的操作都必须保证同时只有一个线程访问，这样做虽然简便，但时间上有效率浪费，因为该对象的所有操作并不一定要保持完全同步，👇的代码段就解决了这一问题：</p>
+<p>通过细粒度的锁来提高并发性：</p>
+</blockquote>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.22.45 AM.png" alt="MacGesture MacGesture, Today at 12.22.45 AM"></p>
+<blockquote>
+<p>类<code>MsLunch</code>有两个实例字段，<code>c1</code>并且<code>c2</code>从不一起使用。这些字段的所有更新必须同步，但是没有理由阻止c1的更新与c2的更新进行交错 - 这样做会通过创建不必要的阻止来降低并发性。而不是使用同步方法或以其他方式使用与之关联的锁<code>this</code></p>
+</blockquote>
+</li>
+<li><p>原子操作（<code>Atomic</code> Access ）</p>
+<blockquote>
+<p>原子操作保证了操作的完整性：要么不执行，执行的话就一定要完全执行（即使虚拟机GC也不能打断）</p>
+</blockquote>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.35.40 AM.png" alt="MacGesture MacGesture, Today at 12.35.40 AM"></p>
+<p> 第一条指的是我们可以使用<code>Java</code>内附的<code>AtomicInteger</code>、<code>AtomicBoolean</code>等变量来直接利用这一特性</p>
+<p> 第二条引出了另一个关键字<code>volatile</code>，这实际上需要另起一篇进行介绍了</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>synchronize在解决多线程编程问题时有奇效，但有一定的效率牺牲</p>
+<p>使用时应尽量减小锁定的范围</p>
+<p>对并发性有要求的地方需要注意看是否有细化锁粒度的必要</p>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Synchronized/">Synchronized</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+  </nav>
+
+</section>
+        
+      </div>
+      
+        <div align="center" style="margin-top: 30px;"><hr class="hr" style="margin:0px; height:3px;"></div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://kylece.github.io/" target="_blank">KyleCe</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2015 - 2018 KyleCe All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
 </footer>
 
-<!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
+<!-- min height -->
 
-<!-- Custom Theme JavaScript -->
-<script src="/js/blog.js"></script>
-
-<!-- async load function -->
 <script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
     }
 </script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
 
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("https://github.com/KyleCe/kylece.github.io/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
     }
+  });
 </script>
 
-<!--fastClick.js -->
-<script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
 </script>
 
-<!-- Google Analytics -->
-
-
-
-<!-- Baidu Tongji -->
-
-
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install','','2.0.0');
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
 </script>
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
-<!--wechat title img-->
-<img class="wechat-title-img" src="">
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+  <script src="/js/home.js"></script>
+
+
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            KyleCe
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 KyleCe All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
 </body>
-
 </html>

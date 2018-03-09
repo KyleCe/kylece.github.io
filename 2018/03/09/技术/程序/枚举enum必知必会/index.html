@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>枚举enum必知必会 | KyleCe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="JavaEnum" />
+  
+  
+  
+  
+  <meta name="description" content="内容大纲 常规范式——替代int保安全 高阶范式——实现单例模式 复杂范式——实现方法 Android中的替代方案——IntDef/StringDef 纯 Java中的替代方案——MagicConstant  常规范式 取代int常量，确保类型安全性   可以看到，上例中，直接使用1，2之类的int值编译器是会报错的，因为enum是一种class，不止具有int值这一属性 相较于int值，enum">
+<meta name="keywords" content="Java,Enum">
+<meta property="og:type" content="article">
+<meta property="og:title" content="枚举enum必知必会">
+<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/枚举enum必知必会/index.html">
+<meta property="og:site_name" content="KyleCe">
+<meta property="og:description" content="内容大纲 常规范式——替代int保安全 高阶范式——实现单例模式 复杂范式——实现方法 Android中的替代方案——IntDef/StringDef 纯 Java中的替代方案——MagicConstant  常规范式 取代int常量，确保类型安全性   可以看到，上例中，直接使用1，2之类的int值编译器是会报错的，因为enum是一种class，不止具有int值这一属性 相较于int值，enum">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/enum_general.png">
+<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/enum_singleton.png">
+<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/enum_memeber.png">
+<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/enum_method.png">
+<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/enum_interface.png">
+<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/enum_replace.png">
+<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/enum_intDef.png">
+<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/enum_magic_constant.png">
+<meta property="og:updated_time" content="2018-03-09T15:32:43.098Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="枚举enum必知必会">
+<meta name="twitter:description" content="内容大纲 常规范式——替代int保安全 高阶范式——实现单例模式 复杂范式——实现方法 Android中的替代方案——IntDef/StringDef 纯 Java中的替代方案——MagicConstant  常规范式 取代int常量，确保类型安全性   可以看到，上例中，直接使用1，2之类的int值编译器是会报错的，因为enum是一种class，不止具有int值这一属性 相较于int值，enum">
+<meta name="twitter:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/enum_general.png">
+  
+    <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/avatar.jpg">
+  <link rel="apple-touch-icon" href="/css/images/avatar.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/avatar.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">首页</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">归档</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">分类</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">标签</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">关于</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(无标题)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-技术/程序/枚举enum必知必会" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      枚举enum必知必会
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/枚举enum必知必会/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		阅读量<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="内容大纲"><a href="#内容大纲" class="headerlink" title="内容大纲"></a>内容大纲</h3><ul>
+<li>常规范式——替代int保安全</li>
+<li>高阶范式——实现单例模式</li>
+<li>复杂范式——实现方法</li>
+<li>Android中的替代方案——IntDef/StringDef</li>
+<li>纯 Java中的替代方案——MagicConstant</li>
+</ul>
+<h3 id="常规范式"><a href="#常规范式" class="headerlink" title="常规范式"></a>常规范式</h3><ul>
+<li>取代int常量，确保类型安全性</li>
+</ul>
+<p><img src="../../pic_resource/enum_general.png" alt=""></p>
+<p>可以看到，上例中，直接使用1，2之类的int值编译器是会报错的，因为enum是一种class，不止具有int值这一属性</p>
+<p>相较于int值，enum会有类型安全检查，代码会更安全</p>
+<h3 id="高阶范式"><a href="#高阶范式" class="headerlink" title="高阶范式"></a>高阶范式</h3><ul>
+<li>实现单例模式</li>
+</ul>
+<p><img src="../../pic_resource/enum_singleton.png" alt=""></p>
+<p>这样实现的单例模式，不需要处理线程同步的问题，相较于传统的懒汉-饿汉-doublecheck的优势显而易见</p>
+<blockquote>
+<p>实际上单例模式特别容易导致内存泄露，应该尽量减少使用，用更易用的架构设计模式来避免使用单例模式</p>
+</blockquote>
+<h3 id="复杂范式"><a href="#复杂范式" class="headerlink" title="复杂范式"></a>复杂范式</h3><ul>
+<li>添加成员变量</li>
+</ul>
+<p><img src="../../pic_resource/enum_memeber.png" alt=""></p>
+<p>在利用这一属性时，我们可以直接将enum当成一个类来使用，不一样的地方在于，enum的各项是直接给出了实例化的instance，所以带参构造函数需要我直接在定义中给出初始化参数（如上例中的hour）</p>
+<ul>
+<li>提供有差异的API </li>
+</ul>
+<p><img src="../../pic_resource/enum_method.png" alt=""></p>
+<p>如上图所示，DayType的两个类型，各自实现了free方法，实现了差异化的API，这一属性可以用于策略模式，针对不同的类型，我们的enum可以提供不同的策略算法，满足差异化的需求</p>
+<ul>
+<li>实现接口</li>
+</ul>
+<p><img src="../../pic_resource/enum_interface.png" alt=""></p>
+<p>上面的抽象方法free，也可以抽象成接口形式，让枚举去实现，这一特性在工程中的应用极为有利，这样一来，就与我们的“面向接口编程”对上号了</p>
+<blockquote>
+<p>注意API的访问级别需要升级为public</p>
+</blockquote>
+<h3 id="Android中的替代办法"><a href="#Android中的替代办法" class="headerlink" title="Android中的替代办法"></a>Android中的替代办法</h3><p>我们都知道Android的内存非常宝贵，纵使enum有如此多的优点，但我们有时可能只想用它的一个替代int的属性，来增强代码的安全性，有没有其它更轻量的办法的？</p>
+<p>答案是有的，@IntDef, @StringDef就能满足这一要求（属于注解范畴），以IntDef为例:</p>
+<p><img src="../../pic_resource/enum_replace.png" alt=""></p>
+<p>扒一扒IntDef的源码，我们会发现它其实自己也是一个注解，我们上例中应用的是它的value域，还可以利用的有flag域，鉴于flag一般都不会使用，不做过多介绍</p>
+<p><img src="../../pic_resource/enum_intDef.png" alt=""></p>
+<h3 id="Java模块中的替代办法"><a href="#Java模块中的替代办法" class="headerlink" title="Java模块中的替代办法"></a>Java模块中的替代办法</h3><p>有的同学可能碰到这样的业务需要：</p>
+<p>实际的工程是纯Java的，根本无法使用Android中的注解，这时该怎么办？</p>
+<p>好吧，其实是我自己碰到这样的问题了，解决方案其实也很容易找到，查IntDef的设计思路，可以找到它的出处，最后的解决lib是</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.intellij.lang.annotations.MagicConstant</span><br></pre></td></tr></table></figure>
+<p>可以看到，这一lib是intellij的注解，感谢伟大的程序员们的杰作intellij</p>
+<p><img src="../../pic_resource/enum_magic_constant.png" alt=""></p>
+<p>与IntDef不一样的地方在于：</p>
+<ul>
+<li>需要添加intValues关键字，不可以省略（IntDef中对应的可省略关键字是value）</li>
+<li>具体的值可以相同（IntDef中不可以）</li>
+<li>值变为String类型时只需要改关键字为 stringValues</li>
+</ul>
+<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>enum还有一些特性，比如ordinal()取值、初始值从0开始、用EnumSet/EnumMap代替序数</p>
+<p>实际也不推荐使用（ordinal取值不确定性强，程序稳定性差，实在要使用可以用成员变量代替）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Enum/">Enum</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/09/技术/程序/【分享】Project ANR/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">【分享】Project ANR</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#内容大纲"><span class="nav-number">1.</span> <span class="nav-text">内容大纲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常规范式"><span class="nav-number">2.</span> <span class="nav-text">常规范式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高阶范式"><span class="nav-number">3.</span> <span class="nav-text">高阶范式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂范式"><span class="nav-number">4.</span> <span class="nav-text">复杂范式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android中的替代办法"><span class="nav-number">5.</span> <span class="nav-text">Android中的替代办法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java模块中的替代办法"><span class="nav-number">6.</span> <span class="nav-text">Java模块中的替代办法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get"><span class="nav-number">7.</span> <span class="nav-text">get</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://kylece.github.io/" target="_blank">KyleCe</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2015 - 2018 KyleCe All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访问量 : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            KyleCe
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 KyleCe All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
