@@ -255,7 +255,7 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/[Book] Android应用性能优化/ch4.1"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-日常记录/8.9"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -263,7 +263,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/08/技术/[Book] Android应用性能优化/ch4.1/">Android应用性能优化 ch4.1</a>
+      <a class="article-title" href="/2017/08/09/日常记录/8.9/">8.9</a>
     </h1>
   
 
@@ -271,88 +271,39 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/08/技术/[Book] Android应用性能优化/ch4.1/" class="article-date">
-	  <time datetime="2017-08-07T16:35:35.000Z" itemprop="datePublished">2017-08-08</time>
+	<a href="/2017/08/09/日常记录/8.9/" class="article-date">
+	  <time datetime="2017-08-08T16:35:35.000Z" itemprop="datePublished">2017-08-09</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/技术/">技术</a>
+    <a class="article-category-link" href="/categories/随笔/">随笔</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="说说内存"><a href="#说说内存" class="headerlink" title="说说内存"></a>说说内存</h1><p><strong>Android与传统JVM差别：</strong></p>
+        <h1 id="8-9-日总结"><a href="#8-9-日总结" class="headerlink" title="8.9 日总结"></a>8.9 日总结</h1><h2 id="积小流"><a href="#积小流" class="headerlink" title="积小流"></a>积小流</h2><blockquote>
+<p>不积小流无以成江河，不积跬步无以至千里</p>
+</blockquote>
+<p>把一点一滴的小事做好，才有可能把整件事做好</p>
+<p>信任的累积有个过程，切莫急躁</p>
+<h2 id="书"><a href="#书" class="headerlink" title="书"></a>书</h2><blockquote>
+<p> 买到一本价值极高的书，书籍，真智慧载体，以前有看到过“读书，就像与作者交朋友，恰如与其面谈”之类的观点，甚是赞同</p>
+<p> 谷歌以前想把所有的书都扫描成在线版本，奈何触动了太多利益集团的奶酪，未能成规模——太进步的思想，很多时候都得不到认可，或许再过几百年，能既保证版方利益，又利惠人类</p>
+</blockquote>
+<p>保持阅读习惯</p>
+<h2 id="抉择"><a href="#抉择" class="headerlink" title="抉择"></a>抉择</h2><p>向何方，未可知，这一命题又异常重要，或许落入gisg亦未可知，现在的状态不是该停留的状态，move on</p>
 <ul>
-<li>大小</li>
-<li>交换能力<ul>
-<li>内存交换能力——给应用系统有更多内存可用的假象</li>
-<li>Android根本没有PC机上虚拟内存大内存寻址空间的优待</li>
+<li>保存自己，做好准备</li>
 </ul>
-</li>
-</ul>
-<p><strong>primary type内存占用</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Local type</th>
-<th>Size</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>boolean</td>
-<td>jboolean</td>
-<td>8bit(desired by VM)</td>
-</tr>
-<tr>
-<td>byte</td>
-<td>jbyte</td>
-<td>8</td>
-</tr>
-<tr>
-<td>char</td>
-<td>jchar</td>
-<td>16</td>
-</tr>
-<tr>
-<td>short</td>
-<td>jshort</td>
-<td>16</td>
-</tr>
-<tr>
-<td>int</td>
-<td>jint</td>
-<td>32</td>
-</tr>
-<tr>
-<td>long</td>
-<td>jlong</td>
-<td>64</td>
-</tr>
-<tr>
-<td>float</td>
-<td>jfloat</td>
-<td>32</td>
-</tr>
-<tr>
-<td>double</td>
-<td>jdouble</td>
-<td>64</td>
-</tr>
-</tbody>
-</table>
-<p>使用尽可能少的内存，既是经验，也是常识</p>
+<h2 id="早起"><a href="#早起" class="headerlink" title="早起"></a>早起</h2><p>昨日晨间5点即起，补充上线APP的工作，纵使后又补一觉，下午稍晚一些的时候亦有很强的疲惫感；包括现在，起的稍微早一些，感觉也是困沌</p>
 <ul>
-<li>除了减少OOM的风险外，也可提升性能</li>
+<li>会否继续，有待观察</li>
 </ul>
-<p>性能主要由以下三个<strong>因素决定</strong>：</p>
-<ul>
-<li>CPU如何操纵特定的数据类型</li>
-<li>数据和指令需要占用多少存储空间</li>
-<li>数据在内存中的布局</li>
-</ul>
+<hr>
+<blockquote>
+<p>继调研GL essential之后，昨天又接到了调查ANR的任务，感觉有转型成一名调研员的趋势，离本职的编码工作相去甚远；不过做一段时间的调查也有好处，毕竟信息决定思维方向，决策的基础就是信息，过程中，需要保证工作的准确性，因为数据分析层面用“差之毫厘谬以千里”形容亦不为过，尽量做到准确、全面，时间允许时可做分析工作。</p>
+</blockquote>
 
       
     </div>
@@ -360,7 +311,67 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Performance/">Performance</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/日记/">日记</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-古文一字一句/论语&amp;孙子兵法/【论语】学而11--父在，观其志。父没，观其行。三年无改于父之道，可谓孝矣。"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/08/古文一字一句/论语&孙子兵法/【论语】学而11--父在，观其志。父没，观其行。三年无改于父之道，可谓孝矣。/">【国学经典】《论语》-学而第一-11</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/08/古文一字一句/论语&孙子兵法/【论语】学而11--父在，观其志。父没，观其行。三年无改于父之道，可谓孝矣。/" class="article-date">
+	  <time datetime="2017-08-07T16:35:35.000Z" itemprop="datePublished">2017-08-08</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/论语/">论语</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>子曰：父在，观其志。父没，观其行。三年无改于父之道，可谓孝矣。</p>
+</blockquote>
+<p><strong>其</strong><br>——他的，非父</p>
+<p><strong>没</strong><br>——逝</p>
+<p><strong>父之道</strong><br>——道，可谓德之道</p>
+<p><strong>三年无改   可谓孝</strong><br>——能够较长时间坚持父之道，可以算作是孝道</p>
+<blockquote>
+<p>引申：<br>字面意思理解，或许会感觉比较浅薄、迂腐；<br>联系“三人行必有我师焉，择其善者而从之，其不善者而改之”，似乎此处的“三年无改”略显僵化，实则涉及到两个方面：</p>
+<ol>
+<li>道的界限把握；</li>
+<li>虽不适，实行之；强调的是对待值得尊敬的人时的度量、牺牲、隐忍…纵其没</li>
+</ol>
+</blockquote>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/国学/">国学</a></li></ul>
 
     </footer>
   </div>
@@ -425,7 +436,7 @@
 <!-- Table of Contents -->
 
   
-    <article id="post-古文一字一句/论语&amp;孙子兵法/【论语】学而14--君子食无求饱，居无求安。敏于事而慎于言，就有道而正焉。可谓好学也已。"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-古文一字一句/论语&amp;孙子兵法/【论语】学而15--未若贫而乐，富而好礼者也"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -433,7 +444,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/08/古文一字一句/论语&孙子兵法/【论语】学而14--君子食无求饱，居无求安。敏于事而慎于言，就有道而正焉。可谓好学也已。/">【国学经典】《论语》-学而第一-14</a>
+      <a class="article-title" href="/2017/08/08/古文一字一句/论语&孙子兵法/【论语】学而15--未若贫而乐，富而好礼者也/">【国学经典】《论语》-学而第一-15</a>
     </h1>
   
 
@@ -441,7 +452,7 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/08/古文一字一句/论语&孙子兵法/【论语】学而14--君子食无求饱，居无求安。敏于事而慎于言，就有道而正焉。可谓好学也已。/" class="article-date">
+	<a href="/2017/08/08/古文一字一句/论语&孙子兵法/【论语】学而15--未若贫而乐，富而好礼者也/" class="article-date">
 	  <time datetime="2017-08-07T16:35:35.000Z" itemprop="datePublished">2017-08-08</time>
 	</a>
 
@@ -453,17 +464,127 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>子曰：君子食无求饱，居无求安。敏于事而慎于言，就有道而正焉。可谓好学也已。</p>
+<p>子贡曰：“贫而无谄，富而无骄。何如？”子曰：“可也。未若贫而乐，富而好礼者也。”子贡曰：“《诗》云：如切如磋，如琢如磨。其斯之谓与？”子曰：“赐也，始可与言《诗》已矣。告诸往而知来者。”</p>
 </blockquote>
-<p><strong>君子食无求饱，居无求安</strong><br>—— 食不求珍馐，居不求豪宅</p>
-<p><strong>敏于事而慎于言</strong><br>—— 做事机敏，说话谨慎（所谓谨言慎行）</p>
-<p><strong>就有道而正焉</strong><br>—— 参考德至于道这一境界的人来匡正自己的言行</p>
-<p>这样才算是好学。</p>
+<p>子贡，孔子学生，名赐</p>
+<p><strong>贫而无谄，富而无骄。何如？</strong><br>——贫穷的时候不巴结别人，富贵的时候不骄傲，怎么样？</p>
+<p><strong>可也，未若贫而乐，富而好礼者也</strong><br>——好是好，但是不如，贫穷的时候保持快乐，富贵的时候尊崇礼</p>
+<p><strong>《诗》云：如切如磋，如琢如磨。其斯之谓与？</strong><br>——《诗经》有云，如切如磋，如琢如磨。讲的就是这个道理吧？</p>
+<p><strong>赐也，始可与言《诗》已矣。告诸往而知来者。</strong><br>——赐啊，你能够举一反三，我可以跟你谈论谈论《诗经》了</p>
 <blockquote>
-<p>引申：<br>将精力聚焦在有价值的事情上，其它的细节你真的需要考虑这么多吗？别样的物质，你真的需要拥有那么多吗？</p>
+<p>引申：<br>常人，能够想到“贫而无谄，富而无骄”的是少数；<br>子贡问老师，老师指点之后，子贡马上能举一反三，可以看出子贡的悟性，他也得到了夫子的赞扬。</p>
 </blockquote>
+<p>“贫而乐，富而好礼”是夫子所倡导的态度；能够举一反三，也是夫子最期望弟子们习得的能力。</p>
 <hr>
 <p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/国学/">国学</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-古文一字一句/论语&amp;孙子兵法/【论语&amp;孙子兵法】Day 18"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/08/古文一字一句/论语&孙子兵法/【论语&孙子兵法】Day 18/">【论语&amp;孙子兵法】Day-18</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/08/古文一字一句/论语&孙子兵法/【论语&孙子兵法】Day 18/" class="article-date">
+	  <time datetime="2017-08-07T16:35:35.000Z" itemprop="datePublished">2017-08-08</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/论语/">论语</a><a class="article-category-link" href="/categories/论语/孙子兵法/">孙子兵法</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="【论语-amp-孙子兵法】Day-18"><a href="#【论语-amp-孙子兵法】Day-18" class="headerlink" title="【论语&amp;孙子兵法】Day 18"></a>【论语&amp;孙子兵法】Day 18</h1><h3 id="原文与注解"><a href="#原文与注解" class="headerlink" title="原文与注解"></a>原文与注解</h3><p><strong>子曰：“诗三百首，一言以蔽之，曰，思无邪” </strong></p>
+<blockquote>
+<p>《诗经》三百篇，一句话概括，思想纯正；三百，约指</p>
+</blockquote>
+<h3 id="体会"><a href="#体会" class="headerlink" title="体会"></a>体会</h3><p>这大概可以解释为什么有如此多的人给子孙后代起名的时候，喜欢翻阅诗经</p>
+<hr>
+<h3 id="原文与注解-1"><a href="#原文与注解-1" class="headerlink" title="原文与注解"></a>原文与注解</h3><p><strong>其用战也胜，久则钝兵挫锐，攻城则力屈，久暴师则国用不足。夫钝兵挫锐、屈力殚货，则诸侯乘其弊而起，虽有智者，不能善其后矣。故兵闻拙速，未睹巧之久也。夫兵久而国利者，未之有也。故不尽知用兵之害者，则不能尽知用兵之利也。 </strong></p>
+<blockquote>
+<p>讲就用兵之害、用兵之利</p>
+</blockquote>
+<h3 id="体会-1"><a href="#体会-1" class="headerlink" title="体会"></a>体会</h3><p>兵贵神速，关键时刻，不能给敌人喘息的机会，战场上的关键时机，用“一招失，满盘输”形容不为夸张</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/国学/">国学</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-古文一字一句/论语&amp;孙子兵法/【国学经典】《论语》-学而第一-07-子夏曰：贤贤易色，事父母，能竭其力。事君，能致其身。与朋友交，言而有信。虽曰未学，吾必谓之学矣。"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/08/古文一字一句/论语&孙子兵法/【国学经典】《论语》-学而第一-07-子夏曰：贤贤易色，事父母，能竭其力。事君，能致其身。与朋友交，言而有信。虽曰未学，吾必谓之学矣。/">【国学经典】《论语》-学而第一-07</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/08/古文一字一句/论语&孙子兵法/【国学经典】《论语》-学而第一-07-子夏曰：贤贤易色，事父母，能竭其力。事君，能致其身。与朋友交，言而有信。虽曰未学，吾必谓之学矣。/" class="article-date">
+	  <time datetime="2017-08-07T16:35:35.000Z" itemprop="datePublished">2017-08-08</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/论语/">论语</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>子夏曰：贤贤易色，事父母，能竭其力。事君，能致其身。与朋友交，言而有信。虽曰未学，吾必谓之学矣。</p>
+</blockquote>
+<blockquote>
+<p>实际上是对 “行有余力，则以学文”的发挥</p>
+</blockquote>
+<p><strong>贤贤易色</strong><br>尊重贤者，看轻美色<br><strong>致其身</strong><br>献纳，尽力</p>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
     </div>
@@ -543,7 +664,7 @@
 <!-- Table of Contents -->
 
   
-    <article id="post-古文一字一句/论语&amp;孙子兵法/【论语】学而15--未若贫而乐，富而好礼者也"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-古文一字一句/论语&amp;孙子兵法/【国学经典】《论语》-学而第一-05-子曰：道千乘之国，敬事而信，节用而爱人，使民以时。"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -551,7 +672,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/08/古文一字一句/论语&孙子兵法/【论语】学而15--未若贫而乐，富而好礼者也/">【国学经典】《论语》-学而第一-15</a>
+      <a class="article-title" href="/2017/08/08/古文一字一句/论语&孙子兵法/【国学经典】《论语》-学而第一-05-子曰：道千乘之国，敬事而信，节用而爱人，使民以时。/">【国学经典】《论语》-学而第一-05</a>
     </h1>
   
 
@@ -559,7 +680,7 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/08/古文一字一句/论语&孙子兵法/【论语】学而15--未若贫而乐，富而好礼者也/" class="article-date">
+	<a href="/2017/08/08/古文一字一句/论语&孙子兵法/【国学经典】《论语》-学而第一-05-子曰：道千乘之国，敬事而信，节用而爱人，使民以时。/" class="article-date">
 	  <time datetime="2017-08-07T16:35:35.000Z" itemprop="datePublished">2017-08-08</time>
 	</a>
 
@@ -571,19 +692,11 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>子贡曰：“贫而无谄，富而无骄。何如？”子曰：“可也。未若贫而乐，富而好礼者也。”子贡曰：“《诗》云：如切如磋，如琢如磨。其斯之谓与？”子曰：“赐也，始可与言《诗》已矣。告诸往而知来者。”</p>
+<p>子曰：道千乘之国，敬事而信，节用而爱人，使民以时。</p>
 </blockquote>
-<p>子贡，孔子学生，名赐</p>
-<p><strong>贫而无谄，富而无骄。何如？</strong><br>——贫穷的时候不巴结别人，富贵的时候不骄傲，怎么样？</p>
-<p><strong>可也，未若贫而乐，富而好礼者也</strong><br>——好是好，但是不如，贫穷的时候保持快乐，富贵的时候尊崇礼</p>
-<p><strong>《诗》云：如切如磋，如琢如磨。其斯之谓与？</strong><br>——《诗经》有云，如切如磋，如琢如磨。讲的就是这个道理吧？</p>
-<p><strong>赐也，始可与言《诗》已矣。告诸往而知来者。</strong><br>——赐啊，你能够举一反三，我可以跟你谈论谈论《诗经》了</p>
-<blockquote>
-<p>引申：<br>常人，能够想到“贫而无谄，富而无骄”的是少数；<br>子贡问老师，老师指点之后，子贡马上能举一反三，可以看出子贡的悟性，他也得到了夫子的赞扬。</p>
-</blockquote>
-<p>“贫而乐，富而好礼”是夫子所倡导的态度；能够举一反三，也是夫子最期望弟子们习得的能力。</p>
+<p><strong>敬事而信</strong><br>对待所事之务，谨慎专一、兢兢业业<br><strong>节用而爱人</strong><br>节约财政开支而爱护领头者<br><strong>使民以时</strong><br>役使百姓要不误农时</p>
 <hr>
-<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
     </div>
@@ -601,7 +714,7 @@
 <!-- Table of Contents -->
 
   
-    <article id="post-古文一字一句/论语&amp;孙子兵法/【孙子兵法】始计篇-01-兵者，国之大事，死生之地，存亡之道，不可不查也"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-古文一字一句/论语&amp;孙子兵法/【论语&amp;孙子兵法】Day 17"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -609,7 +722,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/08/古文一字一句/论语&孙子兵法/【孙子兵法】始计篇-01-兵者，国之大事，死生之地，存亡之道，不可不查也/">【国学经典】《孙子兵法》-始计篇 01</a>
+      <a class="article-title" href="/2017/08/08/古文一字一句/论语&孙子兵法/【论语&孙子兵法】Day 17/">【论语&amp;孙子兵法】Day-17</a>
     </h1>
   
 
@@ -617,27 +730,34 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/08/古文一字一句/论语&孙子兵法/【孙子兵法】始计篇-01-兵者，国之大事，死生之地，存亡之道，不可不查也/" class="article-date">
+	<a href="/2017/08/08/古文一字一句/论语&孙子兵法/【论语&孙子兵法】Day 17/" class="article-date">
 	  <time datetime="2017-08-07T16:35:35.000Z" itemprop="datePublished">2017-08-08</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/孙子兵法/">孙子兵法</a>
+    <a class="article-category-link" href="/categories/论语/">论语</a><a class="article-category-link" href="/categories/论语/孙子兵法/">孙子兵法</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>始计篇 01<br>兵者，国之大事，死生之地，存亡之道，不可不查也</p>
+        <h1 id="【论语-amp-孙子兵法】Day-17"><a href="#【论语-amp-孙子兵法】Day-17" class="headerlink" title="【论语&amp;孙子兵法】Day 17"></a>【论语&amp;孙子兵法】Day 17</h1><h3 id="原文与注解"><a href="#原文与注解" class="headerlink" title="原文与注解"></a>原文与注解</h3><blockquote>
+<p>《为政》篇第二</p>
 </blockquote>
-<p>  <strong>国之大事</strong><br>——国之大事，在祀与戒（杜牧注）</p>
-<p><strong>国之大事，死生之地，存亡之道，不可不查也</strong><br>——事关国家命运、要塞、存亡，必须引起重视</p>
+<p><strong>子曰：“为政以德，譬如北辰，居其所而众星共之”</strong></p>
 <blockquote>
-<p>是为引</p>
+<p>以德治政、治事、治民，自然而然地，政清、事明、民归</p>
 </blockquote>
+<h3 id="体会"><a href="#体会" class="headerlink" title="体会"></a>体会</h3><p>以德服人 上行下效，如是可成</p>
 <hr>
-<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="原文与注解-1"><a href="#原文与注解-1" class="headerlink" title="原文与注解"></a>原文与注解</h3><blockquote>
+<p>《作战》篇第二</p>
+</blockquote>
+<p><strong>孙子曰：凡用兵之法，驰车千驷，革车千乘，带甲十万，千里馈粮，则内外之费，宾客之用，胶漆之材，车甲之奉，日费千金，然后十万之师举矣</strong></p>
+<blockquote>
+<p>只有做好战争准备，才可以举兵作战</p>
+</blockquote>
+<h3 id="体会-1"><a href="#体会-1" class="headerlink" title="体会"></a>体会</h3><p>谋定而后动</p>
 
       
     </div>
@@ -690,163 +810,6 @@
 <p><strong>行有余力，则以学文</strong><br>这些都做到之后，还有时间精力，可以学习诗书礼乐</p>
 <hr>
 <p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/国学/">国学</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-古文一字一句/论语&amp;孙子兵法/【论语&amp;孙子兵法】Day 18"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/08/古文一字一句/论语&孙子兵法/【论语&孙子兵法】Day 18/">【论语&amp;孙子兵法】Day-18</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/08/古文一字一句/论语&孙子兵法/【论语&孙子兵法】Day 18/" class="article-date">
-	  <time datetime="2017-08-07T16:35:35.000Z" itemprop="datePublished">2017-08-08</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/论语/">论语</a><a class="article-category-link" href="/categories/论语/孙子兵法/">孙子兵法</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="【论语-amp-孙子兵法】Day-18"><a href="#【论语-amp-孙子兵法】Day-18" class="headerlink" title="【论语&amp;孙子兵法】Day 18"></a>【论语&amp;孙子兵法】Day 18</h1><h3 id="原文与注解"><a href="#原文与注解" class="headerlink" title="原文与注解"></a>原文与注解</h3><p><strong>子曰：“诗三百首，一言以蔽之，曰，思无邪” </strong></p>
-<blockquote>
-<p>《诗经》三百篇，一句话概括，思想纯正；三百，约指</p>
-</blockquote>
-<h3 id="体会"><a href="#体会" class="headerlink" title="体会"></a>体会</h3><p>这大概可以解释为什么有如此多的人给子孙后代起名的时候，喜欢翻阅诗经</p>
-<hr>
-<h3 id="原文与注解-1"><a href="#原文与注解-1" class="headerlink" title="原文与注解"></a>原文与注解</h3><p><strong>其用战也胜，久则钝兵挫锐，攻城则力屈，久暴师则国用不足。夫钝兵挫锐、屈力殚货，则诸侯乘其弊而起，虽有智者，不能善其后矣。故兵闻拙速，未睹巧之久也。夫兵久而国利者，未之有也。故不尽知用兵之害者，则不能尽知用兵之利也。 </strong></p>
-<blockquote>
-<p>讲就用兵之害、用兵之利</p>
-</blockquote>
-<h3 id="体会-1"><a href="#体会-1" class="headerlink" title="体会"></a>体会</h3><p>兵贵神速，关键时刻，不能给敌人喘息的机会，战场上的关键时机，用“一招失，满盘输”形容不为夸张</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/国学/">国学</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-古文一字一句/论语&amp;孙子兵法/【国学经典】《论语》-学而第一-05-子曰：道千乘之国，敬事而信，节用而爱人，使民以时。"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/08/古文一字一句/论语&孙子兵法/【国学经典】《论语》-学而第一-05-子曰：道千乘之国，敬事而信，节用而爱人，使民以时。/">【国学经典】《论语》-学而第一-05</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/08/古文一字一句/论语&孙子兵法/【国学经典】《论语》-学而第一-05-子曰：道千乘之国，敬事而信，节用而爱人，使民以时。/" class="article-date">
-	  <time datetime="2017-08-07T16:35:35.000Z" itemprop="datePublished">2017-08-08</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/论语/">论语</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>子曰：道千乘之国，敬事而信，节用而爱人，使民以时。</p>
-</blockquote>
-<p><strong>敬事而信</strong><br>对待所事之务，谨慎专一、兢兢业业<br><strong>节用而爱人</strong><br>节约财政开支而爱护领头者<br><strong>使民以时</strong><br>役使百姓要不误农时</p>
-<hr>
-<p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/国学/">国学</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-古文一字一句/论语&amp;孙子兵法/【国学经典】《论语》-学而第一-04-曾子曰：吾日三省乎吾身。为人谋而不忠乎？与朋友交而不信乎？传不习乎？"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/08/古文一字一句/论语&孙子兵法/【国学经典】《论语》-学而第一-04-曾子曰：吾日三省乎吾身。为人谋而不忠乎？与朋友交而不信乎？传不习乎？/">【国学经典】《论语》-学而第一-04</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/08/古文一字一句/论语&孙子兵法/【国学经典】《论语》-学而第一-04-曾子曰：吾日三省乎吾身。为人谋而不忠乎？与朋友交而不信乎？传不习乎？/" class="article-date">
-	  <time datetime="2017-08-07T16:35:35.000Z" itemprop="datePublished">2017-08-08</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/论语/">论语</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>曾子曰：吾日三省乎吾身。为人谋而不忠乎？与朋友交而不信乎？传不习乎？</p>
-</blockquote>
-<p><em>曾子：姓曾名参(shen 一声)字子舆，孔子得意门生，以孝子出名。</em></p>
-<hr>
-<p>我每天都多次地检查自己：<br>为人办事有竭尽全力吗？<br>跟朋友交往时有不讲诚信的时候么？<br>师长、前辈 传授的知识有实践检验温习过吗？</p>
-<hr>
-<p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="夕识"></p>
 
       
     </div>

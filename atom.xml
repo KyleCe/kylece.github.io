@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/KyleCe/kylece.github.io/"/>
-  <updated>2018-03-09T15:32:43.048Z</updated>
+  <updated>2018-03-11T07:09:38.586Z</updated>
   <id>https://github.com/KyleCe/kylece.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>寻找优秀的Programmer</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/11/%E6%8A%80%E6%9C%AF/%E7%AE%A1%E7%90%86/%E5%AF%BB%E6%89%BE%E4%BC%98%E7%A7%80%E7%9A%84Programmer/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/11/技术/管理/寻找优秀的Programmer/</id>
+    <published>2018-03-11T07:09:31.000Z</published>
+    <updated>2018-03-11T07:09:38.586Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="寻找优秀的Programmer"><a href="#寻找优秀的Programmer" class="headerlink" title="寻找优秀的Programmer"></a>寻找优秀的Programmer</h2><p>最近读的Stack Overflow CEO 博客集锦 《软件随想录 卷2》</p><p>结合其中的两篇：《寻找优秀的程序员》、《寻找优秀的程序员之实战指南》谈谈</p><p>因为作者所处位置，他写作两篇blog的角度其实是一个公司管理人员的角度，作为基础的从业程序员，也有一点的借鉴价值</p><h3 id="优秀的程序员都在哪"><a href="#优秀的程序员都在哪" class="headerlink" title="优秀的程序员都在哪"></a>优秀的程序员都在哪</h3><p>作者的观点</p><ol><li>他们不会出现在招聘市场上</li><li>平均职业生涯求职只有4次</li><li>基本上想上哪工作，就上哪工作，不需要投许多简历</li><li>招聘部门想找到合适的人，就如同在一堆干草中找到一根针</li></ol><h3 id="我们能找到他们吗？"><a href="#我们能找到他们吗？" class="headerlink" title="我们能找到他们吗？"></a>我们能找到他们吗？</h3><ol><li>走出去（不要在大型求职论坛发布没有针对性的招聘广告）</li><li>实习生（一些真正优秀的人，往往10左右就已经开始做自己爱的事情）</li><li>建立自己的社区</li><li>员工推荐：小心陷阱（真实生活中，我一般认为员工推荐是最不可靠的招聘方法之一—— 实际上Google基本只招收员工推荐的人）</li></ol><h3 id="实战指南"><a href="#实战指南" class="headerlink" title="实战指南"></a>实战指南</h3><ol><li>私人办公室（这一条成本太高了）——作者的坚持这一点的理由是 “这能极大地提高效率”</li><li>工作环境</li><li>社交生活<ol><li>如何被对待</li><li>谁是他们的同事</li><li>独立和自主</li><li>不搞政治</li></ol></li><li>干的是什么活？<ol><li>让一流的人挑选他们自己的项目</li><li>使用非热门新技术</li></ol></li><li>能够认同公司吗？</li><li>不在乎的一件事：工资（只要公平合理）</li></ol><p>更多信息：Joel on software <a href="https://www.joelonsoftware.com" target="_blank" rel="noopener">https://www.joelonsoftware.com</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;寻找优秀的Programmer&quot;&gt;&lt;a href=&quot;#寻找优秀的Programmer&quot; class=&quot;headerlink&quot; title=&quot;寻找优秀的Programmer&quot;&gt;&lt;/a&gt;寻找优秀的Programmer&lt;/h2&gt;&lt;p&gt;最近读的Stack Overflow
+      
+    
+    </summary>
+    
+      <category term="阅读、管理" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E9%98%85%E8%AF%BB%E3%80%81%E7%AE%A1%E7%90%86/"/>
+    
+    
+      <category term="项目管理" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
+    
+      <category term="读书" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E8%AF%BB%E4%B9%A6/"/>
+    
+  </entry>
   
   <entry>
     <title>【Note-PM】《项目管理修炼之道》提要</title>
@@ -43,34 +70,6 @@
       <category term="项目管理" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
     
       <category term="读书" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E8%AF%BB%E4%B9%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【算法】BinarySearch--二分搜索-折半查找法</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91BinarySearch--%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2-%E6%8A%98%E5%8D%8A%E6%9F%A5%E6%89%BE%E6%B3%95/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.084Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下</p></blockquote><p>wiki 图示：(<a href="https://zh.wikipedia.org/wiki/二分搜索算法" target="_blank" rel="noopener">Link</a>)</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-c0e03f78ac559fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search wiki pic.png"></p><p>Android中util.ContainerHelpers中的实现api：</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-53135a5bb2e3e281.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search.png"></p><p><em>排序前提：array本身已为有序数组</em></p><p>查找过程：<br>0.向右无符号移位1位，得到middle位值；<br>1.以mid为准比对midIndex位置值与参数value大小，大则hi位移至现mid位前一位，小则lo位移至现mid位后一位，相等则返回mid；<br>2.重复以上过程直至不满足循环条件或是又查找结果</p><p>从low、high可以看出，结果返回的是value在数组中对应的index，如果为负则代表不存在（最后一行，返回~lo会得到一个负数，因为lo计算结果一定为正，个人感觉直接返回一个负数可以连按位取反都省略掉，是不是性能更优？）</p><hr><blockquote><p>Java 位操作符：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-a2c49bbb981fa6c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Java bit calculate.png"></p></blockquote><hr><p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="夕识.jpeg"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;wiki 图示：(&lt;a href=&quot;https://
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="算法" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
@@ -135,6 +134,34 @@
       <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
     
       <category term="内存" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E5%86%85%E5%AD%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【算法】BinarySearch--二分搜索-折半查找法</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91BinarySearch--%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2-%E6%8A%98%E5%8D%8A%E6%9F%A5%E6%89%BE%E6%B3%95/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:32:43.084Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下</p></blockquote><p>wiki 图示：(<a href="https://zh.wikipedia.org/wiki/二分搜索算法" target="_blank" rel="noopener">Link</a>)</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-c0e03f78ac559fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search wiki pic.png"></p><p>Android中util.ContainerHelpers中的实现api：</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-53135a5bb2e3e281.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search.png"></p><p><em>排序前提：array本身已为有序数组</em></p><p>查找过程：<br>0.向右无符号移位1位，得到middle位值；<br>1.以mid为准比对midIndex位置值与参数value大小，大则hi位移至现mid位前一位，小则lo位移至现mid位后一位，相等则返回mid；<br>2.重复以上过程直至不满足循环条件或是又查找结果</p><p>从low、high可以看出，结果返回的是value在数组中对应的index，如果为负则代表不存在（最后一行，返回~lo会得到一个负数，因为lo计算结果一定为正，个人感觉直接返回一个负数可以连按位取反都省略掉，是不是性能更优？）</p><hr><blockquote><p>Java 位操作符：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-a2c49bbb981fa6c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Java bit calculate.png"></p></blockquote><hr><p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="夕识.jpeg"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;wiki 图示：(&lt;a href=&quot;https://
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="算法" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
@@ -376,33 +403,6 @@
   </entry>
   
   <entry>
-    <title>gc-pictures</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/gc-pictures/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/gc-pictures/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:22:18.168Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7061db0196475abb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Hotspot JVM components.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-1bf9a615abb8e4d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Structure.png"></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-c29f25476bbacbe2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Leak by MAT.png"></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-783169a523910316.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AppsFlyer leak and resolution.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-ca53c4d2e0fd72d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AS分析出的泄露现场.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-962ab459822c3a93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CMS运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-50f18bb588311844.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Coping Referenced Object.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a4320ea3b641d3cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Example Allocation Code.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d3f472e8f57f4507.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="G1 运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-473f69299d0029a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="GC Roots reachable analyze.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a5848042f2a13510.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="GC收集器.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-5def65145209ff4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Heap Usage ratio.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0cc80185075e1e36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Heap Structure.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-01af30bab5fb201f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Structure.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a252ca7dcb958038.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JVM Architecture.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-35782e1de1365e82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Key JVM Components.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-dffef12d27e0440c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Marking.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-facf61f82cf12b67.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MinorGC &amp; MajorGC.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-7d913bf3a474dcd0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Normal Deletion.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-3d1db4efd09b12db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Parallel Old运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-8c509f9d210e2339.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Parallel Scavenge运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0ba80f3d07039584.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ParNew运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-8927a9cb7340b35b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial Old运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0d5f648b819bd823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial收集器与CMS收集器操作线程比较.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-26a178b15d61c0d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-351394496f49338a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="static collection cause leak.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d44647bb58bf7c2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="串并行收集.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-65c85ce0940865cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="从年轻代晋升到老年代.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-242a868f2c4d6c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="写入年轻代Eden区.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-e57595176a60153f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="删除整理.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d2c22b62ee39e595.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图2.2.1 匿名内部类引发的内存泄露示例.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-099ba10858c1daac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象年龄.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-f1b583b94f371c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象年龄的增长示例.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-09da3e69c1e7de12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象空间分配.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a9b46c9c1ef158eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="收集器策略.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-2540999a7248fa74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="晋升概览图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-97d976558b387970.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="未反注册及未取消动画更新监听的泄露GC-Root引用路径.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-c09be6dd982fbba3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="部分GVM常规参数一览表.png"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/1481332-7061db0196475abb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; 
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
-    
-      <category term="GC" scheme="https://github.com/KyleCe/kylece.github.io/tags/GC/"/>
-    
-  </entry>
-  
-  <entry>
     <title>LogFoQATest</title>
     <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/LogFoQATest/"/>
     <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/LogFoQATest/</id>
@@ -430,21 +430,19 @@
   </entry>
   
   <entry>
-    <title>Java进阶——接口优于抽象类</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E6%8E%A5%E5%8F%A3%E4%BC%98%E4%BA%8E%E6%8A%BD%E8%B1%A1%E7%B1%BB/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶——接口优于抽象类/</id>
+    <title>gc-pictures</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/gc-pictures/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/gc-pictures/</id>
     <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:22:18.151Z</updated>
+    <updated>2018-03-09T15:22:18.168Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>本篇系Java进阶系列 篇4.18，介绍<strong>接口</strong>相较于<strong>抽象类</strong>的优点</p><p>跑题1——一直牢记的一点“100%的坚持比百分之九十几的坚持更容易”又一次体会到，上周跟随部门团建出去旅游，一旦停更就是将近一周，希望能把原则秉持下来</p><p>跑题2——今天看了new iPhone的发布会，依旧很精致，不知何时Android能有赶上iPhone水准的机器面世</p></blockquote><h3 id="两者区别"><a href="#两者区别" class="headerlink" title="两者区别"></a>两者区别</h3><p>抽象类可以包含部分实现，接口不可以（Java8接口中可以定义默认方法，但不推荐如此使用接口）</p><p>为了实现抽象类定义的类型，必须extends 抽象类，限制了其可扩展性</p><h3 id="接口的优势"><a href="#接口的优势" class="headerlink" title="接口的优势"></a>接口的优势</h3><ul><li>已有类可以很容易被更新，以实现新接口</li><li>接口是定义mixin（像中文“迷信”，实则取自此词，代表混合类型）的理想选择</li><li>允许我们构造非层次结构的类型框架（就像我们每个人身怀多技一样，每个类也可能有多种特性）</li><li>使得增强类的功能更加安全</li></ul><h3 id="pay-attention"><a href="#pay-attention" class="headerlink" title="pay attention"></a>pay attention</h3><ul><li><p>公共接口一旦被公开，修改起来就极其麻烦，所谓牵一发而动全身，所以设计接口时要谨慎；</p><blockquote><p>实际项目中发现这个点其实是一个经验问题，又要最小化接口，又要把接口设计得符合<strong>SOLID</strong>设计模式五大原则，就要求我们在实际工作中训练好这个技能，把握好接口设计的度</p></blockquote></li><li><p>抽象类也并非一无是处，它的改变就比接口要简易的多，实际使用时也是体验很好的一种设计方法，不过抽象类的使用也要有所衡量，只有在确实是属于一个类别的类时才好去使用抽象类，否则就违背了我们的编程原则</p></li></ul>]]></content>
+    <content type="html"><![CDATA[<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7061db0196475abb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Hotspot JVM components.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-1bf9a615abb8e4d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Structure.png"></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-c29f25476bbacbe2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Leak by MAT.png"></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-783169a523910316.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AppsFlyer leak and resolution.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-ca53c4d2e0fd72d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AS分析出的泄露现场.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-962ab459822c3a93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CMS运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-50f18bb588311844.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Coping Referenced Object.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a4320ea3b641d3cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Example Allocation Code.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d3f472e8f57f4507.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="G1 运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-473f69299d0029a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="GC Roots reachable analyze.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a5848042f2a13510.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="GC收集器.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-5def65145209ff4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Heap Usage ratio.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0cc80185075e1e36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Heap Structure.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-01af30bab5fb201f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Structure.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a252ca7dcb958038.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JVM Architecture.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-35782e1de1365e82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Key JVM Components.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-dffef12d27e0440c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Marking.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-facf61f82cf12b67.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MinorGC &amp; MajorGC.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-7d913bf3a474dcd0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Normal Deletion.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-3d1db4efd09b12db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Parallel Old运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-8c509f9d210e2339.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Parallel Scavenge运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0ba80f3d07039584.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ParNew运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-8927a9cb7340b35b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial Old运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0d5f648b819bd823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial收集器与CMS收集器操作线程比较.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-26a178b15d61c0d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-351394496f49338a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="static collection cause leak.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d44647bb58bf7c2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="串并行收集.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-65c85ce0940865cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="从年轻代晋升到老年代.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-242a868f2c4d6c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="写入年轻代Eden区.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-e57595176a60153f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="删除整理.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d2c22b62ee39e595.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图2.2.1 匿名内部类引发的内存泄露示例.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-099ba10858c1daac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象年龄.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-f1b583b94f371c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象年龄的增长示例.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-09da3e69c1e7de12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象空间分配.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a9b46c9c1ef158eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="收集器策略.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-2540999a7248fa74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="晋升概览图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-97d976558b387970.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="未反注册及未取消动画更新监听的泄露GC-Root引用路径.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-c09be6dd982fbba3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="部分GVM常规参数一览表.png"></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;blockquote&gt;
-&lt;p&gt;本篇系Java进阶系列 篇4.18，介绍&lt;strong&gt;接口&lt;/strong&gt;相较于&lt;strong&gt;抽象类&lt;/strong&gt;的优点&lt;/p&gt;
-&lt;p&gt;跑题1——一直牢记的一点“100%的坚持比百分之九十几的坚持更容易”又一次体会到，上周跟随部门团建出去
+        &lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/1481332-7061db0196475abb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; 
       
     
     </summary>
@@ -452,7 +450,9 @@
       <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
+    
+      <category term="GC" scheme="https://github.com/KyleCe/kylece.github.io/tags/GC/"/>
     
   </entry>
   
@@ -472,6 +472,33 @@
         &lt;h3 id=&quot;摘要与关键字&quot;&gt;&lt;a href=&quot;#摘要与关键字&quot; class=&quot;headerlink&quot; title=&quot;摘要与关键字&quot;&gt;&lt;/a&gt;摘要与关键字&lt;/h3&gt;&lt;p&gt;继承很强大，但也有问题&lt;/p&gt;
 &lt;p&gt;确实是is-a关系时才使用继承&lt;/p&gt;
 &lt;p&gt;如果处在不同的包中，并且
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶——接口优于抽象类</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E6%8E%A5%E5%8F%A3%E4%BC%98%E4%BA%8E%E6%8A%BD%E8%B1%A1%E7%B1%BB/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶——接口优于抽象类/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.151Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本篇系Java进阶系列 篇4.18，介绍<strong>接口</strong>相较于<strong>抽象类</strong>的优点</p><p>跑题1——一直牢记的一点“100%的坚持比百分之九十几的坚持更容易”又一次体会到，上周跟随部门团建出去旅游，一旦停更就是将近一周，希望能把原则秉持下来</p><p>跑题2——今天看了new iPhone的发布会，依旧很精致，不知何时Android能有赶上iPhone水准的机器面世</p></blockquote><h3 id="两者区别"><a href="#两者区别" class="headerlink" title="两者区别"></a>两者区别</h3><p>抽象类可以包含部分实现，接口不可以（Java8接口中可以定义默认方法，但不推荐如此使用接口）</p><p>为了实现抽象类定义的类型，必须extends 抽象类，限制了其可扩展性</p><h3 id="接口的优势"><a href="#接口的优势" class="headerlink" title="接口的优势"></a>接口的优势</h3><ul><li>已有类可以很容易被更新，以实现新接口</li><li>接口是定义mixin（像中文“迷信”，实则取自此词，代表混合类型）的理想选择</li><li>允许我们构造非层次结构的类型框架（就像我们每个人身怀多技一样，每个类也可能有多种特性）</li><li>使得增强类的功能更加安全</li></ul><h3 id="pay-attention"><a href="#pay-attention" class="headerlink" title="pay attention"></a>pay attention</h3><ul><li><p>公共接口一旦被公开，修改起来就极其麻烦，所谓牵一发而动全身，所以设计接口时要谨慎；</p><blockquote><p>实际项目中发现这个点其实是一个经验问题，又要最小化接口，又要把接口设计得符合<strong>SOLID</strong>设计模式五大原则，就要求我们在实际工作中训练好这个技能，把握好接口设计的度</p></blockquote></li><li><p>抽象类也并非一无是处，它的改变就比接口要简易的多，实际使用时也是体验很好的一种设计方法，不过抽象类的使用也要有所衡量，只有在确实是属于一个类别的类时才好去使用抽象类，否则就违背了我们的编程原则</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;本篇系Java进阶系列 篇4.18，介绍&lt;strong&gt;接口&lt;/strong&gt;相较于&lt;strong&gt;抽象类&lt;/strong&gt;的优点&lt;/p&gt;
+&lt;p&gt;跑题1——一直牢记的一点“100%的坚持比百分之九十几的坚持更容易”又一次体会到，上周跟随部门团建出去
       
     
     </summary>
@@ -529,33 +556,6 @@
 &lt;ul&gt;
 &lt;li&gt;? extends E&lt;/li&gt;
 &lt;li&gt;? super E&lt;
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java进阶-- 优先考虑泛型方法</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E6%B3%9B%E5%9E%8B%E6%96%B9%E6%B3%95/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:22:18.163Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h3><p>类可以从泛型中受益，静态工具API更适合泛型</p><blockquote><p>Collections 的算法方法都已泛型化(如binarySearch、sort)</p></blockquote><h3 id="优势示例"><a href="#优势示例" class="headerlink" title="优势示例"></a>优势示例</h3><ul><li>例1：精简API</li></ul><p><img src="../../pic_resource/GenericMethodEg.png" alt=""></p><p>代码所示是一个简单的设置字体的Util的static API的泛型化代码；</p><p>如果不是使用这种泛型化的API，则需要为TextView的扩展类（Button、CheckBox等等）编写数不清的函数</p><ul><li>例2：确保类型安全的情况下提升API的易用性</li></ul><p><img src="../../pic_resource/GenericMethodEg2.png" alt=""></p><p>可以看到上面的API可以轻易的操作所有以View为基类的类的集合；</p><ul><li>例3：类级别的泛型化</li></ul><p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p><blockquote><p>在配合集合使用时需要注意类型cast的警告，这些警告实际上是编译时不会有问题，但真正在运行时可能会抛出ClassCastException，我们在实际项目中应该将这些潜在的威胁清除掉；</p><p>对于十分确定不会出问题的类型操作API上，可以用@SuppressWarning(“unckecked”)消除这类警告</p></blockquote><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>赶紧用起来吧，你的小伙伴会爱上你写的极简API的</p><blockquote><p>源码里的代码有很多写的极好的点，同学们平时可以扒一扒</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;适用范围&quot;&gt;&lt;a href=&quot;#适用范围&quot; class=&quot;headerlink&quot; title=&quot;适用范围&quot;&gt;&lt;/a&gt;适用范围&lt;/h3&gt;&lt;p&gt;类可以从泛型中受益，静态工具API更适合泛型&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Collections 的算法方法都已
       
     
     </summary>
