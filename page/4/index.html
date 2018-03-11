@@ -255,62 +255,6 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/Android/【Android】JNI-Tips-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/">JNI-Tips-提要</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>引：<br>项目需要用到JNI，实际上还需要在native跟Java之间写一些代码，来连接二位，需要做进一步了解。本文主要对官方的JNI Tips做一些简单的关键提取<br>参考：<br><a href="">JNI Tips</a></p>
-</blockquote>
-<hr>
-<p><a href="https://www.evernote.com/l/ARunDTJCHX9AQ5Zm7URUjILWW2iFBUVWGRc" target="_blank" rel="noopener">Evernote连接</a></p>
-<p><a href="https://www.evernote.com/shard/s283/sh/a70d3242-1d7f-4043-9666-ed44548c82d6/5b68850545561917/res/ba76fe6f-7df9-41f8-a0cd-1f0dcbe4349c/JNI%20Tips.xmind" target="_blank" rel="noopener">XMind 文档下载</a></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ce0301d2d61fe60b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JNI Tips.png"></p>
-<p>文本：</p>
-<p>JNI Tips</p>
-<p>definition<br>  Java Native Interface<br>  how it works<br>    <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html</a><br>JavaVM and JNIEnv<br>  JavaVM<br>    one process can only create one JavaVM in Android<br>  JNIEnv<br>    provides most of JNI functions. Your native functions all receive a JNIEnv as first argument<br>    used for thread-local, so you cannot share a JNIEnv between threads (GetEnv can be used to discover the thread’s JNIEnv when no other way)<br>Threads<br>  a thread will have no JNIEnv unless it’s attached, before this it cannot make JNI calls (all threads are Linux threads, scheduled by the kernel)<br>  Threads attached through JNI must call DetachCurrentThread before they exit<br>jclass, jmethodID, and jfieldID<br>  steps to access an object’s field from native code<br>    FindClass:—&gt; get the class object reference for the class<br>    GetFieldID:—&gt;Get the field ID for the field with GetFieldID<br>    GetIntField:—&gt;Get the contents of the field with something appropriate<br>  call a method—&gt; get a class object reference and then a method ID<br>  it’s useful to look the values up once and cache the results in your native code. Because there is a limit of one JAVAVM per process<br>  if want to cache IDs when a class is loaded, add a piece of code that allow the native code to cache field offsets<br>Local and Global Reference<br>  almost every object returned by a JNI function is a “local reference”—&gt;it’s valid for the duration of the current native method in the current thread. Even if the object itself continues to live on after the native method returns, the reference is not valid<br>  the only way to get non-local references is via the functions NewGlobalRef and NewWeakGlobalRef (the global reference is guaranteed to be valid until you call DeleteGlobalRef)<br>  to see if two reference refer to the same object, you must use the IsSameObject function, never use == in native code<br>  jfieldIDs, jmethod are opaque types, not object references, should not be passed to NewGlobalRef<br>  if you attach a native thread with AttachCurrentThread, the code you are running will never automatically free local references until the thread detaches. Any local references you create will have to be deleted manually.<br>UTF-8 and UTF-16 Strings<br>  java use UTF-16, JNI provides methods that work with Modified UTF-8 as well.<br>  you cannot pass arbitrary UTF-8 data to JNI and expect it to work correctly<br>  Android currently does not require a copy in GetStringChars,however GetStringUTFChars requires an allocation and a conversion to UTF-8. UTF-16 strings are not zero-terminated, \u0000 is allowed, so you need to hang on to the string length like jchar pointer<br>  Don’t forget to Release the strings you Get. the string functions return jchar<em> or jbyte</em><br>  Data passed to NewStringUTF must be in Modified UTF-8 format<br>Primitive Arrays<br>  You must Release every array you Get<br>  release mode arguments alternative values<br>    0<br>        buffer freed<br>    JNI_COMMIT<br>        do nothing/ buffer not freed<br>    JNI_ABORT<br>        buffer freed, Earlier wirtes are not aborted<br>Region calls<br>  advantages<br>    reducing overhead by reducing JNI call requirements<br>    do not require pinning or extra data copies<br>    reduces the risk of programmer error–&gt; no risk of forgetting to call Release<br>Exception<br>  your must not call JNI functions while an exception is pending, except several special kinds of API: delete/ exception process/stack process/ release process …<br>Extended Checking<br>  JNI does very little error checking ~~!<br>  Android offers a mode called CheckJNI<br>    array, bad pointers, Class names, Critical call,Direct ByteBuffers, Exceptions, JNIEnv<em>s, jmethodIDs, References,Release modes, Type safety, UTF-8<br>Native Libraries<br>  steps<br>    call System.loadLibrary<br>    provide a native function : jint JNI_OnLoad(JavaVM</em> vm void* reserved)<br>    in JNI_OnLoad, register all your native methods<br>64-bit Considerations<br>  you need to stash your native pointers in a long field rather than an int<br>Unsupported Features/ Backwards Compatibility<br>  Define class<br>  dynamic lookup of native functions<br>  detaching threads<br>  weak global references<br>  Local references<br>  determining reference type with GetObjectRefType</p>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
     <article id="post-技术/Android/【Android】Clean-Architecture--初析"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -375,6 +319,83 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-技术/Android/【Android】VectorDrawable介绍"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/">VectorDrawable介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>引<br>今天视频处理中碰到一些简单图片的vector绘制方案<br>调研结果：</p>
+</blockquote>
+<p>效果：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9a7da5968fccb57a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="vector paint eg.png"></p>
+<p><strong>优点</strong>：Vector与PNG文件相比，能极大地缩小文件占用空间；<br><strong>弱势</strong>：</p>
+<ol>
+<li>兼容性处理起来需要花费一些心思；</li>
+<li>复杂图片不适合运用vector绘制，一个是初始化效率，第二个是重复使用时bitmap在GPU中会有缓存，而vector没有；</li>
+<li>需要额外的一些辅助工具协作生成path；</li>
+</ol>
+<blockquote>
+<p>例注：</p>
+<ol>
+<li>使用：<br>需要在Gradle 中添加：android.defaultConfig域<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vectorDrawables.useSupportLibrary = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<ol>
+<li>XML attributes:  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">viewportHeight \ viewportWidth</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>划分的比例大小（图片中的例子：36dp大小的图像划分成24份，Path中的坐标建立在划分后的坐标系统之上）<br><code>意义--&gt;将大小与path分离</code></p>
+<hr>
+<p>Path指令：<br>M = moveto(M X,Y)<br>L = lineto(L X,Y)<br>H = horizontal lineto(H X)<br>V = vertical lineto(V Y)<br>C = curveto(C X1,Y1,X2,Y2,ENDX,ENDY)：三次贝赛曲线<br>S = smooth curveto(S X2,Y2,ENDX,ENDY)<br>Q = quadratic Belzier curve(Q X,Y,ENDX,ENDY)：二次贝赛曲线<br>T = smooth quadratic Belzier curveto(T ENDX,ENDY)：映射<br>A = elliptical Arc(A RX,RY,XROTATION,FLAG1,FLAG2,X,Y)：弧线<br>Z = closepath()</p>
+<hr>
+<p>工具：<br><a href="http://inloop.github.io/svg2android/" target="_blank" rel="noopener">to vector</a><br><a href="http://editor.method.ac/" target="_blank" rel="noopener">SVG editor</a></p>
+<hr>
+<blockquote>
+<p>参考：(涵盖由头、Vector语法、转换工具、原理、兼容处理、性能考量等方面知识，良心之作)<br><a href="http://www.jianshu.com/p/e3614e7abc03" target="_blank" rel="noopener">Android Vector曲折的兼容之路</a></p>
+</blockquote>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VectorDrawable/">VectorDrawable</a></li></ul>
 
     </footer>
   </div>
@@ -566,7 +587,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 <!-- Table of Contents -->
 
   
-    <article id="post-技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -574,7 +595,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/">【Android Tool】内存快照分析，自动抓取dump文件并转换脚本</a>
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
     </h1>
   
 
@@ -582,7 +603,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/" class="article-date">
+	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -594,38 +615,25 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>最新得到的Google内部消息，未来谷歌应用商店的排名算法将会把App的性能纳入考量范围（使用的机器学习算法），我们开发者也应该将性能这一指标纳入自己的检查范围</p>
+<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
 </blockquote>
-<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>解决抓取内存文件，拉取到电脑，新建文件夹，转换为Eclipse Memory Analyzer 文件操作繁琐的问题</p>
-<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
-<li>clone项目之后，上述流程只需要👇的指令即可完成</li>
-<li>自动将转换的文件存档到新建的同名目录下，避免MAT分析产生的临时文件污染文档目录</li>
-<li>更改目录或进程时，无需修改配置文件，输入即可自动记录上次操作习惯</li>
-<li>重复输入名称时，会自动append 时间到原来名称，避免覆盖历史文件</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python GrabDump.py</span><br></pre></td></tr></table></figure>
-<p>读完本文，你将收获到一个自动化上述流程的简单project</p>
 <blockquote>
-<p>需要了解 Apk包的内存占用各部分组成</p>
+<p>这样的话，注意定期检查各lib版本就好</p>
 </blockquote>
-<h3 id="GitHub-地址"><a href="#GitHub-地址" class="headerlink" title="GitHub 地址"></a>GitHub 地址</h3><p><a href="https://github.com/KyleCe/PhonePerformanceMeasure">https://github.com/KyleCe/PhonePerformanceMeasure</a></p>
-<h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><p>最终的使用时样式：</p>
-<p><img src="../../pic_resource/grabDump.png" alt=""></p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
-<li>首先你需要安装Python ^_^</li>
-</ul>
-<ul>
-<li>可以输入的参数包括：  dump文件名、存放目录、需要抓取的进程名</li>
-<li>下次输入时，如果没有完全输入，会自动使用上一次的参数</li>
-</ul>
-<blockquote>
-<p>第一次输入的时候还是需要完全的配置</p>
-</blockquote>
-<h3 id="已知问题"><a href="#已知问题" class="headerlink" title="已知问题"></a>已知问题</h3><p>抓取dump次数过多时会出现adb缓存读写错误的问题，需要重启adb（kill-server | start-server），后续找到解决方案会及时更新到Github repository</p>
+<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
+<p>总结一下步骤：</p>
+<ol>
+<li>获取二维码（QRCode）</li>
+<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
+<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
+</li>
+<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
+</li>
+</ol>
+<p>时序图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
 <hr>
-<p>扫描二维码，关注“夕识”，一起学习Android知识、CS知识，努力成为一位  different thinker</p>
-<p><img src="../../pic_resource/qrcode_for_wechat.jpg" alt=""></p>
-<p>点击“链接”，跳转至repo地址</p>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
     </div>
@@ -633,7 +641,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dump/">Dump</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
 
     </footer>
   </div>
@@ -830,7 +838,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 <!-- Table of Contents -->
 
   
-    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -838,7 +846,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/">【Android Tool】内存快照分析，自动抓取dump文件并转换脚本</a>
     </h1>
   
 
@@ -846,7 +854,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
+	<a href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -858,25 +866,38 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
+<p>最新得到的Google内部消息，未来谷歌应用商店的排名算法将会把App的性能纳入考量范围（使用的机器学习算法），我们开发者也应该将性能这一指标纳入自己的检查范围</p>
 </blockquote>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>解决抓取内存文件，拉取到电脑，新建文件夹，转换为Eclipse Memory Analyzer 文件操作繁琐的问题</p>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
+<li>clone项目之后，上述流程只需要👇的指令即可完成</li>
+<li>自动将转换的文件存档到新建的同名目录下，避免MAT分析产生的临时文件污染文档目录</li>
+<li>更改目录或进程时，无需修改配置文件，输入即可自动记录上次操作习惯</li>
+<li>重复输入名称时，会自动append 时间到原来名称，避免覆盖历史文件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python GrabDump.py</span><br></pre></td></tr></table></figure>
+<p>读完本文，你将收获到一个自动化上述流程的简单project</p>
 <blockquote>
-<p>这样的话，注意定期检查各lib版本就好</p>
+<p>需要了解 Apk包的内存占用各部分组成</p>
 </blockquote>
-<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
-<p>总结一下步骤：</p>
-<ol>
-<li>获取二维码（QRCode）</li>
-<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
-<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
-</li>
-<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
-</li>
-</ol>
-<p>时序图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
+<h3 id="GitHub-地址"><a href="#GitHub-地址" class="headerlink" title="GitHub 地址"></a>GitHub 地址</h3><p><a href="https://github.com/KyleCe/PhonePerformanceMeasure">https://github.com/KyleCe/PhonePerformanceMeasure</a></p>
+<h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><p>最终的使用时样式：</p>
+<p><img src="../../pic_resource/grabDump.png" alt=""></p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>首先你需要安装Python ^_^</li>
+</ul>
+<ul>
+<li>可以输入的参数包括：  dump文件名、存放目录、需要抓取的进程名</li>
+<li>下次输入时，如果没有完全输入，会自动使用上一次的参数</li>
+</ul>
+<blockquote>
+<p>第一次输入的时候还是需要完全的配置</p>
+</blockquote>
+<h3 id="已知问题"><a href="#已知问题" class="headerlink" title="已知问题"></a>已知问题</h3><p>抓取dump次数过多时会出现adb缓存读写错误的问题，需要重启adb（kill-server | start-server），后续找到解决方案会及时更新到Github repository</p>
 <hr>
-<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>扫描二维码，关注“夕识”，一起学习Android知识、CS知识，努力成为一位  different thinker</p>
+<p><img src="../../pic_resource/qrcode_for_wechat.jpg" alt=""></p>
+<p>点击“链接”，跳转至repo地址</p>
 
       
     </div>
@@ -884,7 +905,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dump/">Dump</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
 
     </footer>
   </div>
@@ -1136,18 +1157,18 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 
   <div class="container">
       	<div class="row">
-	      <p> Powered by <a href="http://kylece.github.io/" target="_blank">KyleCe</a> </p>
+	      <p> Powered by <a href="/about/" target="_blank">KyleCe</a> </p>
 	      <p id="copyRightEn">Copyright &copy; 2015 - 2018 KyleCe All Rights Reserved.</p>
-	      
+
 	      
     		<p class="busuanzi_uv">
-				访客数 : <span id="busuanzi_value_site_uv"></span> |  
+				访客数 : <span id="busuanzi_value_site_uv"></span> |
 				访问量 : <span id="busuanzi_value_site_pv"></span>
 		    </p>
   		   
 		</div>
 
-		
+
   </div>
 </footer>
 
@@ -1166,6 +1187,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
     }
 </script>
+
     </div>
     <!-- <nav id="mobile-nav">
   
