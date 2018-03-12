@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>【算法】binarysearch--二分搜索-折半查找法 | KyleCe</title>
+  <title>面经--逆转字符串 | KyleCe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="keywords" content="算法" />
@@ -11,23 +11,18 @@
   
   
   
-  <meta name="description" content="前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下  wiki 图示：(Link)  Android中util.ContainerHelpers中的实现api：  排序前提：array本身已为有序数组 查找过程：0.向右无符号移位1位，得到middle位值；1.以mid为准比对midIndex位">
+  <meta name="description" content="[面经] 逆转字符串（Java）如何逆转字符串呢？本篇介绍几种常见方法：  暴力解法 StringBuilder自带的reverse reverse源码 堆栈 集合的reverse方法  暴力解法： 利用String.charAt()，倒序地访问 原String的各个char12345678910public static String reverseIt(String source) &amp;#123">
 <meta name="keywords" content="算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【算法】BinarySearch--二分搜索-折半查找法">
-<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/index.html">
+<meta property="og:title" content="面经--逆转字符串">
+<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2018/03/12/技术/算法/面经--逆转字符串（Java）/index.html">
 <meta property="og:site_name" content="KyleCe">
-<meta property="og:description" content="前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下  wiki 图示：(Link)  Android中util.ContainerHelpers中的实现api：  排序前提：array本身已为有序数组 查找过程：0.向右无符号移位1位，得到middle位值；1.以mid为准比对midIndex位">
+<meta property="og:description" content="[面经] 逆转字符串（Java）如何逆转字符串呢？本篇介绍几种常见方法：  暴力解法 StringBuilder自带的reverse reverse源码 堆栈 集合的reverse方法  暴力解法： 利用String.charAt()，倒序地访问 原String的各个char12345678910public static String reverseIt(String source) &amp;#123">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-c0e03f78ac559fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-53135a5bb2e3e281.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-a2c49bbb981fa6c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-03-09T15:32:43.084Z">
+<meta property="og:updated_time" content="2018-03-12T15:22:07.989Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【算法】BinarySearch--二分搜索-折半查找法">
-<meta name="twitter:description" content="前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下  wiki 图示：(Link)  Android中util.ContainerHelpers中的实现api：  排序前提：array本身已为有序数组 查找过程：0.向右无符号移位1位，得到middle位值；1.以mid为准比对midIndex位">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1481332-c0e03f78ac559fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="面经--逆转字符串">
+<meta name="twitter:description" content="[面经] 逆转字符串（Java）如何逆转字符串呢？本篇介绍几种常见方法：  暴力解法 StringBuilder自带的reverse reverse源码 堆栈 集合的reverse方法  暴力解法： 利用String.charAt()，倒序地访问 原String的各个char12345678910public static String reverseIt(String source) &amp;#123">
   
     <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
   
@@ -165,7 +160,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-技术/算法/【算法】BinarySearch--二分搜索-折半查找法" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-技术/算法/面经--逆转字符串（Java）" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -173,7 +168,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      【算法】BinarySearch--二分搜索-折半查找法
+      面经--逆转字符串
     </h1>
   
 
@@ -181,8 +176,8 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	<a href="/2018/03/12/技术/算法/面经--逆转字符串（Java）/" class="article-date">
+	  <time datetime="2018-03-12T14:50:52.000Z" itemprop="datePublished">2018-03-12</time>
 	</a>
 
       
@@ -198,22 +193,19 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下</p>
-</blockquote>
-<p>wiki 图示：(<a href="https://zh.wikipedia.org/wiki/二分搜索算法" target="_blank" rel="noopener">Link</a>)</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c0e03f78ac559fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search wiki pic.png"></p>
-<p>Android中util.ContainerHelpers中的实现api：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-53135a5bb2e3e281.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search.png"></p>
-<p><em>排序前提：array本身已为有序数组</em></p>
-<p>查找过程：<br>0.向右无符号移位1位，得到middle位值；<br>1.以mid为准比对midIndex位置值与参数value大小，大则hi位移至现mid位前一位，小则lo位移至现mid位后一位，相等则返回mid；<br>2.重复以上过程直至不满足循环条件或是又查找结果</p>
-<p>从low、high可以看出，结果返回的是value在数组中对应的index，如果为负则代表不存在（最后一行，返回~lo会得到一个负数，因为lo计算结果一定为正，个人感觉直接返回一个负数可以连按位取反都省略掉，是不是性能更优？）</p>
-<hr>
-<blockquote>
-<p>Java 位操作符：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-a2c49bbb981fa6c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Java bit calculate.png"></p>
-</blockquote>
-<hr>
-<p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="夕识.jpeg"></p>
+        <h3 id="面经-逆转字符串（Java）"><a href="#面经-逆转字符串（Java）" class="headerlink" title="[面经] 逆转字符串（Java）"></a>[面经] 逆转字符串（Java）</h3><p>如何逆转字符串呢？本篇介绍几种常见方法：</p>
+<ol>
+<li>暴力解法</li>
+<li>StringBuilder自带的reverse</li>
+<li>reverse源码</li>
+<li>堆栈</li>
+<li>集合的reverse方法</li>
+</ol>
+<h5 id="暴力解法：-利用String-charAt-，倒序地访问-原String的各个char"><a href="#暴力解法：-利用String-charAt-，倒序地访问-原String的各个char" class="headerlink" title="暴力解法： 利用String.charAt()，倒序地访问 原String的各个char"></a>暴力解法： 利用String.charAt()，倒序地访问 原String的各个char</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">reverseIt</span><span class="params">(String source)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, len = source.length();</span><br><span class="line">    StringBuilder dest = <span class="keyword">new</span> StringBuilder(len);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = (len - <span class="number">1</span>); i &gt;= <span class="number">0</span>; i--)&#123; <span class="comment">// key</span></span><br><span class="line">        dest.append(source.charAt(i));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dest.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="最不装的：直接利用自带reverse方法"><a href="#最不装的：直接利用自带reverse方法" class="headerlink" title="最不装的：直接利用自带reverse方法"></a>最不装的：直接利用自带reverse方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> StringBuilder(hi).reverse().toString()</span><br></pre></td></tr></table></figure>
+<h5 id="这显然没什么营养，我们看看StringBuilder的reverse-做了什么："><a href="#这显然没什么营养，我们看看StringBuilder的reverse-做了什么：" class="headerlink" title="这显然没什么营养，我们看看StringBuilder的reverse()做了什么："></a>这显然没什么营养，我们看看StringBuilder的reverse()做了什么：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">reverse</span><span class="params">(String input)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span>[] in = input.toCharArray();</span><br><span class="line">    <span class="keyword">int</span> begin=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> end=in.length-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">char</span> temp;</span><br><span class="line">    <span class="keyword">while</span>(end&gt;begin)&#123; <span class="comment">// key</span></span><br><span class="line">        temp = in[begin];</span><br><span class="line">        in[begin]=in[end];</span><br><span class="line">        in[end] = temp;</span><br><span class="line">        end--;</span><br><span class="line">        begin++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> String(in);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="当然，如果你想被嫌弃，也可以用堆栈："><a href="#当然，如果你想被嫌弃，也可以用堆栈：" class="headerlink" title="当然，如果你想被嫌弃，也可以用堆栈："></a>当然，如果你想被嫌弃，也可以用堆栈：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">reverseString</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">    Stack&lt;Character&gt; stack = <span class="keyword">new</span> Stack&lt;Character&gt;();</span><br><span class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">        stack.push(s.charAt(i));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (!stack.empty()) &#123; <span class="comment">// key</span></span><br><span class="line">        sb.append(stack.pop());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sb.toString();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="或者想被喷出翔，装一下箱，拆一下箱："><a href="#或者想被喷出翔，装一下箱，拆一下箱：" class="headerlink" title="或者想被喷出翔，装一下箱，拆一下箱："></a>或者想被喷出翔，装一下箱，拆一下箱：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">reverseStr</span><span class="params">(String input)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span>[] hello = input.toCharArray();</span><br><span class="line">    List&lt;Character&gt; trial1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">char</span> c: hello)</span><br><span class="line">        trial1.add(c);</span><br><span class="line"></span><br><span class="line">    Collections.reverse(trial1); <span class="comment">// key</span></span><br><span class="line">    ListIterator li = trial1.listIterator();</span><br><span class="line">    <span class="keyword">while</span> (li.hasNext())</span><br><span class="line">        System.out.print(li.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -256,19 +248,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          【Note-PM】《项目管理修炼之道》提要
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/03/09/技术/程序/降低内存占用Route/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/03/11/技术/管理/寻找优秀的Programmer/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">降低内存占用Route</div>
+      <div class="article-nav-title">寻找优秀的Programmer</div>
     </a>
   
 </nav>
@@ -282,7 +265,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav">无</ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#面经-逆转字符串（Java）"><span class="nav-number">1.</span> <span class="nav-text">[面经] 逆转字符串（Java）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#暴力解法：-利用String-charAt-，倒序地访问-原String的各个char"><span class="nav-number">1.0.1.</span> <span class="nav-text">暴力解法： 利用String.charAt()，倒序地访问 原String的各个char</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最不装的：直接利用自带reverse方法"><span class="nav-number">1.0.2.</span> <span class="nav-text">最不装的：直接利用自带reverse方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#这显然没什么营养，我们看看StringBuilder的reverse-做了什么："><span class="nav-number">1.0.3.</span> <span class="nav-text">这显然没什么营养，我们看看StringBuilder的reverse()做了什么：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#当然，如果你想被嫌弃，也可以用堆栈："><span class="nav-number">1.0.4.</span> <span class="nav-text">当然，如果你想被嫌弃，也可以用堆栈：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#或者想被喷出翔，装一下箱，拆一下箱："><span class="nav-number">1.0.5.</span> <span class="nav-text">或者想被喷出翔，装一下箱，拆一下箱：</span></a></li></ol></li></ol></li></ol>
     
     </div>
   </aside>

@@ -255,6 +255,73 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/Android/【Android】declare-styleable-枚举format简介"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/">declare-styleable-枚举format简介</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>旨：介绍styleable enum format的使用方法</p>
+</blockquote>
+<blockquote>
+<p>技术含量：低<br>（项目中对字体的自定义类型较多，考虑将字体设置属性定义成styleable，方便直接在xml中设置）</p>
+</blockquote>
+<p>首先定义attr.xml中的styleable：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-11adc1f8df53f3dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_define.png"></p>
+<blockquote>
+<p>Code Glance （类型设置为enum）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"Font"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"font_type"</span> <span class="attr">format</span>=<span class="string">"enum"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"msyh"</span> <span class="attr">value</span>=<span class="string">"0"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"unidream_led"</span> <span class="attr">value</span>=<span class="string">"1"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"helvetica"</span> <span class="attr">value</span>=<span class="string">"2"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"bank"</span> <span class="attr">value</span>=<span class="string">"3"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"ping_fang"</span> <span class="attr">value</span>=<span class="string">"4"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">attr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>之后就可以在xml中直接利用font_type属性了：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-a2fae41d6f9e84cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_enum.png"></p>
+<p>在具体的类中解析：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-64bf23e9b4fd9a56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_parse.png"></p>
+<blockquote>
+<p>Code Glance<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (attrs != <span class="keyword">null</span>) &#123;</span><br><span class="line">    TypedArray ar = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Font, defStyleAttr, <span class="number">0</span>);</span><br><span class="line">    <span class="meta">@FontMaster</span>.Type</span><br><span class="line">    <span class="keyword">int</span> fontType = ar.getInteger(R.styleable.Font_type, FontMaster.Type.Default);</span><br><span class="line">    FontMaster.font(fontType).set(<span class="keyword">this</span>);</span><br><span class="line">    ar.recycle();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    FontMaster.font(FontMaster.Type.MSYH).set(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/【Android】VectorDrawable介绍"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -317,8 +384,10 @@
 <p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
+
     </div>
     <footer class="article-footer">
+
       
       
       
@@ -330,6 +399,7 @@
 </article>
 
 <!-- Table of Contents -->
+
 
   
     <article id="post-技术/Android/【Android】JNI-Tips-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
@@ -373,8 +443,10 @@
 <p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
+
     </div>
     <footer class="article-footer">
+
       
       
       
@@ -386,6 +458,7 @@
 </article>
 
 <!-- Table of Contents -->
+
 
   
     <article id="post-技术/Android/【Android】Clean-Architecture--初析"  class="article article-type-post" itemscope itemprop="blogPost" >
@@ -446,8 +519,10 @@
 <p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
+
     </div>
     <footer class="article-footer">
+
       
       
       
@@ -459,6 +534,7 @@
 </article>
 
 <!-- Table of Contents -->
+
 
   
     <article id="post-技术/Android/【Android】Android-Clean-Architecture推介"  class="article article-type-post" itemscope itemprop="blogPost" >
@@ -515,8 +591,10 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 <p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
+
     </div>
     <footer class="article-footer">
+
       
       
       
@@ -528,6 +606,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 </article>
 
 <!-- Table of Contents -->
+
 
   
     <article id="post-技术/Android/【Android】AS添加JNI支持"  class="article article-type-post" itemscope itemprop="blogPost" >
@@ -628,8 +707,10 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 <p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
+
     </div>
     <footer class="article-footer">
+
       
       
       
@@ -641,6 +722,154 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 </article>
 
 <!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
+</blockquote>
+<blockquote>
+<p>这样的话，注意定期检查各lib版本就好</p>
+</blockquote>
+<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
+<p>总结一下步骤：</p>
+<ol>
+<li>获取二维码（QRCode）</li>
+<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
+<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
+</li>
+<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
+</li>
+</ol>
+<p>时序图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/">【Android Tool】内存快照分析，自动抓取dump文件并转换脚本</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最新得到的Google内部消息，未来谷歌应用商店的排名算法将会把App的性能纳入考量范围（使用的机器学习算法），我们开发者也应该将性能这一指标纳入自己的检查范围</p>
+</blockquote>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>解决抓取内存文件，拉取到电脑，新建文件夹，转换为Eclipse Memory Analyzer 文件操作繁琐的问题</p>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
+<li>clone项目之后，上述流程只需要👇的指令即可完成</li>
+<li>自动将转换的文件存档到新建的同名目录下，避免MAT分析产生的临时文件污染文档目录</li>
+<li>更改目录或进程时，无需修改配置文件，输入即可自动记录上次操作习惯</li>
+<li>重复输入名称时，会自动append 时间到原来名称，避免覆盖历史文件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python GrabDump.py</span><br></pre></td></tr></table></figure>
+<p>读完本文，你将收获到一个自动化上述流程的简单project</p>
+<blockquote>
+<p>需要了解 Apk包的内存占用各部分组成</p>
+</blockquote>
+<h3 id="GitHub-地址"><a href="#GitHub-地址" class="headerlink" title="GitHub 地址"></a>GitHub 地址</h3><p><a href="https://github.com/KyleCe/PhonePerformanceMeasure">https://github.com/KyleCe/PhonePerformanceMeasure</a></p>
+<h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><p>最终的使用时样式：</p>
+<p><img src="../../pic_resource/grabDump.png" alt=""></p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>首先你需要安装Python ^_^</li>
+</ul>
+<ul>
+<li>可以输入的参数包括：  dump文件名、存放目录、需要抓取的进程名</li>
+<li>下次输入时，如果没有完全输入，会自动使用上一次的参数</li>
+</ul>
+<blockquote>
+<p>第一次输入的时候还是需要完全的配置</p>
+</blockquote>
+<h3 id="已知问题"><a href="#已知问题" class="headerlink" title="已知问题"></a>已知问题</h3><p>抓取dump次数过多时会出现adb缓存读写错误的问题，需要重启adb（kill-server | start-server），后续找到解决方案会及时更新到Github repository</p>
+<hr>
+<p>扫描二维码，关注“夕识”，一起学习Android知识、CS知识，努力成为一位  different thinker</p>
+<p><img src="../../pic_resource/qrcode_for_wechat.jpg" alt=""></p>
+<p>点击“链接”，跳转至repo地址</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dump/">Dump</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
 
   
     <article id="post-技术/Android/retrofit2"  class="article article-type-post" itemscope itemprop="blogPost" >
@@ -815,8 +1044,10 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 <p>你可以依赖它。它已经可以正常工作了，API 接口也相对稳定。Converter 和 converter 工厂方法未来可能会改变，但是总体来说是有用的。要是你有什么不喜欢或者有问题的地方，请联系我！谢谢！</p>
 
       
+
     </div>
     <footer class="article-footer">
+
       
       
       
@@ -829,230 +1060,6 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 
 <!-- Table of Contents -->
 
-  
-    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
-</blockquote>
-<blockquote>
-<p>这样的话，注意定期检查各lib版本就好</p>
-</blockquote>
-<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
-<p>总结一下步骤：</p>
-<ol>
-<li>获取二维码（QRCode）</li>
-<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
-<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
-</li>
-<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
-</li>
-</ol>
-<p>时序图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/">【Android Tool】内存快照分析，自动抓取dump文件并转换脚本</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>最新得到的Google内部消息，未来谷歌应用商店的排名算法将会把App的性能纳入考量范围（使用的机器学习算法），我们开发者也应该将性能这一指标纳入自己的检查范围</p>
-</blockquote>
-<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>解决抓取内存文件，拉取到电脑，新建文件夹，转换为Eclipse Memory Analyzer 文件操作繁琐的问题</p>
-<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
-<li>clone项目之后，上述流程只需要👇的指令即可完成</li>
-<li>自动将转换的文件存档到新建的同名目录下，避免MAT分析产生的临时文件污染文档目录</li>
-<li>更改目录或进程时，无需修改配置文件，输入即可自动记录上次操作习惯</li>
-<li>重复输入名称时，会自动append 时间到原来名称，避免覆盖历史文件</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python GrabDump.py</span><br></pre></td></tr></table></figure>
-<p>读完本文，你将收获到一个自动化上述流程的简单project</p>
-<blockquote>
-<p>需要了解 Apk包的内存占用各部分组成</p>
-</blockquote>
-<h3 id="GitHub-地址"><a href="#GitHub-地址" class="headerlink" title="GitHub 地址"></a>GitHub 地址</h3><p><a href="https://github.com/KyleCe/PhonePerformanceMeasure">https://github.com/KyleCe/PhonePerformanceMeasure</a></p>
-<h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><p>最终的使用时样式：</p>
-<p><img src="../../pic_resource/grabDump.png" alt=""></p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
-<li>首先你需要安装Python ^_^</li>
-</ul>
-<ul>
-<li>可以输入的参数包括：  dump文件名、存放目录、需要抓取的进程名</li>
-<li>下次输入时，如果没有完全输入，会自动使用上一次的参数</li>
-</ul>
-<blockquote>
-<p>第一次输入的时候还是需要完全的配置</p>
-</blockquote>
-<h3 id="已知问题"><a href="#已知问题" class="headerlink" title="已知问题"></a>已知问题</h3><p>抓取dump次数过多时会出现adb缓存读写错误的问题，需要重启adb（kill-server | start-server），后续找到解决方案会及时更新到Github repository</p>
-<hr>
-<p>扫描二维码，关注“夕识”，一起学习Android知识、CS知识，努力成为一位  different thinker</p>
-<p><img src="../../pic_resource/qrcode_for_wechat.jpg" alt=""></p>
-<p>点击“链接”，跳转至repo地址</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dump/">Dump</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-技术/Android/GL Launcher memory consume test report"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/GL Launcher memory consume test report/">GL exampleModule memory consume test report</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/GL Launcher memory consume test report/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="“GL”-test部分模块-内存占用测试"><a href="#“GL”-test部分模块-内存占用测试" class="headerlink" title="“GL”  test部分模块 内存占用测试"></a>“GL”  test部分模块 内存占用测试</h1><blockquote>
-<p>trunk 3.0 #90770</p>
-<p>测试机型：N5 6.0</p>
-</blockquote>
-<h3 id="dump场景："><a href="#dump场景：" class="headerlink" title="dump场景："></a>dump场景：</h3><ol>
-<li>正常运行——静置3min</li>
-<li>进入负一屏</li>
-<li>进入3D时钟</li>
-<li>进入AllApps</li>
-<li>进入天气</li>
-<li>进入搜索</li>
-<li>应用3D主题之后</li>
-<li>3D主题关屏之后</li>
-<li>从3D切回2D</li>
-</ol>
-<h2 id="测试结论"><a href="#测试结论" class="headerlink" title="测试结论"></a>测试结论</h2><blockquote>
-<p>以下结论基于N5 6.0机型，结果未与其它机器、安卓版本做横向比较</p>
-</blockquote>
-<ul>
-<li>test进程内，各模块切换时未出现太大波动</li>
-<li>但test起始值（Gfx dev）在 40000KB（~40M）左右，考虑这一点是否有改进必要、空间？</li>
-<li>3D主题相较2D，内存占用升高~17M左右（具体值未严格测试）</li>
-<li>关屏之后（静置&gt;2min），未对内存占用做优化处理——考虑是否可行？是否必要？？？</li>
-<li>从3D切回2D，内存反增11M左右（对此dump文件感兴趣的同学联系我）——此处需要分析hprof，找到问题点</li>
-</ul>
-<h2 id="实验数据"><a href="#实验数据" class="headerlink" title="实验数据"></a>实验数据</h2><h3 id="正常运行——静置3min"><a href="#正常运行——静置3min" class="headerlink" title="正常运行——静置3min"></a>正常运行——静置3min</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">16257</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">25108</span>    <span class="number">25080</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">43264</span>    <span class="number">36859</span>     <span class="number">6404</span></span><br><span class="line">  Dalvik Heap    <span class="number">42114</span>    <span class="number">42040</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">65438</span>    <span class="number">50717</span>    <span class="number">14721</span></span><br><span class="line"> Dalvik Other     <span class="number">3860</span>     <span class="number">3860</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1516</span>     <span class="number">1516</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">176</span>      <span class="number">140</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">41004</span>    <span class="number">41004</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev      <span class="number">136</span>        <span class="number">0</span>      <span class="number">136</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">8610</span>      <span class="number">320</span>      <span class="number">812</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">2555</span>        <span class="number">0</span>     <span class="number">2100</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">173</span>        <span class="number">0</span>      <span class="number">128</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">29908</span>       <span class="number">48</span>    <span class="number">23812</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">2767</span>        <span class="number">0</span>      <span class="number">900</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">1705</span>     <span class="number">1528</span>        <span class="number">4</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1078</span>        <span class="number">8</span>      <span class="number">608</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">44880</span>    <span class="number">44880</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">4924</span>     <span class="number">4924</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">210514</span>   <span class="number">165348</span>    <span class="number">28500</span>        <span class="number">0</span>   <span class="number">108702</span>    <span class="number">87576</span>    <span class="number">21125</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">43572</span></span><br><span class="line">         Native Heap:    <span class="number">25080</span></span><br><span class="line">                Code:    <span class="number">28120</span></span><br><span class="line">               Stack:     <span class="number">1516</span></span><br><span class="line">            Graphics:    <span class="number">85884</span></span><br><span class="line">       Private Other:     <span class="number">9676</span></span><br><span class="line">              System:    <span class="number">16666</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">210514</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
-<h3 id="进入负一屏"><a href="#进入负一屏" class="headerlink" title="进入负一屏"></a>进入负一屏</h3><blockquote>
-<p>未点击触发任何动画</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">16257</span> [com..test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">25583</span>    <span class="number">25548</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">43264</span>    <span class="number">37267</span>     <span class="number">5996</span></span><br><span class="line">  Dalvik Heap    <span class="number">45619</span>    <span class="number">45532</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">65017</span>    <span class="number">57890</span>     <span class="number">7127</span></span><br><span class="line"> Dalvik Other     <span class="number">3900</span>     <span class="number">3900</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1520</span>     <span class="number">1520</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">176</span>      <span class="number">140</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">42456</span>    <span class="number">42456</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev      <span class="number">136</span>        <span class="number">0</span>      <span class="number">136</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">9323</span>      <span class="number">320</span>      <span class="number">960</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">2583</span>        <span class="number">0</span>     <span class="number">2104</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">173</span>        <span class="number">0</span>      <span class="number">128</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">30308</span>       <span class="number">48</span>    <span class="number">24112</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">3297</span>        <span class="number">0</span>     <span class="number">1284</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">2015</span>     <span class="number">1540</span>      <span class="number">272</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1223</span>        <span class="number">8</span>      <span class="number">696</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">53520</span>    <span class="number">53520</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">4924</span>     <span class="number">4924</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">226756</span>   <span class="number">179456</span>    <span class="number">29692</span>        <span class="number">0</span>   <span class="number">108281</span>    <span class="number">95157</span>    <span class="number">13123</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">47344</span></span><br><span class="line">         Native Heap:    <span class="number">25548</span></span><br><span class="line">                Code:    <span class="number">28956</span></span><br><span class="line">               Stack:     <span class="number">1520</span></span><br><span class="line">            Graphics:    <span class="number">95976</span></span><br><span class="line">       Private Other:     <span class="number">9804</span></span><br><span class="line">              System:    <span class="number">17608</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">226756</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
-<h3 id="进入3D时钟"><a href="#进入3D时钟" class="headerlink" title="进入3D时钟"></a>进入3D时钟</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">16257</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">25243</span>    <span class="number">25216</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">43776</span>    <span class="number">36699</span>     <span class="number">7076</span></span><br><span class="line">  Dalvik Heap    <span class="number">42553</span>    <span class="number">42480</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">66333</span>    <span class="number">50306</span>    <span class="number">16027</span></span><br><span class="line"> Dalvik Other     <span class="number">3692</span>     <span class="number">3692</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1532</span>     <span class="number">1532</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">176</span>      <span class="number">140</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">42884</span>    <span class="number">42884</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev      <span class="number">136</span>        <span class="number">0</span>      <span class="number">136</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">8622</span>      <span class="number">320</span>      <span class="number">836</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">2549</span>        <span class="number">0</span>     <span class="number">2108</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">173</span>        <span class="number">0</span>      <span class="number">128</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">29687</span>       <span class="number">48</span>    <span class="number">23884</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">3646</span>        <span class="number">0</span>     <span class="number">1660</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">2539</span>     <span class="number">1564</span>      <span class="number">792</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1077</span>        <span class="number">8</span>      <span class="number">608</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">36240</span>    <span class="number">36240</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">4924</span>     <span class="number">4924</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">205673</span>   <span class="number">159048</span>    <span class="number">30152</span>        <span class="number">0</span>   <span class="number">110109</span>    <span class="number">87005</span>    <span class="number">23103</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">44836</span></span><br><span class="line">         Native Heap:    <span class="number">25216</span></span><br><span class="line">                Code:    <span class="number">28984</span></span><br><span class="line">               Stack:     <span class="number">1532</span></span><br><span class="line">            Graphics:    <span class="number">79124</span></span><br><span class="line">       Private Other:     <span class="number">9508</span></span><br><span class="line">              System:    <span class="number">16473</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">205673</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
-<h3 id="进入AllApps"><a href="#进入AllApps" class="headerlink" title="进入AllApps"></a>进入AllApps</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">16257</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">25539</span>    <span class="number">25512</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">43776</span>    <span class="number">37873</span>     <span class="number">5902</span></span><br><span class="line">  Dalvik Heap    <span class="number">45413</span>    <span class="number">45340</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">66146</span>    <span class="number">57815</span>     <span class="number">8331</span></span><br><span class="line"> Dalvik Other     <span class="number">3960</span>     <span class="number">3960</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1532</span>     <span class="number">1532</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">176</span>      <span class="number">140</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">39380</span>    <span class="number">39380</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev      <span class="number">136</span>        <span class="number">0</span>      <span class="number">136</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">8620</span>      <span class="number">320</span>      <span class="number">836</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">2549</span>        <span class="number">0</span>     <span class="number">2108</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">173</span>        <span class="number">0</span>      <span class="number">128</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">29887</span>       <span class="number">48</span>    <span class="number">24052</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">3646</span>        <span class="number">0</span>     <span class="number">1648</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">2558</span>     <span class="number">1584</span>      <span class="number">792</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1127</span>        <span class="number">8</span>      <span class="number">636</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">44880</span>    <span class="number">44880</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">4924</span>     <span class="number">4924</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">214500</span>   <span class="number">167628</span>    <span class="number">30336</span>        <span class="number">0</span>   <span class="number">109922</span>    <span class="number">95688</span>    <span class="number">14233</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">47716</span></span><br><span class="line">         Native Heap:    <span class="number">25512</span></span><br><span class="line">                Code:    <span class="number">29140</span></span><br><span class="line">               Stack:     <span class="number">1532</span></span><br><span class="line">            Graphics:    <span class="number">84260</span></span><br><span class="line">       Private Other:     <span class="number">9804</span></span><br><span class="line">              System:    <span class="number">16536</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">214500</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
-<h3 id="进入天气"><a href="#进入天气" class="headerlink" title="进入天气"></a>进入天气</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">16257</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">30251</span>    <span class="number">30224</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">50176</span>    <span class="number">46472</span>     <span class="number">3703</span></span><br><span class="line">  Dalvik Heap    <span class="number">56889</span>    <span class="number">56816</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">82047</span>    <span class="number">68387</span>    <span class="number">13660</span></span><br><span class="line"> Dalvik Other     <span class="number">4124</span>     <span class="number">4124</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1872</span>     <span class="number">1872</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">228</span>      <span class="number">144</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">48684</span>    <span class="number">48684</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev      <span class="number">136</span>        <span class="number">0</span>      <span class="number">136</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">9119</span>      <span class="number">320</span>     <span class="number">1216</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">2537</span>        <span class="number">0</span>     <span class="number">2096</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">261</span>        <span class="number">0</span>      <span class="number">216</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">31424</span>       <span class="number">48</span>    <span class="number">25576</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">3819</span>        <span class="number">0</span>     <span class="number">1784</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">2593</span>     <span class="number">1620</span>      <span class="number">792</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1397</span>        <span class="number">8</span>      <span class="number">852</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">39552</span>    <span class="number">39552</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">9044</span>     <span class="number">9044</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">241930</span>   <span class="number">192456</span>    <span class="number">32668</span>        <span class="number">0</span>   <span class="number">132223</span>   <span class="number">114859</span>    <span class="number">17363</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">59228</span></span><br><span class="line">         Native Heap:    <span class="number">30224</span></span><br><span class="line">                Code:    <span class="number">31256</span></span><br><span class="line">               Stack:     <span class="number">1872</span></span><br><span class="line">            Graphics:    <span class="number">88236</span></span><br><span class="line">       Private Other:    <span class="number">14308</span></span><br><span class="line">              System:    <span class="number">16806</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">241930</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
-<h3 id="进入搜索"><a href="#进入搜索" class="headerlink" title="进入搜索"></a>进入搜索</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">16257</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">30979</span>    <span class="number">30952</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">51712</span>    <span class="number">46697</span>     <span class="number">5014</span></span><br><span class="line">  Dalvik Heap    <span class="number">53559</span>    <span class="number">53488</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">78029</span>    <span class="number">62140</span>    <span class="number">15889</span></span><br><span class="line"> Dalvik Other     <span class="number">4084</span>     <span class="number">4084</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1864</span>     <span class="number">1864</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">224</span>      <span class="number">152</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">44948</span>    <span class="number">44948</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev      <span class="number">136</span>        <span class="number">0</span>      <span class="number">136</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">9092</span>      <span class="number">320</span>     <span class="number">1184</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">1214</span>        <span class="number">0</span>      <span class="number">812</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">224</span>        <span class="number">0</span>      <span class="number">204</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">31530</span>       <span class="number">48</span>    <span class="number">25696</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">4048</span>        <span class="number">0</span>     <span class="number">2056</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">2619</span>     <span class="number">1704</span>      <span class="number">732</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1449</span>        <span class="number">8</span>      <span class="number">812</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">53520</span>    <span class="number">53520</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">8700</span>     <span class="number">8700</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">248190</span>   <span class="number">199788</span>    <span class="number">31632</span>        <span class="number">0</span>   <span class="number">129741</span>   <span class="number">108837</span>    <span class="number">20903</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">55924</span></span><br><span class="line">         Native Heap:    <span class="number">30952</span></span><br><span class="line">                Code:    <span class="number">30320</span></span><br><span class="line">               Stack:     <span class="number">1864</span></span><br><span class="line">            Graphics:    <span class="number">98468</span></span><br><span class="line">       Private Other:    <span class="number">13892</span></span><br><span class="line">              System:    <span class="number">16770</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">248190</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
-<h3 id="应用3D主题之后"><a href="#应用3D主题之后" class="headerlink" title="应用3D主题之后"></a>应用3D主题之后</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">23770</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">16450</span>    <span class="number">16424</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">24832</span>    <span class="number">22375</span>     <span class="number">2456</span></span><br><span class="line">  Dalvik Heap    <span class="number">32283</span>    <span class="number">32212</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">57652</span>    <span class="number">46603</span>    <span class="number">11049</span></span><br><span class="line"> Dalvik Other     <span class="number">3352</span>     <span class="number">3352</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack      <span class="number">864</span>      <span class="number">864</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">130</span>      <span class="number">128</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">58872</span>    <span class="number">58872</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev        <span class="number">4</span>        <span class="number">0</span>        <span class="number">4</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">3563</span>      <span class="number">268</span>     <span class="number">1692</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">1359</span>        <span class="number">0</span>      <span class="number">896</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">114</span>        <span class="number">0</span>      <span class="number">112</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">24990</span>       <span class="number">32</span>    <span class="number">20756</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">3203</span>        <span class="number">0</span>     <span class="number">1672</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">1352</span>     <span class="number">1152</span>       <span class="number">16</span>        <span class="number">0</span></span><br><span class="line">   Other mmap      <span class="number">913</span>        <span class="number">8</span>      <span class="number">716</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">44880</span>    <span class="number">44880</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown      <span class="number">300</span>      <span class="number">300</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">192629</span>   <span class="number">158492</span>    <span class="number">25864</span>        <span class="number">0</span>    <span class="number">82484</span>    <span class="number">68978</span>    <span class="number">13505</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">33380</span></span><br><span class="line">         Native Heap:    <span class="number">16424</span></span><br><span class="line">                Code:    <span class="number">25428</span></span><br><span class="line">               Stack:      <span class="number">864</span></span><br><span class="line">            Graphics:   <span class="number">103752</span></span><br><span class="line">       Private Other:     <span class="number">4508</span></span><br><span class="line">              System:     <span class="number">8273</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">192629</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
-<h3 id="3D桌面——关屏"><a href="#3D桌面——关屏" class="headerlink" title="3D桌面——关屏"></a>3D桌面——关屏</h3><blockquote>
-<p>静置1min</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">23770</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">20416</span>    <span class="number">20388</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">33280</span>    <span class="number">27504</span>     <span class="number">5775</span></span><br><span class="line">  Dalvik Heap    <span class="number">34972</span>    <span class="number">34900</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">60660</span>    <span class="number">44452</span>    <span class="number">16208</span></span><br><span class="line"> Dalvik Other     <span class="number">3228</span>     <span class="number">3228</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1088</span>     <span class="number">1088</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">150</span>      <span class="number">136</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">59148</span>    <span class="number">59148</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev        <span class="number">8</span>        <span class="number">0</span>        <span class="number">8</span>        <span class="number">0</span></span><br><span class="line">     .so mmap    <span class="number">12463</span>      <span class="number">284</span>     <span class="number">9176</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">2967</span>        <span class="number">0</span>     <span class="number">2524</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">110</span>        <span class="number">0</span>      <span class="number">108</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">31520</span>       <span class="number">52</span>    <span class="number">26864</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">3170</span>        <span class="number">0</span>     <span class="number">1560</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">1701</span>     <span class="number">1348</span>       <span class="number">20</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1359</span>        <span class="number">8</span>     <span class="number">1120</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">44880</span>    <span class="number">44880</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">3652</span>     <span class="number">3652</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">220832</span>   <span class="number">169112</span>    <span class="number">41380</span>        <span class="number">0</span>    <span class="number">93940</span>    <span class="number">71956</span>    <span class="number">21983</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">36268</span></span><br><span class="line">         Native Heap:    <span class="number">20388</span></span><br><span class="line">                Code:    <span class="number">40568</span></span><br><span class="line">               Stack:     <span class="number">1088</span></span><br><span class="line">            Graphics:   <span class="number">104028</span></span><br><span class="line">       Private Other:     <span class="number">8152</span></span><br><span class="line">              System:    <span class="number">10340</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">220832</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
-<h3 id="从3D切回2D"><a href="#从3D切回2D" class="headerlink" title="从3D切回2D"></a>从3D切回2D</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">23770</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">23624</span>    <span class="number">23596</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">37376</span>    <span class="number">31068</span>     <span class="number">6307</span></span><br><span class="line">  Dalvik Heap    <span class="number">48127</span>    <span class="number">48056</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">69274</span>    <span class="number">53190</span>    <span class="number">16084</span></span><br><span class="line"> Dalvik Other     <span class="number">3368</span>     <span class="number">3368</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1256</span>     <span class="number">1256</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">150</span>      <span class="number">136</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">70896</span>    <span class="number">70896</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev        <span class="number">8</span>        <span class="number">0</span>        <span class="number">8</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">4425</span>      <span class="number">320</span>      <span class="number">968</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap      <span class="number">654</span>        <span class="number">0</span>       <span class="number">64</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">118</span>        <span class="number">0</span>      <span class="number">108</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">13328</span>       <span class="number">52</span>     <span class="number">8816</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">1996</span>        <span class="number">0</span>      <span class="number">380</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">2020</span>     <span class="number">1440</span>      <span class="number">332</span>        <span class="number">0</span></span><br><span class="line">   Other mmap       <span class="number">88</span>        <span class="number">8</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">53520</span>    <span class="number">53520</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">3668</span>     <span class="number">3668</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">227246</span>   <span class="number">206316</span>    <span class="number">10676</span>        <span class="number">0</span>   <span class="number">106650</span>    <span class="number">84258</span>    <span class="number">22391</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">49828</span></span><br><span class="line">         Native Heap:    <span class="number">23596</span></span><br><span class="line">                Code:    <span class="number">10708</span></span><br><span class="line">               Stack:     <span class="number">1256</span></span><br><span class="line">            Graphics:   <span class="number">124416</span></span><br><span class="line">       Private Other:     <span class="number">7188</span></span><br><span class="line">              System:    <span class="number">10254</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">227246</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">------------------------              </span></span><br><span class="line"><span class="function">After 5Min------------------              </span></span><br><span class="line"><span class="function">------------------------              </span></span><br><span class="line"><span class="function">** MEMINFO in pid 23770 [com.org.test] **</span></span><br><span class="line"><span class="function">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span></span><br><span class="line"><span class="function">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span></span><br><span class="line"><span class="function">                ------   ------   ------   ------   ------   ------   ------</span></span><br><span class="line"><span class="function">  Native Heap    23368    23340        0        0    37120    30598     6521</span></span><br><span class="line"><span class="function">  Dalvik Heap    43928    43856        0        0    69379    65551     3828</span></span><br><span class="line"><span class="function"> Dalvik Other     3560     3560        0        0</span></span><br><span class="line"><span class="function">        Stack     1244     1244        0        0</span></span><br><span class="line"><span class="function">       Ashmem      150      136        0        0</span></span><br><span class="line"><span class="function">      Gfx dev    72440    72440        0        0</span></span><br><span class="line"><span class="function">    Other dev        8        0        8        0</span></span><br><span class="line"><span class="function">     .so mmap     3636      320      788        0</span></span><br><span class="line"><span class="function">    .apk mmap      395        0        0        0</span></span><br><span class="line"><span class="function">    .ttf mmap       26        0        8        0</span></span><br><span class="line"><span class="function">    .dex mmap    12470       52     8176        0</span></span><br><span class="line"><span class="function">    .oat mmap     2610        0      260        0</span></span><br><span class="line"><span class="function">    .art mmap     2159     1456       28        0</span></span><br><span class="line"><span class="function">   Other mmap       58        8       20        0</span></span><br><span class="line"><span class="function">   EGL mtrack    44880    44880        0        0</span></span><br><span class="line"><span class="function">      Unknown     3668     3668        0        0</span></span><br><span class="line"><span class="function">        TOTAL   214600   194960     9288        0   106499    96149    10349</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"> App Summary</span></span><br><span class="line"><span class="function">                       <span class="title">Pss</span><span class="params">(KB)</span></span></span><br><span class="line"><span class="function">                        ------</span></span><br><span class="line"><span class="function">           Java Heap:    45340</span></span><br><span class="line"><span class="function">         Native Heap:    23340</span></span><br><span class="line"><span class="function">                Code:     9604</span></span><br><span class="line"><span class="function">               Stack:     1244</span></span><br><span class="line"><span class="function">            Graphics:   117320</span></span><br><span class="line"><span class="function">       Private Other:     7400</span></span><br><span class="line"><span class="function">              System:    10352</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">               TOTAL:   214600      TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GL/">GL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Performance/">Performance</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
 
   
     <article id="post-技术/Android/GL check point"  class="article article-type-post" itemscope itemprop="blogPost" >
@@ -1114,8 +1121,10 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 <p>高斯模糊之类的优化</p>
 
       
+
     </div>
     <footer class="article-footer">
+
       
       
       
@@ -1127,6 +1136,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 </article>
 
 <!-- Table of Contents -->
+
 
   
 
