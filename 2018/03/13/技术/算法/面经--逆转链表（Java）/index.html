@@ -3,28 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>《我想看到的世界》（a-light-inside）[美]jeannie-suk | KyleCe</title>
+  <title>面经--逆转链表 | KyleCe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="读书社科" />
+  <meta name="keywords" content="算法" />
   
   
   
   
-  <meta name="description" content="#源引–关于作者  珍妮 苏克(Jeannie Suk)  韩裔美国人，1973年生于首尔，6岁全家技术移民美国 她在韩国的知名度仅次于女总统朴槿惠从芭蕾舞逐梦少女到哈佛法学院终身教授一段关于艺术、人生和法律的长途冒险   耶鲁学士-牛津文学博士-哈佛法学博士-哈佛法学院终身教授  曾梦想成为一名芭蕾舞舞者，后因家庭原因被迫放弃。91年凭借自身天赋和努力，成功申请上耶鲁。毕业时获得马歇尔奖学金，继">
-<meta name="keywords" content="读书,社科">
+  <meta name="description" content="[面经] 逆转字符串（Java）如何逆转链表呢？本篇介绍两种常见方法：  遍历 递归  遍历123456789101112131415private static Node reverseHead(@Nonnull Node head) &amp;#123;    Node pre = head;    Node cur = head.nextNode;    Node next = null;    w">
+<meta name="keywords" content="算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《我想看到的世界》（A-light-inside）[美]Jeannie-Suk">
-<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2017/08/13/每周一书/《我想看到的世界》（A-light-inside）[美]Jeannie-Suk/index.html">
+<meta property="og:title" content="面经--逆转链表">
+<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2018/03/13/技术/算法/面经--逆转链表（Java）/index.html">
 <meta property="og:site_name" content="KyleCe">
-<meta property="og:description" content="#源引–关于作者  珍妮 苏克(Jeannie Suk)  韩裔美国人，1973年生于首尔，6岁全家技术移民美国 她在韩国的知名度仅次于女总统朴槿惠从芭蕾舞逐梦少女到哈佛法学院终身教授一段关于艺术、人生和法律的长途冒险   耶鲁学士-牛津文学博士-哈佛法学博士-哈佛法学院终身教授  曾梦想成为一名芭蕾舞舞者，后因家庭原因被迫放弃。91年凭借自身天赋和努力，成功申请上耶鲁。毕业时获得马歇尔奖学金，继">
+<meta property="og:description" content="[面经] 逆转字符串（Java）如何逆转链表呢？本篇介绍两种常见方法：  遍历 递归  遍历123456789101112131415private static Node reverseHead(@Nonnull Node head) &amp;#123;    Node pre = head;    Node cur = head.nextNode;    Node next = null;    w">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-2d8d3e45715252fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-03-09T15:44:28.813Z">
+<meta property="og:updated_time" content="2018-03-13T15:39:00.997Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《我想看到的世界》（A-light-inside）[美]Jeannie-Suk">
-<meta name="twitter:description" content="#源引–关于作者  珍妮 苏克(Jeannie Suk)  韩裔美国人，1973年生于首尔，6岁全家技术移民美国 她在韩国的知名度仅次于女总统朴槿惠从芭蕾舞逐梦少女到哈佛法学院终身教授一段关于艺术、人生和法律的长途冒险   耶鲁学士-牛津文学博士-哈佛法学博士-哈佛法学院终身教授  曾梦想成为一名芭蕾舞舞者，后因家庭原因被迫放弃。91年凭借自身天赋和努力，成功申请上耶鲁。毕业时获得马歇尔奖学金，继">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1481332-2d8d3e45715252fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="面经--逆转链表">
+<meta name="twitter:description" content="[面经] 逆转字符串（Java）如何逆转链表呢？本篇介绍两种常见方法：  遍历 递归  遍历123456789101112131415private static Node reverseHead(@Nonnull Node head) &amp;#123;    Node pre = head;    Node cur = head.nextNode;    Node next = null;    w">
   
     <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
   
@@ -162,7 +160,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-每周一书/《我想看到的世界》（A-light-inside）[美]Jeannie-Suk" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-技术/算法/面经--逆转链表（Java）" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -170,7 +168,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      《我想看到的世界》（A-light-inside）[美]Jeannie-Suk
+      面经--逆转链表
     </h1>
   
 
@@ -178,8 +176,8 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/每周一书/《我想看到的世界》（A-light-inside）[美]Jeannie-Suk/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	<a href="/2018/03/13/技术/算法/面经--逆转链表（Java）/" class="article-date">
+	  <time datetime="2018-03-13T15:27:30.000Z" itemprop="datePublished">2018-03-13</time>
 	</a>
 
       
@@ -195,35 +193,13 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#源引–关于作者</p>
-<hr>
-<p><strong>珍妮 苏克(Jeannie Suk)</strong></p>
-<blockquote>
-<p>韩裔美国人，1973年生于首尔，6岁全家技术移民美国</p>
-<p>她在韩国的知名度仅次于女总统朴槿惠<br>从芭蕾舞逐梦少女到哈佛法学院终身教授<br>一段关于艺术、人生和法律的长途冒险</p>
-</blockquote>
-<hr>
-<p><strong>耶鲁学士-牛津文学博士-哈佛法学博士-哈佛法学院终身教授</strong></p>
-<blockquote>
-<p>曾梦想成为一名芭蕾舞舞者，后因家庭原因被迫放弃。<br>91年凭借自身天赋和努力，成功申请上耶鲁。毕业时获得马歇尔奖学金，继而转战牛津大学攻读文学博士。在完成文学博士学位之后，发现法律才是自己愿意为之终身付出的事业，于是她考入哈佛大学法学院…</p>
-</blockquote>
-<hr>
-<p>#发现–《A light inside》</p>
-<hr>
-<p>这并不是一碗鸡汤，书中描写了很多作者幼年时期的经历细节以及当时的心路历程，从中可以看出作者母亲的远见卓识以及早年教育对一个人的重要性，或许会对教育孩子有所启发。</p>
-<p>作者行文率真，字里行间都透露着真诚，书中不少章节读起来都会忍不住会心一笑。</p>
-<p>读到最后，不禁生出敬仰之情。敬仰作者为追求目标拼尽全力，敬仰她追求真我而毫无畏惧，敬仰她的全面（芭蕾舞、钢琴、小提琴、文学、法语、跆拳道）…</p>
-<p>她的理想是通过法律，让世界变得更好，对学生倾囊相授，让他们一起来实现不仅仅属于她个人的崇高理想。</p>
-<hr>
-<p><a href="https://www.amazon.cn/gp/product/B00OUL14NM/ref=oh_aui_detailpage_o00_s01?ie=UTF8&amp;psc=1" target="_blank" rel="noopener"><strong>亚马逊链接</strong></a></p>
-<p><a href="https://www.evernote.com/l/ARveLWgXaEFLoac7FvDAMASOFxA3j3q0NOk" target="_blank" rel="noopener"><strong>笔记链接</strong></a></p>
-<p><strong>导图</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2d8d3e45715252fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="A light inside overview.png"></p>
-<hr>
-<p><strong>笔记文字</strong></p>
-<blockquote>
-<p>A Light Inside<br>1 流放的移民<br>  1.1 去美国，全速驶向未来<br>  1.2 作为一个韩裔，竟不能吃泡菜<br>  1.3 努力一次，就会获得多一点勇气<br>  1.4 在书籍中漫游是最美妙的冒险<br>  1.5 充好电，才能和焦虑这个魔鬼对峙<br>2 成长的烦恼<br>  2.1 从回忆中创造自己<br>  2.2 学会用沉默表达意见<br>  2.3 但愿你也曾经倾尽全力<br>  2.4 上不了Yale也不要紧<br>  2.5 将自己的爱好和游戏融合在一起<br>  2.6 自由是人生的基石<br>3 通往自由<br>  3.1 感受全心投入的强烈愉悦感<br>  3.2 完成论文的技巧：每天只写一页半<br>  3.3 找到命中注定要去做的事<br>  3.4 认知不完美，不要有过高期待<br>  3.5 不要让直觉阻碍你前进<br>  3.6 支配工作，而不是让工作支配你<br>4 在哈佛<br>  4.1 完美靠恐惧而活<br>  4.2 过想要的人生，就是终极礼物<br>  4.3 没有正确答案，只有独立思考<br>  4.4 学习那些让你感到不适的事</p>
-</blockquote>
+        <h3 id="面经-逆转字符串（Java）"><a href="#面经-逆转字符串（Java）" class="headerlink" title="[面经] 逆转字符串（Java）"></a>[面经] 逆转字符串（Java）</h3><p>如何逆转链表呢？本篇介绍两种常见方法：</p>
+<ol>
+<li>遍历</li>
+<li>递归</li>
+</ol>
+<h5 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseHead</span><span class="params">(@Nonnull Node head)</span> </span>&#123;</span><br><span class="line">    Node pre = head;</span><br><span class="line">    Node cur = head.nextNode;</span><br><span class="line">    Node next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</span><br><span class="line">        next = cur.nextNode;</span><br><span class="line">        cur.nextNode = pre;</span><br><span class="line"></span><br><span class="line">        pre = cur;</span><br><span class="line">        cur = next;</span><br><span class="line">    &#125;</span><br><span class="line">    head.nextNode = <span class="keyword">null</span>;</span><br><span class="line">    head = pre;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseByRecur</span><span class="params">(Node current)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (current == <span class="keyword">null</span> || current.nextNode == <span class="keyword">null</span>) <span class="keyword">return</span> current;  </span><br><span class="line">    Node nextNode = current.nextNode;  </span><br><span class="line">    current.nextNode = <span class="keyword">null</span>;  </span><br><span class="line">    Node reverseRest = reverseByRecur(nextNode);  </span><br><span class="line">    nextNode.nextNode = current;  </span><br><span class="line">    <span class="keyword">return</span> reverseRest;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -258,7 +234,7 @@
 
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
 
     </footer>
   </div>
@@ -266,19 +242,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/08/13/日常记录/【心得分享】工具推荐——思维导图、VPN、远程、笔记本、任务管理/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          【心得分享】工具推荐——思维导图、VPN、远程、笔记本、任务管理
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/08/13/每周一书/《褚时健传》/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/03/12/技术/算法/面经--逆转字符串（Java）/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">《褚时健传》</div>
+      <div class="article-nav-title">面经--逆转字符串</div>
     </a>
   
 </nav>
@@ -292,7 +259,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav">无</ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#面经-逆转字符串（Java）"><span class="nav-number">1.</span> <span class="nav-text">[面经] 逆转字符串（Java）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#遍历"><span class="nav-number">1.0.1.</span> <span class="nav-text">遍历</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#递归"><span class="nav-number">1.0.2.</span> <span class="nav-text">递归</span></a></li></ol></li></ol></li></ol>
     
     </div>
   </aside>
