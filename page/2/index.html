@@ -255,228 +255,6 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--/">【Note-程序】HashMap-Integer,-V--SparseArray--</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>众所周知，基础数组的处理效率要比集合的处理效率高出指数倍（内存寻址优势，指哪打哪，直截了当）</p>
-</blockquote>
-<blockquote>
-<p>在HashMap&lt;K, V&gt; 中K为Integer类型时，简单考虑，使用K作为数组下标可以使用基础数组替代HashMap，但这样处理的话会有一个问题，那就是K值较大时，直接使用数组会导致极大的内存空间浪费（很多数组内容都由null填充）——由此想到“稀疏数组”</p>
-</blockquote>
-<p><strong>SparseArray</strong>就是针对这一场景设计的<br><em>数组中仅仅保存有内容的空间</em> 这样一来，就既可以利用数组高效的优势，又避免了内存空间的浪费。</p>
-<p><strong>取android.util.SparseArray源码中的put API如下：</strong></p>
-<pre><code>/**
- * Adds a mapping from the specified key to the specified value,
- * replacing the previous mapping from the specified key if there
- * was one.
- */
-public void put(int key, E value) {
-    int i = ContainerHelpers.binarySearch(mKeys, mSize, key);
-
-    if (i &gt;= 0) {
-        mValues[i] = value;
-    } else {
-        i = ~i;
-
-        if (i &lt; mSize &amp;&amp; mValues[i] == DELETED) {
-            mKeys[i] = key;
-            mValues[i] = value;
-            return;
-        }
-
-        if (mGarbage &amp;&amp; mSize &gt;= mKeys.length) {
-            gc();
-
-            // Search again because indices may have changed.
-            i = ~ContainerHelpers.binarySearch(mKeys, mSize, key);
-        }
-
-        mKeys = GrowingArrayUtils.insert(mKeys, mSize, i, key);
-        mValues = GrowingArrayUtils.insert(mValues, mSize, i, value);
-        mSize++;
-    }
-}
-</code></pre><blockquote>
-<p><em>可以看到，在查找是否包含时使用了BinarySearch（二分搜索），在插入时又做了一次容量、size检查，有无用内存时手动gc，此gc为private函数，只是对内存进行了整理，无效内容置为null</em></p>
-</blockquote>
-<blockquote>
-<p>查看DELETED定义：<br>private static final Object DELETED = new Object();<br>在删除时，只是将有效索引的内容至为DELETED，将mGarbage至为true，在下次有增/改操作时进行统一的容量整理；个人感觉这一api逻辑是经验设计，为的是避免连续删除时的频繁容量整理；</p>
-</blockquote>
-<p><strong>结论：</strong></p>
-<blockquote>
-<p>使用HashMap&lt;Integer, V&gt;时，用SparseArray替代，可以极大地提高性能</p>
-</blockquote>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashMap-Integer/">HashMap-Integer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SparseArray/">SparseArray</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/【Java-基础系列】Synchronized关键字"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/">【Java-基础系列】Synchronized关键字</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="初识"><a href="#初识" class="headerlink" title="初识"></a>初识</h2><p><code>synchronize</code></p>
-<blockquote>
-<p> 翻译——同步（cause to occur or operate at the same time or rate.）</p>
-</blockquote>
-<p>一般用于多线程操作，保证操作的同步性</p>
-<p>消除线程切换时导致的共享内存的内容不可预测性</p>
-<h2 id="典型应用"><a href="#典型应用" class="headerlink" title="典型应用"></a>典型应用</h2><p>单例模式的<code>double-check</code></p>
-<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.45.47 AM.png" alt="MacGesture MacGesture, Today at 12.45.47 AM"></p>
-<blockquote>
-<p>题外话：单例模式很容易引发内存泄露，在项目中要少用；</p>
-<p>另外单例模式的实现形式中，使用<code>enum</code>枚举是比较简洁的形式</p>
-</blockquote>
-<h2 id="常见使用形式"><a href="#常见使用形式" class="headerlink" title="常见使用形式"></a>常见使用形式</h2><ul>
-<li><p>锁方法</p>
-<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p>
-</li>
-<li><p>锁代码段</p>
-<ul>
-<li>用this关键字 <code>sychronized(this)</code></li>
-</ul>
-<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.21.38 AM.png" alt="MacGesture MacGesture, Today at 12.21.38 AM"></p>
-<ul>
-<li>用锁对象 <code>sychronized(lockObjct)</code></li>
-</ul>
-<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.17.56 AM.png" alt="MacGesture MacGesture, Today at 12.17.56 AM"></p>
-</li>
-</ul>
-<h2 id="官方教程"><a href="#官方教程" class="headerlink" title="官方教程"></a>官方教程</h2><p>在Oracle的Java 文档里头有对Synchronization的详细解释，分为如下五部分展开：</p>
-<ol>
-<li><p>线程接口（Thread Interference）</p>
-<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM.png" alt="【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM"></p>
-<blockquote>
-<p>不同线程对同一份数据的操作如果是穿插进行的，会导致不可预料的结果，这主要是因为CPU会让多个线程分片执行，各个线程对此数据的操作也是互不可知的，这样就很容易引发内存不按照预期改变的情况</p>
-</blockquote>
-</li>
-<li><p>内存连续性错误（Memory Consistency Errors）<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.17 AM.png" alt=""></p>
-<blockquote>
-<p>例子如上图，若三步操作不仅由一个线程执行，就很有可能导致打印出的并不是1而是0</p>
-</blockquote>
-</li>
-<li><p>同步方法（Synchronized Methods)<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.41 AM.png" alt=""></p>
-<blockquote>
-<ul>
-<li>Java中在方法体上添加<code>synchronized</code>关键字，能够保证同一时间仅有一个线程在调用某个对象的该方法；</li>
-</ul>
-<ul>
-<li>同时Java还会为该方法在与对象之间建立一个happens-before关系，保证对象的该状态对所有线程都是可见的</li>
-</ul>
-</blockquote>
-</li>
-</ol>
-<ol>
-<li><p>固有锁与同步（Intrinsic Locks and Synchronization)</p>
-<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p>
-<blockquote>
-<p>当一个线程调用<code>synchronized</code>方法时，它会自动获取该方法对象的固有锁，并在方法返回时释放它。即使返回是由未捕获的异常引起的，也会释放锁。</p>
-</blockquote>
-<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.56 AM.png" alt="MacGesture MacGesture, Today at 12.16.56 AM"></p>
-<blockquote>
-<p>直接使用this当做锁的关键字时，改对象的所有使用this当关键字的操作都必须保证同时只有一个线程访问，这样做虽然简便，但时间上有效率浪费，因为该对象的所有操作并不一定要保持完全同步，👇的代码段就解决了这一问题：</p>
-<p>通过细粒度的锁来提高并发性：</p>
-</blockquote>
-<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.22.45 AM.png" alt="MacGesture MacGesture, Today at 12.22.45 AM"></p>
-<blockquote>
-<p>类<code>MsLunch</code>有两个实例字段，<code>c1</code>并且<code>c2</code>从不一起使用。这些字段的所有更新必须同步，但是没有理由阻止c1的更新与c2的更新进行交错 - 这样做会通过创建不必要的阻止来降低并发性。而不是使用同步方法或以其他方式使用与之关联的锁<code>this</code></p>
-</blockquote>
-</li>
-<li><p>原子操作（<code>Atomic</code> Access ）</p>
-<blockquote>
-<p>原子操作保证了操作的完整性：要么不执行，执行的话就一定要完全执行（即使虚拟机GC也不能打断）</p>
-</blockquote>
-<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.35.40 AM.png" alt="MacGesture MacGesture, Today at 12.35.40 AM"></p>
-<p> 第一条指的是我们可以使用<code>Java</code>内附的<code>AtomicInteger</code>、<code>AtomicBoolean</code>等变量来直接利用这一特性</p>
-<p> 第二条引出了另一个关键字<code>volatile</code>，这实际上需要另起一篇进行介绍了</p>
-</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>synchronize在解决多线程编程问题时有奇效，但有一定的效率牺牲</p>
-<p>使用时应尽量减小锁定的范围</p>
-<p>对并发性有要求的地方需要注意看是否有细化锁粒度的必要</p>
-<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3>
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Synchronized/">Synchronized</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-技术/程序/【Alibaba-Java开发手册】-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -656,61 +434,6 @@ public void put(int key, E value) {
 
 
   
-    <article id="post-技术/程序/Java进阶--for-each与传统for"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶--for-each与传统for/">Java进阶--for-each与传统for</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Java进阶--for-each与传统for/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>for-each 相较于 传统的 for-i更优</p>
-<p>自己编写的类在代表一组元素时，即使不实现Collection也要让它实现Iterable</p>
-<h3 id="体现"><a href="#体现" class="headerlink" title="体现"></a>体现</h3><p>for-each循环在预防bug方面与传统for循环有着无可比拟的优势</p>
-<ul>
-<li>传统for</li>
-<li>for-each</li>
-</ul>
-<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>implement Iterable接口，示例：</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/for-each/">for-each</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-技术/程序/Java进阶——接口优于抽象类"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -770,6 +493,130 @@ public void put(int key, E value) {
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/Java进阶--被用烂的&#34;继承&#34;"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶--被用烂的"继承"/">Java进阶——接口优于抽象类</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/Java进阶--被用烂的"继承"/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>继承很强大，但也有问题</p>
+<p>确实是is-a关系时才使用继承</p>
+<p>如果处在不同的包中，并且SuperClass不是为继承设计的，这时会导致脆弱性</p>
+<p>可以使用复合和转发机制来代替继承来避免这种脆弱性</p>
+<p>关键字:</p>
+<p><strong>继承、复合、装饰者模式、包装类、转发</strong></p>
+<blockquote>
+<p>keywords:</p>
+<p>继承(inheritance)、复合(composition)、装饰者模式(decorator)、包装类(WrapperClass)、转发(forwarding)</p>
+</blockquote>
+<p><em>为叙述方便，下文以CC代表子类，SC代表超类，也就是父类</em></p>
+<h3 id="问题体现"><a href="#问题体现" class="headerlink" title="问题体现"></a>问题体现</h3><p><strong>继承打破了封装性</strong></p>
+<p>CC依赖于SC的实现细节，在SC更新换代时，CC会受影响，严重的会导致错误，为了避免出现错误，时常要做的事情是跟着SC的更新而更新CC</p>
+<p>其实你可以直接使用<strong>复合</strong>来避免这一问题出现——也就是，在原来的CC中添加一个SC的实例</p>
+<p>这样新的类中可以直接使用SC的方法逻辑，而不用担心SC更新时要升级API的问题（概念：<strong>转发</strong>）</p>
+<p>这样的类也被称为<strong>包装类</strong></p>
+<p>这也引出了设计模式中的Decorator模式概念（<strong>装饰者模式</strong>）</p>
+<h3 id="强制使用的弊端"><a href="#强制使用的弊端" class="headerlink" title="强制使用的弊端"></a>强制使用的弊端</h3><ul>
+<li>暴露不必要的SC细节</li>
+<li>永远地限制了CC的性能（使用复合模式则可以在需要时更换转发的具体实现）</li>
+<li>导致语义混淆</li>
+</ul>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/Java进阶--for-each与传统for"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶--for-each与传统for/">Java进阶--for-each与传统for</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/Java进阶--for-each与传统for/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>for-each 相较于 传统的 for-i更优</p>
+<p>自己编写的类在代表一组元素时，即使不实现Collection也要让它实现Iterable</p>
+<h3 id="体现"><a href="#体现" class="headerlink" title="体现"></a>体现</h3><p>for-each循环在预防bug方面与传统for循环有着无可比拟的优势</p>
+<ul>
+<li>传统for</li>
+<li>for-each</li>
+</ul>
+<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>implement Iterable接口，示例：</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/for-each/">for-each</a></li></ul>
 
     </footer>
   </div>
@@ -871,6 +718,60 @@ public void put(int key, E value) {
 
 
   
+    <article id="post-技术/程序/Java进阶-- 以函数对象代表策略"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/">Java进阶-- 以函数对象代表策略</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>介绍设计模式中的策略模式（strategy）</p>
+<p>C++、C语言中的函数指针在Java中的替代形式</p>
+<p>面向接口编程</p>
+<p>keywords：</p>
+<p><strong>策略、函数对象、面向接口</strong></p>
+<h3 id="出发点"><a href="#出发点" class="headerlink" title="出发点"></a>出发点</h3><p>函数指针，或是实现代理模式、lambda表达式</p>
+<p>### </p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/程序/Java进阶-- 优先考虑泛型方法"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -945,7 +846,7 @@ public void put(int key, E value) {
 
 
   
-    <article id="post-技术/程序/Java进阶-- 以函数对象代表策略"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/程序/Java进阶-- volatile关键字"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -953,7 +854,7 @@ public void put(int key, E value) {
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/">Java进阶-- 以函数对象代表策略</a>
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/">Java进阶-- volatile关键字</a>
     </h1>
   
 
@@ -961,7 +862,7 @@ public void put(int key, E value) {
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/" class="article-date">
+	<a href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -972,13 +873,36 @@ public void put(int key, E value) {
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>介绍设计模式中的策略模式（strategy）</p>
-<p>C++、C语言中的函数指针在Java中的替代形式</p>
-<p>面向接口编程</p>
-<p>keywords：</p>
-<p><strong>策略、函数对象、面向接口</strong></p>
-<h3 id="出发点"><a href="#出发点" class="headerlink" title="出发点"></a>出发点</h3><p>函数指针，或是实现代理模式、lambda表达式</p>
-<p>### </p>
+        <p>volatile含有部分synchronized的特性，效率更高，但使用时需要注意细节，不然容易出错</p>
+<h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>Java中被volatile修饰的变量，每次读写都会直接使用“内存”介质，而不是使用CPU缓存</p>
+<blockquote>
+<p>音 — UK <strong> /ˈvɒl.ə.taɪl/  US </strong> /ˈvɑː.lə.t̬əl/</p>
+<p>英 — <strong>likely to change suddenly and unexpectedly or suddenly become violent or angry</strong></p>
+<p>中 — 易变的</p>
+</blockquote>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
+<li>保证变量可见性</li>
+<li>禁止指令进行重排序</li>
+</ul>
+<blockquote>
+<p>基础概念：可见性、有序性、原子性</p>
+<ol>
+<li>可见性：对所有线程来说，任一线程对变量的改动都立即可见</li>
+<li>有序性：代码可能会被编译器混编，有序性即指代码按顺序执行</li>
+<li>原子性：所有操作不会被打断，谁也不行（除非断电）</li>
+</ol>
+</blockquote>
+<p>实际上我们对变量的修改，虽然可能Java就一行代码（如 y=x），但被解释成汇编语言会变成多行（y=x就需要进行两步操作：读x值，写入y所在内存，学过汇编的同学应该比较清楚）</p>
+<h3 id="与synchronized的区别"><a href="#与synchronized的区别" class="headerlink" title="与synchronized的区别"></a>与synchronized的区别</h3><p>按字面理解，volatile关键字只是标记变量为易变的，并不能保证对变量的所有操作都是同步的，即不能保证具有synchronized一样的效果</p>
+<p>实际上，对volatile修饰的变量的读/写操作是可以保证其原子性的，但还要注意一个问题，即同时写变量的线程可能不止一个，如此一来，其中部分的写操作就有可能丢失</p>
+<p>听起来好像volatile使用起来很危险，但它也是有它的用途的</p>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
+<li>对于写不依赖历史状态的变量，可以考虑使用volatile修饰字代替synchronized来提高程序效率</li>
+<li>保证代码的有序性：volatile变量的读写操作之前的代码，编译器是不会进行重排序的</li>
+</ul>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在volatile满足不了要求的场景可以考虑使用synchronized、lock、Atomic变量来保证特性</p>
+<p>对变量的写不依赖历史状态的变量使用volatile修饰可以提高效率</p>
+<p>对于需要保证部分程序语句有序性的场景可以考虑使用volatile代替锁定整个代码块，提高效率</p>
 
       
 
@@ -988,7 +912,7 @@ public void put(int key, E value) {
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/volatile/">volatile</a></li></ul>
 
     </footer>
   </div>

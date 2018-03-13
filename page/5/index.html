@@ -255,86 +255,6 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/">【Android Tool】内存快照分析，自动抓取dump文件并转换脚本</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>最新得到的Google内部消息，未来谷歌应用商店的排名算法将会把App的性能纳入考量范围（使用的机器学习算法），我们开发者也应该将性能这一指标纳入自己的检查范围</p>
-</blockquote>
-<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>解决抓取内存文件，拉取到电脑，新建文件夹，转换为Eclipse Memory Analyzer 文件操作繁琐的问题</p>
-<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
-<li>clone项目之后，上述流程只需要👇的指令即可完成</li>
-<li>自动将转换的文件存档到新建的同名目录下，避免MAT分析产生的临时文件污染文档目录</li>
-<li>更改目录或进程时，无需修改配置文件，输入即可自动记录上次操作习惯</li>
-<li>重复输入名称时，会自动append 时间到原来名称，避免覆盖历史文件</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python GrabDump.py</span><br></pre></td></tr></table></figure>
-<p>读完本文，你将收获到一个自动化上述流程的简单project</p>
-<blockquote>
-<p>需要了解 Apk包的内存占用各部分组成</p>
-</blockquote>
-<h3 id="GitHub-地址"><a href="#GitHub-地址" class="headerlink" title="GitHub 地址"></a>GitHub 地址</h3><p><a href="https://github.com/KyleCe/PhonePerformanceMeasure">https://github.com/KyleCe/PhonePerformanceMeasure</a></p>
-<h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><p>最终的使用时样式：</p>
-<p><img src="../../pic_resource/grabDump.png" alt=""></p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
-<li>首先你需要安装Python ^_^</li>
-</ul>
-<ul>
-<li>可以输入的参数包括：  dump文件名、存放目录、需要抓取的进程名</li>
-<li>下次输入时，如果没有完全输入，会自动使用上一次的参数</li>
-</ul>
-<blockquote>
-<p>第一次输入的时候还是需要完全的配置</p>
-</blockquote>
-<h3 id="已知问题"><a href="#已知问题" class="headerlink" title="已知问题"></a>已知问题</h3><p>抓取dump次数过多时会出现adb缓存读写错误的问题，需要重启adb（kill-server | start-server），后续找到解决方案会及时更新到Github repository</p>
-<hr>
-<p>扫描二维码，关注“夕识”，一起学习Android知识、CS知识，努力成为一位  different thinker</p>
-<p><img src="../../pic_resource/qrcode_for_wechat.jpg" alt=""></p>
-<p>点击“链接”，跳转至repo地址</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dump/">Dump</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-技术/Android/GL Launcher memory consume test report"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -489,6 +409,75 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GL/">GL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Performance/">Performance</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/【Note】《构建之法》提要"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/【Note】《构建之法》提要/">【Note】《构建之法》提要</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/【Note】《构建之法》提要/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>《软件工程  构建之法》作者邹欣系Windows中国工程师团队首席研发总监 （Link：<a href="https://www.amazon.cn/图书/dp/B011LPUAYI/ref=sr_1_1?ie=UTF8&amp;qid=1487685207&amp;sr=8-1&amp;keywords=构建之法" target="_blank" rel="noopener">亚马逊</a>）</p>
+</blockquote>
+<blockquote>
+<p>整本书，极其认真，结构组织的有点像学术论文了。涵盖面比较全，涉及到了现代软件工程的整个流程，从需求的挖掘产生，到中间各个环节地循序渐进，直至最后的交付与维护支持。必然也就导致每个点深入程度相对较有限。</p>
+</blockquote>
+<blockquote>
+<p>除了项目本身，本书另一个关注重点是项目中的人：项目经理、用户、测试、开发，讲到各种角色各自的职责，相互之间的协作关系、合作方法，最后一章中还有提到职业道德~（感觉有点偏向股东与雇主）</p>
+</blockquote>
+<blockquote>
+<p>全书更多的是探讨方法论，关于开发、关于敏捷迭代、关于项目管理、关于结对编程、关于测试流程与种类、关于用户体验的获得与改进、关于需求分析与评审、关于软件工程师的成长。当然作者只是提供了一些自己的见解，很多观点并不一定准确，其中也有一些落伍的工具、模型。</p>
+</blockquote>
+<blockquote>
+<p>更大的意义许是全面地概述一些需要注意的点，真正贯彻落实这些方法需要耗费极大成本。很多观点引人深思。</p>
+</blockquote>
+<hr>
+<p><a href="https://www.evernote.com/l/ARsVoFkwFjJCdY6Llj0jxODvRc2NPL8xgTI" target="_blank" rel="noopener">EverNote链接</a></p>
+<p><a href="https://www.evernote.com/shard/s283/sh/15a05930-1632-4275-8e8b-963d23c4e0ef/45cd8d3cbf318132/res/7853730d-412e-4220-9b6a-4fda39ca66a8/构建之法.xmind" target="_blank" rel="noopener">XMind文档</a></p>
+<p><strong>导图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7bcaba0014f30279.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="构建之法 overview.png"></p>
+<p><strong>文本</strong><br>构建之法</p>
+<p>1 个人<br>  1.1 2 个人和技术流程<br>    1.1.1 单元测试<br>        1.1.1.1 着眼于基本点；当事人编写；不改变机器状态；快；可重现；覆盖所有代码路径；与产品代码一同维护<br>    1.1.2 效能分析工具<br>        1.1.2.1 抽样、代码注入<br>    1.1.3 个人开发流程<br>        1.1.3.1 计划、开发、记录用时、测试报告、计算工作量、事后总结、提出过程改进计划<br>  1.2 3 软件工程师的成长<br>    1.2.1 大江东去，浪淘尽，千古风流人物<br>2 团队<br>  2.1 4 两人合作<br>    2.1.1 代码规范、设计规范、复审（驳回，选择性同意，放行）、结对编程、不同阶段的技巧<br>  2.2 5 团队和流程<br>    2.2.1 团队模式、开发流程<br>  2.3 6 敏捷流程<br>    2.3.1 敏捷问题与解法、敏捷团队（自主）、敏捷总结<br>  2.4 7 MSF<br>    2.4.1 MSF基本原则（共享、沟通、为共同目标努力、充分授权和信任、各司其职、敏捷）；MSF团队模型<br>3 产品<br>  3.1 8 需求分析<br>    3.1.1 软件需求（获取引导、分析定义、验证、管理）；利益相关者；用户调研（焦点小组、人类学、快速原型、AB测试）；竞争性需求分析框架（Need、Approach、Benefit、Competitors、Delivery）；功能定位与优先级（必要与辅助、核心与外围）；计划与估计；分而治之<br>  3.2 9 项目经理<br>    3.2.1 来历；职责（开发与测试之外的所有）；PM与风险管理；能力要求与任务（观察理解快速学习、分析管理、专业、自省）<br>  3.3 10 典型用户和场景<br>  3.4 12 用户体验<br>    3.4.1 要素（第一印象、换位思考、记住用户选择…）；设计的步骤与目标；评价标准（快反馈、贴近现实、暴露控制权、一致性与标准化、适合各种用户、帮助修复；提示语帮助）<br>4 质量<br>  4.1 11 软件设计与实现<br>    4.1.1 分析与设计方法；团队建模和分析方法；日常管理；<br>  4.2 13 软件测试<br>    4.2.1 分类方法（黑白、功能非功能、时机作用分类）；测试方法（UnitTest、BuildTest、AcceptanceTest、探索测试、回归测试、场景/集成/系统测试、伙伴测试、效能测试、压力测试、内外部测试、易用性测试）<br>  4.3 14 质量保障<br>    4.3.1 软件质量（程序、工程、如何衡量、成本）；质量保障工作（测试角色）<br>  4.4 15 稳定和发布阶段<br>    4.4.1 从完成到发布；渐进发布；发布之后——事后诸葛亮会议（赏罚、总结经验教训）<br>5 IT<br>  5.1 16 IT行业的创新<br>    5.1.1 争议点（创新与跟随、鼻祖与布道、专家？、技术创新为核心？、成功者更能创新？）；时机；招数<br>  5.2 17 人、绩效和职业道德<br>    5.2.1 猪鸡鹦鹉（成员投入程度不一）；人；绩效管理；职业道德（与公众利益一致、客户与雇主利益最大化、产出物满足高标准、专业判断、管理软件与开发维护、职业的诚信与声誉、对同事的支持与帮助、自身不断提高）</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
 
     </footer>
   </div>
@@ -730,7 +719,7 @@
 
 
   
-    <article id="post-每周一书/【读书笔记】深入理解Android内核设计思想"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-每周一书/【笔记】《超越感觉--批判性思考指南》"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -738,7 +727,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】深入理解Android内核设计思想/">【读书笔记】深入理解Android内核设计思想</a>
+      <a class="article-title" href="/2017/08/13/每周一书/【笔记】《超越感觉--批判性思考指南》/">【笔记】《超越感觉--批判性思考指南》</a>
     </h1>
   
 
@@ -746,31 +735,46 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/每周一书/【读书笔记】深入理解Android内核设计思想/" class="article-date">
+	<a href="/2017/08/13/每周一书/【笔记】《超越感觉--批判性思考指南》/" class="article-date">
 	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/阅读/">阅读</a><a class="article-category-link" href="/categories/阅读/技术/">技术</a>
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>这本书太深了，不适合略读，可以在碰到相关问题时仔细研读，知识覆盖面较广</p>
+<p>重温<br>作者：文森特·鲁吉罗 (Vincent Ruggiero)(美)</p>
 </blockquote>
-<p>这么多大块的时间来一条条钻研这些内核实现细节其实不如学习算法来的有用，毕竟一个是形式，一个是内功</p>
 <blockquote>
+<p>里面很多论点对很多人来说可能都是常识，不过还是有闪光处的，比如：</p>
+<ul>
+<li>25%的人认为自己位列前 1%（实验数据，并不准确）</li>
+</ul>
 </blockquote>
-<p>留待查阅</p>
 <hr>
-<p><a href="https://www.evernote.com/l/ARvkJbs0vmxOJZn5WVExzJGV7jJHClXEVtY" target="_blank" rel="noopener">印象笔记链接（附带XMind文件）</a></p>
-<p>图片：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-228b08c1632f933b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="深入理解Android 内核设计思想 overview.png"></p>
+<ul>
+<li>除非你意识到自己经验的局限性，训练你的思维扩展到超越你熟悉的事物，考察所有相关的观点，并在判断钱先进行理解，否则你就几乎肯定会眼光狭隘，思维贫乏</li>
+</ul>
 <hr>
-<p>#笔记文字</p>
-<p>深入理解Android内核思想<br>1 4 操作系统基础<br>  1.1 4.3 进程间通信的经典实现<br>    1.1.1 共享内存<br>    1.1.2 管道pipe<br>        1.1.2.1 管道是单向的<br>        1.1.2.2 有容量限制<br>    1.1.3 Unix domain socket<br>        1.1.3.1 专门针对单机的进程间通信，并不依赖Network socket 的那些TCP/IP协议<br>        1.1.3.2 Android上使用最多的一种IPC机制是Binder，其次就是UDS<br>    1.1.4 RPC（Remote Procedure Calls）<br>  1.2 4.4 同步机制的经典实现<br>    1.2.1 定义<br>        1.2.1.1 如果多个进程间存在时序关系，需要协同工作以完成一项任务，则称为同步<br>        1.2.1.2 如果它们并不满足协同条件，而只是因为共享具有排他性资源时所产生的关系，称为互斥<br>    1.2.2 信号量（Semaphore）<br>        1.2.2.1 信号量与PV原语操作 是使用最广泛的互斥方法之一<br>        1.2.2.2 PV原语都属于原子操作（Atomic Operations）<br>    1.2.3 Mutex（Mutual Exclusion）<br>    1.2.4 管程（Monitor）<br>        1.2.4.1 对Semaphore机制的延伸和改善，是一种控制更为简单的同步手段<br>        1.2.4.2 管程中的方法都是受Mutex保护的，意味着同一时刻只允许有一个访问者使用它们<br>  1.3 4.5 Android中的同步机制<br>    1.3.1 Mutex<br>    1.3.2 Condition<br>    1.3.3 Barrier<br>        1.3.3.1 Barrier是填充了具体条件的Condition<br>        1.3.3.2 专门为SurfaceFlinger而设计<br>  1.4 4.6 操作系统内存管理基础<br>    1.4.1 核心点：虚拟内存、内存分配与回收、内存保护<br>    1.4.2 虚拟内存<br>        1.4.2.1 地址空间<br>                1.4.2.1.1 逻辑地址，也称相对地址，是程序编译后所产生的地址<br>                1.4.2.1.1.1 组成部分： Segment Selector + Offset<br>                1.4.2.1.2 线性地址<br>                1.4.2.1.3 物理地址<br>    1.4.3 内存保护<br>    1.4.4 内存分配与内存回收<br>    1.4.5 进程间通信mmap<br>  1.5 4-7 Android中的Low Memory Killer<br>    1.5.1 OOMKiller<br>    1.5.2 策略考虑因素<br>        1.5.2.1 进程消耗的内存<br>        1.5.2.2 进程占用的CPU时间<br>        1.5.2.3 oom_adj（OOM权重）<br>    1.5.3 自己改变oom_adj？<br>        1.5.3.1 1 写文件 ： /proc/<pid>/oom_adj<br>        1.5.3.2 2 android:persistent 添加到application标签中，设置应用为常驻内存<br>  1.6 4-8 Android 匿名共享内存<br>    1.6.1 Anonymous Shared Memory<br>    1.6.2 Ashmem 设备<br>        1.6.2.1 创建时机<br>        1.6.2.2 操作函数及实现原理<br>        1.6.2.3 Linux 共享机制的区别与联系<br>    1.6.3 Ashmem应用实例<br>  1.7 4-9 JNI<br>2 5 Android 进程/线程管理<br>  2.1 5.1 Android进程和线程<br>    2.1.1 Activity启动后，除了主线程 ActivityThread之外还需要两个Binder线程<br>    2.1.2 Service与Activity一样，也寄存于ActivityThread之中，并且启动流程和Activity基本一致<br>    2.1.3 启动Service时，同样也需要两个Binder线程支持<br>    2.1.4 对于同一个AndroidManifest.xml中定义的四大组件，除非有特别声明，否则它们都运行于同一个进程中<br>    2.1.5 Android提供了特殊的方式让不是同一个包里的组件也可以运行于相同的进程中，优势是可以方便地进行资源共享<br>        2.1.5.1 针对个别组件，可以在标签中加入android:process<br>        2.1.5.2 针对整个包，直接在<application>标签中加入android:process属性来指明<br>  2.2 5.2 Handler， MessageQueue Runnable， Looper<br>    2.2.1 Handler<br>        2.2.1.1 功能：处理Message、将Message压入MessageQueue<br>        2.2.1.2 函数<br>                2.2.1.2.1 post<br>                2.2.1.2.1.1 post<br>                2.2.1.2.1.2 postAtTime<br>                2.2.1.2.1.3 postDelay<br>                2.2.1.2.2 send<br>                2.2.1.2.2.1 sendEmptyMessage<br>                2.2.1.2.2.2 sendMessageAtFrontOfQueue<br>                2.2.1.2.2.3 sendMessageAtTime<br>                2.2.1.2.2.4 sendMessageDelay<br>    2.2.2 MessageQueue<br>    2.2.3 Looper<br>        2.2.3.1 分为两种：主线程、普通线程<br>        2.2.3.2 ThreadLocal 成员变量<br>  2.3 5.3 UI主线程——ActivityThread<br>    2.3.1 prepareMainLooper<br>        2.3.1.1 prepare<br>        2.3.1.2 不允许退出<br>    2.3.2 sMainThreadHandler<br>        2.3.2.1 创建处理消息环境<br>        2.3.2.2 循环处理消息<br>  2.4 5.4 Thread类<br>    2.4.1 内部原理<br>        2.4.1.1 implements Runnable<br>        2.4.1.2 state<br>                2.4.1.2.1 NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, TERMINATED<br>    2.4.2 休眠和唤醒<br>        2.4.2.1 相关方法：wait,notify,notifyAll, interrupt,join, sleep<br>        2.4.2.2 wait和notify/notifyAll<br>        2.4.2.3 interrupt<br>        2.4.2.4 join<br>                2.4.2.4.1 保证两个线程顺序执行<br>                2.4.2.4.2 带时间参数的join，保证在规定时间没有执行完前面的线程，也会继续执行后面的语句，防止无限等待<br>        2.4.2.5 sleep<br>                2.4.2.5.1 wait等待某个object<br>                2.4.2.5.2 sleep则是等待时间<br>3 6. 进程间通信——Binder<br>  3.1 组成<br>    3.1.1 Binder驱动<br>    3.1.2 Service Manager<br>        3.1.2.1 在Binder通信中的唯一标志永远都是0<br>    3.1.3 Binder Client<br>    3.1.4 Binder Server<br>  3.2 智能指针<br>    3.2.1 引用计数器，由object自身持有<br>    3.2.2 强指针SP<br>    3.2.3 弱指针WP，主要使命是解决循环引用的问题<br>        3.2.3.1 弱指针必须升级为强指针才能访问它所指向的对象<br>  3.3 进程间的数据传递载体——Parcel<br>  3.4 Binder 驱动协议<br>  3.5 ServiceManager[Binder Server]<br>    3.5.1 类似“DNS”服务器<br>  3.6 Binder Client<br>  3.7 Android接口描述语言AIDL<br>  3.8 匿名Binder Server<br>4 7. Android启动过程简析<br>  4.1 第一个系统进程 init<br>  4.2 系统关键服务的启动简析<br>5 8. 管理Activity和组件运行状态的系统进程 Activity Manager Service（AMS）<br>  5.1 AMS功能概述<br>    5.1.1 寄存于SystemServer中。会在系统启动时创建一个线程来循环处理客户请求<br>  5.2 ActivityStack<br>    5.2.1 ActivityState<br>    5.2.2 ArrayList<br>    5.2.3 记录特殊状态下的Activity<br>  5.3 startActivity流程<br>  5.4 ActivityTask<br>    5.4.1 android:taskAffinity<br>        5.4.1.1 当启动Activity的Intent中带有FLAG_ACTIVITY_NEW_TASK标志时<br>                5.4.1.1.1 表示它希望为activity新开一个task， 如果有task的affinity与新Activity的affinity一样，则会复用此task，否则，新建task<br>        5.4.1.2 当Activity中的allowTaskReParenting属性设置为true时<br>                5.4.1.2.1 Activity具有动态转移能力<br>    5.4.2 android:alwaysRetainTaskState<br>6 9. GUI系统之SurfaceFlinger<br>7 11. View体系<br>  7.1 应用程序中的View框架<br>    7.1.1 ViewRoot是View的管理者，ViewRoot的核心任务就是与WindowManagerService进行通信<br>    7.1.2 Activity内部有一个mWindow成员变量<br>    7.1.3 Window与WindowManagerImpl的关系<br>        7.1.3.1 一个应用可能有很多个Window，不会让它们单独地与WMS通信<br>    7.1.4 ViewRoot与WindowManagerImpl的关系<br>  7.2 Activity中ViewTree的创建过程<br>    7.2.1 有了Window以后生成具体的内容由setContentView发起，设置mDecor<br>  7.3 在WMS中注册窗口<br>  7.4 ViewRoot的基本工作方式<br>  7.5 ViewTree的遍历时机<br>  7.6 ViewTree的遍历流程<br>  7.7 View 和 ViewGroup属性<br>  7.8 Canvas<br>  7.9 draw和onDraw<br>  7.10 View中的消息传递<br>  7.11 View动画<br>8 12. InputManager Service与输入事件<br>  8.1 事件分类<br>    8.1.1 KeyEvent<br>    8.1.2 TouchEvent<br>    8.1.3 MouseEvent<br>    8.1.4 TrackBallEvent<br>  8.2 事件的投递流程<br>9 13. 音频系统<br>  9.1 基础<br>  9.2 框架<br>  9.3 核心<br>  9.4 策略制定者<br>  9.5 回放<br>  9.6 数据流<br>  9.7 音量控制<br>  9.8 上层建筑<br>  9.9 支持的格式<br>  9.10 ID3简介<br>  9.11 多媒体文件管理<br>10 14. Intent匹配规则<br>  10.1 Intent 属性<br>  10.2 匹配规则<br>  10.3 源码简析<br>11 15. APK应用程序的资源适配<br>  11.1 资源类型<br>  11.2 可选资源<br>  11.3 最佳匹配流程<br>  11.4 屏幕适配<br>12 16. Android字符编码格式<br>  12.1 ISO/IEC 8859<br>  12.2 ISO/IEC 10646<br>  12.3 Unicode<br>  12.4 String类型<br>13 17. Android和OpenGL ES<br>  13.1 3D 基础<br>  13.2 OpenGL SE<br>  13.3 API-EGL<br>  13.4 GLSurfaceView<br>14 18. SystemUI<br>  14.1 组成元素<br>  14.2 实现<br>  14.3 壁纸<br>15 19. Widget<br>  15.1 AppWidgetProvider<br>  15.2 AppWidgetHost<br>16 20. 编译和打包<br>  16.1 Ant<br>  16.2 命令行<br>  16.3 编译过程<br>  16.4 信息安全<br>  16.5 签名<br>  16.6 签名源码<br>17 21. 版本控制<br>  17.1 Git<br>18 22. 调试工具<br>  18.1 Emulator<br>  18.2 ADB</application></pid></p>
+<ul>
+<li>陈述一种观点，就是告诉他人我们对某事的看法；当需要征引一些东西来支持我们的观点时，很多时候我们不愿意承认，其实我们只能勉强提供一些根本站不住脚的证据</li>
+</ul>
+<hr>
+<p><a href="https://www.amazon.cn/gp/product/B00R4637AS/ref=oh_aui_search_detailpage?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接（我读的这版的翻译很一般）</a></p>
+<hr>
+<p><a href="https://www.evernote.com/l/ARuVDdRrr1hGDZIc3lM92-HSoOrcZlbi27I" target="_blank" rel="noopener">印象笔记链接</a></p>
+<hr>
+<p>提纲图片：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-f8a2d5956c8219f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="批评思考overview.png"></p>
+<hr>
+<p>笔记文字：</p>
+<blockquote>
+<p>批判性思考指南<br>1 第一篇 背景<br>  1.1 第一章 你是谁<br>  1.2 第二章 什么是批判性思考<br>  1.3 第三章 真理是什么？<br>    1.3.1 究竟始于何处<br>        1.3.1.1 或多或少的程度上，我们视为自己独特视角的看法承受着他人思想和信念的印记<br>    1.3.2 不完善的感知<br>    1.3.3 不完善的记忆<br>    1.3.4 有缺陷的信息<br>    1.3.5 即使最明智的人也会出错<br>    1.3.6 真理是发现的，不是创造的<br>    1.3.7 理解原因和结果<br>        1.3.7.1 时间顺序并不决定因果关系<br>        1.3.7.2 并非所有因果关系都包含强力或必然性<br>        1.3.7.3 需要提高对“自由意志”的警惕<br>        1.3.7.4 因果性经常是复杂的<br>  1.4 第四章 认知意味着什么？<br>    1.4.1 认知的必要条件<br>    1.4.2 检验你自己的知识<br>    1.4.3 我们如何知道<br>    1.4.4 为什么认知是困难的<br>    1.4.5 信仰是一种形式的知识吗<br>    1.4.6 知识的障碍<br>  1.5 第五章 你的观点有多少根据？<br>    1.5.1 可能出错的观点<br>    1.5.2 关于道德问题的观点<br>    1.5.3 专家也会出错<br>    1.5.4 有见识的对无见识的观点<br>    1.5.5 明辨是非地形成观点<br>        1.5.5.1 了解观点是如何形成的<br>        1.5.5.2 抵制把你的观点变成事实的诱惑<br>        1.5.5.3 监控你的思想以防止陷入非批判性默认模式<br>  1.6 第六章 证据是什么？<br>    1.6.1 种类<br>    1.6.2 个人经验<br>    1.6.3 未公开的传说<br>    1.6.4 公开报道<br>    1.6.5 目击者睁眼<br>    1.6.6 名人证言<br>    1.6.7 专家意见<br>    1.6.8 统计资料<br>    1.6.9 调查<br>    1.6.10 正规观察<br>    1.6.11 研究评述<br>    1.6.12 评价证据<br>    1.6.13 充分证据的构成要件是什么<br>  1.7 第七章 什么是论证<br>    1.7.1 论证的组成部分<br>    1.7.2 评价论证<br>    1.7.3 比较困难的论证<br>2 第二篇 易犯的错误<br>  2.1 第八章 基本问题：“我的更好”<br>    2.1.1 自我中心的人<br>    2.1.2 族群中心的人<br>    2.1.3 控制“我的更好”的思维<br>  2.2 第九章 立场的错误<br>    2.2.1 视角匮乏<br>    2.2.2 无根据的假定<br>    2.2.3 要么/要么观念<br>    2.2.4 盲目遵从<br>    2.2.5 绝对主义<br>    2.2.6 相对主义<br>    2.2.7 支持或反对变化的偏见<br>  2.3 第十章 程序错误<br>    2.3.1 有偏见的证据考量<br>    2.3.2 双重标准<br>    2.3.3 草率的结论<br>    2.3.4 过度概括和刻板成见<br>    2.3.5 过度简单化<br>    2.3.6 事后归因谬误<br>  2.4 第十一章 表达的错误<br>    2.4.1 自相矛盾<br>    2.4.2 循环论证<br>    2.4.3 无意义的陈述<br>    2.4.4 误用权威<br>    2.4.5 错误类比<br>    2.4.6 非理性述求<br>  2.5 第十二章 反应的错误<br>    2.5.1 自动拒绝<br>    2.5.2 转换话题<br>    2.5.3 转移举证责任<br>    2.5.4 “稻草人“<br>    2.5.5 攻击批评者<br>  2.6 第十三章 错误组合<br>3 第三篇 策略<br>  3.1 第十四章 认识你自己<br>    3.1.1 批判性思考的详细目录<br>    3.1.2 挑战与回报<br>  3.2 第十五章 敏锐地观察<br>    3.2.1 观察人<br>    3.2.2 科学和医学中的观察<br>    3.2.3 应用范围<br>    3.2.4 变得更敏锐<br>    3.2.5 反思你的观察<br>  3.3 第十六章 选择一个议题<br>    3.3.1 基本原则：少是多<br>    3.3.2 如何限定一个议题<br>    3.3.3 发散–收拢<br>  3.4 第十七章 进行探究<br>    3.4.1 处理不确定结果<br>    3.4.2 到何处寻找信息<br>    3.4.3 问题背景<br>    3.4.4 事实和统计资料<br>    3.4.5 关于人的信息<br>    3.4.6 关于英语的信息<br>    3.4.7 期刊、书籍、数据库、摘要检索、互联网<br>    3.4.8 集中与焦点<br>    3.4.9 多少探究才够充分<br>    3.4.10 处理长篇材料<br>  3.5 第十八章 形成判断<br>    3.5.1 评价证据<br>    3.5.2 评价你信息来源的论证<br>    3.5.3 作出重要区分<br>    3.5.4 判断的表达<br>        3.5.4.1 力求一个平衡点<br>        3.5.4.2 处理可能性<br>        3.5.4.3 让主语适当具体<br>        3.5.4.4 让谓语准确<br>        3.5.4.5 限定语<br>        3.5.4.6 避免夸大其词<br>  3.6 第十九章 说服他人<br>    3.6.1 指导原则<br>        3.6.1.1 尊重受众<br>        3.6.1.2 理解听众观点<br>        3.6.1.3 从共同立场开始<br>        3.6.1.4 态度积极<br>        3.6.1.5 尽可能让人理解你的论证<br>        3.6.1.6 承认对方有道理之处<br>        3.6.1.7 不要忽视任何相关事实<br>        3.6.1.8 不要用论证压倒听众<br>        3.6.1.9 集中于最可能起作用的论证<br>        3.6.1.10 不使用无关论证<br>        3.6.1.11 容留时间</p>
+</blockquote>
 
       
 
@@ -780,63 +784,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-日常记录/【福利--福利】北京找兼职、实习的小伙伴看过来"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/日常记录/【福利--福利】北京找兼职、实习的小伙伴看过来/">【福利--福利】北京找兼职、实习的小伙伴看过来</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/日常记录/【福利--福利】北京找兼职、实习的小伙伴看过来/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/其它/">其它</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>招聘兼职【时间截至到5月31日，招聘3人】</p>
-<p><strong>工资待遇</strong>：4000-4500元/月</p>
-<p><strong>岗位</strong>：政府科员助理</p>
-<p><strong>办公地点</strong>：北京市政府六里桥办公大厅</p>
-<p><strong>职责</strong>：政府文案、公文撰写，文件整理等助理类工作</p>
-<p><strong>要求</strong>：本科或以上，文科生，形象端正，品格正直，文笔优秀，思维灵活，周一到周五8：30-17.30，望长期。</p>
-<p><strong>适合人群</strong>：刚毕业希望考公务员、研究生的工作时间可以保证的毕业生。</p>
-<p><strong>优势</strong>：工作量不大，如领导无安排，可以做其他事情；和政府接触，了解政府工作。</p>
-<p><strong>联系人</strong>：<br>微信号：fwl_xyba<br>邮箱：<a href="mailto:474415968@qq.com" target="_blank" rel="noopener">474415968@qq.com</a></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/福利/">福利</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
 
     </footer>
   </div>
@@ -1084,6 +1032,71 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分享会/">分享会</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-每周一书/周读-- 创业维艰"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/13/每周一书/周读-- 创业维艰/">周读-- 创业维艰</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/13/每周一书/周读-- 创业维艰/" class="article-date">
+	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><blockquote>
+<p>分类——管理</p>
+<p>推荐指数——三星半</p>
+</blockquote>
+<blockquote>
+<p>这是一本关于<strong>创业</strong>的书，读起来更像是一本回忆录，不一样的是会有一些比较实操的逆境中求生的经验总结归纳</p>
+</blockquote>
+<blockquote>
+<p>作者系 Loadcloud及Opsware创始人（后者被惠普以15.6亿美元收购），真正实现了从0到0.1，再到1的转变，这些创业之后又开始涉入风险投资，比较符合现在流行的“企投家”标准</p>
+</blockquote>
+<p>虽然是一位CEO关于创业的经验总结，我们大家也没有那么多人创业，但读来感觉会对像我这样“一般员工”的认识产生影响，会更能体会老板是怎么想的，领导是怎么想的</p>
+<p>如果我们能够把平时的工作真正当成自己的事业来做，拿出那份责任感、使命感，我相信最后的结果不会坏</p>
+<p>当然，书中还谈到了很多具体的诸如如何组织、如何就平时的棘手问题进行沟通的细节，纵使作者的故事是在硅谷，但最本质的东西是相通的，虽书中论述不及专业的管理专家（如格鲁夫）之谈，但也具有相当的启发意义，毕竟他的故事算是逆境生长的极其成功的典范，能够在互联网经济泡沫时力挽狂澜，作者的各方面能力可略知一二</p>
+<p>说了这么多好，该扒一扒缺点了。因为是英文翻译过来的，所以有些语义语境读来不那么舒服，再加上中美文化本身的差异，书中描述的一些细节有时看来比较离谱，部分事情可能在我们看来天经地义。还有一点，总结的理论算不上太专业，不太成体系，真正想钻研企业管理，还是得看大师之作（格鲁夫的《给经理人的第一课》拿来当入门就不错）</p>
+<h3 id="部分小结、摘录"><a href="#部分小结、摘录" class="headerlink" title="部分小结、摘录"></a>部分小结、摘录</h3><p>印象笔记 图文链接：</p>
+<p><a href="https://www.evernote.com/l/ARvmQ23Tvs5JKZAmlWM9hqdhqTouO4fRyO8" target="_blank" rel="noopener">https://www.evernote.com/l/ARvmQ23Tvs5JKZAmlWM9hqdhqTouO4fRyO8</a> </p>
+<p>导图：</p>
+<p><img src="../pic_resource/创业维艰overview.png" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
 
     </footer>
   </div>
