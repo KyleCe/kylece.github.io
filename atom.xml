@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/KyleCe/kylece.github.io/"/>
-  <updated>2018-03-13T15:41:27.201Z</updated>
+  <updated>2018-03-14T15:14:08.055Z</updated>
   <id>https://github.com/KyleCe/kylece.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://github.com/KyleCe/kylece.github.io/2018/03/13/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E9%9D%A2%E7%BB%8F--%E9%80%86%E8%BD%AC%E9%93%BE%E8%A1%A8%EF%BC%88Java%EF%BC%89/"/>
     <id>https://github.com/KyleCe/kylece.github.io/2018/03/13/技术/算法/面经--逆转链表（Java）/</id>
     <published>2018-03-13T15:27:30.000Z</published>
-    <updated>2018-03-13T15:41:27.201Z</updated>
+    <updated>2018-03-14T15:14:08.055Z</updated>
     
     <content type="html"><![CDATA[<p>如何逆转链表呢？本篇介绍两种常见方法：</p><ol><li>遍历</li><li>递归</li></ol><h5 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseHead</span><span class="params">(@Nonnull Node head)</span> </span>&#123;</span><br><span class="line">    Node pre = head;</span><br><span class="line">    Node cur = head.nextNode;</span><br><span class="line">    Node next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</span><br><span class="line">        next = cur.nextNode;</span><br><span class="line">        cur.nextNode = pre;</span><br><span class="line"></span><br><span class="line">        pre = cur;</span><br><span class="line">        cur = next;</span><br><span class="line">    &#125;</span><br><span class="line">    head.nextNode = <span class="keyword">null</span>;</span><br><span class="line">    head = pre;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseByRecur</span><span class="params">(Node current)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (current == <span class="keyword">null</span> || current.nextNode == <span class="keyword">null</span>) <span class="keyword">return</span> current;  </span><br><span class="line">    Node nextNode = current.nextNode;  </span><br><span class="line">    current.nextNode = <span class="keyword">null</span>;  </span><br><span class="line">    Node reverseRest = reverseByRecur(nextNode);  </span><br><span class="line">    nextNode.nextNode = current;  </span><br><span class="line">    <span class="keyword">return</span> reverseRest;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -44,6 +44,40 @@
     
       <category term="算法" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
+      <category term="面经" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%9D%A2%E7%BB%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>面经--计算一个字节有几比特（Java）</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/13/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E9%9D%A2%E7%BB%8F--%E8%AE%A1%E7%AE%97%E4%B8%80%E4%B8%AA%E5%AD%97%E8%8A%82%E6%9C%89%E5%87%A0%E6%AF%94%E7%89%B9%EF%BC%88Java%EF%BC%89/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/</id>
+    <published>2018-03-13T15:27:30.000Z</published>
+    <updated>2018-03-14T15:14:02.843Z</updated>
+    
+    <content type="html"><![CDATA[<p>如何逆转链表呢？本篇介绍两种常见方法：</p><ol><li>遍历</li><li>递归</li></ol><h5 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseHead</span><span class="params">(@Nonnull Node head)</span> </span>&#123;</span><br><span class="line">    Node pre = head;</span><br><span class="line">    Node cur = head.nextNode;</span><br><span class="line">    Node next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</span><br><span class="line">        next = cur.nextNode;</span><br><span class="line">        cur.nextNode = pre;</span><br><span class="line"></span><br><span class="line">        pre = cur;</span><br><span class="line">        cur = next;</span><br><span class="line">    &#125;</span><br><span class="line">    head.nextNode = <span class="keyword">null</span>;</span><br><span class="line">    head = pre;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseByRecur</span><span class="params">(Node current)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (current == <span class="keyword">null</span> || current.nextNode == <span class="keyword">null</span>) <span class="keyword">return</span> current;  </span><br><span class="line">    Node nextNode = current.nextNode;  </span><br><span class="line">    current.nextNode = <span class="keyword">null</span>;  </span><br><span class="line">    Node reverseRest = reverseByRecur(nextNode);  </span><br><span class="line">    nextNode.nextNode = current;  </span><br><span class="line">    <span class="keyword">return</span> reverseRest;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;如何逆转链表呢？本篇介绍两种常见方法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;遍历&lt;/li&gt;
+&lt;li&gt;递归&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id=&quot;遍历&quot;&gt;&lt;a href=&quot;#遍历&quot; class=&quot;headerlink&quot; title=&quot;遍历&quot;&gt;&lt;/a&gt;遍历&lt;/h5&gt;&lt;figure cla
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="算法" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="面经" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%9D%A2%E7%BB%8F/"/>
+    
   </entry>
   
   <entry>
@@ -51,7 +85,7 @@
     <link href="https://github.com/KyleCe/kylece.github.io/2018/03/12/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E9%9D%A2%E7%BB%8F--%E9%80%86%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88Java%EF%BC%89/"/>
     <id>https://github.com/KyleCe/kylece.github.io/2018/03/12/技术/算法/面经--逆转字符串（Java）/</id>
     <published>2018-03-12T14:50:52.000Z</published>
-    <updated>2018-03-12T15:22:07.989Z</updated>
+    <updated>2018-03-14T15:14:05.872Z</updated>
     
     <content type="html"><![CDATA[<h3 id="面经-逆转字符串（Java）"><a href="#面经-逆转字符串（Java）" class="headerlink" title="[面经] 逆转字符串（Java）"></a>[面经] 逆转字符串（Java）</h3><p>如何逆转字符串呢？本篇介绍几种常见方法：</p><ol><li>暴力解法</li><li>StringBuilder自带的reverse</li><li>reverse源码</li><li>堆栈</li><li>集合的reverse方法</li></ol><h5 id="暴力解法：-利用String-charAt-，倒序地访问-原String的各个char"><a href="#暴力解法：-利用String-charAt-，倒序地访问-原String的各个char" class="headerlink" title="暴力解法： 利用String.charAt()，倒序地访问 原String的各个char"></a>暴力解法： 利用String.charAt()，倒序地访问 原String的各个char</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">reverseIt</span><span class="params">(String source)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, len = source.length();</span><br><span class="line">    StringBuilder dest = <span class="keyword">new</span> StringBuilder(len);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = (len - <span class="number">1</span>); i &gt;= <span class="number">0</span>; i--)&#123; <span class="comment">// key</span></span><br><span class="line">        dest.append(source.charAt(i));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dest.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="最不装的：直接利用自带reverse方法"><a href="#最不装的：直接利用自带reverse方法" class="headerlink" title="最不装的：直接利用自带reverse方法"></a>最不装的：直接利用自带reverse方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> StringBuilder(hi).reverse().toString()</span><br></pre></td></tr></table></figure><h5 id="这显然没什么营养，我们看看StringBuilder的reverse-做了什么："><a href="#这显然没什么营养，我们看看StringBuilder的reverse-做了什么：" class="headerlink" title="这显然没什么营养，我们看看StringBuilder的reverse()做了什么："></a>这显然没什么营养，我们看看StringBuilder的reverse()做了什么：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">reverse</span><span class="params">(String input)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span>[] in = input.toCharArray();</span><br><span class="line">    <span class="keyword">int</span> begin=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> end=in.length-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">char</span> temp;</span><br><span class="line">    <span class="keyword">while</span>(end&gt;begin)&#123; <span class="comment">// key</span></span><br><span class="line">        temp = in[begin];</span><br><span class="line">        in[begin]=in[end];</span><br><span class="line">        in[end] = temp;</span><br><span class="line">        end--;</span><br><span class="line">        begin++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> String(in);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="当然，如果你想被嫌弃，也可以用堆栈："><a href="#当然，如果你想被嫌弃，也可以用堆栈：" class="headerlink" title="当然，如果你想被嫌弃，也可以用堆栈："></a>当然，如果你想被嫌弃，也可以用堆栈：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">reverseString</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">    Stack&lt;Character&gt; stack = <span class="keyword">new</span> Stack&lt;Character&gt;();</span><br><span class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">        stack.push(s.charAt(i));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (!stack.empty()) &#123; <span class="comment">// key</span></span><br><span class="line">        sb.append(stack.pop());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sb.toString();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="或者想被喷出翔，装一下箱，拆一下箱："><a href="#或者想被喷出翔，装一下箱，拆一下箱：" class="headerlink" title="或者想被喷出翔，装一下箱，拆一下箱："></a>或者想被喷出翔，装一下箱，拆一下箱：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">reverseStr</span><span class="params">(String input)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span>[] hello = input.toCharArray();</span><br><span class="line">    List&lt;Character&gt; trial1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">char</span> c: hello)</span><br><span class="line">        trial1.add(c);</span><br><span class="line"></span><br><span class="line">    Collections.reverse(trial1); <span class="comment">// key</span></span><br><span class="line">    ListIterator li = trial1.listIterator();</span><br><span class="line">    <span class="keyword">while</span> (li.hasNext())</span><br><span class="line">        System.out.print(li.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -68,6 +102,36 @@
     
     
       <category term="算法" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="面经" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%9D%A2%E7%BB%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>面经--连续最长数字串</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/12/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E9%9D%A2%E7%BB%8F--%E8%BF%9E%E7%BB%AD%E6%9C%80%E9%95%BF%E6%95%B0%E5%AD%97%E4%B8%B2/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/12/技术/算法/面经--连续最长数字串/</id>
+    <published>2018-03-12T14:50:52.000Z</published>
+    <updated>2018-03-15T15:48:39.772Z</updated>
+    
+    <content type="html"><![CDATA[<p>如何连续最长数字串呢？本篇介绍一种C语言实现：</p><h4 id="题"><a href="#题" class="headerlink" title="题"></a>题</h4><p>   在字符串中找出连续最长的数字串，返回最长长度，并把这个最长数字串赋值给其中一个函数参数outputStr所指内存</p><h4 id="例"><a href="#例" class="headerlink" title="例"></a>例</h4><p>   “abcd12345ed125ss123456789”的首地址传给intputStr后，函数将返回9，outputStr所指的值为123456789</p><h4 id="析"><a href="#析" class="headerlink" title="析"></a>析</h4><pre><code>我们可以对字符串中的每个数字串计数，然后比较得到最大的。这就是我们所要求的最大连续数字串。需要记住这个最大串的开始位置，还有最大串的长度。</code></pre><ol><li>遍历字符串</li><li>如果遇到数字，则将计数器+1；否则，我们应该统计刚才的数字串的长度和最大长度比较，如果大于最大长度，则重新设置最大长度，并记住数字串开始位置</li><li>返回我们所需要的最大长度和数字串</li></ol><h4 id="code"><a href="#code" class="headerlink" title="code"></a>code</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">find_max_number</span><span class="params">(<span class="keyword">char</span> <span class="built_in">string</span>[],<span class="keyword">int</span> length,<span class="keyword">int</span> &amp;count, <span class="keyword">char</span> *result )</span></span>&#123;</span><br><span class="line">   <span class="comment">/* max_length represents the max length of number string. */</span></span><br><span class="line">   <span class="keyword">int</span> max_length = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">/* start means first character's position of number string */</span></span><br><span class="line">   <span class="keyword">int</span> start = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">/* i represents iterator of string array */</span></span><br><span class="line">   <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">// here we scan the character array.</span></span><br><span class="line">   <span class="keyword">for</span>( ; i &lt; length; i++ )&#123;</span><br><span class="line">      <span class="comment">// if character belongs to 0~9 we add counter.</span></span><br><span class="line">      <span class="comment">// otherwise we set counter as 0.</span></span><br><span class="line">      <span class="keyword">if</span>( <span class="built_in">string</span>[i] &gt;= <span class="string">'0'</span> &amp;&amp; <span class="built_in">string</span>[i] &lt;= <span class="string">'9'</span> )&#123;</span><br><span class="line">         count ++;</span><br><span class="line">      &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">         <span class="keyword">if</span>( count &gt; max_length )&#123;</span><br><span class="line">            max_length = count;</span><br><span class="line">            start = i - count + <span class="number">1</span>;</span><br><span class="line">         &#125;</span><br><span class="line">         count  = <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// finally we should set max_length and the position again.</span></span><br><span class="line">   <span class="keyword">if</span>( count &gt; max_length )&#123;</span><br><span class="line">      max_length = count;</span><br><span class="line">      start = i - count;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// the last, we return counter and the string we need.</span></span><br><span class="line">   count = max_length;</span><br><span class="line">   <span class="built_in">memcpy</span>( result, &amp;<span class="built_in">string</span>[start], count*<span class="keyword">sizeof</span>(<span class="keyword">char</span>) );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">( <span class="keyword">int</span> argc, <span class="keyword">char</span> ** argv )</span></span>&#123;</span><br><span class="line">   <span class="keyword">char</span> <span class="built_in">string</span>[] = <span class="string">"iabcd12345ed125ss123456789"</span>;</span><br><span class="line">   <span class="keyword">char</span> result[<span class="number">20</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">   <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">   find_max_number( <span class="built_in">string</span>, <span class="built_in">strlen</span>(<span class="built_in">string</span>), count, result );</span><br><span class="line">   <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; count &lt;&lt; <span class="string">" "</span> &lt;&lt; result &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;如何连续最长数字串呢？本篇介绍一种C语言实现：&lt;/p&gt;
+&lt;h4 id=&quot;题&quot;&gt;&lt;a href=&quot;#题&quot; class=&quot;headerlink&quot; title=&quot;题&quot;&gt;&lt;/a&gt;题&lt;/h4&gt;&lt;p&gt;   在字符串中找出连续最长的数字串，返回最长长度，并把这个最长数字串赋值给其中一个函
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="算法" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="面经" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%9D%A2%E7%BB%8F/"/>
     
   </entry>
   
@@ -99,51 +163,24 @@
   </entry>
   
   <entry>
-    <title>【Note-PM】《项目管理修炼之道》提要</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E3%80%90Note-PM%E3%80%91%E3%80%8A%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93%E3%80%8B%E6%8F%90%E8%A6%81/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/</id>
+    <title>【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E3%80%90%E5%B7%A5%E5%85%B7-%E7%A8%8B%E5%BA%8F%E4%B8%93%E4%BE%9B%E3%80%91IntelliJ-IDEA-Android-Studio-Plugin%E6%8E%A8%E4%BB%8B/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/</id>
     <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.048Z</updated>
+    <updated>2018-03-09T15:32:43.105Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>第18届Jolt生产效率大奖图书<br>作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富</p></blockquote><p><a href="https://pan.baidu.com/s/1cAaOxw" target="_blank" rel="noopener">XMind文档链接</a></p><p><a href="https://pan.baidu.com/s/1mhZO5Fa" target="_blank" rel="noopener">导图PDF版链接</a></p><p><strong>导图</strong></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-d20195caa4e17ed9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第一部分：规划与日程"></p><p><strong>文本</strong></p><p> 项目管理修炼之道<br>    Johanna Rothman<br>    规划与日程<br>        启动项目<br>            0.KEY——定义项目、项目约束、决定项目关键驱动因素、章程决策<br>            章程决策<br>                远景、需求、目标、成功标准、ROI<br>        规划项目<br>            0.KEY——足以启动的规划、规划模板、制定发布条件<br>            规划模板<br>                意图<br>                记录<br>                发布条件<br>                目标<br>                项目组织<br>                日程总览<br>                人员配备<br>                建议日程<br>                制订项目风险列表<br>        使用生命周期组织项目<br>            0.KEY——理解生命周期、概览、反馈、大规模项目需要组合多种生命周期、管理架构风险、从瀑布中解脱<br>        安排项目日程<br>            0.KEY——注重实效的日程安排、可选择安排技术、用低技术含量工具安排日程<br>        估算工作<br>            0.KEY——实用估算方式、里程碑切分项目、能不做什么？、多项目时的估算、主动安排人们进行多任务、实用波浪式规划、决定迭代的持续时间、“小石子”<br>            估算<br>                对比历史数据<br>                通过Delphi和宽带Delphi估算<br>                何时不应相信团队的话<br>                    减掉每个任务的缓冲时间、要得到的是更准确的估算结果<br>                用日期范围进行估计<br>                用自信心估计<br>                用三个日期估计：最佳、可能、墨菲<br>            小石子<br>                任务不清时使用<br>                如何得到“小石子”<br>                为什么使用<br>        识别和避免日程安排游戏<br>            0.KEY——“希望”是我们最重要的策略、拒绝女王、把灰扫到地毯下面、幸福日期、分散注意力、日程等于承诺<br>    团队与节奏<br>        创建出色的项目团队<br>            0.KEY——招募需要的人、形成团队凝聚力、让组织配合你的工作、对必必需的团队规模了如指掌、知道何时应该加入、成为出色的项目经理、知道何时全身而退<br>            凝聚力<br>                好工具让团队有更好的发挥<br>                软件配置管理系统应满足的最低要求<br>                缺陷跟踪系统应满足的最低要求<br>                发展5阶段<br>            让组织配合<br>                以项目经理的方式管理单一职能团队<br>                管理矩阵式项目团队<br>                管理跨职能团队<br>            项目经理<br>                人际交往能力<br>                提升功能性技能<br>                专业领域技能<br>                工具和技术的专业技能<br>            退<br>                不适合的组织、团队、产品<br>        掌控项目<br>            0.KEY——节奏、中途回顾、为需求排序、是时间盒限定需求相关的工作、将迭代限制在4周以下、使用波浪式规划和日程安排、创建跨职能团队、根据项目风险选择生命周期模型、保持合理的工作时间、使用“小石子”、管理干扰、管理缺陷<br>            “小石子“<br>                将计划的粒度细化，能提高规划时项目的估算准确率<br>        保持项目节奏<br>            0.KEY——使用持续集成、自动化冒烟测试、按功能实现而不是按架构、盯着产品、准备重构、通过用例、用户故事、角色和场景定义需求、分离需求与GUI设计、尽可能用低保真度原型<br>            按功能而不是按框架<br>                首先实现具有最高价值的功能<br>                按功能调试、测试<br>            低保真原型<br>                “使用低保真度原型，人们可以更全面地评估要解决的问题。高保真度原型会限制反馈。”<br>        管理会议<br>            0.KEY——取消部分会议、举行必要会议、项目启动会议、发布版本规划会议、进度报告会议、向管理层报告进度、项目团队会议、迭代审查会议、会议疑难问题解答、远程电话会议<br>            取消<br>                不需要你解决问题<br>                多人参加的顺序式进度报告会议<br>        创建并使用项目仪表板<br>            0.KEY——测量有风险、根据项目完成度来衡量进度、为出资人创建项目仪表盘、使用项目气象报告<br>            衡量进度<br>                速度图表跟踪日程安排进度<br>                用迭代内容图跟踪总体进度<br>                用图表展示团队统一采用的实践<br>    非简单项目<br>        管理多地点项目<br>            0.KEY——提问成本、识别项目文化差异、团队间培养信任、团队间使用互补实践、寻找潜在问题、外包时的注意事项<br>        在项目中集成测试<br>            0.KEY——“减少技术债”、小规模测试以降低风险、TDD是集成的最简单方法、使用多种测试、确定成员在测试工作中的角色、开发人员测试人员比率、让测试与开发同步进行、为项目制定测试策略、系统测试策略模板、QA与测试的区别<br>        管理项目群<br>            0.KEY——管理项目群、将多个相关项目组织到一个发布版本中、随时间推移组织多个相关项目、管理项目经理、创建项目仪表盘<br>        结束项目<br>            0.KEY——管理发布早期版本的请求、管理beta版本、项目经理何时知道无法按时发布项目、知道项目走向完成、取消项目<br>            何时知道无法按时发布<br>                避免小偏差<br>                承诺新日期<br>                估算系统测试时间<br>        管理项目组合<br>            0.KEY——构建所有项目的组合、评估项目、决定现在为那个项目提供资金、对组合中的项目进行排序、尽快启动项目、使用产品待办事项列表管理新功能需求<br>            答疑<br>                说服管理层：“切换上下文”是个坏主意<br>                如何对多任务说不</p>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>工欲善其事必先利其器<br>今天介绍几个plugin工具（奇淫巧技）</p></blockquote><blockquote><p><em>（适用平台：IntelliJ IDEA内核的各类IDE）</em></p></blockquote><hr><p><strong>效果图</strong></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-5b8d8a86fda8eca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ide_tools.png"></p><p>按图中标示顺序介绍：</p><p>####1.Translation<br>_ 顾名思义是中英翻译，令人意外的是自带英美两种发音（默认快捷键：ALT + 1/3，OSX 不详）_</p><p>####2.Background Image Plus<br><em>可以对IDE背景进行自定义，可以设置图片质量/明暗等，对内存有一定消耗，小霸王请绕道</em></p><p>####3.CodeGlance<br><em>提供一个代码文件的全局概览缩略图，主要可用于快速定位</em></p>]]></content>
     
     <summary type="html">
     
       
       
         &lt;blockquote&gt;
-&lt;p&gt;第18届Jolt生产效率大奖图书&lt;br&gt;作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富&lt;/p&gt;
+&lt;p&gt;工欲善其事必先利其器&lt;br&gt;今天介绍几个plugin工具（奇淫巧技）&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;https://pan.baidu.com/s/1cAaOxw&quot; target=&quot;_
-      
-    
-    </summary>
-    
-      <category term="阅读" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-      <category term="项目管理" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
-    
-      <category term="读书" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E8%AF%BB%E4%B9%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【分享】Project ANR</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%88%86%E4%BA%AB%E3%80%91Project%20ANR/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【分享】Project ANR/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.081Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>ActivityThread  waitToFinish</p><p>SharePreferenceImpl   </p><h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><blockquote><p>Project  SP操作统一到同一个进程</p></blockquote><ul><li>每次edit都直接apply（初衷— 保证所有数据都生效）</li></ul><h3 id="分析及解决"><a href="#分析及解决" class="headerlink" title="分析及解决"></a>分析及解决</h3><p>6.0 — 7.x ，6.0占比 &gt;96%，6.0及以前的读操作是阻塞的（阻塞ActivityThread）</p><p>SharePreference提交记录：</p><ul><li>第一次读操作不加锁（AndroidFramework7.0开始）</li><li>合并写（最后一次改动才写）（AndroidFramework8.0开始）<ul><li>用generation的概念区分最近的一次改动</li></ul></li></ul><h3 id="优化点"><a href="#优化点" class="headerlink" title="优化点"></a>优化点</h3><ul><li>少用</li><li>消减不必要写操作</li><li>存储是分类型的<ul><li>SP是xml文件，真的需要都写到xml文件里吗？<ul><li>2进制文件写速度快于xml文件</li></ul></li></ul></li></ul><h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ul><li>先清理无用SP写（优化了50%）</li><li>减少操作</li><li>最后才是check架构（动架构有风险，Project此例中有丢config的风险）</li></ul><h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><blockquote><p> GP后台关于ANR、Crash是基于session统计的</p><p>检查ANR、Crash时可以看看源代码，或许Android有主动修正</p><p>做应用，不看Framework</p><p>做业务，先到Framework里搜，看是否有提示</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;p&gt;ActivityThread  waitToFinish&lt;/p&gt;
-&lt;p&gt;SharePreferenceImpl   &lt;/p&gt;
-&lt;h3 id=
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;（适用平台：IntelliJ IDEA内核的各类IDE）&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
       
     
     </summary>
@@ -153,7 +190,9 @@
     
       <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
     
-      <category term="ANR" scheme="https://github.com/KyleCe/kylece.github.io/tags/ANR/"/>
+      <category term="Tool" scheme="https://github.com/KyleCe/kylece.github.io/tags/Tool/"/>
+    
+      <category term="AndroidStudio" scheme="https://github.com/KyleCe/kylece.github.io/tags/AndroidStudio/"/>
     
   </entry>
   
@@ -250,34 +289,6 @@
   </entry>
   
   <entry>
-    <title>【Java】神奇的内存占用大户FinalizerReference</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Java%E3%80%91%E7%A5%9E%E5%A5%87%E7%9A%84%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%A4%A7%E6%88%B7FinalizerReference/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:52:09.914Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="问题起因"><a href="#问题起因" class="headerlink" title="问题起因"></a>问题起因</h2><p>在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西</p><p>下图是项目中内存快照在AndroidStudio2.4中打开看到的样子</p><p><img src="../../pic_resource/finalizerReference.png" alt=""></p><p>可以看到，占用排名第一的类FinalizerReference占用了59M之巨（内存快照前有使用AS强制GC多次）</p><p>这就很让人好奇了</p><h2 id="FinalizerReference是什么？"><a href="#FinalizerReference是什么？" class="headerlink" title="FinalizerReference是什么？"></a>FinalizerReference是什么？</h2><p>我们来看源码：</p><p><img src="../../pic_resource/FinalizerReferenceCode.png" alt=""></p><p><a href="https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java" target="_blank" rel="noopener">https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java</a></p><p>在讲Java  虚拟机 JVM垃圾回收机制时会涉及到一个概念，即finalize方法，这是Sun公司在Java设计之初，为照顾c++程序员有写析构函数的习惯而做的一种妥协</p><p>在《深入理解Java虚拟机》一书中，讲到GC在最终回收对象之前，会去检查对象是否override了finalize方法，如果有覆盖此方法，对象就会被添加到finalize执行队列中，该书中没有指明是什么队列，实际上finalize执行队列就是我们这里讨论的FinalizerReference（书中还有提到finalize方法只会执行一次，并且有超时保护，因与本文主题无关，不做展开讨论）</p><p>也就是说，有重写Java根基类Object的finalize方法的所有对象，在被最终被GC回收之前，都会被添加到这个队列中，等待被执行</p><h2 id="为什么不能被GC"><a href="#为什么不能被GC" class="headerlink" title="为什么不能被GC"></a>为什么不能被GC</h2><p>这里要谈到JVM设计的一个基本标准</p><p>GC的finalize执行队列会在一个单独的守护线程中运行，这一线程的优先级极低；</p><p>一旦用户创建的对象速度过快，含finalize的对象速度快于finalize队列移除各元素的速度，FinalizerReference就会越来越大，而它获取CPU时间又少的可怜</p><p>测试中发现，1~2h过去后，FinalizerReference的大小并没有按照预计的回落到较低水准</p><p>这就迫使我们一定要解决这一问题，否则，随着应用开辟的内存越来越大，很容易引发喜闻乐见的OutOfMemoryError</p><h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><ol><li>不要重写finalize()方法，实在要释放资源，请到其它destroy一类函数中处理</li></ol><blockquote><p>实际上Java库中不少方法都有重写finalize方法（如Input/outputStream、Canvas、Paint）</p><p>这就引出了第二条指导原则：</p></blockquote><ol><li><p>重复利用资源（避免反复创建）</p></li><li><p>杀器FinalizerHelper</p><ul><li>此工具来源于公司同事的技术分享</li><li>指导思想：在场景退出的安全节点，利用反射强制调用FinalizerReference的remove方法，将对象从队列中移除掉</li><li>对具体实施细节的同学联系我</li></ul></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;问题起因&quot;&gt;&lt;a href=&quot;#问题起因&quot; class=&quot;headerlink&quot; title=&quot;问题起因&quot;&gt;&lt;/a&gt;问题起因&lt;/h2&gt;&lt;p&gt;在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西&lt;/p&gt;
-&lt;p&gt;
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
-    
-      <category term="FinalizerReference" scheme="https://github.com/KyleCe/kylece.github.io/tags/FinalizerReference/"/>
-    
-  </entry>
-  
-  <entry>
     <title>【Java-基础系列】Synchronized关键字</title>
     <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Java-%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E3%80%91Synchronized%E5%85%B3%E9%94%AE%E5%AD%97/"/>
     <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/</id>
@@ -307,23 +318,49 @@
   </entry>
   
   <entry>
-    <title>【Alibaba-Java开发手册】-提要</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Alibaba-Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%E3%80%91-%E6%8F%90%E8%A6%81/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Alibaba-Java开发手册】-提要/</id>
+    <title>【Java】神奇的内存占用大户FinalizerReference</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Java%E3%80%91%E7%A5%9E%E5%A5%87%E7%9A%84%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%A4%A7%E6%88%B7FinalizerReference/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/</id>
     <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:22:18.136Z</updated>
+    <updated>2018-03-09T15:52:09.914Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>旨在对手册进行提要<br>关注点： 编程规约</p></blockquote><blockquote><p><a href="http://pan.baidu.com/s/1boHjvxt" target="_blank" rel="noopener">手册源文件点击下载</a></p></blockquote><p><a href="https://www.evernote.com/shard/s283/sh/a8ae54da-157b-4669-97f3-60709e798489/0ab7d45c077516e2fa9845f3acf03b64" target="_blank" rel="noopener">EverNote笔记链接（内含XMind思维导图源文件）</a></p><hr><p>#导图<br><img src="http://upload-images.jianshu.io/upload_images/1481332-f2f67a5b35ab182b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Alibaba Java overview.png"></p><hr><p>文本</p><p>Alibaba Java 开发手册</p><p>1 编程规约<br>  1.1 命名规约<br>    1.1.1 8. POJO类中的布尔型变量不要加is，否则会引起序列化错误<br>  1.2 常量定义<br>    1.2.1 1. 不允许代码中出现任何魔法数<br>        1.2.1.1 （即硬编码变量）<br>    1.2.2 3. 不要再一个常量类中维护所以常量，应按功能归类维护<br>    1.2.3 4. 常量复用有五个层次<br>        1.2.3.1 跨应用、应用内、子工程、包内、类内<br>  1.3 格式规约<br>    1.3.1 一系列Google Java编码规则，不赘述<br>  1.4 OOP规约<br>    1.4.1 1. 避免通过对象引用static域<br>    1.4.2 2. 不可使用 Deprecated方法；自己做弃用注解时也应该 注明替代的新API<br>    1.4.3 10. 序列化新增属性时不要修改serialVersionUID字段；仅在完全不兼容升级避免反序列化混乱时修改<br>    1.4.4 15. 方法排序： public/ protected &gt; private &gt; getter/setter ——为维护者关心的方法展示于前<br>    1.4.5 16. setter/getter 确定为仅有的set get方法，勿要放入业务逻辑<br>    1.4.6 17. 循环体内，字符串联接方式，使用StringBuilder的append方法扩展——String 操作编译后会生成count 个StringBuilder对象，影响程序性能<br>    1.4.7 18. final可提高程序响应效率<br>    1.4.8 20. 访问控制从严（private、protected、public）<br>  1.5 集合处理<br>    1.5.1 1. hashCode equals<br>        1.5.1.1 重写equals时必须重写hashCode<br>        1.5.1.2 Set存储的对象必须重写<br>        1.5.1.3 用作Map的键时必须重写<br>    1.5.2 9. 集合初始化时尽量指定大小<br>        1.5.2.1 注：出于优化内存占用、响应速度考虑；集合默认size为10<br>    1.5.3 10. Map 类集合 K/V 存储null可行性问题<br>        1.5.3.1 HashMap KV均可为null<br>        1.5.3.2 TreeMap仅V可为null<br>        1.5.3.3 其它Map KV一律不可为null<br>    1.5.4 11. 合理利用好集合的有序性和稳定性，避免负面影响<br>  1.6 并发处理<br>    1.6.1 2. 创建线程、线程池时指定有意义的名称，便于出错时回溯<br>    1.6.2 4. 线程池不允许使用Executors创建，而要使用ThreadPoolExecutor<br>        1.6.2.1 Executor创建的几个类型都有大量请求或线程堆积导致OOM的可能<br>    1.6.3 5. SimpleDateFormat 是线程不安全类，一般不要定义为static变量，如果定义为static，必须加锁，或者使用DateUtils工具类<br>    1.6.4 6. 高并发时的同步调用注意锁的性能损耗<br>    1.6.5 10. CountDownLatch异步转同步操作时，每个线程退出前必须调用countDown，避免await超时<br>    1.6.6 11. 避免Random实例被多线程使用，竞争同一seed会导致性能下降；（实例包括Random、Math.random()）<br>    1.6.7 14. HashMap在容量不够进行resize时由于高并发可能出现死链，导致CPU飙升，开发中注意规避<br>  1.7 控制语句<br>    1.7.1 3. if-else 勿超过3层，超过时使用状态设计模式<br>    1.7.2 5. 循环体中考虑性能问题，避免不必要的语句、避免不必要的try-catch<br>    1.7.3 7-8. 注意参数检验的必要性，尽可能提升性能<br>2 日志<br>3 MySQL<br>4 工程规约<br>5 安全规约</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="问题起因"><a href="#问题起因" class="headerlink" title="问题起因"></a>问题起因</h2><p>在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西</p><p>下图是项目中内存快照在AndroidStudio2.4中打开看到的样子</p><p><img src="../../pic_resource/finalizerReference.png" alt=""></p><p>可以看到，占用排名第一的类FinalizerReference占用了59M之巨（内存快照前有使用AS强制GC多次）</p><p>这就很让人好奇了</p><h2 id="FinalizerReference是什么？"><a href="#FinalizerReference是什么？" class="headerlink" title="FinalizerReference是什么？"></a>FinalizerReference是什么？</h2><p>我们来看源码：</p><p><img src="../../pic_resource/FinalizerReferenceCode.png" alt=""></p><p><a href="https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java" target="_blank" rel="noopener">https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java</a></p><p>在讲Java  虚拟机 JVM垃圾回收机制时会涉及到一个概念，即finalize方法，这是Sun公司在Java设计之初，为照顾c++程序员有写析构函数的习惯而做的一种妥协</p><p>在《深入理解Java虚拟机》一书中，讲到GC在最终回收对象之前，会去检查对象是否override了finalize方法，如果有覆盖此方法，对象就会被添加到finalize执行队列中，该书中没有指明是什么队列，实际上finalize执行队列就是我们这里讨论的FinalizerReference（书中还有提到finalize方法只会执行一次，并且有超时保护，因与本文主题无关，不做展开讨论）</p><p>也就是说，有重写Java根基类Object的finalize方法的所有对象，在被最终被GC回收之前，都会被添加到这个队列中，等待被执行</p><h2 id="为什么不能被GC"><a href="#为什么不能被GC" class="headerlink" title="为什么不能被GC"></a>为什么不能被GC</h2><p>这里要谈到JVM设计的一个基本标准</p><p>GC的finalize执行队列会在一个单独的守护线程中运行，这一线程的优先级极低；</p><p>一旦用户创建的对象速度过快，含finalize的对象速度快于finalize队列移除各元素的速度，FinalizerReference就会越来越大，而它获取CPU时间又少的可怜</p><p>测试中发现，1~2h过去后，FinalizerReference的大小并没有按照预计的回落到较低水准</p><p>这就迫使我们一定要解决这一问题，否则，随着应用开辟的内存越来越大，很容易引发喜闻乐见的OutOfMemoryError</p><h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><ol><li>不要重写finalize()方法，实在要释放资源，请到其它destroy一类函数中处理</li></ol><blockquote><p>实际上Java库中不少方法都有重写finalize方法（如Input/outputStream、Canvas、Paint）</p><p>这就引出了第二条指导原则：</p></blockquote><ol><li><p>重复利用资源（避免反复创建）</p></li><li><p>杀器FinalizerHelper</p><ul><li>此工具来源于公司同事的技术分享</li><li>指导思想：在场景退出的安全节点，利用反射强制调用FinalizerReference的remove方法，将对象从队列中移除掉</li><li>对具体实施细节的同学联系我</li></ul></li></ol>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;blockquote&gt;
-&lt;p&gt;旨在对手册进行提要&lt;br&gt;关注点： 编程规约&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;http://pan.baidu.com/s/1boHjvxt&quot; target=&quot;_blank&quot; rel=&quot;noop
+        &lt;h2 id=&quot;问题起因&quot;&gt;&lt;a href=&quot;#问题起因&quot; class=&quot;headerlink&quot; title=&quot;问题起因&quot;&gt;&lt;/a&gt;问题起因&lt;/h2&gt;&lt;p&gt;在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西&lt;/p&gt;
+&lt;p&gt;
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+      <category term="FinalizerReference" scheme="https://github.com/KyleCe/kylece.github.io/tags/FinalizerReference/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶——接口优于抽象类</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%E8%A2%AB%E7%94%A8%E7%83%82%E7%9A%84%22%E7%BB%A7%E6%89%BF%22/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶--被用烂的&quot;继承&quot;/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:52:09.918Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>继承很强大，但也有问题</p><p>确实是is-a关系时才使用继承</p><p>如果处在不同的包中，并且SuperClass不是为继承设计的，这时会导致脆弱性</p><p>可以使用复合和转发机制来代替继承来避免这种脆弱性</p><p>关键字:</p><p><strong>继承、复合、装饰者模式、包装类、转发</strong></p><blockquote><p>keywords:</p><p>继承(inheritance)、复合(composition)、装饰者模式(decorator)、包装类(WrapperClass)、转发(forwarding)</p></blockquote><p><em>为叙述方便，下文以CC代表子类，SC代表超类，也就是父类</em></p><h3 id="问题体现"><a href="#问题体现" class="headerlink" title="问题体现"></a>问题体现</h3><p><strong>继承打破了封装性</strong></p><p>CC依赖于SC的实现细节，在SC更新换代时，CC会受影响，严重的会导致错误，为了避免出现错误，时常要做的事情是跟着SC的更新而更新CC</p><p>其实你可以直接使用<strong>复合</strong>来避免这一问题出现——也就是，在原来的CC中添加一个SC的实例</p><p>这样新的类中可以直接使用SC的方法逻辑，而不用担心SC更新时要升级API的问题（概念：<strong>转发</strong>）</p><p>这样的类也被称为<strong>包装类</strong></p><p>这也引出了设计模式中的Decorator模式概念（<strong>装饰者模式</strong>）</p><h3 id="强制使用的弊端"><a href="#强制使用的弊端" class="headerlink" title="强制使用的弊端"></a>强制使用的弊端</h3><ul><li>暴露不必要的SC细节</li><li>永远地限制了CC的性能（使用复合模式则可以在需要时更换转发的具体实现）</li><li>导致语义混淆</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;摘要与关键字&quot;&gt;&lt;a href=&quot;#摘要与关键字&quot; class=&quot;headerlink&quot; title=&quot;摘要与关键字&quot;&gt;&lt;/a&gt;摘要与关键字&lt;/h3&gt;&lt;p&gt;继承很强大，但也有问题&lt;/p&gt;
+&lt;p&gt;确实是is-a关系时才使用继承&lt;/p&gt;
+&lt;p&gt;如果处在不同的包中，并且
       
     
     </summary>
@@ -363,33 +400,6 @@
   </entry>
   
   <entry>
-    <title>LogFoQATest</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/LogFoQATest/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/LogFoQATest/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.061Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h3><ol><li>判断手机是否存在指定TXT文件。如果存在开始打印log信息进入TXT文件里面。</li><li>加入是否将ORG设置默认的log。</li><li>是否调起menu的log信息。</li><li>打印menu是否拉去广告的log信息，</li><li>其他网络请求。</li></ol><h3 id="实现记录"><a href="#实现记录" class="headerlink" title="实现记录"></a>实现记录</h3><p>所以日志以 QATestInfo 为log的TAG信息</p><ol><li><p>默认包含此功能；</p></li><li><p>SetDefaultHomeOK</p></li><li><p>InvokeMenuPopUp</p></li><li><p>RequestMenuAD</p></li><li><p>可能较耗内存的场景：</p><p>RequestNearbyApp<br>RequestCommonTool</p><p>ImageLoaderLoadImageFromNet<br>ImageLoaderLoadAdmobImageCore<br>VolleyDisplayImage<br>VolleyDecodeImage<br>VolleyDecodeImageFix</p></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;要求&quot;&gt;&lt;a href=&quot;#要求&quot; class=&quot;headerlink&quot; title=&quot;要求&quot;&gt;&lt;/a&gt;要求&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;判断手机是否存在指定TXT文件。如果存在开始打印log信息进入TXT文件里面。&lt;/li&gt;
-&lt;li&gt;加入是否将ORG设置默认的lo
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Java进阶——接口优于抽象类</title>
     <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6%E2%80%94%E2%80%94%E6%8E%A5%E5%8F%A3%E4%BC%98%E4%BA%8E%E6%8A%BD%E8%B1%A1%E7%B1%BB/"/>
     <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶——接口优于抽象类/</id>
@@ -417,21 +427,139 @@
   </entry>
   
   <entry>
-    <title>Java进阶——接口优于抽象类</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%E8%A2%AB%E7%94%A8%E7%83%82%E7%9A%84%22%E7%BB%A7%E6%89%BF%22/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶--被用烂的&quot;继承&quot;/</id>
+    <title>【Alibaba-Java开发手册】-提要</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Alibaba-Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%E3%80%91-%E6%8F%90%E8%A6%81/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Alibaba-Java开发手册】-提要/</id>
     <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:52:09.918Z</updated>
+    <updated>2018-03-09T15:22:18.136Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>继承很强大，但也有问题</p><p>确实是is-a关系时才使用继承</p><p>如果处在不同的包中，并且SuperClass不是为继承设计的，这时会导致脆弱性</p><p>可以使用复合和转发机制来代替继承来避免这种脆弱性</p><p>关键字:</p><p><strong>继承、复合、装饰者模式、包装类、转发</strong></p><blockquote><p>keywords:</p><p>继承(inheritance)、复合(composition)、装饰者模式(decorator)、包装类(WrapperClass)、转发(forwarding)</p></blockquote><p><em>为叙述方便，下文以CC代表子类，SC代表超类，也就是父类</em></p><h3 id="问题体现"><a href="#问题体现" class="headerlink" title="问题体现"></a>问题体现</h3><p><strong>继承打破了封装性</strong></p><p>CC依赖于SC的实现细节，在SC更新换代时，CC会受影响，严重的会导致错误，为了避免出现错误，时常要做的事情是跟着SC的更新而更新CC</p><p>其实你可以直接使用<strong>复合</strong>来避免这一问题出现——也就是，在原来的CC中添加一个SC的实例</p><p>这样新的类中可以直接使用SC的方法逻辑，而不用担心SC更新时要升级API的问题（概念：<strong>转发</strong>）</p><p>这样的类也被称为<strong>包装类</strong></p><p>这也引出了设计模式中的Decorator模式概念（<strong>装饰者模式</strong>）</p><h3 id="强制使用的弊端"><a href="#强制使用的弊端" class="headerlink" title="强制使用的弊端"></a>强制使用的弊端</h3><ul><li>暴露不必要的SC细节</li><li>永远地限制了CC的性能（使用复合模式则可以在需要时更换转发的具体实现）</li><li>导致语义混淆</li></ul>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>旨在对手册进行提要<br>关注点： 编程规约</p></blockquote><blockquote><p><a href="http://pan.baidu.com/s/1boHjvxt" target="_blank" rel="noopener">手册源文件点击下载</a></p></blockquote><p><a href="https://www.evernote.com/shard/s283/sh/a8ae54da-157b-4669-97f3-60709e798489/0ab7d45c077516e2fa9845f3acf03b64" target="_blank" rel="noopener">EverNote笔记链接（内含XMind思维导图源文件）</a></p><hr><p>#导图<br><img src="http://upload-images.jianshu.io/upload_images/1481332-f2f67a5b35ab182b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Alibaba Java overview.png"></p><hr><p>文本</p><p>Alibaba Java 开发手册</p><p>1 编程规约<br>  1.1 命名规约<br>    1.1.1 8. POJO类中的布尔型变量不要加is，否则会引起序列化错误<br>  1.2 常量定义<br>    1.2.1 1. 不允许代码中出现任何魔法数<br>        1.2.1.1 （即硬编码变量）<br>    1.2.2 3. 不要再一个常量类中维护所以常量，应按功能归类维护<br>    1.2.3 4. 常量复用有五个层次<br>        1.2.3.1 跨应用、应用内、子工程、包内、类内<br>  1.3 格式规约<br>    1.3.1 一系列Google Java编码规则，不赘述<br>  1.4 OOP规约<br>    1.4.1 1. 避免通过对象引用static域<br>    1.4.2 2. 不可使用 Deprecated方法；自己做弃用注解时也应该 注明替代的新API<br>    1.4.3 10. 序列化新增属性时不要修改serialVersionUID字段；仅在完全不兼容升级避免反序列化混乱时修改<br>    1.4.4 15. 方法排序： public/ protected &gt; private &gt; getter/setter ——为维护者关心的方法展示于前<br>    1.4.5 16. setter/getter 确定为仅有的set get方法，勿要放入业务逻辑<br>    1.4.6 17. 循环体内，字符串联接方式，使用StringBuilder的append方法扩展——String 操作编译后会生成count 个StringBuilder对象，影响程序性能<br>    1.4.7 18. final可提高程序响应效率<br>    1.4.8 20. 访问控制从严（private、protected、public）<br>  1.5 集合处理<br>    1.5.1 1. hashCode equals<br>        1.5.1.1 重写equals时必须重写hashCode<br>        1.5.1.2 Set存储的对象必须重写<br>        1.5.1.3 用作Map的键时必须重写<br>    1.5.2 9. 集合初始化时尽量指定大小<br>        1.5.2.1 注：出于优化内存占用、响应速度考虑；集合默认size为10<br>    1.5.3 10. Map 类集合 K/V 存储null可行性问题<br>        1.5.3.1 HashMap KV均可为null<br>        1.5.3.2 TreeMap仅V可为null<br>        1.5.3.3 其它Map KV一律不可为null<br>    1.5.4 11. 合理利用好集合的有序性和稳定性，避免负面影响<br>  1.6 并发处理<br>    1.6.1 2. 创建线程、线程池时指定有意义的名称，便于出错时回溯<br>    1.6.2 4. 线程池不允许使用Executors创建，而要使用ThreadPoolExecutor<br>        1.6.2.1 Executor创建的几个类型都有大量请求或线程堆积导致OOM的可能<br>    1.6.3 5. SimpleDateFormat 是线程不安全类，一般不要定义为static变量，如果定义为static，必须加锁，或者使用DateUtils工具类<br>    1.6.4 6. 高并发时的同步调用注意锁的性能损耗<br>    1.6.5 10. CountDownLatch异步转同步操作时，每个线程退出前必须调用countDown，避免await超时<br>    1.6.6 11. 避免Random实例被多线程使用，竞争同一seed会导致性能下降；（实例包括Random、Math.random()）<br>    1.6.7 14. HashMap在容量不够进行resize时由于高并发可能出现死链，导致CPU飙升，开发中注意规避<br>  1.7 控制语句<br>    1.7.1 3. if-else 勿超过3层，超过时使用状态设计模式<br>    1.7.2 5. 循环体中考虑性能问题，避免不必要的语句、避免不必要的try-catch<br>    1.7.3 7-8. 注意参数检验的必要性，尽可能提升性能<br>2 日志<br>3 MySQL<br>4 工程规约<br>5 安全规约</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h3 id=&quot;摘要与关键字&quot;&gt;&lt;a href=&quot;#摘要与关键字&quot; class=&quot;headerlink&quot; title=&quot;摘要与关键字&quot;&gt;&lt;/a&gt;摘要与关键字&lt;/h3&gt;&lt;p&gt;继承很强大，但也有问题&lt;/p&gt;
-&lt;p&gt;确实是is-a关系时才使用继承&lt;/p&gt;
-&lt;p&gt;如果处在不同的包中，并且
+        &lt;blockquote&gt;
+&lt;p&gt;旨在对手册进行提要&lt;br&gt;关注点： 编程规约&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;http://pan.baidu.com/s/1boHjvxt&quot; target=&quot;_blank&quot; rel=&quot;noop
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>LogFoQATest</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/LogFoQATest/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/LogFoQATest/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:32:43.061Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h3><ol><li>判断手机是否存在指定TXT文件。如果存在开始打印log信息进入TXT文件里面。</li><li>加入是否将ORG设置默认的log。</li><li>是否调起menu的log信息。</li><li>打印menu是否拉去广告的log信息，</li><li>其他网络请求。</li></ol><h3 id="实现记录"><a href="#实现记录" class="headerlink" title="实现记录"></a>实现记录</h3><p>所以日志以 QATestInfo 为log的TAG信息</p><ol><li><p>默认包含此功能；</p></li><li><p>SetDefaultHomeOK</p></li><li><p>InvokeMenuPopUp</p></li><li><p>RequestMenuAD</p></li><li><p>可能较耗内存的场景：</p><p>RequestNearbyApp<br>RequestCommonTool</p><p>ImageLoaderLoadImageFromNet<br>ImageLoaderLoadAdmobImageCore<br>VolleyDisplayImage<br>VolleyDecodeImage<br>VolleyDecodeImageFix</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;要求&quot;&gt;&lt;a href=&quot;#要求&quot; class=&quot;headerlink&quot; title=&quot;要求&quot;&gt;&lt;/a&gt;要求&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;判断手机是否存在指定TXT文件。如果存在开始打印log信息进入TXT文件里面。&lt;/li&gt;
+&lt;li&gt;加入是否将ORG设置默认的lo
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶-- 利用有限制通配符来提升API的灵活性</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20%E5%88%A9%E7%94%A8%E6%9C%89%E9%99%90%E5%88%B6%E9%80%9A%E9%85%8D%E7%AC%A6%E6%9D%A5%E6%8F%90%E5%8D%87API%E7%9A%84%E7%81%B5%E6%B4%BB%E6%80%A7/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.142Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="词条"><a href="#词条" class="headerlink" title="词条"></a>词条</h3><p>通配符— ‘?’</p><p>有限制的通配符 —</p><ul><li>? extends E</li><li>? super E</li></ul><p>PECS — producer-extends, consumer-super</p><h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>输入参数是生产者或消费者时使用’?’</p><p>所有的compare和comparator都是consumer</p><p>声明方法时，用’?’取代仅出现一次的的类型参数</p><h3 id="优势体现——论其必要性"><a href="#优势体现——论其必要性" class="headerlink" title="优势体现——论其必要性"></a>优势体现——论其必要性</h3><p>我们先看之前讲 <strong>优先考虑泛型</strong>时的一个示例：</p><p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p><p>考虑为它增加一个方法：</p><p><img src="../../pic_resource/StackPushAll.png" alt=""></p><p>这样的定义，在使用中会存在不灵活的问题：因为类型在定义之后就不可变了，如果想要将一个非E类型的Iterable  push到Stack中是不可能的，这样的事实我们显然不能接受，那么该如何修改呢？答案就在本篇的主角——通配符’?’上</p><p>将上述API的参数修改为：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Iterable&lt;? extends E&gt; src</span><br></pre></td></tr></table></figure><p>即可达到目的</p><p>说完? extends，再来看? super，同样考虑Stack的API，这一次是将Stack中的元素全部弹出到目标集合</p><p><img src="../../pic_resource/StackPopAll.png" alt=""></p><p>理想状态下，所有的子类型的Stack都可以弹出到父类型的集合，但上图的API并不能实现这一目的；我们需要这样修改：</p><p>将参数类型修改为：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collection&lt;? <span class="keyword">super</span> E&gt; dst</span><br></pre></td></tr></table></figure><p>这样一来，任意继承自父类型的Stack就都可以pop到父类型集合了，是不是很带感</p><p>有的同学可能会产生疑惑了，一会儿extends，一会儿super，好晕</p><p>还好有规律可总结：</p><p>PECS——producer-extends, consumer-super</p><p>即参数列表中  生产者总是使用? extends，而消费者则总是使用 ? super（不了解生产者、消费者设计模式的同学请自行翻书）</p><h3 id="高级应用"><a href="#高级应用" class="headerlink" title="高级应用"></a>高级应用</h3><p>原始API声明：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;T&gt;&gt; <span class="function">T <span class="title">max1</span><span class="params">(List&lt;T&gt; list)</span></span></span><br></pre></td></tr></table></figure><p>修改后的API声明：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;? <span class="keyword">super</span> T&gt;&gt; <span class="function">T <span class="title">max2</span><span class="params">(List&lt;? extends T&gt; list)</span></span></span><br></pre></td></tr></table></figure><p>这一修改后的API，pecs都用上了，真有必要弄这么复杂了？</p><p>答案是肯定的</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;ScheduleFuture&lt;?&gt;&gt; futures = ...;</span><br></pre></td></tr></table></figure><p>这一futures不能调用max1方法，原因在于ScheduleFuture扩展的是Compare接口的Delayed接口的子接口，它可以与任意Delayed进行compare；而max2方法这样的声明就不会有这问题</p><h3 id="E-与-‘-’"><a href="#E-与-‘-’" class="headerlink" title="E 与 ‘?’"></a>E 与 ‘?’</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br></pre></td></tr></table></figure><p>你看上哪个了呢？</p><p>从灵活性的角度考虑，肯定是第二种好一些，但在类型参数不止一个时，就不能用’?’ 而要用类型参数了</p><p>使用第二种时需要注意：</p><p>只能把null放入List&lt;?&gt;中，这时为了保证灵活性，就需要写一个辅助捕捉类型的方法</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">  swapTrick(list, i, j);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swapTrick</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    list.set(i, list.set(j, list.get(i)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>这一篇看起来似乎有点绕，但我们真正在项目中写公共库API时，其实是需要用到’?’的，不是为了装，是真的能提升API的适用范围，减少工作量</p><p>不过任何收获都是要付出代价的，在写出高适用度的API时，一定记得写单元测试，进行高覆盖度的验证，保证准确性</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;词条&quot;&gt;&lt;a href=&quot;#词条&quot; class=&quot;headerlink&quot; title=&quot;词条&quot;&gt;&lt;/a&gt;词条&lt;/h3&gt;&lt;p&gt;通配符— ‘?’&lt;/p&gt;
+&lt;p&gt;有限制的通配符 —&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;? extends E&lt;/li&gt;
+&lt;li&gt;? super E&lt;
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>看看Bitmap源码中recycle 做了什么</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Bitmap%20recycle%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Bitmap recycle做了什么/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.158Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>看看Bitmap源码中recycle 做了什么</p><p>PS：源码查看工具网站：AndroidXref、grepCode</p></blockquote><h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p> 在Bitmap调用recycle之后再去使用，会有invalid Bitmap的异常导致应用崩溃，实际项目中其实是碰到了tgkill的Native代码崩溃的堆栈信息：</p><p><img src="../../pic_resource/stacktrace_of_tgkill.png" alt=""></p><p>分析Bitmap getGenerationId在源码中的调用情况：（git clone Framework 源码之后用sublimeText搜索得如下结果，txt文件已过滤）</p><p><img src="../../pic_resource/FindResults.png" alt=""></p><p>绿色框中的代码因为是surface的API，或者是JavaDoc的注释，可以忽略不计，可以看到有效调用就是关于Notification的调用；</p><p>结合GP后台的崩溃占用情况（&gt;7.0占比较高，6.0亦有发生），查阅AndroidDeveloper的v6.0 changeLog，发现有这么一条：</p><p><img src="../../pic_resource/Android6.0_Changes_Notification.png" alt=""></p><p>看到其中关键信息 ==reuse Notification.Builder instance==，但鉴于其它App没有出现这种级别的问题，所以另谋其它出路；</p><p>剩下的就只剩Bitmap了</p><h2 id="Bitmap-recycle做了什么"><a href="#Bitmap-recycle做了什么" class="headerlink" title="Bitmap recycle做了什么"></a>Bitmap recycle做了什么</h2><h3 id="Bitmap-cpp"><a href="#Bitmap-cpp" class="headerlink" title="Bitmap.cpp"></a>Bitmap.cpp</h3><p>source code on xRef: <a href="http://androidxref.com/6.0.1_r10/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp" target="_blank" rel="noopener">http://androidxref.com/6.0.1_r10/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp</a></p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">782</span><span class="function"><span class="keyword">static</span> jboolean <span class="title">Bitmap_recycle</span><span class="params">(JNIEnv* env, jobject, jlong bitmapHandle)</span> </span>&#123;</span><br><span class="line"><span class="number">783</span>    <span class="function">LocalScopedBitmap <span class="title">bitmap</span><span class="params">(bitmapHandle)</span></span>;</span><br><span class="line"><span class="number">784</span>    bitmap-&gt;freePixels();</span><br><span class="line"><span class="number">785</span>    <span class="keyword">return</span> JNI_TRUE;</span><br><span class="line"><span class="number">786</span>&#125;</span><br></pre></td></tr></table></figure><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">168</span><span class="keyword">void</span> Bitmap::freePixels() &#123;</span><br><span class="line"><span class="number">169</span>    AutoMutex _lock(mLock);</span><br><span class="line"><span class="number">170</span>    <span class="keyword">if</span> (mPinnedRefCount == <span class="number">0</span>) &#123;</span><br><span class="line"><span class="number">171</span>        doFreePixels();</span><br><span class="line"><span class="number">172</span>        mPixelStorageType = PixelStorageType::Invalid;</span><br><span class="line"><span class="number">173</span>    &#125;</span><br><span class="line"><span class="number">174</span>&#125;</span><br></pre></td></tr></table></figure><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">176</span><span class="keyword">void</span> Bitmap::doFreePixels() &#123;</span><br><span class="line"><span class="number">177</span>    <span class="keyword">switch</span> (mPixelStorageType) &#123;</span><br><span class="line"><span class="number">178</span>    <span class="keyword">case</span> PixelStorageType::Invalid:</span><br><span class="line"><span class="number">179</span>        <span class="comment">// already free'd, nothing to do</span></span><br><span class="line"><span class="number">180</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">181</span>    <span class="keyword">case</span> PixelStorageType::External:</span><br><span class="line"><span class="number">182</span>        mPixelStorage.external.freeFunc(mPixelStorage.external.address,</span><br><span class="line"><span class="number">183</span>                mPixelStorage.external.context);</span><br><span class="line"><span class="number">184</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">185</span>    <span class="keyword">case</span> PixelStorageType::Ashmem:</span><br><span class="line"><span class="number">186</span>        munmap(mPixelStorage.ashmem.address, mPixelStorage.ashmem.size);</span><br><span class="line"><span class="number">187</span>        close(mPixelStorage.ashmem.fd);</span><br><span class="line"><span class="number">188</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">189</span>    <span class="keyword">case</span> PixelStorageType::Java:</span><br><span class="line"><span class="number">190</span>        JNIEnv* env = jniEnv();</span><br><span class="line"><span class="number">191</span>        LOG_ALWAYS_FATAL_IF(mPixelStorage.java.jstrongRef,</span><br><span class="line"><span class="number">192</span>                <span class="string">"Deleting a bitmap wrapper while there are outstanding strong "</span></span><br><span class="line"><span class="number">193</span>                <span class="string">"references! mPinnedRefCount = %d"</span>, mPinnedRefCount);</span><br><span class="line"><span class="number">194</span>        env-&gt;DeleteWeakGlobalRef(mPixelStorage.java.jweakRef);</span><br><span class="line"><span class="number">195</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">196</span>    &#125;</span><br><span class="line"><span class="number">197</span></span><br><span class="line"><span class="number">198</span>    <span class="keyword">if</span> (android::uirenderer::Caches::hasInstance()) &#123;</span><br><span class="line"><span class="number">199</span>        android::uirenderer::Caches::getInstance().textureCache.releaseTexture(</span><br><span class="line"><span class="number">200</span>                mPixelRef-&gt;getStableID());</span><br><span class="line"><span class="number">201</span>    &#125;</span><br><span class="line"><span class="number">202</span>&#125;</span><br></pre></td></tr></table></figure><p>注意析构函数：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">164</span> Bitmap::~Bitmap() &#123;</span><br><span class="line"><span class="number">165</span>    doFreePixels();</span><br><span class="line"><span class="number">166</span> &#125;</span><br></pre></td></tr></table></figure><p>还需注意到代码：</p><p><img src="../../pic_resource/bitmap_cpp_assert_valid.png" alt=""></p><p>结合Bitmap.cpp的其它代码，只有在Bitmap recycle之后又拿来使用才会出现这个assertValid断言错误，遂将矛头指向Bitmap recycle</p><h3 id="不调用recycle-会怎样？"><a href="#不调用recycle-会怎样？" class="headerlink" title="不调用recycle()会怎样？"></a>不调用recycle()会怎样？</h3><p>Android2.3（API 11）之前，Bitmap开辟的内存位于native Stack，需要手动调用recycle进行释放，而2.3之后属于VM的heap，系统GC会自动处理。</p><p>而我们在2.3之后的系统中调用Bitmap的recycle，唯一的作用，就是把Bitmap释放的动作提前了，私以为，仅有的效用是会降低OOM发生的概率</p><p>这一点也可以从Bitmap AndroidAPI解释网页上看出一点端倪</p><p><img src="../../pic_resource/Java_Bitmap_recycle.png" alt=""></p><blockquote><p>this is an advanced call, and normally need not be called…</p></blockquote><h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><p>在所有会调用Bitmap.recycle()的地方，对相应的recycle状态检查，如果发现有recycle之后仍然在使用的地方，则直接抛出异常，暴露问题，就像这样：</p><p><img src="../../pic_resource/BitmapWatcher.png" alt=""></p><p>这样，在Monkey测试覆盖面够广时，就可以预期暴露出问题所在了；</p><p>关于Bitmap的检查，还有一种思路是使用hook方式进行，这样还可以对第三方依赖lib进行检查，后期如果应用这种方式，我再补充一篇</p><hr><p>Ref:</p><ol><li>bitmap recycle不当调用引发的问题 <a href="http://www.jianshu.com/p/b5c8e98ff5b0" target="_blank" rel="noopener">http://www.jianshu.com/p/b5c8e98ff5b0</a></li><li>Bitmap source Code：<a href="https://android.googlesource.com/platform/frameworks/base/+/47fb191/core/jni/android/graphics/Bitmap.cpp；（GrepCode网站上5.0r1的Bitmap" target="_blank" rel="noopener">https://android.googlesource.com/platform/frameworks/base/+/47fb191/core/jni/android/graphics/Bitmap.cpp；（GrepCode网站上5.0r1的Bitmap</a> sourcecode）<a href="http://grepcode.com/file/repo1.maven.org/maven2/org.robolectric/android-all/5.0.0_r2-robolectric-0/android/graphics/Bitmap.java；（AndroidXref网站上的Bitmap" target="_blank" rel="noopener">http://grepcode.com/file/repo1.maven.org/maven2/org.robolectric/android-all/5.0.0_r2-robolectric-0/android/graphics/Bitmap.java；（AndroidXref网站上的Bitmap</a> 7.1.1 sourcecode）<a href="http://androidxref.com/7.1.1_r6/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp#896" target="_blank" rel="noopener">http://androidxref.com/7.1.1_r6/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp#896</a></li><li>Bitmap API 解释on AndroidDeveloper：<a href="https://stuff.mit.edu/afs/sipb/project/android/docs/reference/android/graphics/Bitmap.html#recycle()" target="_blank" rel="noopener">https://stuff.mit.edu/afs/sipb/project/android/docs/reference/android/graphics/Bitmap.html#recycle()</a></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;看看Bitmap源码中recycle 做了什么&lt;/p&gt;
+&lt;p&gt;PS：源码查看工具网站：AndroidXref、grepCode&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlin
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
+    
+      <category term="Bitmap" scheme="https://github.com/KyleCe/kylece.github.io/tags/Bitmap/"/>
+    
+      <category term="recycle" scheme="https://github.com/KyleCe/kylece.github.io/tags/recycle/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶-- 优先考虑泛型方法</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E6%B3%9B%E5%9E%8B%E6%96%B9%E6%B3%95/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.163Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h3><p>类可以从泛型中受益，静态工具API更适合泛型</p><blockquote><p>Collections 的算法方法都已泛型化(如binarySearch、sort)</p></blockquote><h3 id="优势示例"><a href="#优势示例" class="headerlink" title="优势示例"></a>优势示例</h3><ul><li>例1：精简API</li></ul><p><img src="../../pic_resource/GenericMethodEg.png" alt=""></p><p>代码所示是一个简单的设置字体的Util的static API的泛型化代码；</p><p>如果不是使用这种泛型化的API，则需要为TextView的扩展类（Button、CheckBox等等）编写数不清的函数</p><ul><li>例2：确保类型安全的情况下提升API的易用性</li></ul><p><img src="../../pic_resource/GenericMethodEg2.png" alt=""></p><p>可以看到上面的API可以轻易的操作所有以View为基类的类的集合；</p><ul><li>例3：类级别的泛型化</li></ul><p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p><blockquote><p>在配合集合使用时需要注意类型cast的警告，这些警告实际上是编译时不会有问题，但真正在运行时可能会抛出ClassCastException，我们在实际项目中应该将这些潜在的威胁清除掉；</p><p>对于十分确定不会出问题的类型操作API上，可以用@SuppressWarning(“unckecked”)消除这类警告</p></blockquote><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>赶紧用起来吧，你的小伙伴会爱上你写的极简API的</p><blockquote><p>源码里的代码有很多写的极好的点，同学们平时可以扒一扒</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;适用范围&quot;&gt;&lt;a href=&quot;#适用范围&quot; class=&quot;headerlink&quot; title=&quot;适用范围&quot;&gt;&lt;/a&gt;适用范围&lt;/h3&gt;&lt;p&gt;类可以从泛型中受益，静态工具API更适合泛型&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Collections 的算法方法都已
       
     
     </summary>
@@ -468,116 +596,6 @@
       <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
     
       <category term="for-each" scheme="https://github.com/KyleCe/kylece.github.io/tags/for-each/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java进阶-- 利用有限制通配符来提升API的灵活性</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20%E5%88%A9%E7%94%A8%E6%9C%89%E9%99%90%E5%88%B6%E9%80%9A%E9%85%8D%E7%AC%A6%E6%9D%A5%E6%8F%90%E5%8D%87API%E7%9A%84%E7%81%B5%E6%B4%BB%E6%80%A7/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:22:18.142Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="词条"><a href="#词条" class="headerlink" title="词条"></a>词条</h3><p>通配符— ‘?’</p><p>有限制的通配符 —</p><ul><li>? extends E</li><li>? super E</li></ul><p>PECS — producer-extends, consumer-super</p><h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>输入参数是生产者或消费者时使用’?’</p><p>所有的compare和comparator都是consumer</p><p>声明方法时，用’?’取代仅出现一次的的类型参数</p><h3 id="优势体现——论其必要性"><a href="#优势体现——论其必要性" class="headerlink" title="优势体现——论其必要性"></a>优势体现——论其必要性</h3><p>我们先看之前讲 <strong>优先考虑泛型</strong>时的一个示例：</p><p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p><p>考虑为它增加一个方法：</p><p><img src="../../pic_resource/StackPushAll.png" alt=""></p><p>这样的定义，在使用中会存在不灵活的问题：因为类型在定义之后就不可变了，如果想要将一个非E类型的Iterable  push到Stack中是不可能的，这样的事实我们显然不能接受，那么该如何修改呢？答案就在本篇的主角——通配符’?’上</p><p>将上述API的参数修改为：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Iterable&lt;? extends E&gt; src</span><br></pre></td></tr></table></figure><p>即可达到目的</p><p>说完? extends，再来看? super，同样考虑Stack的API，这一次是将Stack中的元素全部弹出到目标集合</p><p><img src="../../pic_resource/StackPopAll.png" alt=""></p><p>理想状态下，所有的子类型的Stack都可以弹出到父类型的集合，但上图的API并不能实现这一目的；我们需要这样修改：</p><p>将参数类型修改为：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collection&lt;? <span class="keyword">super</span> E&gt; dst</span><br></pre></td></tr></table></figure><p>这样一来，任意继承自父类型的Stack就都可以pop到父类型集合了，是不是很带感</p><p>有的同学可能会产生疑惑了，一会儿extends，一会儿super，好晕</p><p>还好有规律可总结：</p><p>PECS——producer-extends, consumer-super</p><p>即参数列表中  生产者总是使用? extends，而消费者则总是使用 ? super（不了解生产者、消费者设计模式的同学请自行翻书）</p><h3 id="高级应用"><a href="#高级应用" class="headerlink" title="高级应用"></a>高级应用</h3><p>原始API声明：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;T&gt;&gt; <span class="function">T <span class="title">max1</span><span class="params">(List&lt;T&gt; list)</span></span></span><br></pre></td></tr></table></figure><p>修改后的API声明：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;? <span class="keyword">super</span> T&gt;&gt; <span class="function">T <span class="title">max2</span><span class="params">(List&lt;? extends T&gt; list)</span></span></span><br></pre></td></tr></table></figure><p>这一修改后的API，pecs都用上了，真有必要弄这么复杂了？</p><p>答案是肯定的</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;ScheduleFuture&lt;?&gt;&gt; futures = ...;</span><br></pre></td></tr></table></figure><p>这一futures不能调用max1方法，原因在于ScheduleFuture扩展的是Compare接口的Delayed接口的子接口，它可以与任意Delayed进行compare；而max2方法这样的声明就不会有这问题</p><h3 id="E-与-‘-’"><a href="#E-与-‘-’" class="headerlink" title="E 与 ‘?’"></a>E 与 ‘?’</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br></pre></td></tr></table></figure><p>你看上哪个了呢？</p><p>从灵活性的角度考虑，肯定是第二种好一些，但在类型参数不止一个时，就不能用’?’ 而要用类型参数了</p><p>使用第二种时需要注意：</p><p>只能把null放入List&lt;?&gt;中，这时为了保证灵活性，就需要写一个辅助捕捉类型的方法</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">  swapTrick(list, i, j);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swapTrick</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    list.set(i, list.set(j, list.get(i)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>这一篇看起来似乎有点绕，但我们真正在项目中写公共库API时，其实是需要用到’?’的，不是为了装，是真的能提升API的适用范围，减少工作量</p><p>不过任何收获都是要付出代价的，在写出高适用度的API时，一定记得写单元测试，进行高覆盖度的验证，保证准确性</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;词条&quot;&gt;&lt;a href=&quot;#词条&quot; class=&quot;headerlink&quot; title=&quot;词条&quot;&gt;&lt;/a&gt;词条&lt;/h3&gt;&lt;p&gt;通配符— ‘?’&lt;/p&gt;
-&lt;p&gt;有限制的通配符 —&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;? extends E&lt;/li&gt;
-&lt;li&gt;? super E&lt;
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java进阶-- 以函数对象代表策略</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20%E4%BB%A5%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E4%BB%A3%E8%A1%A8%E7%AD%96%E7%95%A5/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:22:18.139Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>介绍设计模式中的策略模式（strategy）</p><p>C++、C语言中的函数指针在Java中的替代形式</p><p>面向接口编程</p><p>keywords：</p><p><strong>策略、函数对象、面向接口</strong></p><h3 id="出发点"><a href="#出发点" class="headerlink" title="出发点"></a>出发点</h3><p>函数指针，或是实现代理模式、lambda表达式</p><p>### </p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;摘要与关键字&quot;&gt;&lt;a href=&quot;#摘要与关键字&quot; class=&quot;headerlink&quot; title=&quot;摘要与关键字&quot;&gt;&lt;/a&gt;摘要与关键字&lt;/h3&gt;&lt;p&gt;介绍设计模式中的策略模式（strategy）&lt;/p&gt;
-&lt;p&gt;C++、C语言中的函数指针在Java中的替代形式
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java进阶-- 优先考虑泛型方法</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E6%B3%9B%E5%9E%8B%E6%96%B9%E6%B3%95/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:22:18.163Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h3><p>类可以从泛型中受益，静态工具API更适合泛型</p><blockquote><p>Collections 的算法方法都已泛型化(如binarySearch、sort)</p></blockquote><h3 id="优势示例"><a href="#优势示例" class="headerlink" title="优势示例"></a>优势示例</h3><ul><li>例1：精简API</li></ul><p><img src="../../pic_resource/GenericMethodEg.png" alt=""></p><p>代码所示是一个简单的设置字体的Util的static API的泛型化代码；</p><p>如果不是使用这种泛型化的API，则需要为TextView的扩展类（Button、CheckBox等等）编写数不清的函数</p><ul><li>例2：确保类型安全的情况下提升API的易用性</li></ul><p><img src="../../pic_resource/GenericMethodEg2.png" alt=""></p><p>可以看到上面的API可以轻易的操作所有以View为基类的类的集合；</p><ul><li>例3：类级别的泛型化</li></ul><p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p><blockquote><p>在配合集合使用时需要注意类型cast的警告，这些警告实际上是编译时不会有问题，但真正在运行时可能会抛出ClassCastException，我们在实际项目中应该将这些潜在的威胁清除掉；</p><p>对于十分确定不会出问题的类型操作API上，可以用@SuppressWarning(“unckecked”)消除这类警告</p></blockquote><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>赶紧用起来吧，你的小伙伴会爱上你写的极简API的</p><blockquote><p>源码里的代码有很多写的极好的点，同学们平时可以扒一扒</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;适用范围&quot;&gt;&lt;a href=&quot;#适用范围&quot; class=&quot;headerlink&quot; title=&quot;适用范围&quot;&gt;&lt;/a&gt;适用范围&lt;/h3&gt;&lt;p&gt;类可以从泛型中受益，静态工具API更适合泛型&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Collections 的算法方法都已
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java进阶-- volatile关键字</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20volatile%E5%85%B3%E9%94%AE%E5%AD%97/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- volatile关键字/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:22:18.153Z</updated>
-    
-    <content type="html"><![CDATA[<p>volatile含有部分synchronized的特性，效率更高，但使用时需要注意细节，不然容易出错</p><h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>Java中被volatile修饰的变量，每次读写都会直接使用“内存”介质，而不是使用CPU缓存</p><blockquote><p>音 — UK <strong> /ˈvɒl.ə.taɪl/  US </strong> /ˈvɑː.lə.t̬əl/</p><p>英 — <strong>likely to change suddenly and unexpectedly or suddenly become violent or angry</strong></p><p>中 — 易变的</p></blockquote><h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul><li>保证变量可见性</li><li>禁止指令进行重排序</li></ul><blockquote><p>基础概念：可见性、有序性、原子性</p><ol><li>可见性：对所有线程来说，任一线程对变量的改动都立即可见</li><li>有序性：代码可能会被编译器混编，有序性即指代码按顺序执行</li><li>原子性：所有操作不会被打断，谁也不行（除非断电）</li></ol></blockquote><p>实际上我们对变量的修改，虽然可能Java就一行代码（如 y=x），但被解释成汇编语言会变成多行（y=x就需要进行两步操作：读x值，写入y所在内存，学过汇编的同学应该比较清楚）</p><h3 id="与synchronized的区别"><a href="#与synchronized的区别" class="headerlink" title="与synchronized的区别"></a>与synchronized的区别</h3><p>按字面理解，volatile关键字只是标记变量为易变的，并不能保证对变量的所有操作都是同步的，即不能保证具有synchronized一样的效果</p><p>实际上，对volatile修饰的变量的读/写操作是可以保证其原子性的，但还要注意一个问题，即同时写变量的线程可能不止一个，如此一来，其中部分的写操作就有可能丢失</p><p>听起来好像volatile使用起来很危险，但它也是有它的用途的</p><h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul><li>对于写不依赖历史状态的变量，可以考虑使用volatile修饰字代替synchronized来提高程序效率</li><li>保证代码的有序性：volatile变量的读写操作之前的代码，编译器是不会进行重排序的</li></ul><h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在volatile满足不了要求的场景可以考虑使用synchronized、lock、Atomic变量来保证特性</p><p>对变量的写不依赖历史状态的变量使用volatile修饰可以提高效率</p><p>对于需要保证部分程序语句有序性的场景可以考虑使用volatile代替锁定整个代码块，提高效率</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;volatile含有部分synchronized的特性，效率更高，但使用时需要注意细节，不然容易出错&lt;/p&gt;
-&lt;h3 id=&quot;是什么&quot;&gt;&lt;a href=&quot;#是什么&quot; class=&quot;headerlink&quot; title=&quot;是什么&quot;&gt;&lt;/a&gt;是什么&lt;/h3&gt;&lt;p&gt;Java中被vo
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
-    
-      <category term="volatile" scheme="https://github.com/KyleCe/kylece.github.io/tags/volatile/"/>
     
   </entry>
   

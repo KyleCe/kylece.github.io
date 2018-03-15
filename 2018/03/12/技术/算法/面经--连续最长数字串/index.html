@@ -3,26 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>【note-程序】hashmap-integer,-v--sparsearray-- | KyleCe</title>
+  <title>面经--连续最长数字串 | KyleCe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="JavaHashMap-IntegerSparseArray" />
+  <meta name="keywords" content="算法面经" />
   
   
   
   
-  <meta name="description" content="众所周知，基础数组的处理效率要比集合的处理效率高出指数倍（内存寻址优势，指哪打哪，直截了当）   在HashMap&amp;lt;K, V&amp;gt; 中K为Integer类型时，简单考虑，使用K作为数组下标可以使用基础数组替代HashMap，但这样处理的话会有一个问题，那就是K值较大时，直接使用数组会导致极大的内存空间浪费（很多数组内容都由null填充）——由此想到“稀疏数组”  SparseArray就">
-<meta name="keywords" content="Java,HashMap-Integer,SparseArray">
+  <meta name="description" content="如何连续最长数字串呢？本篇介绍一种C语言实现： 题   在字符串中找出连续最长的数字串，返回最长长度，并把这个最长数字串赋值给其中一个函数参数outputStr所指内存 例   “abcd12345ed125ss123456789”的首地址传给intputStr后，函数将返回9，outputStr所指的值为123456789 析我们可以对字符串中的每个数字串计数，然后比较得到最大的。这就是我们所要">
+<meta name="keywords" content="算法,面经">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Note-程序】HashMap-Integer,-V--SparseArray--">
-<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--/index.html">
+<meta property="og:title" content="面经--连续最长数字串">
+<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2018/03/12/技术/算法/面经--连续最长数字串/index.html">
 <meta property="og:site_name" content="KyleCe">
-<meta property="og:description" content="众所周知，基础数组的处理效率要比集合的处理效率高出指数倍（内存寻址优势，指哪打哪，直截了当）   在HashMap&amp;lt;K, V&amp;gt; 中K为Integer类型时，简单考虑，使用K作为数组下标可以使用基础数组替代HashMap，但这样处理的话会有一个问题，那就是K值较大时，直接使用数组会导致极大的内存空间浪费（很多数组内容都由null填充）——由此想到“稀疏数组”  SparseArray就">
+<meta property="og:description" content="如何连续最长数字串呢？本篇介绍一种C语言实现： 题   在字符串中找出连续最长的数字串，返回最长长度，并把这个最长数字串赋值给其中一个函数参数outputStr所指内存 例   “abcd12345ed125ss123456789”的首地址传给intputStr后，函数将返回9，outputStr所指的值为123456789 析我们可以对字符串中的每个数字串计数，然后比较得到最大的。这就是我们所要">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-09T15:32:43.079Z">
+<meta property="og:updated_time" content="2018-03-15T15:48:39.772Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【Note-程序】HashMap-Integer,-V--SparseArray--">
-<meta name="twitter:description" content="众所周知，基础数组的处理效率要比集合的处理效率高出指数倍（内存寻址优势，指哪打哪，直截了当）   在HashMap&amp;lt;K, V&amp;gt; 中K为Integer类型时，简单考虑，使用K作为数组下标可以使用基础数组替代HashMap，但这样处理的话会有一个问题，那就是K值较大时，直接使用数组会导致极大的内存空间浪费（很多数组内容都由null填充）——由此想到“稀疏数组”  SparseArray就">
+<meta name="twitter:title" content="面经--连续最长数字串">
+<meta name="twitter:description" content="如何连续最长数字串呢？本篇介绍一种C语言实现： 题   在字符串中找出连续最长的数字串，返回最长长度，并把这个最长数字串赋值给其中一个函数参数outputStr所指内存 例   “abcd12345ed125ss123456789”的首地址传给intputStr后，函数将返回9，outputStr所指的值为123456789 析我们可以对字符串中的每个数字串计数，然后比较得到最大的。这就是我们所要">
   
     <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
   
@@ -160,7 +160,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-技术/算法/面经--连续最长数字串" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -168,7 +168,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      【Note-程序】HashMap-Integer,-V--SparseArray--
+      面经--连续最长数字串
     </h1>
   
 
@@ -176,8 +176,8 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	<a href="/2018/03/12/技术/算法/面经--连续最长数字串/" class="article-date">
+	  <time datetime="2018-03-12T14:50:52.000Z" itemprop="datePublished">2018-03-12</time>
 	</a>
 
       
@@ -193,55 +193,16 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>众所周知，基础数组的处理效率要比集合的处理效率高出指数倍（内存寻址优势，指哪打哪，直截了当）</p>
-</blockquote>
-<blockquote>
-<p>在HashMap&lt;K, V&gt; 中K为Integer类型时，简单考虑，使用K作为数组下标可以使用基础数组替代HashMap，但这样处理的话会有一个问题，那就是K值较大时，直接使用数组会导致极大的内存空间浪费（很多数组内容都由null填充）——由此想到“稀疏数组”</p>
-</blockquote>
-<p><strong>SparseArray</strong>就是针对这一场景设计的<br><em>数组中仅仅保存有内容的空间</em> 这样一来，就既可以利用数组高效的优势，又避免了内存空间的浪费。</p>
-<p><strong>取android.util.SparseArray源码中的put API如下：</strong></p>
-<pre><code>/**
- * Adds a mapping from the specified key to the specified value,
- * replacing the previous mapping from the specified key if there
- * was one.
- */
-public void put(int key, E value) {
-    int i = ContainerHelpers.binarySearch(mKeys, mSize, key);
-
-    if (i &gt;= 0) {
-        mValues[i] = value;
-    } else {
-        i = ~i;
-
-        if (i &lt; mSize &amp;&amp; mValues[i] == DELETED) {
-            mKeys[i] = key;
-            mValues[i] = value;
-            return;
-        }
-
-        if (mGarbage &amp;&amp; mSize &gt;= mKeys.length) {
-            gc();
-
-            // Search again because indices may have changed.
-            i = ~ContainerHelpers.binarySearch(mKeys, mSize, key);
-        }
-
-        mKeys = GrowingArrayUtils.insert(mKeys, mSize, i, key);
-        mValues = GrowingArrayUtils.insert(mValues, mSize, i, value);
-        mSize++;
-    }
-}
-</code></pre><blockquote>
-<p><em>可以看到，在查找是否包含时使用了BinarySearch（二分搜索），在插入时又做了一次容量、size检查，有无用内存时手动gc，此gc为private函数，只是对内存进行了整理，无效内容置为null</em></p>
-</blockquote>
-<blockquote>
-<p>查看DELETED定义：<br>private static final Object DELETED = new Object();<br>在删除时，只是将有效索引的内容至为DELETED，将mGarbage至为true，在下次有增/改操作时进行统一的容量整理；个人感觉这一api逻辑是经验设计，为的是避免连续删除时的频繁容量整理；</p>
-</blockquote>
-<p><strong>结论：</strong></p>
-<blockquote>
-<p>使用HashMap&lt;Integer, V&gt;时，用SparseArray替代，可以极大地提高性能</p>
-</blockquote>
+        <p>如何连续最长数字串呢？本篇介绍一种C语言实现：</p>
+<h4 id="题"><a href="#题" class="headerlink" title="题"></a>题</h4><p>   在字符串中找出连续最长的数字串，返回最长长度，并把这个最长数字串赋值给其中一个函数参数outputStr所指内存</p>
+<h4 id="例"><a href="#例" class="headerlink" title="例"></a>例</h4><p>   “abcd12345ed125ss123456789”的首地址传给intputStr后，函数将返回9，outputStr所指的值为123456789</p>
+<h4 id="析"><a href="#析" class="headerlink" title="析"></a>析</h4><pre><code>我们可以对字符串中的每个数字串计数，然后比较得到最大的。这就是我们所要求的最大连续数字串。需要记住这个最大串的开始位置，还有最大串的长度。
+</code></pre><ol>
+<li>遍历字符串</li>
+<li>如果遇到数字，则将计数器+1；否则，我们应该统计刚才的数字串的长度和最大长度比较，如果大于最大长度，则重新设置最大长度，并记住数字串开始位置</li>
+<li>返回我们所需要的最大长度和数字串</li>
+</ol>
+<h4 id="code"><a href="#code" class="headerlink" title="code"></a>code</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">find_max_number</span><span class="params">(<span class="keyword">char</span> <span class="built_in">string</span>[],<span class="keyword">int</span> length,<span class="keyword">int</span> &amp;count, <span class="keyword">char</span> *result )</span></span>&#123;</span><br><span class="line">   <span class="comment">/* max_length represents the max length of number string. */</span></span><br><span class="line">   <span class="keyword">int</span> max_length = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">/* start means first character's position of number string */</span></span><br><span class="line">   <span class="keyword">int</span> start = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">/* i represents iterator of string array */</span></span><br><span class="line">   <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">// here we scan the character array.</span></span><br><span class="line">   <span class="keyword">for</span>( ; i &lt; length; i++ )&#123;</span><br><span class="line">      <span class="comment">// if character belongs to 0~9 we add counter.</span></span><br><span class="line">      <span class="comment">// otherwise we set counter as 0.</span></span><br><span class="line">      <span class="keyword">if</span>( <span class="built_in">string</span>[i] &gt;= <span class="string">'0'</span> &amp;&amp; <span class="built_in">string</span>[i] &lt;= <span class="string">'9'</span> )&#123;</span><br><span class="line">         count ++;</span><br><span class="line">      &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">         <span class="keyword">if</span>( count &gt; max_length )&#123;</span><br><span class="line">            max_length = count;</span><br><span class="line">            start = i - count + <span class="number">1</span>;</span><br><span class="line">         &#125;</span><br><span class="line">         count  = <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// finally we should set max_length and the position again.</span></span><br><span class="line">   <span class="keyword">if</span>( count &gt; max_length )&#123;</span><br><span class="line">      max_length = count;</span><br><span class="line">      start = i - count;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// the last, we return counter and the string we need.</span></span><br><span class="line">   count = max_length;</span><br><span class="line">   <span class="built_in">memcpy</span>( result, &amp;<span class="built_in">string</span>[start], count*<span class="keyword">sizeof</span>(<span class="keyword">char</span>) );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">( <span class="keyword">int</span> argc, <span class="keyword">char</span> ** argv )</span></span>&#123;</span><br><span class="line">   <span class="keyword">char</span> <span class="built_in">string</span>[] = <span class="string">"iabcd12345ed125ss123456789"</span>;</span><br><span class="line">   <span class="keyword">char</span> result[<span class="number">20</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">   <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">   find_max_number( <span class="built_in">string</span>, <span class="built_in">strlen</span>(<span class="built_in">string</span>), count, result );</span><br><span class="line">   <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; count &lt;&lt; <span class="string">" "</span> &lt;&lt; result &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -276,7 +237,7 @@ public void put(int key, E value) {
 
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashMap-Integer/">HashMap-Integer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SparseArray/">SparseArray</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面经/">面经</a></li></ul>
 
     </footer>
   </div>
@@ -284,19 +245,19 @@ public void put(int key, E value) {
     
 <nav id="article-nav">
   
-    <a href="/2018/03/09/技术/程序/【Program】性能考量/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/12/技术/算法/面经--逆转字符串（Java）/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          【Program】性能考量
+          面经--逆转字符串
         
       </div>
     </a>
   
   
-    <a href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/03/11/技术/管理/寻找优秀的Programmer/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">【Java-基础系列】Synchronized关键字</div>
+      <div class="article-nav-title">寻找优秀的Programmer</div>
     </a>
   
 </nav>
@@ -310,7 +271,7 @@ public void put(int key, E value) {
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav">无</ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#题"><span class="nav-number">1.</span> <span class="nav-text">题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例"><span class="nav-number">2.</span> <span class="nav-text">例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#析"><span class="nav-number">3.</span> <span class="nav-text">析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#code"><span class="nav-number">4.</span> <span class="nav-text">code</span></a></li></ol>
     
     </div>
   </aside>

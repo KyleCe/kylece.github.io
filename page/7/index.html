@@ -255,433 +255,6 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-每周一书/《Effective-Java》"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/《Effective-Java》/">《Effective-Java》</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/每周一书/《Effective-Java》/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>经典重读——<a href="https://www.amazon.cn/gp/product/B001PTGR52/ref=oh_aui_search_detailpage?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接</a></p>
-<hr>
-<p><a href="https://www.evernote.com/l/ARv2VKlxd59DkIwV8_vaUhtw0JNvBqZoXqg" target="_blank" rel="noopener">笔记链接</a></p>
-<hr>
-<p>导图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9bd9895c1b3e285e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Effective  Java  overview.png"></p>
-<hr>
-<p>笔记文本：</p>
-<blockquote>
-<p>Effective Java<br>1 第2章 创建和销毁对象<br>  1.1 1. 考虑用静态工厂方法代替构造器<br>    1.1.1 优点<br>        1.1.1.1 优势一：有名称<br>        1.1.1.2 优势二：不必在每次调用它们的时候都创建一个新对象<br>        1.1.1.3 优势三：可以返回原返回类型的任何子类型的对象<br>        1.1.1.4 优势四：在创建参数化类型实例时，它们使代码变得更简洁<br>    1.1.2 缺点<br>        1.1.2.1 类如果不含有公有的或者受保护的构造器，就不能被子类化<br>        1.1.2.2 它们与其他静态方法实际上没有任何区别<br>  1.2 2. 遇到多个构造器参数时要考虑用构建器<br>    1.2.1 Builder<br>    1.2.2 与构造器相比的略微优势在于：builder可以有多个可变参数<br>    1.2.3 虽然创建builder的开销在实践中可能不那么明显，但是在某些十分注重性能的情况下，可能就成问题<br>    1.2.4 builder比重叠构造器更冗长，因此只在很多参数时才使用<br>  1.3 3. 用私有构造器或者枚举类型强化Singleton属性<br>    1.3.1 单元素的枚举类型已经成为实现Singleton的最佳方法<br>  1.4 4. 通过私有构造器强化不可实例化的能力<br>    1.4.1 弊端：使得其不能被子类化<br>  1.5 5. 避免创建不必要的对象<br>    1.5.1 对于同时提供了静态工厂方法和构造器的不可变类，通常可以使用静态工厂方法而不是构造器，以避免创建不必要的对象<br>    1.5.2 除了重用不可变的对象之外，也可以重用那些已知不会被修改的可变对象<br>    1.5.3 要优先使用基本类型而不是装箱基本类型，要当心无意识的自动装箱<br>    1.5.4 自己维护对象池只在对象非常重量级时才显得必要，比如数据库连接池，线程池<br>  1.6 6. 消除过期的对象引用<br>    1.6.1 一旦对象引用已经过期，只需清空这些引用即可<br>    1.6.2 缓存导致的内存泄露<br>        1.6.2.1 一种是确认在缓存之外存在对某几个项的键的引用，该项就有意义 ——可以用WeakHashMap代表缓存<br>        1.6.2.2 针对“缓存项生命周期是否有意义”难以确认的情况 ——缓存应该时不时地清除掉没用的项。这项清除工作可以由一个后台线程来完成，或者也可以在给缓存添加新条目时顺便清理（LinkedHashMap类利用它的removeEldestEntry方法可以很容易实现）<br>        1.6.2.3 第三种引发来源是：监听器和其他回调。 确保回调立即被当做垃圾回收的最佳方法是只保存它们的弱引用 weak reference<br>  1.7 7. 避免使用finalizer方法<br>    1.7.1 通常是不可预测的<br>        1.7.1.1 一个对象从不可用开始，到它的终结方法被执行，这段时间是任意长的<br>    1.7.2 使用它有一个非常严重的性能损失<br>    1.7.3 显示的终止方法通常与try-finally结合使用，以确保及时终止<br>    1.7.4 用途：充当安全网、本地对等体<br>    1.7.5 结论：不应该依赖终结方法来更新重要的持久状态<br>    1.7.6 结论：除非是作为安全网，或者是为了终止非关键的本地资源，否则不要使用<br>2 第3章 对所有对象都通用的方法<br>  2.1 8. 覆盖equals时请遵守通用约定<br>    2.1.1 建议：能不覆盖就不要覆盖<br>    2.1.2 不用覆盖的情形<br>        2.1.2.1 类的每个实例本质上都是唯一的<br>        2.1.2.2 不关心类是否提供了“逻辑相等”<br>        2.1.2.3 超类已经覆盖了equals，从超类继承过来的行为对于子类也是合适的<br>        2.1.2.4 类是私有的或是包级私有的，可以确定它的equals方法永远不会被调用<br>    2.1.3 覆盖的约定<br>        2.1.3.1 自反性<br>        2.1.3.2 对称性<br>        2.1.3.3 传递性<br>        2.1.3.4 一致性<br>        2.1.3.5 非空性<br>                2.1.3.5.1 对于任何非null的引用值，x.equals(null)必须返回false<br>    2.1.4 诀窍<br>        2.1.4.1 使用== 检查参数是否为这个对象的引用<br>        2.1.4.2 使用instanceof检查 参数是否为正确的类型<br>        2.1.4.3 把参数转换为正确的类型<br>        2.1.4.4 对于该类中的每个关键域，检查参数中的域是否与该对象中对应的域相匹配<br>        2.1.4.5 是否满足：对称、传递、一致<br>        2.1.4.6 覆盖equals时总要覆盖hashCode<br>        2.1.4.7 不要企图让equals方法过于智能<br>        2.1.4.8 不要将equals声明中的Object对象替换为其他类型<br>  2.2 9. 覆盖 equals时总要覆盖 hashCode<br>    2.2.1 最佳实践：<br>        2.2.1.1 @Override public int hashCode(){ int result = 17; result = 31 <em> result + areaCode; result = 31 </em> result + prefix; result = 31 <em> result + lineNumber; }<br>  2.3 10. 总要覆盖 toString<br>    2.3.1 toString方法应该返回对象中包含的所有值得关注的信息<br>  2.4 11. 谨慎地覆盖clone<br>    2.4.1 通则：永远不要让客户去做任何类库能够替客户完成的事情<br>    2.4.2 最好提供某些其他途径来代替对象拷贝，或者干脆不提供这样的功能<br>    2.4.3 另一个实现对象拷贝的好方法是提供一个拷贝构造器或拷贝工厂<br>    2.4.4 由于它有这么多缺点，有些专家级的程序员干脆从来不去覆盖clone方法，也从来不去调用它，除非拷贝数组<br>  2.5 12. 考虑实现comparable接口<br>    2.5.1 compareTo不但允许进行简单的等同性比较，而且允许执行顺序比较<br>    2.5.2 如果你在编写一个值类，它具有非常明显的内在排序关系，比如按字母顺序、按数值顺序或者按年代顺序，那你就应该坚决考虑实现这个接口<br>    2.5.3 如果一个类有多个关键域，那么你必须从最关键的域开始，逐步进行到所有的重要域<br>3 第4章 类和接口<br>  3.1 13. 使类和成员的可访问性最小化<br>    3.1.1 信息隐藏 或 封装<br>    3.1.2 尽可能地使每个类或者成员不被外界访问<br>    3.1.3 有一条规则限制了降低方法的可访问性能力：如果方法覆盖了超类中的一个方法，子类中的访问级别就不允许低于超类中的访问级别<br>    3.1.4 注意：长度非零的数组总是可变的，所以，类具有公有的静态final数组域或者返回这种域的访问方法总是会出错<br>  3.2 14. 在公有类中使用访问方法而非公有域<br>    3.2.1 如果类可以在它所在的包的外部进行访问，就提供访问方法<br>    3.2.2 如果类是包级私有的，或者是私有的嵌套类，直接暴露它的数据域并没有本质错误<br>    3.2.3 Java类库的反面典型：Point和Dimension，暴露dimension类的内部数据造成了严重的性能问题，而且这个问题依然存在<br>  3.3 15. 使可变性最小化<br>    3.3.1 理由：比可变类更加易于设计、实现和使用。它们不容易出错，且更加安全<br>    3.3.2 使类成为不可变需要遵循五条规则<br>        3.3.2.1 1 不要提供任何会修改对象状态的方法<br>        3.3.2.2 2 保证类不会被扩展<br>        3.3.2.3 使所有的域都是final的<br>        3.3.2.4 使所有的域都成为私有的<br>        3.3.2.5 确保对于任何可变组件的互斥访问<br>    3.3.3 不可变对象的优势<br>        3.3.3.1 不可变对象本质上是线程安全的，它们不要求同步<br>        3.3.3.2 不仅可以共享不可变对象，甚至可以共享它们的内部信息<br>        3.3.3.3 不可变对象为其他对象提供了大量的构件<br>        3.3.3.4 不可变对象真正唯一的缺点是，对于每个不同的值都需要一个单独的对象<br>    3.3.4 使类成为不可变的方法 （绝不允许自身被子类化）<br>        3.3.4.1 1 使类成为final<br>        3.3.4.2 2 让类的所有构造器都变成私有的或者包级私有的，并添加公有的静态工厂来替代公有的构造器<br>        3.3.4.3 静态工厂方法除了允许多个实现类的灵活性之外，这种方法还使得有可能通过改善静态工厂的对象缓存能力，在后续的发行版中改进该类的性能<br>        3.3.4.4 还有许多其他优势，比如，提供一种其他功能的 构造器 ，只需添加第二个静态工厂，并且工厂的名字清楚地表明它的功能<br>    3.3.5 如果你选择让自己的不可变类实现Serializable接口，并且包含一个或多个指向可变对象的域，就必须提供一个显式的readObject或者readResolve方法<br>    3.3.6 除非有很好的理由要让类成为一个可变的类，否则就应该是不可变的<br>    3.3.7 如果类不能被做成不可变的，仍然应该尽可能地限制它的可变性。降低对象可存在的状态数，可以更容易地分析该对象的行为，同时降低出错的可能性<br>  3.4 16. 复合优先于继承<br>    3.4.1 继承是实现代码重用的有力手段，但它并非永远是完成这项工作的最佳工具<br>    3.4.2 与方法调用不同的是，继承打破了封装性<br>    3.4.3 新类中的每个实例方法都可以调用被包含的现有类实例中对应的方法，并返回它的结果，这被称为“转发”，新类中的方法被称为转发方法<br>    3.4.4 使用复合的类也被称为包装类，这也正是“装饰模式”<br>    3.4.5 包装类不适合用在回调框架中。 编写转发方法倒是有点琐碎，但是只需要给每个接口编写一次构造器，转发类则可以通过包含接口的包替你提供<br>    3.4.6 只有当子类真正是超类的子类型时，才适合用继承<br>    3.4.7 如果在适合于使用复合的地方使用继承，则会不必要地暴露实现细节。这样得到的API会把你限制在原始的实现上，永远限定了类的性能<br>  3.5 17. 要么为继承而设计，并提供文档说明，要么就禁止继承<br>    3.5.1 说明可覆盖方法的自用性<br>    3.5.2 好的文档应该描述一个给定的方法做了什么，而不是如何做到的<br>    3.5.3 对于为了继承而设计的类，唯一的测试方法就是编写子类<br>    3.5.4 构造器决不能调用可被覆盖的方法<br>    3.5.5 为了继承而设计的类，对于这个类会有一些实质性的限制<br>    3.5.6 对于那些并非为了安全地进行子类化而设计和编写文档的类，要禁止子类化<br>  3.6 18. 接口优于抽象类<br>    3.6.1 现有的类可以很容易被更新，以实现新的接口<br>    3.6.2 接口是定义mixin（混合类型）的理想选择<br>    3.6.3 接口允许我们构造非层次结构的类型框架<br>    3.6.4 接口使得安全地增强类的功能成为可能<br>    3.6.5 通过对你导出的每个重要接口都提供一个抽象的骨架实现类，把接口和抽象类的优点结合起来<br>    3.6.6 抽象类与接口相比有一个明显优势：抽象类的演变比接口的演变要容易得多。如果在后续发行版中，你希望在抽象类中增加新的方法，始终可以增加具体方法，它包含合理的默认实现。然后，该抽象类的所有实现都将提供这个新方法。对于接口，这样做是行不通的<br>    3.6.7 设计公有接口要非常谨慎。接口一旦被公开发行，并且已被广泛实现，再想改变这个接口几乎是不可能的<br>  3.7 19. 接口只用于定义类型<br>    3.7.1 有一种接口被称为 常量接口。这种接口不包含任何方法，它只包含静态final域，每个域都导出一个常量。使用这些常量的类实现这个接口，以避免用类名来修饰常量名。<br>    3.7.2 应该将这种量导出<br>  3.8 20. 类层次优于标签类<br>    3.8.1 缺点<br>        3.8.1.1 充斥着样板代码，包括枚举声明、标签域以及条件语句<br>        3.8.1.2 标签类过于冗长、容易出错，并且效率低下<br>  3.9 21. 用函数对象表示策略<br>    3.9.1 比较器函数代表一种为元素排序的策略<br>    3.9.2 我们在设计具体的策略类时，还需要定义一个策略接口<br>  3.10 22. 优先考虑静态成员类<br>    3.10.1 嵌套类是指被定义在另一个类的内部的类。嵌套类有四种<br>        3.10.1.1 静态成员类<br>        3.10.1.2 非静态成员类<br>        3.10.1.3 匿名类<br>        3.10.1.4 局部类<br>    3.10.2 如果声明成员类不要求访问外围实例，就要始终把static修饰符放在它的声明中<br>4 第5章 泛型<br>  4.1 23. 请不要在新代码中使用原生态类型<br>  4.2 24. 消除非受检警告<br>    4.2.1 要尽可能消除每一个非受检警告<br>    4.2.2 如果无法消除警告，同时可以证明引起警告的代码是类型安全的，（只有在这种情况下才）可以用一个@SuppressWarning(“uncheck”)注解来禁止这条警告<br>  4.3 25. 列表优先于数组<br>    4.3.1 数组与泛型相比，有两个重要不同点<br>        4.3.1.1 1 数组是协变的<br>        4.3.1.2 2 数组是具体化的<br>  4.4 26. 优先考虑泛型<br>    4.4.1 编写自己的泛型会比较困难，但是值得花些时间去学习如何编写<br>  4.5 27. 优先考虑泛型方法<br>    4.5.1 泛型方法就像泛型一样，使用起来比要求客户端转换输入参数并返回值的方法来得更加安全，也更加容易。<br>    4.5.2 就像泛型一样，你应该确保新方法可以不用转换就能使用，这通常意味着要将它们泛型化<br>  4.6 28. 利用有限制通配符来提升API的灵活性<br>    4.6.1 &lt;？ Extends E&gt;<br>    4.6.2 &lt;? super E&gt;<br>    4.6.3 PECS 表示： producer-extends, consumer-super<br>    4.6.4 所有的comparable和comparator都是消费者<br>  4.7 29. 优先考虑类型安全的异构容器<br>5 第6章 枚举和注解<br>  5.1 第30条 用enum代替int常量<br>    5.1.1 因为没有可访问的构造器，枚举类型是真正的final<br>    5.1.2 枚举是实例受控的<br>    5.1.3 它们是单例的泛型化，本质上是单元素的枚举<br>    5.1.4 你可以增加或重新排列枚举类型中的常量，而无需重新编译它的客户端代码，因为导出常量的域在枚举类型和它的客户端之间提供了一个隔离层：常量值并没有被编译到客户端代码中，而是在int枚举模式之中<br>    5.1.5 最终，可以通过调用toString方法将枚举转化成可打印的字符串<br>    5.1.6 除了完善了int枚举模式不足之外，枚举类型还允许添加任意的方法和域，并实现任意接口<br>    5.1.7 将不同的行为与每个枚举常量关联起来：在枚举类型中声明一个抽象的方法<br>        5.1.7.1 pubic enum Operation{ PLUS{double apply(double x, double y){return x + y;}}, MINUS{double apply(double x, double y){return x - y;}}, TIMES{double apply(double x, double y){return x </em> y;}}, DIVIDE{double apply(double x, double y){return x / y;}}; abstract double apply(double x, double y); }<br>        5.1.7.2 如果给第二版添加新常量，你就不可能会忘记提供apply方法<br>    5.1.8 特定于常量的方法实现可以与特定于常量的数据结合起来<br>        5.1.8.1 pubic enum Operation{ PLUS(“+”) {double apply(double x, double y){return x + y;}}, MINUS(“-“) {double apply(double x, double y){return x - y;}}, TIMES(“<em>“) {double apply(double x, double y){return x </em> y;}}, DIVIDE(“/“) {double apply(double x, double y){return x / y;}}; private final String symbol; Operation(String symbol) {this.symbol = symbol;} @Override public String toString(){ return this.sybol;} abstract double apply(double x, double y); }<br>    5.1.9 枚举类型有一个自动产生的valueOf(String )方法，它将常量的名字转变成常量本身<br>    5.1.10 策略枚举<br>        5.1.10.1 嵌套策略枚举之后，枚举中就不需要switch语句或者特定于常量的方法实现了。虽然这种模式没有switch语句那么简洁，但更加安全，也更加灵活<br>  5.2 第31条 用实例域代替序数<br>    5.2.1 永远不要根据枚举的序数导出与它关联的值，而是要将它保存在一个实例域中<br>    5.2.2 ordinal()——大多数程序员都不需要这个方法，它是设计成用于像EnumSet和EnumMap这种基于枚举的通用数据结构的<br>  5.3 第32条 用EnumSet代替位域<br>    5.3.1 枚举类型要用于集合中，没有理由用位域来表示它们<br>  5.4 第33条 用EnumMap代替序数索引<br>    5.4.1 使用EnumMap，运行速度可以与使用序数的程序相媲美，没有不安全的转换，不必手工标注这些索引的输出；计算数组索引时也不可能出错<br>    5.4.2 之所以能与通过序数索引的数组相媲美，是因为EnumMap在内部使用了这种数组<br>    5.4.3 最好不要用序数来索引数组，而要使用EnumMap<br>  5.5 第34条 用接口模拟可伸缩的枚举<br>    5.5.1 虽然无法编写可扩展的枚举类型，却可以通过编写接口以及实现该接口的基础枚举类型，对它进行模拟<br>  5.6 第35条 注解优先于命名模式<br>    5.6.1 示例<br>        5.6.1.1 @Retention(RetentionPolicy.RUNTIME) @Target(ElementType.METHOD) public @interface Test{ }<br>        5.6.1.2 这种注解称为元注解<br>  5.7 第36条 坚持使用Override注解<br>    5.7.1 能够避免疏漏的 重载<br>  5.8 第37条 用标记接口定义类型<br>    5.8.1 定义：没有包含方法声明的接口，而只是指明一个类实现了具有某种属性的接口<br>6 第7章 方法<br>  6.1 第38条 检查参数的有效性<br>  6.2 第39条 必要时进行保护性拷贝<br>    6.2.1 假设类的客户端会尽其所能来破坏这个类的约束条件，因此你必须保护性地设计程序<br>    6.2.2 为了保护类的内部信息免受直接访问修改的攻击，对于构造器的每个可变参数进行保护性拷贝是必要的<br>    6.2.3 对与参数类型可以被不可信任方子类化的参数，请不要使用clone方法进行保护性拷贝<br>    6.2.4 虽然替换构造器就可以成功地避免上述攻击，但是改变Period实例仍然是有可能的，因为它的访问方法提供了对其可变内部成员的访问能力 为了防御这种攻击，只需要修改访问方法，使它返回可变内部域的保护性拷贝即可<br>  6.3 第40条 谨慎设计方法签名<br>    6.3.1 谨慎选择方法的名称<br>    6.3.2 不要过于追求提供便利的方法<br>        6.3.2.1 每个方法都应该尽其所能。<br>        6.3.2.2 方法太多会使类难以学习、使用、文档化、测试和维护<br>        6.3.2.3 只有当一项操作被经常使用时，才考虑为它提供快捷方法，如果不能确定，还是不提供为好<br>    6.3.3 避免过长的参数列表<br>        6.3.3.1 相同类型的长参数列表格外有害<br>        6.3.3.2 例如，List接口提供了subList方法，返回子列表的视图(view)<br>        6.3.3.3 解决方法<br>                6.3.3.3.1 1 分解为多个方法<br>                6.3.3.3.2 2 创建辅助类<br>                6.3.3.3.3 3 采用builder模式<br>        6.3.3.4 对参数类型，要优先使用接口而不是类<br>        6.3.3.5 对于boolean参数，要优先使用两个元素的枚举类型<br>  6.4 第41条 慎用重载<br>    6.4.1 对于重载方法的选择是静态的，而对于被覆盖的方法的选择则是动态的<br>    6.4.2 安全而保守的策略是，永远不要导出两个具有相同参数数目的重载方法<br>  6.5 第42条 慎用可变参数<br>    6.5.1 EnumSet类对它的静态工厂使用这种方法，最大限度地减少创建枚举集合的成本。枚举集合为位域提供在性能方面有竞争力的替代方法<br>  6.6 第43条 返回零长度的数组或者集合，而不是null<br>    6.6.1 对于不返回任何元素的调用，每次都返回同一个零长度数组是有可能的，因为零长度数组是不可变的<br>  6.7 第44条 为所有导出的API元素编写文档注释<br>    6.7.1 为了正确地编写API文档，必须在每个被导出的 类、接口、构造器、方法和域声明之前增加一个文档注释<br>    6.7.2 方法的文档注释应该简洁地描述出它和客户端之间的约定<br>        6.7.2.1 precondition<br>        6.7.2.2 postcondition<br>        6.7.2.3 side effect<br>        6.7.2.4 thread safety<br>    6.7.3 可以使用HTML标签<br>    6.7.4 使用{@code}标签<br>    6.7.5 {@literal}<br>7 第8章 通用程序设计<br>  7.1 第45条 将局部变量的作用域最小化<br>    7.1.1 几乎每个局部变量的声明都应该包含一个初始化表达式<br>    7.1.2 使用for循环，可以大大降低 “剪切-粘贴”错误<br>    7.1.3 使用for循环与使用while相比还有另外一个优势：更简短，从而增强可读性<br>  7.2 第46条 for-each循环优先于传统的for循环<br>    7.2.1 for-each循环不仅让你遍历集合和数组，还让你遍历任何实现Iterable接口的对象<br>    7.2.2 如果你在编写的类型表示的是一组元素，即使你选择不让它实现Collection，也要让它实现Iterable。这样可以允许用户利用for-each循环遍历你的类型<br>    7.2.3 有三种常见情况无法使用for-each循环<br>        7.2.3.1 过滤<br>        7.2.3.2 转换<br>        7.2.3.3 平行迭代<br>  7.3 第47条 了解和使用类库<br>  7.4 第48条 如果需要精确答案，请避免使用float和double<br>    7.4.1 二进制浮点运算<br>    7.4.2 float和double不适合货币计算<br>    7.4.3 使用BigDecimal、int或者long进行<br>  7.5 第49条 基本类型优先于装箱基本类型<br>    7.5.1 装箱类型的合理用处<br>        7.5.1.1 作为集合中的元素、键和值<br>        7.5.1.2 在参数化类型中，必须使用装箱基本类型作为类型参数<br>        7.5.1.3 在反射调用时，必须使用装箱基本类型<br>  7.6 第50条 如果其他类型更合适，则尽量避免使用字符串<br>    7.6.1 字符串不适合代替其他的值类型<br>    7.6.2 字符串不适合代替枚举类型<br>    7.6.3 字符串不适合代替聚集类型<br>    7.6.4 字符串不适合代替能力表<br>  7.7 第51条 当心字符串连接的性能<br>    7.7.1 使用StringBuilder替代<br>  7.8 第52条 通过接口引用对象<br>    7.8.1 如果你养成了用接口作为类型的习惯，你的程序将更加灵活<br>    7.8.2 如果没有合适的接口存在，完全可以用类而不是接口来引用对象<br>  7.9 第53条 接口优先于反射机制<br>    7.9.1 反射<br>        7.9.1.1 丧失了编译时类型检查的好处<br>        7.9.1.2 执行反射访问所需要的代码非常笨拙和冗长<br>        7.9.1.3 性能损失<br>  7.10 第54条 谨慎地使用本地方法<br>    7.10.1 使用本地方法提升性能的做法不值得提倡<br>  7.11 第55条 谨慎地进行优化<br>    7.11.1 优化的弊大于利<br>    7.11.2 要努力编写好的程序而不是快的程序<br>    7.11.3 努力避免那些限制性能的设计决策<br>    7.11.4 要考虑API设计决策的性能后果<br>    7.11.5 为了获得好的性能而对API进行包装，这是一种非常不好的想法<br>  7.12 第56条 遵守普遍接受的命名规则<br>8 第9章 异常<br>  8.1 第57条 只针对异常的情况才使用异常<br>    8.1.1 基于异常的模式比标准模式要慢得多<br>  8.2 第58条 对可恢复的情况使用受检异常，对编程错误使用运行时异常<br>    8.2.1 受检异常<br>    8.2.2 用运行时异常来表明编程错误<br>  8.3 第59条 避免不必要地使用受检异常<br>  8.4 第60条 优先使用标准异常<br>  8.5 第61条 抛出与抽象相对应的异常<br>    8.5.1 更高层的实现应该捕获低层的异常，同时抛出可以按照高层抽象进行解释的异常<br>    8.5.2 异常链<br>  8.6 第62条 每个方法抛出的异常都要有文档<br>    8.6.1 单独声明受检异常，使用Javadoc的@throws标记<br>    8.6.2 不要在非受检异常上使用@throws<br>  8.7 第63条 在细节消息中包含能捕获失败的信息<br>    8.7.1 为了捕获失败，异常的细节信息应该包含所有“对该异常有贡献”的参数和域的值<br>  8.8 第64条 努力使失败保持原子性<br>    8.8.1 失败的方法调用应该使对象保持在被调用之前的状态<br>  8.9 第65条 不要忽略异常<br>    8.9.1 空的catch块达不到应有的目的<br>    8.9.2 至少包含一条忽略的说明<br>9 第10章 并发<br>  9.1 第66条 同步访问共享的可变数据<br>    9.1.1 Java语言规范保证读或者写一个变量是原子性的<br>    9.1.2 volatile修饰符不执行互斥访问，但它可以保证任一线程在读取该域时都将看到最近刚被写入的值<br>    9.1.3 使用volatile时，务必要小心，++操作并不是原子性的<br>    9.1.4 AtomicInt、AtomicLong<br>        9.1.4.1 getAndIncrement<br>    9.1.5 多线程共享可变数据时，每个读或者写数据的线程都必行执行同步<br>  9.2 第67条 避免过度同步<br>  9.3 第68条 executor和task优先于线程<br>    9.3.1 Executor FrameWork中有一个可以替代Timer的东西，即ScheduleThreadPoolExecutor 虽然就Timer更加容易，但executor更灵活。Timer对于长期运行任务时会影响到定时准确性。 如果Timer唯一的线程抛出未被捕获异常，Timer就会停止执行，而executor支持多个线程，并且优雅地从抛出的未受检异常的任务中恢复<br>  9.4 第69条 并发工具优先于wait和notify<br>    9.4.1 既然正确地使用wait和notify比较困难，就应该用更高级的并发工具来代替<br>    9.4.2 concurrent工具分三类：Executor Framework、并发集合 以及 同步器<br>        9.4.2.1 并发集合为标准的集合接口（如List、Queue和Map）<br>                9.4.2.1.1 ConcurrentHashMap出了提供卓越的并发性之外，速度也非常快<br>                9.4.2.1.2 优先使用ConcurrentHashMap而不是Hashtable或者Collections.synchronizedMap<br>        9.4.2.2 有些集合接口已经通过阻塞操作进行了扩展，他们会一直等待可以成功执行为止<br>                9.4.2.2.1 如BlockingQueue<br>                9.4.2.2.2 不出所料，大多数ExecutorService实现（包括ThreadPoolExecutor）都使用BlockingQueue<br>        9.4.2.3 同步器 是一些使线程能够等待另一个线程的对象，允许它们协调动作<br>                9.4.2.3.1 最常用的是CountDownLatch和Semaphore<br>                9.4.2.3.2 对于间歇式定时，应该使用System.nanoTime，更加精准<br>                9.4.2.3.3 传递给Timer方法的executor必须允许创建至少与指定并发级别一样多的线程，否则这个测试就永远不会结束，这就是线程饥饿死锁<br>    9.4.3 使用wait和notify就像用“并发汇编语言”进行编程一样<br>    9.4.4 维护时：一般情况下你应该优先使用notifyAll，而不是notify<br>  9.5 第70条 线程安全性的文档化<br>  9.6 第71条 慎用延迟初始化<br>    9.6.1 除非绝对必要，否则就不要这么做<br>    9.6.2 在大多数情况下，正常的初始化要优先于延迟初始化<br>    9.6.3 如果处于性能考虑需要对实例域使用延迟初始化，就使用双重检查模式<br>  9.7 第72条 不要依赖于线程调度器<br>    9.7.1 任何依赖于线程调度器来达到正确性或者性能要求的程序，很有可能都是不可移植的<br>    9.7.2 不要依赖Thread.yield或者线程优先级。这些设施仅仅对调度器作些按时<br>    9.7.3 线程优先级可以用来提高一个已经能够正常工作的程序的服务质量，但永远不应该用来“修正”一个原本不能正常工作的程序<br>  9.8 第73条 避免使用线程组<br>10 第11章 序列化<br>  10.1 第74条 谨慎实现Serializable接口<br>    10.1.1 代价<br>        10.1.1.1 降低了改变这个类的实现的灵活性<br>        10.1.1.2 增加了出现Bug和安全漏洞的可能性<br>        10.1.1.3 相关的测试负担增加<br>  10.2 第75条 考虑使用自定义的序列化形式<br>  10.3 第76条 保护性地编写readObject方法<br>  10.4 第77条 对于实例控制，枚举类型优先于readResolve<br>  10.5 第78条 考虑用序列化代理代替序列化实例</p>
-</blockquote>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-每周一书/《褚时健传》"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/《褚时健传》/">《褚时健传》</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/每周一书/《褚时健传》/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>“回想这么多年来，我自己做的最问心无愧的就是：‘没有庸庸碌碌地生活’”<br>“我不期望别人在说起我的人生时有多少褒奖，我只希望人家说起我时，会说上一句：‘褚时健这个人，还是做了一些事。’”<br>——褚时健</p>
-<p>不积跬步无以至千里，一屋不扫何以扫天下。<br>真正从小事做起，精益求精态度的践行者，他之所以能走这么远，按照友人常说的，“必定不是运气”。</p>
-<p>想起《苦难辉煌》，苦难并不一定会带来辉煌，但辉煌，必定是由苦难锻造的。</p>
-<p>听起来稍显鸡汤，不过这本传记虽说文笔谈不上优美，但确实是王石传记的同一撰写者，文中细节还原或许有一定可信度。</p>
-<p>值得一提的是，他背后也俗套地有一位贤内助。</p>
-<p>老年丧女，白发人送黑发人的撕心裂肺或许只有当事人能够体会吧。</p>
-<blockquote>
-<p>父亲早逝后，一度辍学，幸有堂兄指引，遂得续造</p>
-</blockquote>
-<blockquote>
-<p>找准关键点，精益求精，一步一个脚印，才有红塔山的传奇</p>
-</blockquote>
-<blockquote>
-<p>波澜起伏，一度失女入狱，耳后自困荒山，东山再起，褚橙横空出世</p>
-</blockquote>
-<blockquote>
-<p>父亲早逝、少年参军、后被打为右派，沉着冷静，脚踏实地，才有再起之势</p>
-</blockquote>
-<blockquote>
-<p>这不是一部普通的传记，它描写了一个人如何在17年时间里缔造了一个商业王国，然后如何陨落、自困荒山，然后又如何用17年时间走出心理和职业的巨大困局。</p>
-</blockquote>
-<blockquote>
-<p>正如尼采所言，一个伟大的人格，可以在自己的身上克服这个时代</p>
-</blockquote>
-<hr>
-<p><a href="https://www.amazon.cn/gp/product/B017SAZAD6/ref=oh_aui_detailpage_o03_s00?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接</a></p>
-<hr>
-<p>导图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-6433421a9297d513.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="褚时健传  overview.png"></p>
-<hr>
-<p>笔记文本：</p>
-<blockquote>
-<p>褚时健传<br>1 第一篇 早年故事<br>  1.1 第一章 起始<br>    1.1.1 褚姓人家<br>    1.1.2 矣则<br>  1.2 第二章 童年浪花<br>  1.3 第三章 少年故事<br>    1.3.1 年少逝父<br>  1.4 第四章 离家的日子<br>  1.5 第五章 所谓长大<br>  1.6 第六章 思变<br>2 第二篇 激情的青春十年<br>  2.1 第一章 当上了游击队员<br>  2.2 第二章 战火纷飞<br>  2.3 第三章 迎来解放<br>  2.4 第四章 革命意味着牺牲<br>  2.5 第五章 平静或不平静的生活<br>  2.6 第六章 波澜骤起<br>3 第三篇 生活的断层<br>  3.1 第一章 跌入生活底层<br>  3.2 第二章 一家人要在一起<br>  3.3 第三章 到了另一个农场<br>  3.4 第四章 新平、新平<br>  3.5 第五章 迅速进入角色<br>  3.6 第六章 戛洒缘分<br>  3.7 第七章 动乱岁月中的平静生活<br>  3.8 第八章 希望的光就要来了<br>4 第四篇 华彩人生篇章<br>  4.1 第一章 预备<br>  4.2 第二章 完事开头难<br>  4.3 第三章 启动改革<br>  4.4 第四章 出手改革<br>  4.5 第五章 设备之战<br>  4.6 第六章 烟叶的故事<br>  4.7 第七章 内部管理大小事<br>5 第五篇 行在人生巅峰时期<br>  5.1 第一章 名烟翻番<br>  5.2 第二章 关索坝工程<br>  5.3 第三章 快马加鞭<br>  5.4 第四章 谢幕<br>  5.5 第五章 人生间隙<br>6 第六篇 果夺锦标<br>  6.1 第一章 是结束，也是开始<br>  6.2 第二章 土地、水和树<br>  6.3 第三章 橙树在长大<br>  6.4 第四章 一年比一年丰收<br>  6.5 第五章 每一条路都指向未来<br>  6.6 第六章 江山无限<br>这不是一部普通的传记，它描写了一个人如何在17年时间里缔造了一个商业王国，然后如何陨落、自困荒山，然后又如何用17年时间走出心理和职业的巨大困局。 正如尼采所言，一个伟大的人格，可以在自己的身上克服这个时代</p>
-</blockquote>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-每周一书/《我想看到的世界》（A-light-inside）[美]Jeannie-Suk"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/《我想看到的世界》（A-light-inside）[美]Jeannie-Suk/">《我想看到的世界》（A-light-inside）[美]Jeannie-Suk</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/每周一书/《我想看到的世界》（A-light-inside）[美]Jeannie-Suk/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#源引–关于作者</p>
-<hr>
-<p><strong>珍妮 苏克(Jeannie Suk)</strong></p>
-<blockquote>
-<p>韩裔美国人，1973年生于首尔，6岁全家技术移民美国</p>
-<p>她在韩国的知名度仅次于女总统朴槿惠<br>从芭蕾舞逐梦少女到哈佛法学院终身教授<br>一段关于艺术、人生和法律的长途冒险</p>
-</blockquote>
-<hr>
-<p><strong>耶鲁学士-牛津文学博士-哈佛法学博士-哈佛法学院终身教授</strong></p>
-<blockquote>
-<p>曾梦想成为一名芭蕾舞舞者，后因家庭原因被迫放弃。<br>91年凭借自身天赋和努力，成功申请上耶鲁。毕业时获得马歇尔奖学金，继而转战牛津大学攻读文学博士。在完成文学博士学位之后，发现法律才是自己愿意为之终身付出的事业，于是她考入哈佛大学法学院…</p>
-</blockquote>
-<hr>
-<p>#发现–《A light inside》</p>
-<hr>
-<p>这并不是一碗鸡汤，书中描写了很多作者幼年时期的经历细节以及当时的心路历程，从中可以看出作者母亲的远见卓识以及早年教育对一个人的重要性，或许会对教育孩子有所启发。</p>
-<p>作者行文率真，字里行间都透露着真诚，书中不少章节读起来都会忍不住会心一笑。</p>
-<p>读到最后，不禁生出敬仰之情。敬仰作者为追求目标拼尽全力，敬仰她追求真我而毫无畏惧，敬仰她的全面（芭蕾舞、钢琴、小提琴、文学、法语、跆拳道）…</p>
-<p>她的理想是通过法律，让世界变得更好，对学生倾囊相授，让他们一起来实现不仅仅属于她个人的崇高理想。</p>
-<hr>
-<p><a href="https://www.amazon.cn/gp/product/B00OUL14NM/ref=oh_aui_detailpage_o00_s01?ie=UTF8&amp;psc=1" target="_blank" rel="noopener"><strong>亚马逊链接</strong></a></p>
-<p><a href="https://www.evernote.com/l/ARveLWgXaEFLoac7FvDAMASOFxA3j3q0NOk" target="_blank" rel="noopener"><strong>笔记链接</strong></a></p>
-<p><strong>导图</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2d8d3e45715252fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="A light inside overview.png"></p>
-<hr>
-<p><strong>笔记文字</strong></p>
-<blockquote>
-<p>A Light Inside<br>1 流放的移民<br>  1.1 去美国，全速驶向未来<br>  1.2 作为一个韩裔，竟不能吃泡菜<br>  1.3 努力一次，就会获得多一点勇气<br>  1.4 在书籍中漫游是最美妙的冒险<br>  1.5 充好电，才能和焦虑这个魔鬼对峙<br>2 成长的烦恼<br>  2.1 从回忆中创造自己<br>  2.2 学会用沉默表达意见<br>  2.3 但愿你也曾经倾尽全力<br>  2.4 上不了Yale也不要紧<br>  2.5 将自己的爱好和游戏融合在一起<br>  2.6 自由是人生的基石<br>3 通往自由<br>  3.1 感受全心投入的强烈愉悦感<br>  3.2 完成论文的技巧：每天只写一页半<br>  3.3 找到命中注定要去做的事<br>  3.4 认知不完美，不要有过高期待<br>  3.5 不要让直觉阻碍你前进<br>  3.6 支配工作，而不是让工作支配你<br>4 在哈佛<br>  4.1 完美靠恐惧而活<br>  4.2 过想要的人生，就是终极礼物<br>  4.3 没有正确答案，只有独立思考<br>  4.4 学习那些让你感到不适的事</p>
-</blockquote>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-每周一书/OKR-实践手册"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/OKR-实践手册/">OKR-实践手册</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/每周一书/OKR-实践手册/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/效率/">效率</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<blockquote>
-<p>OKR(Objectives and Key Results)全称为“目标和主要成果”，是企业进行目标管理的一个简单有效的系统，能够将目标管理自上而下贯穿到基层。这套系统由英特尔公司制定，在谷歌成立不到一年的时间，被投资者约翰·都尔(John-Doerr)引入谷歌，并一直沿用至今。</p>
-</blockquote>
-<blockquote>
-<p>解释：<a href="https://en.wikipedia.org/wiki/OKR" target="_blank" rel="noopener">wiki</a>、<a href="http://wiki.mbalib.com/wiki/OKR" target="_blank" rel="noopener">MBA Lib</a></p>
-</blockquote>
-<blockquote>
-<p>关联词条：KPI</p>
-</blockquote>
-<blockquote>
-<p>外链: <a href="https://www.zhihu.com/question/22471467" target="_blank" rel="noopener">谷歌内部考核制度 OKR 是怎样的？–知乎问答</a></p>
-</blockquote>
-<p><a href="https://www.evernote.com/l/ARtRalexB_1Kgo6iYJ8zTP6m74QZ-A81cQg" target="_blank" rel="noopener">笔记链接</a></p>
-<hr>
-<p>#导图<br><img src="http://upload-images.jianshu.io/upload_images/1481332-135fc3aabe73babd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="OKR manual overview.png"></p>
-<hr>
-<p>#文本<br>OKR最佳实践手册</p>
-<p>1 what<br>  1.1 如何定义<br>    1.1.1 通过设置不同层级目标和关键结果，以保证企业内部良好沟通协作；使个人目标与团队、公司目标紧密联系<br>  1.2 从哪来<br>    1.2.1 源自德鲁克，始于Intel，成由Google，盛拜硅谷<br>  1.3 哪些公司在用<br>    1.3.1 还有这些公司在用：Facebook、Oracle、Twitter、Zynga、知乎、头条…<br>  1.4 OKR其形<br>    1.4.1 组成<br>        1.4.1.1 公司OKR<br>        1.4.1.2 团队OKR<br>        1.4.1.3 个人OKR<br>  1.5 对管理的意义<br>    1.5.1 管理的思考框架<br>        1.5.1.1 O<br>                1.5.1.1.1 为何目标服务<br>        1.5.1.2 KR<br>                1.5.1.2.1 遵循5W2H<br>                1.5.1.2.1.1 Who<br>                1.5.1.2.1.2 Where<br>                1.5.1.2.1.3 What<br>                1.5.1.2.1.4 Why<br>                1.5.1.2.1.5 When<br>                1.5.1.2.1.6 Hoew to do<br>                1.5.1.2.1.7 How much<br>    1.5.2 保证上下协调一致、高度聚焦的管理方法<br>        1.5.2.1 在不断分解过程中不断调整、反馈和对齐<br>    1.5.3 内部协作和沟通工具<br>  1.6 对企业的价值<br>    1.6.1 对齐目标、形成驱动、形成良好沟通文化<br>  1.7 何种企业适合<br>    1.7.1 互联网<br>    1.7.2 业务转型企业<br>    1.7.3 知识服务型企业<br>    1.7.4 …<br>2 与KPI比较<br>  2.1 案例<br>  2.2 与KPI比较<br>    2.2.1 KIP绩效考核工具：不公开、结果导向、不接受改变<br>    2.2.2 OKR沟通和管理工具：公开、产出导向、实时调整<br>3 How<br>  3.1 实施<br>    3.1.1 设定原则<br>        3.1.1.1 体现目标价值及影响力<br>        3.1.1.2 控制目标数量<br>        3.1.1.3 KR 截止时间、可量化<br>        3.1.1.4 主要自下而上提出<br>        3.1.1.5 全体共同接受<br>        3.1.1.6 公开透明<br>    3.1.2 设定流程<br>        3.1.2.1 1. 公司目标<br>        3.1.2.2 2. 每人自行思考并对公司目标提出建议<br>        3.1.2.3 3. 直属经理与员工1对1沟通每个OKR合理性，适时调整<br>        3.1.2.4 4. 团队共同商定团队目标进行沟通，确定一致目标及完成时间<br>        3.1.2.5 5. 目标确定后，使用必要工具对OKR进行跟踪管理<br>  3.2 助力绩效管理<br>    3.2.1 设定目标<br>        3.2.1.1 具备一定野心<br>                3.2.1.1.1 保持60-70%的正常完成率<br>        3.2.1.2 作为绩效考虑的一个考量标准<br>    3.2.2 建立绩效评价标准<br>        3.2.2.1 考评量级不宜过多<br>        3.2.2.2 绩效高低员工、升职员工、公平性<br>        3.2.2.3 5星评价体系<br>                3.2.2.3.1 杰出、极大超出预期、超出预期、达到预期、需要改进<br>        3.2.2.4 关注最好及最差员工<br>    3.2.3 绩效评价及校准<br>        3.2.3.1 360度评估（以Google为例）<br>                3.2.3.1.1 经理初评<br>                3.2.3.1.2 员工自评<br>                3.2.3.1.3 同事评价<br>        3.2.3.2 校准会议<br>        3.2.3.3 通过两次会议推动员工学习<br>                3.2.3.3.1 将加薪和成长两项内容分两次谈话；避免自主意愿的减弱<br>  3.3 落实<br>    3.3.1 实施前准备<br>        3.3.1.1 OKR专业培训<br>    3.3.2 实施OKR<br>        3.3.2.1 设定公司OKR<br>        3.3.2.2 召开全员大会、不断沟通<br>        3.3.2.3 建立团队和个人目标<br>        3.3.2.4 调整<br>        3.3.2.5 建立过程批注<br>        3.3.2.6 目标完成度打分<br>    3.3.3 反馈<br>        3.3.3.1 发起反馈活动<br>        3.3.3.2 员工自评<br>        3.3.3.3 邀请主管与同事评价<br>        3.3.3.4 同事反馈<br>        3.3.3.5 主管评价和打分<br>        3.3.3.6 进入下一个OKR周期<br>  3.4 应对失败<br>    3.4.1 员工积极性不高<br>    3.4.2 管理层对OKR理解不够透彻<br>    3.4.3 员工设立出来的目标与上级目标关联性不大<br>    3.4.4 KR与目标之间没有因果关系<br>OKR：Objectives and Key Results 目标与关键结果法 —— 这套系统由英特尔公司制定， 谷歌成立不到一年时引入，沿用至今。</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-日常记录/心能转物即同如来"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/日常记录/心能转物即同如来/">心能转物即同如来</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/日常记录/心能转物即同如来/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>题引自佛经《楞严经》，闻自一师友<br>恐忘遂墨</p>
-</blockquote>
-<hr>
-<p><strong>无住相布施</strong></p>
-<blockquote>
-<p>如果不是不求回报地帮助，就不要帮助</p>
-</blockquote>
-<hr>
-<p><strong>心能转物即同如来</strong></p>
-<blockquote>
-<p>出自《楞严经》<br>此处物非“物质”<br>谓一切圣贤，能转万物，不被万物所转，随心自在，处处真如。<br>可以联想《礼记 大学》八目中的“格物致知”</p>
-</blockquote>
-<hr>
-<p><strong>收束万心做一事，再用一心做万事</strong></p>
-<hr>
-<p><strong><a href="https://zh.wikipedia.org/wiki/马太效应" target="_blank" rel="noopener">马太效应</a></strong></p>
-<blockquote>
-<p>（引自维基百科）<br><em>1968年，美国科学史学者罗伯特·莫顿提出这个术语用以概括一种社会心理现象：“相对于那些不知名的研究者，声名显赫的科学家通常得到更多的声望，即使他们的成就是相似的，同样地，在同一个项目上，声誉通常给予那些已经出名的研究者，例如，一个奖项几乎总是授予最资深的研究者，即使所有工作都是一个研究生完成的。”</em></p>
-</blockquote>
-<blockquote>
-<p><em>指科学界的名聲累加的一种反饋现象，最早由美國學者罗伯特·莫顿於1968年提出[1][2]。其名稱来自于《新约圣经·马太福音》中的一则寓言[3]。
-</em></p>
-</blockquote>
-<hr>
-<p><strong><a href="https://zh.wikipedia.org/zh-cn/复利" target="_blank" rel="noopener">复利效应</a></strong></p>
-<blockquote>
-<p>（引自维基百科）<br><em>复利是现代理财一个重要概念，由此产生的财富增长，称作“复利效应”，对财富可以带来深远的影响。假设投资每年的回报率是100%，本金10万，如果只按照普通利息计算，每年回报只有10万元，10年亦只有100万元，整体财富增长只是10倍，但按照复利方法计算，首年回报是10万元，令个人整体财富变成20万，第二年20万会变成40万，第三年40万再变80万元，10年累计增长将高达1024倍（2的10次方），亦即指10万元的本金，最后会变成1.024亿元。</em></p>
-</blockquote>
-<blockquote>
-<p><em>人类历史中，要长期达到每年100%回报是几近不可能，以华人首富李嘉诚为例，1950年以7,000美元成立长江塑胶厂（改组后成为长江和记实业有限公司，地产方面成为长江实业地产有限公司），在2006年拥有约188亿美元身家计算，撇开其他因素，他的财富在57年增长268.6万倍，其每年的复利回报亦仅为26.68%((188亿/7000)开57次方=1.2966)。</em></p>
-</blockquote>
-<hr>
-<p>听闻这些佛经小解之后，昨天回去迫不及待地查阅了一下《金刚经 心经》，发现对我来说就是天书：</p>
-<blockquote>
-<p>金刚经 第八品 依法出生分<br>“须菩提！于意云何？若人满三千大千世界七宝以用布施，是人所得福德，宁为多不？”须菩提言：“甚多，世尊！何以故？是福德即非福德性，是故如来说福德多。”“若复有人，于此经中受持，乃至四句偈等，为他人说，其福胜彼。何以故？须菩提！一切诸佛，及诸佛阿耨多罗三藐三菩提法，皆从此经出。须菩提！所谓佛法者，即非佛法。”</p>
-</blockquote>
-<p><strong>信，解，行，证</strong>——是为学经四部曲</p>
-<hr>
-<p>最后，附师诗一首：</p>
-<blockquote>
-<p>万物皆寂灭<br>法本一明觉<br>归源真性显<br>心如庙会生</p>
-</blockquote>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/佛经/">佛经</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-日常记录/【福利--福利】北京找兼职、实习的小伙伴看过来"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/日常记录/【福利--福利】北京找兼职、实习的小伙伴看过来/">【福利--福利】北京找兼职、实习的小伙伴看过来</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/日常记录/【福利--福利】北京找兼职、实习的小伙伴看过来/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/其它/">其它</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>招聘兼职【时间截至到5月31日，招聘3人】</p>
-<p><strong>工资待遇</strong>：4000-4500元/月</p>
-<p><strong>岗位</strong>：政府科员助理</p>
-<p><strong>办公地点</strong>：北京市政府六里桥办公大厅</p>
-<p><strong>职责</strong>：政府文案、公文撰写，文件整理等助理类工作</p>
-<p><strong>要求</strong>：本科或以上，文科生，形象端正，品格正直，文笔优秀，思维灵活，周一到周五8：30-17.30，望长期。</p>
-<p><strong>适合人群</strong>：刚毕业希望考公务员、研究生的工作时间可以保证的毕业生。</p>
-<p><strong>优势</strong>：工作量不大，如领导无安排，可以做其他事情；和政府接触，了解政府工作。</p>
-<p><strong>联系人</strong>：<br>微信号：fwl_xyba<br>邮箱：<a href="mailto:474415968@qq.com" target="_blank" rel="noopener">474415968@qq.com</a></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/福利/">福利</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-日常记录/【心得分享】工具推荐——思维导图、VPN、远程、笔记本、任务管理"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -755,7 +328,7 @@
 
 
   
-    <article id="post-日常记录/【工具】流程图-图形标准简介"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-每周一书/周读-- 创业维艰"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -763,7 +336,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/日常记录/【工具】流程图-图形标准简介/">【工具】流程图-图形标准简介</a>
+      <a class="article-title" href="/2017/08/13/每周一书/周读-- 创业维艰/">周读-- 创业维艰</a>
     </h1>
   
 
@@ -771,29 +344,35 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/日常记录/【工具】流程图-图形标准简介/" class="article-date">
+	<a href="/2017/08/13/每周一书/周读-- 创业维艰/" class="article-date">
 	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/效率/">效率</a>
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>流程图可以提供一种简单扼要的“缩略俯瞰图”，帮助观众快速了解业务如何运转。可以极大地提高沟通效率、业务认知速率</p>
+        <h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><blockquote>
+<p>分类——管理</p>
+<p>推荐指数——三星半</p>
 </blockquote>
 <blockquote>
-<p>本篇介绍各个图形的标准含义与用法（基础篇）</p>
+<p>这是一本关于<strong>创业</strong>的书，读起来更像是一本回忆录，不一样的是会有一些比较实操的逆境中求生的经验总结归纳</p>
 </blockquote>
-<hr>
-<p><strong>图示：</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-faca475f0e621d3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flow_chat_standard_icon.png"></p>
-<p><strong>来个例子</strong></p>
-<p>获取验证码的逻辑流程：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-306faf3145e4e6a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flow_chat_example.png"></p>
+<blockquote>
+<p>作者系 Loadcloud及Opsware创始人（后者被惠普以15.6亿美元收购），真正实现了从0到0.1，再到1的转变，这些创业之后又开始涉入风险投资，比较符合现在流行的“企投家”标准</p>
+</blockquote>
+<p>虽然是一位CEO关于创业的经验总结，我们大家也没有那么多人创业，但读来感觉会对像我这样“一般员工”的认识产生影响，会更能体会老板是怎么想的，领导是怎么想的</p>
+<p>如果我们能够把平时的工作真正当成自己的事业来做，拿出那份责任感、使命感，我相信最后的结果不会坏</p>
+<p>当然，书中还谈到了很多具体的诸如如何组织、如何就平时的棘手问题进行沟通的细节，纵使作者的故事是在硅谷，但最本质的东西是相通的，虽书中论述不及专业的管理专家（如格鲁夫）之谈，但也具有相当的启发意义，毕竟他的故事算是逆境生长的极其成功的典范，能够在互联网经济泡沫时力挽狂澜，作者的各方面能力可略知一二</p>
+<p>说了这么多好，该扒一扒缺点了。因为是英文翻译过来的，所以有些语义语境读来不那么舒服，再加上中美文化本身的差异，书中描述的一些细节有时看来比较离谱，部分事情可能在我们看来天经地义。还有一点，总结的理论算不上太专业，不太成体系，真正想钻研企业管理，还是得看大师之作（格鲁夫的《给经理人的第一课》拿来当入门就不错）</p>
+<h3 id="部分小结、摘录"><a href="#部分小结、摘录" class="headerlink" title="部分小结、摘录"></a>部分小结、摘录</h3><p>印象笔记 图文链接：</p>
+<p><a href="https://www.evernote.com/l/ARvmQ23Tvs5JKZAmlWM9hqdhqTouO4fRyO8" target="_blank" rel="noopener">https://www.evernote.com/l/ARvmQ23Tvs5JKZAmlWM9hqdhqTouO4fRyO8</a> </p>
+<p>导图：</p>
+<p><img src="../pic_resource/创业维艰overview.png" alt=""></p>
 
       
 
@@ -803,7 +382,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tool/">Tool</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
 
     </footer>
   </div>
@@ -814,7 +393,7 @@
 
 
   
-    <article id="post-日常记录/【分享】保持健康，保持体形"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-每周一书/【读书笔记】《重新认识你自己》——克里希拉穆提"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -822,7 +401,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/日常记录/【分享】保持健康，保持体形/">【分享】保持健康，保持体形</a>
+      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《重新认识你自己》——克里希拉穆提/">【读书笔记】《重新认识你自己》——克里希拉穆提</a>
     </h1>
   
 
@@ -830,47 +409,308 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/日常记录/【分享】保持健康，保持体形/" class="article-date">
+	<a href="/2017/08/13/每周一书/【读书笔记】《重新认识你自己》——克里希拉穆提/" class="article-date">
 	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/身心/">身心</a>
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>最近要做一个英语分享，为了投大家所好，准备将之前看过的两个BBC关于减肥、运动的两个视频作一下提要</p>
+<p>不知道是不是翻译的原因，这本书比《一生的学习》读起来感觉要更接地气，相对也更浅显易懂一些</p>
 </blockquote>
 <blockquote>
-<p>视频里讲的虽说都是科学研究、实验，但真正是否科学还需要您擦亮眼，里面的总结是否东西方人都适用就有待您的尝试了</p>
+<p>或许是因为是克里较为核心的思想体现</p>
 </blockquote>
+<hr>
 <blockquote>
-<p>具体讲的是：</p>
+<p>书中主题涉及面较广，有：</p>
 <ul>
-<li>减肥的十个小秘密 </li>
-<li>运动的真相（给没时间去体育馆、健身房的你）</li>
+<li>认识自我</li>
+<li>觉察力</li>
+<li>告别恐惧</li>
+<li>爱</li>
+<li>思想的起源</li>
+<li>昨日的重担</li>
+<li>…</li>
 </ul>
 </blockquote>
+<p><a href="https://www.amazon.cn/gp/product/B003DSI05I/ref=oh_aui_search_detailpage?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接</a></p>
+<p><a href="https://www.evernote.com/l/ARsTf26hwsZABorVzyzxFAdeYPtbL6fc8pU" target="_blank" rel="noopener">印象笔记链接</a></p>
+<p>导图图片：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-bd48a9f516415a7d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="重新认识你自己overview.png"></p>
+<p>笔记文本：</p>
+<p>《重新认识你自己》克里希拉穆提<br>1 一、 没有任何导向<br>  1.1 遍寻不着那冠以千名的无名本体，只得另谋出路，培养自己对救主或某种理想的信念，而这份信念迟早会酿成暴力<br>  1.2 多少世纪以来，我们被老师、尊长、书籍和圣人用汤匙喂大。我们充其量只是“二手货”人类<br>  1.3 传统的方式是由外向内包抄，通过时间、修炼和压离，逐渐才能开化结果，才能培育出内在的美及爱。然而事实上，这种方式反而使人变得更加狭隘、琐碎而低劣<br>  1.4 我们大多人都反对暴君式的专制政体，内心却接受了别人的权威或专断，允许他们来扭曲我们的心智和生活，这真是不可思议<br>  1.5 认识自己才是智慧的开端<br>  1.6 外在的社会结构，就是人际关系心理结构的成果，而个人则是整体人类的经验、知识和行为总结。每个人都是过去历史的库存，因此，个人就是整体人类。人类的历史就写在我们身上。<br>  1.7 其实真理根本是无路可循的，而它的美就在于此，因为它是活生生的<br>  1.8 人生哲学并不重要，重要的是如何观察日常生活中确实在发生的事，不论是内在的或外在的。<br>  1.9 如果我真的愚蠢到给你一套制度，而你也愚蠢到全盘接受的地步，那么你就任然在模仿、顺从与接受，在自己的内心树立另一个权威<br>  1.10 只有死于昨日种种，才能使你内在及外在的所有权威中解脱，你的心才能时时年轻、新鲜、天真无邪、充满热情活力。只有处于这种心境中，人才能观察和学习<br>2 二、 认识自我<br>  2.1 如果你不打算跟随任何导师，你会感到孤单，那么就让自己孤单吧<br>  2.2 我无法独自生存，我自能活在与外在人、事及概念的关系之中，因此观察我与外在人、事及内心种种活动的关系，我才开始认识自己<br>3 三、 觉察力<br>  3.1 只有当你觉察到自己的限制时，你才会明白自己所有层面的意识<br>  3.2 人究竟能否看到完整的意识领域，然后成为一个完整的人？<br>  3.3 我的心不再向外寻求，这就是关键所在<br>  3.4 若想开启那扇门，我们必行每天都保持全观而且充满觉察力，觉察自己的每一个思想和言行<br>  3.5 在没有拣择的心智状态下，也许大门会在刹那间开启，让你一睹那既无挣扎又超越时间的境界<br>4 四、 什么是快感<br>  4.1 你也许会问，那为什么不让快感来引导生活？原因极其简单：快感必定带来痛苦、沮丧、忧伤及恐惧，或是因恐惧而滋生的暴力<br>  4.2 意念只是记忆、经验及知识的反应，毫无创意可言<br>  4.3 好好观察你自己，你会发现，就是这种想重负快感的需求，才不断带给人挣扎及痛苦，因为它绝不可能和昨天的感受一样<br>  4.4 所谓“活在当下”，就是在刹那间领会其中的美及喜悦，而不眷恋它所带来的快感<br>5 五、告别恐惧<br>  5.1 这种对地位、权势的追求，希望在某方面被社会视为卓越的心理，都不过是一种驾驭他人的欲望。这种欲望本身就是某种形式的侵略性<br>  5.2 除非我们从恐惧中彻底解脱，否则我们只有继续追逐最高目标，制造出各种神来解救我们脱离黑暗<br>  5.3 你能不能注释着恐惧，既不加以判断，也不以你所累积的只是来干预它？如果不能，那么你所看到的便只是陈旧往事，而不是恐惧<br>  5.4 你一旦认清自己就是恐惧，和恐惧无二无别，自然会停止所有的斗争，然后恐惧就会完全止息下来<br>6 六、 暴力与愤怒<br>  6.1 我们能不能深入暴力的根源，然后从中解脱出来？<br>  6.2 暴力最通常的表达就是愤怒<br>  6.3 根本没试一试或尽力而为这件事，只有做与不做的选择而已<br>7 七、 人际冲突的真相<br>  7.1 人际关系时常是建立在塑造的假象与方位机制上<br>  7.2 当人心真的从社会的心理结构中解脱出来时，清贫才能变成一件美好的事。一个人应该先致力于内在的简朴，不再追寻，不再要求，也不再渴望，也就是一无所求了<br>  7.3 我们如何才能从社会的心理结构中解脱出来？<br>  7.4 如果你不再和别人比较，你就会接纳自己<br>  7.5 如果我们不能确切地了解欲望的本质，冲突时很难避免的<br>8 八、 与真实的自我相处<br>  8.1 反抗并不是自由，而只是一种反应，它必然又会形成自己的模式，于是你又陷入了那个模式之中。其实只是新瓶装旧酒<br>  8.2 只有当你能真正看清真相而付诸行动时，才有自由可言，反叛是无法带来自由的<br>  8.3 看清真相就是行动，也就是自由<br>  8.4 自由乃是一种心智状态，它不是某种东西挣脱的自由，而是一种自由的意识，一种可以怀疑和追问一切的自由，他强烈、活跃而富有生气，因此能清楚各式各样的依赖、奴役、臣服及逆来顺受的阴影<br>  8.5 这种自由意味着彻底的孤独<br>  8.6 如果你认清自己是如此乏味，充满嫉妒、恐惧，自以为感情丰富，实则相当无情，又这么容易受到伤害，容易得意也容易感到无聊，我们能够与这样的自我相处吗？<br>  8.7 我们不能不能既不接受它，也不排斥它，既不消沉，也不得意，而只是如实地关照？<br>9 九、时间与烦恼<br>  9.1 我们总认为自己将来会有所改变，我们内心所向往的和谐境界也会一点一点、一天一天地实现。事实上，时间并不会带来任何的和谐或平安，我们必行停止这种渐进的想法<br>  9.2 时间乃是观察者与被观察者之间的空隙<br>  9.3 一个人如果能够活得平安和谐，充满了美与爱，必然不会恐惧死亡，因为爱本身即是死亡<br>  9.4 你必行真的死了，才能发现死后究竟是怎么一回事。如果你能毫不勉强，也不讨价还价地死于任何令你快慰的事物，然后你料能了解死亡的意义。死亡就是彻底让心智空掉，把每天的渴望、快感以及痛苦完全空掉。死亡就是一种更新，一种突变<br>  9.5 从已知中解脱便是死亡，然后你才能真正地生活<br>10 十、 懂得爱<br>  10.1 一个人如果能真正地爱，必然享有自由，它不是从对方那里掠夺来的，而是自然由内心生起的<br>  10.2 如果你了解爱，你就不会再追随任何人，爱不是臣服，当你爱的时候，根本没有可敬或不可敬之分<br>  10.3 爱所到之处，既无责任，也无义务可言<br>  10.4 爱是新鲜、活泼而充满着生命力的，它没有昨日，也没有明天，更不受杂念的干扰。只有赤子之心才能人出它来<br>  10.5 所谓的爱，是属于完全不同次元的东西<br>11 十一、时空隔阂<br>  11.1 能够透视自己的内心，而不是外在的人事，是在是最难的事了<br>  11.2 长久相处在一起的伴侣，彼此间必定存有很深的印象，因此阻碍了关系的发展<br>  11.3 当你和所观之物产生空隙时，你就知道爱不存在了<br>12 十二、 观察者与被观察者<br>  12.1 觉察到观者与被观者不二，并不意味着一定要与那被观者认同<br>  12.2 如果他尚未领悟到观察者与被观察者不二的真理，则观察者的任何作为不过是在制造另一个意象而又使自己身陷其中<br>  12.3 从这种强烈的觉知中就会产生不同品质的专注力，这种专注力就会造成全然不同的心智状态。<br>  12.4 因为心智就是觉知本身，它会因此而变得极度敏锐，而且有高度智慧<br>13 十三、 思想的起源<br>  13.1 思想只不过是一些观念，它是积存在脑细胞中的记忆的一种反应<br>  13.2 思想是扭曲的，因为它总是任意发明和看到根本不存在的东西<br>  13.3 然后心智就会一改常态，不再一味强求和征服，它会变得出奇的宁静、柔软、敏感和空寂。在这种境界中，就不会再有任何的自欺欺人<br>14 十四、 昨日的重担<br>  14.1 我们极少有独处的机会，即使独自一人，生活仍然充满着各种外来的影响<br>  14.2 内心享有独处空间是十分重要的，因为那意味着存在的自由、行动的自由以及任意翱翔的自由。<br>  14.3 只有空寂才能滋生出良善，也只有自由才能培育出德行的花朵<br>  14.4 一个人如果总想获取或达成一些什么，这种拼命奋斗的态度，对我来说就是人生最大的绊脚石<br>  14.5 真正的自由乃是从锻炼的强制中解脱出来，能认识这份自由便是极深的修炼<br>  14.6 在地质所有的权威，必须先看清楚为什么我们会服从它们<br>15 十五、 冥想<br>  15.1 一个不听寻找和渴求更深更广经验的心，就是肤浅而迟钝的，因为它其实永远活在自己的记忆里<br>  15.2 冥想就是觉察每个念头和每个感受，绝不加以是非判断，而只是观察，随着它律动，从这份觉察中你会认清思想及感受的所有活动，几经就会在这份觉察中出现<br>  15.3 如果你用一小时全神贯注地读这本书，就是在冥想了<br>16 十六、 彻底革新<br>  16.1 任何有意义的运动或影响深远的行动，都必行从我们每一个人开始<br>  16.2 可惜我们从不质疑，只希望别人告诉我们如何去做。<br>  16.3 我们的心理结构中有一样奇怪的东西，就是喜欢听别人指使，这是上万年以来洗脑的结果</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-每周一书/【读书笔记】《精要主义》摘录"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《精要主义》摘录/">【读书笔记】《精要主义》摘录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/13/每周一书/【读书笔记】《精要主义》摘录/" class="article-date">
+	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>这本书信息量并不大，可取点有限，我做了部分摘录，整理出了文章脉络导图；附带了图片、文字以及XMind文件</p>
+</blockquote>
+<p>#导图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-df86e0d44b185df4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Essentialism.png"></p>
+<p>#完整Evernote笔记<br><i><a href="https://www.evernote.com/l/ARtfyBms2ExG-Lko_fpO58YsW63ktFMCqco" target="_blank" rel="noopener">文字、图片、XMind导图文件</a></i></p>
+<p>答辩求过</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-每周一书/【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock/">【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/13/每周一书/【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock/" class="article-date">
+	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>“谷歌如何超越苹果、微软、亚马逊等公司，成为世界顶尖人才心目中的最佳雇主？<br>谷歌如何培养人才、留住人才，最大限度地发掘人的创造力？”</p>
+</blockquote>
 <blockquote>
-<p>后附视频链接，视频看起来就比这些干瘪的文字有意思多了</p>
+<p>本书主要谈论：谷歌的人力资源管理，谷歌的招聘</p>
+</blockquote>
+<blockquote>
+<p>虽说谷歌受到的过度关注让它成为光环效应的最好示例，但书中的很多故事都是值得一读的</p>
+</blockquote>
+<blockquote>
+<p>本书实质上是很多实验的总结，从中可以看出谷歌的规章制度都是一点一点尝试、学习、改进不断循环的过程<br>但也不能忘记“盛名之下其实难副”，书中的很多观点或许并不准确</p>
+</blockquote>
+<blockquote>
+<p>书中的很多想法都对管理者或者公司的资源丰富度要求很高，可以参考借鉴的地方还是有一些</p>
+</blockquote>
+<p><a href="https://www.amazon.cn/gp/product/B0151H9SZY/ref=oh_aui_search_detailpage?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接</a></p>
+<hr>
+<p><a href="https://www.evernote.com/l/ARvFNXR8105IyYuow1VvarE9_1iS-6rI400" target="_blank" rel="noopener">印象笔记链接</a></p>
+<p>部分笔记图片：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-3d6811d6b5e1b02d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="重新定义团队 overview.png"></p>
+<p>笔记文本：</p>
+<p>《重新定义团队 谷歌如何工作》Laszlo Bock<br>1 十、 不公平薪酬<br>  1.1 以成就为荣，不以报酬为荣<br>    1.1.1 金钱带来的喜悦转瞬即逝，但是美好的记忆却永远保持<br>  1.2 创造易于传播爱的环境<br>  1.3 精心筹划却遭受失败的同样要奖励<br>  1.4 信念的飞跃<br>    1.4.1 如果你的目标足够有野心，足够疯狂，即使失败了也能有相当不错的成就<br>2 十一、 世界上最好的东西是免费的<br>  2.1 提高职业和个人生活的效率<br>  2.2 一个关联谷歌及周边的社区<br>  2.3 推动创新<br>  2.4 想办法说好<br>  2.5 员工最需要你的时候，请伸出援手<br>3 十二、 助推<br>  3.1 利用助推帮助员工变得更明智<br>  3.2 更富有<br>    3.2.1 激励储蓄<br>  3.3 更健康<br>  3.4 精心设计，用心设计<br>4 十三、 谷歌的教训<br>  4.1 透明的代价<br>  4.2 摒弃应得权利<br>  4.3 一次失败的绩效管理变革<br>  4.4 珍视怪人<br>  4.5 有的放矢<br>    4.5.1 创新因创造力和实验而蓬勃发展，但同时也需要细心地修剪<br>5 十四、 从明天起你可以做些什么<br>  5.1 赋予工作意义<br>  5.2 相信员工<br>  5.3 只聘用比你更优秀的人<br>  5.4 不要将职业发展与管理绩效混为一谈<br>  5.5 关注团队的两端<br>  5.6 既要节俭，又要慷慨<br>  5.7 不公平薪酬<br>  5.8 助推<br>  5.9 管理日益提升的期望<br>  5.10 享受</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-每周一书/【读书笔记】《如何阅读一本书》——莫提默·J·艾德勒-,-查尔斯·范多伦"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《如何阅读一本书》——莫提默·J·艾德勒-,-查尔斯·范多伦/">【读书笔记】《如何阅读一本书》——莫提默·J·艾德勒-,-查尔斯·范多伦</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/13/每周一书/【读书笔记】《如何阅读一本书》——莫提默·J·艾德勒-,-查尔斯·范多伦/" class="article-date">
+	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>不愧为《大英百科全书》的编辑指导，书中所论书籍种类，大概把世间大部分的有形书籍都朗阔其中了</p>
+</blockquote>
+<p>想成为一个阅读人吗？老觉得读书慢吗？不知道如何区分书籍的打开方式吗？</p>
+<blockquote>
+</blockquote>
+<p>在这本书中或许能找到你想要的答案</p>
+<blockquote>
+</blockquote>
+<p>书中信息含量很大，文末还有大量的阅读推荐（经典导读），我并未逐章看完，或许其中的很多章节在用到的时候可以翻阅，毕竟并不常读诗歌、戏剧等类别的书籍</p>
+<blockquote>
+</blockquote>
+<p>睿智的你没准早已深谙阅读之法，当然也就不需要再听这些废话了</p>
+<hr>
+<p><a href="https://www.amazon.cn/gp/product/B00IX8NX5A/ref=oh_aui_search_detailpage?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接</a></p>
+<p><a href="https://www.evernote.com/l/ARuiiLYxlAVJDo2p0RPt0-HZRDA1qXbIFyQ" target="_blank" rel="noopener">印象笔记链接</a></p>
+<p>图片：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-e8fe66029681f3c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="如何阅读一本书overview.png"></p>
+<p>笔记文本：</p>
+<p>如何阅读一本书<br>1 第一篇 阅读的层次<br>  1.1 一、 阅读的艺术与活力<br>    1.1.1 这些新时代的传播媒体是否能增进我们对自己世界的了解？<br>    1.1.2 主动阅读<br>        1.1.2.1 阅读越主动，效果越好<br>        1.1.2.2 阅读的艺术也在于尽可能掌握住每一种讯息的技巧<br>        1.1.2.3 阅读的目标：为获得资讯而读，以及为求得理解而读<br>        1.1.2.4 阅读就是学习：指导型学习，以及自我发现型学习之间的差异<br>                1.1.2.4.1 要避免这样的错误——以为读的多就是读得好的错误<br>        1.1.2.5 老师的出席与缺席<br>  1.2 二、 阅读的层次<br>    1.2.1 四个层次<br>        1.2.1.1 基础阅读<br>        1.2.1.2 检视阅读<br>        1.2.1.3 分析阅读<br>        1.2.1.4 主题阅读<br>  1.3 三、 阅读的第一个层次：基础阅读<br>    1.3.1 学习阶段的阅读<br>  1.4 四、 阅读的第二个层次：检视阅读<br>    1.4.1 一 有系统的略读<br>    1.4.2 二 粗浅的阅读<br>    1.4.3 阅读的速度<br>    1.4.4 检视阅读的摘要<br>  1.5 五、 如何做一个自我要求的读者<br>    1.5.1 你在阅读时要提出问题来——在阅读的过程中，你自己必须尝试去回答这些问题<br>    1.5.2 如何让一本书真正属于你<br>        1.5.2.1 笔记方法<br>    1.5.3 培养阅读的习惯<br>        1.5.3.1 由许多规则中养成一个习惯<br>2 第二篇 阅读的第三个层次：分析阅读<br>  2.1 六、 一本书的分类<br>    2.1.1 从一本书的书名中你能学到什么？<br>    2.1.2 实用性vs理论作品<br>    2.1.3 理论性作品的分类<br>  2.2 七、 透视一本书<br>    2.2.1 使用一个单一的句子或最多几句话来叙述整本书的内容<br>    2.2.2 将书中重要篇章列举出来，说明它们如何组织<br>    2.2.3 结构与规划：叙述整本书的大意<br>    2.2.4 驾驭复杂的内容：为一本书拟大纲的技巧<br>    2.2.5 阅读与写作的互惠技巧<br>    2.2.6 发现作者的意图<br>  2.3 八、 与作者找出共通的词义<br>    2.3.1 句子与主旨<br>    2.3.2 找出关键句<br>  2.4 九、 判断作者的主旨<br>    2.4.1 找出主旨<br>    2.4.2 找出论述<br>    2.4.3 找出解答<br>  2.5 十、 公正地评价一本书<br>    2.5.1 受教是一种美德<br>    2.5.2 修辞的作用<br>    2.5.3 暂缓评论的重要性<br>    2.5.4 避免争强好辩的重要性<br>    2.5.5 化解争议<br>    2.5.6 尊重知识与个人观点，在作任何论断之前，都要找出理论基础<br>  2.6 十一、 赞同或反对作者<br>    2.6.1 偏见与公正<br>    2.6.2 判断论点是否正确<br>    2.6.3 判断论述的完整性<br>  2.7 十二、 辅助阅读<br>    2.7.1 相关经验的角色<br>    2.7.2 其他书可以当做阅读时的外在助力<br>    2.7.3 如何运用导读与摘要<br>    2.7.4 如何运用工具书<br>    2.7.5 如何使用字典<br>    2.7.6 如何使用百科全书<br>3 第三篇 阅读不同读物的方法<br>  3.1 十三、 如何阅读实用型的书<br>    3.1.1 说服的角色<br>    3.1.2 赞同实用书之后<br>  3.2 十四、 如何阅读想象文学<br>    3.2.1 读想象文学的不要<br>    3.2.2 一般规则<br>  3.3 十五、 阅读故事、戏剧与诗的一些建议<br>  3.4 十六、 如何阅读历史书<br>    3.4.1 难以捉摸的失实<br>    3.4.2 历史的理论<br>    3.4.3 历史的普遍性<br>    3.4.4 阅读历史书要提出问题<br>    3.4.5 如何阅读传记与自传<br>  3.5 十七、 如何阅读科学与数学<br>    3.5.1 了解科学这一门行业<br>    3.5.2 阅读科学经典名著的建议<br>    3.5.3 面对数学问题<br>    3.5.4 掌握科学作品中的数学问题<br>  3.6 十八、 如何阅读哲学<br>    3.6.1 哲学家提出的问题<br>    3.6.2 现代哲学与传承<br>    3.6.3 哲学的方法<br>    3.6.4 哲学的风格<br>    3.6.5 阅读哲学的提示<br>    3.6.6 理清你的思绪<br>    3.6.7 如何阅读经书<br>  3.7 十九、 如何阅读社会科学<br>    3.7.1 定义<br>    3.7.2 难易<br>    3.7.3 方法<br>4 第四篇 阅读的最终目标<br>  4.1 二十、 阅读的第四个层次：主题阅读<br>    4.1.1 主题阅读与检视阅读相结合<br>    4.1.2 五个步骤<br>        4.1.2.1 重点章节<br>        4.1.2.2 共识<br>        4.1.2.3 理清问题<br>        4.1.2.4 界定议题<br>        4.1.2.5 分析讨论<br>    4.1.3 可观的必要性<br>        4.1.3.1 面面俱到，并不预设立场<br>    4.1.4 练习：进步论<br>    4.1.5 如何应用主题书籍<br>        4.1.5.1 启动阅读、建议阅读、指导阅读<br>  4.2 二十一、 阅读与心智成长<br>    4.2.1 好书能给我们什么帮助<br>        4.2.1.1 不能囫囵吞枣<br>        4.2.1.2 书的金字塔<br>        4.2.1.3 生命与心智的成长<br>这是一本为阅读的人，或是想要成为阅读的人而写的书 针对发展阅读技巧</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-每周一书/【笔记】《超越感觉--批判性思考指南》"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/13/每周一书/【笔记】《超越感觉--批判性思考指南》/">【笔记】《超越感觉--批判性思考指南》</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/13/每周一书/【笔记】《超越感觉--批判性思考指南》/" class="article-date">
+	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>重温<br>作者：文森特·鲁吉罗 (Vincent Ruggiero)(美)</p>
+</blockquote>
+<blockquote>
+<p>里面很多论点对很多人来说可能都是常识，不过还是有闪光处的，比如：</p>
+<ul>
+<li>25%的人认为自己位列前 1%（实验数据，并不准确）</li>
+</ul>
 </blockquote>
 <hr>
-<p><a href="https://www.evernote.com/l/ARuMvXhTJzlHxoL9b6wOe_50Y25ldo3PtNM" target="_blank" rel="noopener">印象笔记链接</a></p>
-<hr>
-<p>#视频链接：</p>
 <ul>
-<li><a href="http://open.163.com/movie/2013/5/E/1/M8TBLASMF_M8TBLJSE1.html" target="_blank" rel="noopener">减肥十律</a></li>
-<li><a href="http://open.163.com/movie/2015/6/9/6/MAR049N4N_MAR04TA96.html" target="_blank" rel="noopener">运动的真相</a></li>
+<li>除非你意识到自己经验的局限性，训练你的思维扩展到超越你熟悉的事物，考察所有相关的观点，并在判断钱先进行理解，否则你就几乎肯定会眼光狭隘，思维贫乏</li>
 </ul>
 <hr>
-<p>#图片概览：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-362b8a2456807aaf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="keep in shape overview.png"></p>
+<ul>
+<li>陈述一种观点，就是告诉他人我们对某事的看法；当需要征引一些东西来支持我们的观点时，很多时候我们不愿意承认，其实我们只能勉强提供一些根本站不住脚的证据</li>
+</ul>
+<hr>
+<p><a href="https://www.amazon.cn/gp/product/B00R4637AS/ref=oh_aui_search_detailpage?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接（我读的这版的翻译很一般）</a></p>
+<hr>
+<p><a href="https://www.evernote.com/l/ARuVDdRrr1hGDZIc3lM92-HSoOrcZlbi27I" target="_blank" rel="noopener">印象笔记链接</a></p>
+<hr>
+<p>提纲图片：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-f8a2d5956c8219f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="批评思考overview.png"></p>
 <hr>
 <p>笔记文字：</p>
-<p>保持体形 Keep in shape<br>1 关于减肥你不知道的十件事 10 Things About Losing Weight<br>  1.1 1. Don’t skip meals<br>    1.1.1 If you skip the breakfast and get really hungry, your brain tries to compensate by engage you to high calorie food<br>    1.1.2 饥饿的大脑会发出进食高卡路里的食物，饱腹的大脑会发出进食低卡路里的食物<br>    1.1.3 三餐要保持，如果少吃一顿，大脑会不自觉的指示我们寻找高卡路里的食物。饱胀的时候人还能理智一点。<br>  1.2 2. Use smaller plates<br>    1.2.1 Change your 12-inch plates down to 10-inch, you’re likely to eat 20% less<br>    1.2.2 大盘换小盘，大碗换小碗，能让人减少20%的进食量。<br>  1.3 3.Count your calories<br>    1.3.1 If you choose low calories food carefully, by the end of the day, you’ll get half less the calories, and already to start losing weight<br>    1.3.2 计算每天摄入的卡路里<br>  1.4 4. Don’t blame your metabolism<br>    1.4.1 Peoples’ metabolism is about the same, pay attention to what you eat.<br>    1.4.2 新陈代谢速度其实人人差不多，还是要少摄入卡路里量。<br>  1.5 5. Protein staves off hunger pangs.<br>    1.5.1 One way of cheating your brain that you’re not hungry.<br>    1.5.2 三餐多吃蛋白质高的食品，如鸡蛋、豆子、瘦肉，可以维持饱胀感很长时间。<br>  1.6 6. Soup keeps you feeling fuller for longer<br>    1.6.1 The sticky soup will stay longer before they reach your stomach<br>    1.6.2 浓稠的汤（比如罗宋汤之类的）可以让人饱胀时间更长。<br>  1.7 7.The wider the choice the more you eat<br>    1.7.1 The thing we can’t resist is choice, people will eat more than they have less choice<br>    1.7.2 选择多多，吃得也多。所以不要多吃自助餐。<br>  1.8 8. Low fat dairy helps you excrete more fat<br>    1.8.1 Low fat dairy will help you absorb less fat in your food, like 120g per month while eat only low fat diary for meal<br>    1.8.2 低脂的奶制品可以帮助我们排泄更多的脂肪。似乎是钙的作用。只能是低脂。<br>  1.9 9. Exercise goes on burning fat even while you sleep<br>    1.9.1 要多做运动，运动能够代谢掉脂肪，还能保持身体代谢脂肪率很长一段时间，甚至让你睡觉时也能燃烧脂肪。<br>    1.9.2 Exercise will keep on burning fat after exercise for 24 hours even when we are asleep.<br>  1.10 10.Keep active will help you lose weight<br>    1.10.1 Small changes of your daily routine can significantly increase the number of calories you burn<br>    1.10.2 多做小运动，如走路上班、爬楼梯而不是上电梯，缩短午饭攀谈的时间等等。每天可以多消耗很多卡路里。坚持一年，效果非凡。<br>2 锻炼的真相 Truth about Exercise<br>  2.1 HIT<br>    2.1.1 The truth of exercise is that it should be tailored to individuals. There will be many types of exercise that will be effective.<br>    2.1.2 Opinion: If you can improve your VO2 max, you will be more healthy<br>    2.1.3 提升最大耗氧量和胰岛素敏感性，你会更长寿<br>    2.1.4 Method: Run as fast as you can. 20 seconds for three times once / three times a week——it’s 3 minutes<br>    2.1.5 方法： 以最快速度跑动，每次20秒，每组3次，每周3组——三分钟<br>    2.1.6 quite a lot for the metabolism in your muscle and will really make a difference<br>  2.2 NEAT<br>    2.2.1 in order to keep the fuels moving through the body system, you need to move every hour<br>    2.2.2 bound to the chair, chained to the chair. it’s hurting our bodies. it literally killing millions.<br>    2.2.3 每个小时都需要动一动，久坐对健康损害极大<br>    2.2.4 增加你的日常行动的运动量，简单地保持健康</p>
+<blockquote>
+<p>批判性思考指南<br>1 第一篇 背景<br>  1.1 第一章 你是谁<br>  1.2 第二章 什么是批判性思考<br>  1.3 第三章 真理是什么？<br>    1.3.1 究竟始于何处<br>        1.3.1.1 或多或少的程度上，我们视为自己独特视角的看法承受着他人思想和信念的印记<br>    1.3.2 不完善的感知<br>    1.3.3 不完善的记忆<br>    1.3.4 有缺陷的信息<br>    1.3.5 即使最明智的人也会出错<br>    1.3.6 真理是发现的，不是创造的<br>    1.3.7 理解原因和结果<br>        1.3.7.1 时间顺序并不决定因果关系<br>        1.3.7.2 并非所有因果关系都包含强力或必然性<br>        1.3.7.3 需要提高对“自由意志”的警惕<br>        1.3.7.4 因果性经常是复杂的<br>  1.4 第四章 认知意味着什么？<br>    1.4.1 认知的必要条件<br>    1.4.2 检验你自己的知识<br>    1.4.3 我们如何知道<br>    1.4.4 为什么认知是困难的<br>    1.4.5 信仰是一种形式的知识吗<br>    1.4.6 知识的障碍<br>  1.5 第五章 你的观点有多少根据？<br>    1.5.1 可能出错的观点<br>    1.5.2 关于道德问题的观点<br>    1.5.3 专家也会出错<br>    1.5.4 有见识的对无见识的观点<br>    1.5.5 明辨是非地形成观点<br>        1.5.5.1 了解观点是如何形成的<br>        1.5.5.2 抵制把你的观点变成事实的诱惑<br>        1.5.5.3 监控你的思想以防止陷入非批判性默认模式<br>  1.6 第六章 证据是什么？<br>    1.6.1 种类<br>    1.6.2 个人经验<br>    1.6.3 未公开的传说<br>    1.6.4 公开报道<br>    1.6.5 目击者睁眼<br>    1.6.6 名人证言<br>    1.6.7 专家意见<br>    1.6.8 统计资料<br>    1.6.9 调查<br>    1.6.10 正规观察<br>    1.6.11 研究评述<br>    1.6.12 评价证据<br>    1.6.13 充分证据的构成要件是什么<br>  1.7 第七章 什么是论证<br>    1.7.1 论证的组成部分<br>    1.7.2 评价论证<br>    1.7.3 比较困难的论证<br>2 第二篇 易犯的错误<br>  2.1 第八章 基本问题：“我的更好”<br>    2.1.1 自我中心的人<br>    2.1.2 族群中心的人<br>    2.1.3 控制“我的更好”的思维<br>  2.2 第九章 立场的错误<br>    2.2.1 视角匮乏<br>    2.2.2 无根据的假定<br>    2.2.3 要么/要么观念<br>    2.2.4 盲目遵从<br>    2.2.5 绝对主义<br>    2.2.6 相对主义<br>    2.2.7 支持或反对变化的偏见<br>  2.3 第十章 程序错误<br>    2.3.1 有偏见的证据考量<br>    2.3.2 双重标准<br>    2.3.3 草率的结论<br>    2.3.4 过度概括和刻板成见<br>    2.3.5 过度简单化<br>    2.3.6 事后归因谬误<br>  2.4 第十一章 表达的错误<br>    2.4.1 自相矛盾<br>    2.4.2 循环论证<br>    2.4.3 无意义的陈述<br>    2.4.4 误用权威<br>    2.4.5 错误类比<br>    2.4.6 非理性述求<br>  2.5 第十二章 反应的错误<br>    2.5.1 自动拒绝<br>    2.5.2 转换话题<br>    2.5.3 转移举证责任<br>    2.5.4 “稻草人“<br>    2.5.5 攻击批评者<br>  2.6 第十三章 错误组合<br>3 第三篇 策略<br>  3.1 第十四章 认识你自己<br>    3.1.1 批判性思考的详细目录<br>    3.1.2 挑战与回报<br>  3.2 第十五章 敏锐地观察<br>    3.2.1 观察人<br>    3.2.2 科学和医学中的观察<br>    3.2.3 应用范围<br>    3.2.4 变得更敏锐<br>    3.2.5 反思你的观察<br>  3.3 第十六章 选择一个议题<br>    3.3.1 基本原则：少是多<br>    3.3.2 如何限定一个议题<br>    3.3.3 发散–收拢<br>  3.4 第十七章 进行探究<br>    3.4.1 处理不确定结果<br>    3.4.2 到何处寻找信息<br>    3.4.3 问题背景<br>    3.4.4 事实和统计资料<br>    3.4.5 关于人的信息<br>    3.4.6 关于英语的信息<br>    3.4.7 期刊、书籍、数据库、摘要检索、互联网<br>    3.4.8 集中与焦点<br>    3.4.9 多少探究才够充分<br>    3.4.10 处理长篇材料<br>  3.5 第十八章 形成判断<br>    3.5.1 评价证据<br>    3.5.2 评价你信息来源的论证<br>    3.5.3 作出重要区分<br>    3.5.4 判断的表达<br>        3.5.4.1 力求一个平衡点<br>        3.5.4.2 处理可能性<br>        3.5.4.3 让主语适当具体<br>        3.5.4.4 让谓语准确<br>        3.5.4.5 限定语<br>        3.5.4.6 避免夸大其词<br>  3.6 第十九章 说服他人<br>    3.6.1 指导原则<br>        3.6.1.1 尊重受众<br>        3.6.1.2 理解听众观点<br>        3.6.1.3 从共同立场开始<br>        3.6.1.4 态度积极<br>        3.6.1.5 尽可能让人理解你的论证<br>        3.6.1.6 承认对方有道理之处<br>        3.6.1.7 不要忽视任何相关事实<br>        3.6.1.8 不要用论证压倒听众<br>        3.6.1.9 集中于最可能起作用的论证<br>        3.6.1.10 不使用无关论证<br>        3.6.1.11 容留时间</p>
+</blockquote>
 
       
 
@@ -880,7 +720,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/健康/">健康</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
 
     </footer>
   </div>
@@ -891,7 +731,7 @@
 
 
   
-    <article id="post-日常记录/8.13"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-每周一书/【读书笔记】《Android开发艺术探索》"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -899,7 +739,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/日常记录/8.13/">8.13</a>
+      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《Android开发艺术探索》/">【读书笔记】《Android开发艺术探索》</a>
     </h1>
   
 
@@ -907,51 +747,31 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/日常记录/8.13/" class="article-date">
+	<a href="/2017/08/13/每周一书/【读书笔记】《Android开发艺术探索》/" class="article-date">
 	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/随笔/">随笔</a>
+    <a class="article-category-link" href="/categories/阅读/">阅读</a><a class="article-category-link" href="/categories/阅读/技术/">技术</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="APP发版"><a href="#APP发版" class="headerlink" title="APP发版"></a>APP发版</h2><p> 前两天连续经历了晚上的发版，感受了一下大项目的流程性压力。</p>
-<ul>
-<li>项目规模大了也会限制到人的发挥，还好谷歌后台的分发流程极其智能，能做到分版分类型进行测试</li>
-<li>可以把beta测试的动作再放大一些，see what we will got, or the result will be amazing.</li>
-<li><p>有一些时间是浪费在build/test 上的</p>
-<ul>
-<li>过程是可以优化的，比如build加速，比如Test不要仅仅依赖手工测试，可以为流程引入自动化测试</li>
-</ul>
-<blockquote>
-<p>截止现在，我还是没有完全掌握ORG全部的流程，逻辑相对还是比较复杂的，领导们提倡的文档化在这种问题上就凸显出重要性了</p>
+        <blockquote>
+<p>这本书对初学者来说还是比较有深度的，知识覆盖面也比较广<br>虽然可能讲解的重点不一定都是你想看到的，但是对于安卓开发进阶来说是一本不错的总体概览书籍，能够get到一些实用的技能点</p>
 </blockquote>
-</li>
-</ul>
-<h2 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h2><p> 好友的老婆今天晚上可能就要生宝宝了，替他开心，不过他不能立刻回到爱人身边，小小遗憾</p>
+<p>前后用了一个星期的时间来看，总体来说比较有参考价值的，阅读起来也没有太大难度</p>
 <blockquote>
-<p>我似乎也应该开始着手培养爱的能力了，你说对么？</p>
 </blockquote>
-<p>今天邀三位大学同学到家附近小聚，尔后到家中小坐，互通有无，收获还是不小的</p>
-<ul>
-<li><p>BG分享了不少网站前端的知识，还有一些亚历山大与始皇时期的一些历史细节、阳明心学、骑行服务的远大理想等等</p>
-</li>
-<li><p>从院士那了解到学术论文的一些微操，包括论文检索引擎的暴利，老教授的会议空谈惯性，还有一些学术奋斗的故事宏观始末等等</p>
-</li>
-<li><p>中哥的Linux服务号写起来了，你下次多说几句^_^</p>
-</li>
-<li><p>剩下的就是扯淡了，我也不记得我说了啥了，我好像扯淡比较多！</p>
-</li>
-</ul>
-<blockquote>
-<p>朋友的角色还是很重的，会影响思维、想法、拓宽见识</p>
-<p>读书如交友，这也凸显了读好书、交好友的重要性</p>
-</blockquote>
-<h2 id="move-on"><a href="#move-on" class="headerlink" title="move on"></a>move on</h2><p>新的一周又要开始啦，预期工作上的责任与任务会更重，好好努力。</p>
-<p>自己的长期目标也要即刻开始准备，加油。</p>
+<p>评价：<strong>三星半</strong></p>
+<hr>
+<p>#链接、图片、笔记文本<br>下面是印象笔记公开链接、XMind思维导图图片与文字</p>
+<p><a href="https://www.evernote.com/l/ARsAb8sBsXJAHYReK_yz0I2z-lNkfmqgi9I" target="_blank" rel="noopener">EverNote链接</a></p>
+<p>图片：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7a4017224b211621.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Android开发艺术.png"></p>
+<p>文字：</p>
+<p>Android 开发艺术探索<br>1 1 Activity生命周期和启动模式<br>  1.1 生命周期<br>    1.1.1 典型周期<br>        1.1.1.1 onStart<br>                1.1.1.1.1 Activity已经可见，但是没有出现在前台<br>        1.1.1.2 onResume<br>                1.1.1.2.1 Activity可见，出现在前台并且开始活动<br>        1.1.1.3 onPause<br>                1.1.1.3.1 可以做一些存储数据、停止动画等工作，但是不能太耗时<br>        1.1.1.4 onStop<br>                1.1.1.4.1 可以做一些重量级工作，但也不能太耗时<br>                1.1.1.4.2 如果新Activity采用了透明主题，那么当前Activity不会回调onStop<br>        1.1.1.5 从Activity A切换到Activity B<br>                1.1.1.5.1 A先执行onPause，B再执行onCreate-onStart-onResume，最后才是A执行onStop<br>    1.1.2 异常周期<br>        1.1.2.1 被系统回收<br>        1.1.2.2 当Activity并不是由我主动点击back键而丧失焦点时，onSaveInstanceState方法就一定会调用<br>                1.1.2.2.1 google工程师们对onSaveInstanceState如此设计就是让其完成对一些临时的、非永久数据存储并进行恢复<br>                1.1.2.2.2 Android的View本身自己就实现了onSaveInstanceState方法，这些控件自己就具有保存临时数据和恢复临时数据的能力<br>                1.1.2.2.2.1 值得一提的是，只有当你给这个wiget在xml中指定id时，它才具有保存数据并且恢复的能力，并且不同的wiget还不能共用这个id，否则会出现数据覆盖的情况。<br>                1.1.2.2.3 onRestoreInstanceState一旦被调用，其参数Bundle savedInstanceState一定是有值的<br>        1.1.2.3 资源不足导致低优先级的Activity被杀死<br>        1.1.2.4 Configuration改变导致的销毁重建<br>                1.1.2.4.1 通过configChanges配置<br>  1.2 启动模式<br>    1.2.1 Activity的LaunchMode<br>        1.2.1.1 standard<br>                1.2.1.1.1 这种模式的Activity默认会进入启动它的Activity所属的任务栈中，但诸如ApplicationContext等Context并没有所谓的任务栈，需要在启动时添加FLAG_ACTIVITY_NEW_TASK，这样启动时就会为它创建一个新的任务栈，此时其实是以singleTask模式启动的<br>        1.2.1.2 singleTop<br>        1.2.1.3 singleTask<br>                1.2.1.3.1 taskAffinity属性，配合singleTask使用，指定Activity运行的任务栈名，是一个字符串，Activity默认的栈名是Application的包名<br>                1.2.1.3.2 singleTask模式的Activity切换到栈顶会导致在它之上的栈内的Activity出栈<br>        1.2.1.4 singleInstance<br>    1.2.2 Activity的Flags<br>        1.2.2.1 FLAG_ACTIVITY_NEW_TASK<br>        1.2.2.2 FLAG_ACTIVITY_SINGLE_TOP<br>        1.2.2.3 FLAG_ACTIVITY_CLEAR_TOP<br>                1.2.2.3.1 带此标记位启动Activity，启动它时，在同一栈中所有位于它上面的Activity都要出栈<br>                1.2.2.3.2 一般会和singleTask启动模式一起出现，如果Activity已经创建，则调用onNewIntent<br>        1.2.2.4 FLAG_ACTIVITY_EXCLUDE_FROME_RECENTS<br>                1.2.2.4.1 相当于xml中声明 android:exludeFromRecents=”true”<br>                1.2.2.4.2 Activity不会出现在历史Activity列表中<br>    1.2.3 IntentFilter匹配规则<br>        1.2.3.1 为了匹配过滤列表，需要同时匹配过滤列表中的action、category、data信息，否则匹配失败。只有一个Intent同时匹配action、category、data才算完全匹配，只有完全匹配才能启动目标Activity。<br>        1.2.3.2 一个Activity中可以有多个intent-filter，一个Intent只要能匹配任何一组intent-filter即可成功启动对应的Activity<br>        1.2.3.3 具体细则<br>                1.2.3.3.1 action匹配规则<br>                1.2.3.3.1.1 字符必须完全相同，一个过滤规则中可以有多个action，只要Intent的action能够与其中任意一个相同即可匹配成功<br>                1.2.3.3.1.2 必须含有action项，可以有多个，只要其中一项能在intent-filter中找到匹配项就行<br>                1.2.3.3.2 category匹配规则<br>                1.2.3.3.2.1 可以没有，如果有，则必须全部被包含在intent-filter中<br>                1.2.3.3.2.2 startActivity时默认含有android.intent.category.DEFAULT这个category<br>                1.2.3.3.3 data匹配规则<br>                1.2.3.3.3.1 与action类似<br>                1.2.3.3.3.2 由两部分组成 mimeType和URI<br>                1.2.3.3.3.2.1 URI<br>                1.2.3.3.3.2.1.1 <scheme>://<host>:<port>/[<path></path>][<pathprefix>][<pathpattern>]<br>                1.2.3.3.3.3 如果为intent指定完整的data，必须调用setDataAndType，不能先setData再setType，因为这两个方法彼此会清楚对方的值<br>2 2. IPC机制<br>  2.1 简介<br>    2.1.1 缩写： Inter-Process Communication 进程间通信或者跨进程通信<br>    2.1.2 进程与线程<br>        2.1.2.1 线程是CPU调度的最小单元，线程是一种有限的系统资源<br>        2.1.2.2 进程一般指一个执行单元，在PC或移动设备上指一个程序或者一个应用。<br>        2.1.2.3 一个进程中可以只有一个线程，即主线程；在Android里的主线程也叫UI线程，由此引出ANR，线程<br>    2.1.3 不是Android独有，Linux上可以通过命名管道、共享内存、信号量等来进行进程间通信。<br>    2.1.4 Android中最有特色的进程间通信方式就是Binder，也支持socket<br>  2.2 Android中的多进程模式<br>    2.2.1 使用多进程的方法：在AndroidMenifest中指定android:process属性<br>        2.2.1.1 以“：”开头的进程属于当前进程的私有进程，否则为全局进程，其他应用通过ShareUID方式可以和它运行在同一进程中<br>    2.2.2 数据共享的问题<br>    2.2.3 引发的问题<br>        2.2.3.1 静态成员和单例模式完全失败<br>                2.2.3.1.1 运行在不同进程中的四大组件，想通过内存来共享数据都会失败<br>        2.2.3.2 线程同步机制完全失效<br>        2.2.3.3 SharedPreference可靠性下降<br>        2.2.3.4 Application会多次创建<br>  2.3 基础概念<br>    2.3.1 Serializable接口<br>        2.3.1.1 是Java的一个序列化接口，只需在类中声明serialVersionUID标识即可自动实现默认序列化过程<br>                2.3.1.1.1 标识用以辅助序列化与反序列化过程，反序列化时会检查和当前类是否一致（可能类被修改了，如添加了成员）<br>        2.3.1.2 Serializable使用简单，但是含有大量IO操作，开销大<br>    2.3.2 Parcelable<br>        2.3.2.1 只要实现这个接口，一个类的对象就可以实现序列化，并且可以通过Intent和Binder传递<br>        2.3.2.2 系统已经为我们提供了许多实现了Parcelable接口的类，如Intent、Bundle、Bitmap，同时List和Map也可以序列化<br>        2.3.2.3 Parcelable稍显麻烦，但是效率很高<br>    2.3.3 Binder<br>        2.3.3.1 Android特有，可以理解为虚拟的物理设备<br>        2.3.3.2 应用层来说，是客户端和服务端进行通信的媒介<br>        2.3.3.3 主要用在Service中，包括AIDL和Messenger<br>        2.3.3.4 手动实现Binder的步骤<br>                2.3.3.4.1 声明一个AIDL接口，只需继承IInterface（只有一个asBinder方法）<br>                2.3.3.4.2 实现Stub类和Stub类中的Proxy代理类<br>        2.3.3.5 linkToDeath与unlinkToDeath<br>  2.4 Android中的IPC<br>    2.4.1 方式<br>        2.4.1.1 Intent中添加extras<br>        2.4.1.2 Binder跨进程通信<br>        2.4.1.3 ContentProvider支持跨进程<br>        2.4.1.4 网络通信，如socket<br>        2.4.1.5 文件共享<br>                2.4.1.5.1 并发问题<br>                2.4.1.5.2 SharedPreference虽然本质也也是文件，但系统对它的读写有一定的缓存策略，所以不在进程间通信时使用<br>    2.4.2 使用Messenger<br>        2.4.2.1 一种轻量级的IPC方案，底层实现是AIDL<br>        2.4.2.2 使用方法简单，它对AIDL做了封装<br>        2.4.2.3 由于一次处理一个请求，因此在服务端我们不用考虑线程同步的问题（服务端不存在并发执行的情况）<br>        2.4.2.4 实现步骤<br>                2.4.2.4.1 服务端进程<br>                2.4.2.4.2 客户端进程<br>    2.4.3 AIDL<br>        2.4.3.1 服务端<br>                2.4.3.1.1 创建Service<br>                2.4.3.1.2 创建AIDL文件，将暴露给客户端的接口在这个AIDL文件中声明<br>                2.4.3.1.3 在Service中实现这个接口<br>        2.4.3.2 客户端<br>                2.4.3.2.1 绑定服务端Service<br>                2.4.3.2.2 将服务端返回的Binder对象转换成AIDL接口所属的类型<br>                2.4.3.2.3 调用AIDL中的方法<br>        2.4.3.3 AIDL接口的创建<br>                2.4.3.3.1 支持的数据类型<br>                2.4.3.3.1.1 基本数据类型<br>                2.4.3.3.1.2 String CharSequence<br>                2.4.3.3.1.3 ArrayList<br>                2.4.3.3.1.4 HashMap<br>                2.4.3.3.1.5 Parcelable<br>                2.4.3.3.1.6 AIDL<br>    2.4.4 ContentProvider<br>        2.4.4.1 继承ContentProvider，实现六个方法：onCreate、query、update、insert、delete和getType<br>                2.4.4.1.1 onCreate用来创建<br>                2.4.4.1.1.1 在主线程中，不能进行耗时操作<br>                2.4.4.1.2 getType用以返回MIME类型，如果返回null或者 <em>/</em>表示不关注<br>        2.4.4.2 底层看来来像一个SQLite数据库，但其实对底层数据储存没有任何要求，可以使用普通文件，可以采用内存中的一个对象来进行数据存储<br>        2.4.4.3 注册自定义的ContentProvider<br>                2.4.4.3.1 android：authorities是ContentProvider的唯一表示，通过这个属性外部应用就可以访问我们的ContentProvider了，所以必须保证authorities唯一（可以加上包名前缀）<br>    2.4.5 Sockete<br>    2.4.6 Binder连接池<br>        2.4.6.1 可以极大的提高AIDL的开发效率，并且可以避免大量的Service创建<br>3 3. View事件体系<br>  3.1 基础<br>    3.1.1 位置参数<br>        3.1.1.1 left、right、top、bottom<br>        3.1.1.2 3.0之后添加了x、y、translationX、translationY<br>    3.1.2 MotionEvent与TouchSlop<br>    3.1.3 VelocityTracker、GestureDetector、Scroller<br>        3.1.3.1 获取速度前必须先计算速度<br>        3.1.3.2 这里的速度是指一段时间内手指所滑过的像素<br>        3.1.3.3 不需要使用时，需要调用clear方法来重置并回收内存<br>  3.2 View的滑动<br>    3.2.1 scrollTo、scrollBy<br>        3.2.1.1 只能滑动View的内容，并不能滑动View本身<br>    3.2.2 使用动画<br>        3.2.2.1 将fillAfter属性设置为true可以保持动画结束后的view效果（但是view的四个顶点坐标并没有发生变化）<br>    3.2.3 改变布局参数<br>    3.2.4 比较： scrollTo/ScrollBy操作简单，适合对View内容的滑动 动画：操作简单，主要适用于没有交互的View和实现复杂的动画效果 改变布局参数：操作相对复杂，适用于有交互的View<br>    3.2.5 eg：<br>        3.2.5.1 具有跟手滑动效果的View：只需要重写onTouchEvent方法并处理ACTION_MOVE事件，根据两次滑动之间的距离就可以实现它的滑动。为了实现全屏滑动，需要采用动画的方式来实现（原书P134）<br>  3.3 弹性滑动<br>    3.3.1 使用Scroller<br>        3.3.1.1 配合View的computeScroll方法完成，对View没有丝毫的引用，内部也不含有计时器<br>    3.3.2 通过动画，一帧一帧地更新，设置动画的updateListener实现<br>    3.3.3 使用延时策略<br>        3.3.3.1 使用Handler或View的postDelay方法<br>  3.4 View的事件分发机制<br>    3.4.1 传递规则<br>        3.4.1.1 dispatchTouchEvent<br>                3.4.1.1.1 用来进行事件分发<br>        3.4.1.2 onInterceptTouchEvent<br>                3.4.1.2.1 用来判断是否拦截某个事件<br>        3.4.1.3 onTouchEvent<br>                3.4.1.3.1 dispatchTouchEvent中调用，处理点击事件，返回结果表示是否消耗当前事件<br>        3.4.1.4 关系伪代码<br>                3.4.1.4.1 public boolean dispatchTouchEvent(MotionEvent ev){ boolean consume = false; if(onInterceptTouchEvent(ev)){ consume = onTouchEvent(ev); }else{ consume = child.dispatchTouchEvent(ev); } return consume; }<br>        3.4.1.5 结论<br>                3.4.1.5.1 同一个事件序列内的事件不能分别由两个View同时处理（不包含特殊处理）<br>                3.4.1.5.2 某个View一旦决定拦截，那么这一事件序列都只能由它来处理，并且它的onInterceptTouchEvent不会再被调用<br>                3.4.1.5.3 如果View不消耗除ACTION_DOWN以外的其他事件，那么这个点击事件会小时，父元素的onTouchEvent并不会被调用，最终这些消耗的点击事件会传递给Activity处理<br>                3.4.1.5.4 ViewGroup默认不拦截任何事件<br>                3.4.1.5.5 View没有onInterceptTouchEvent方法<br>                3.4.1.5.6 View的onTouchEvent默认都会消耗事件（返回true），除非是不可点击的（clickable和longClickable同时为false）<br>                3.4.1.5.7 View的enable属性不影响onTouchEvent默认返回值。哪怕一个View是disable状态，只要它的clickable或者longclickable有一个为true，那么它的onTouchEvent就返回true<br>4 4. View工作原理<br>  4.1 ViewRoot、DecorView<br>    4.1.1 DecorView作为顶级View，一般会包含一个竖直方向的LinearLayout<br>        4.1.1.1 一个是titlebar，一个是content，这也是setContentView所设置的对象<br>    4.1.2 View层的事件都先经过DecorView，然后才传递给我们的View<br>  4.2 MeasureSpec<br>    4.2.1 一个32位的int值，高2位为SpecMode，低30位代表SpecSize<br>  4.3 View工作流程<br>    4.3.1 主要指measure、layout、draw<br>        4.3.1.1 如何在Activity中获取view的宽高？<br>                4.3.1.1.1 Activity#onWindowFocusChanged<br>                4.3.1.1.2 view.post(runnable)<br>                4.3.1.1.3 ViewTreeObserver<br>                4.3.1.1.4 view.measure(int windthMeasureSpec, int heightMeasureSpec)<br>        4.3.1.2 ViewGroup会逐个measure子view<br>    4.3.2 layout过程<br>        4.3.2.1 通过setFrame去设置子元素的四个顶点位置<br>    4.3.3 draw过程<br>        4.3.3.1 View绘制过程是通过dispatchDraw来实现的，dispatchDraw会遍历调用所有字元素的draw<br>  4.4 自定义View<br>    4.4.1 分类<br>        4.4.1.1 onDraw<br>        4.4.1.2 继承ViewGroup<br>        4.4.1.3 继承特定View<br>        4.4.1.4 继承特定ViewGroup<br>    4.4.2 须知<br>        4.4.2.1 让View支持wrap_content<br>        4.4.2.2 如有必要，让其支持padding<br>                4.4.2.2.1 在onDraw中取padding值，加入绘制参数计算<br>        4.4.2.3 尽量不用Handler<br>        4.4.2.4 View中如果有线程或动画，需要及时停止，View#onDetachFromWindow<br>        4.4.2.5 View带有滑动嵌套时，处理好滑动冲突<br>    4.4.3 xml属性扩展<br>        4.4.3.1 1. values目录下创建xml<br>                4.4.3.1.1 eg： <declare-styleable name="CircleView"> <attr name="circle_color" format="color"> &lt;.declare-syleable&gt;<br>        4.4.3.2 2. 在View的构造方法中解析自定义属性的值并处理<br>                4.4.3.2.1 eg: TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleView); mColor = a.getColor(R.styleable.CircleView_circle_color, Color.RED); a.recycle();<br>        4.4.3.3 3. 在布局文件中使用自定义属性<br>                4.4.3.3.1 s<br>5 5. RemoteViews<br>  5.1 应用<br>    5.1.1 通知栏<br>        5.1.1.1 通过RemoteViews提供的方法来更新视图<br>    5.1.2 桌面小部件<br>        5.1.2.1 定义小部件界面<br>        5.1.2.2 定义配置信息<br>        5.1.2.3 定义实现类<br>        5.1.2.4 在androidManifest中声明小部件<br>    5.1.3 PendingIntent<br>        5.1.3.1 内部的Intent相同，并且requestCode也相同即为相同；其中intent相同只需要ComponentName和intent-filter相同<br>  5.2 内部机制<br>    5.2.1 系统并没有通过binder去支持所有的view操作，仅支持了少量的view（TextView，ImageView等），这是出于效率考虑<br>    5.2.2 提供了一个Action概念，Action实现了Parcelable接口，代表一个View操作；将这些actions放到ArrayList中，统一通过Binder进行通信，提高IPC效率<br>6 6. Drawable<br>  6.1 分类<br>    6.1.1 BitmapDrawable<br>        6.1.1.1 android:antialias 抗锯齿<br>        6.1.1.2 android:dither 抖动效果，开启这个选项可以让高质量的图片在低质量的屏幕上还能保持较好的显示效果<br>        6.1.1.3 android:filter 是否开启过滤效果。当图片尺寸被拉伸或者压缩时，开启过滤效果可以保持较好的显示效果<br>        6.1.1.4 android:tileMode 平铺模式。有 disable|clamp|repeat|mirror几个选项，开启平铺模式之后gravity属性会被忽略<br>    6.1.2 ShapeDrawable<br>        6.1.2.1 可以通过纯色构造，也可以是具有渐变效果的图形<br>        6.1.2.2 android:shape —— rectangle/oval/line/ring<br>                6.1.2.2.1 line 和ring两个选项必须通过stroke标签来指定线的宽度和颜色等信息<br>        6.1.2.3 <corners>表示shape 的四个角度，只使用于矩形shape，这里的角度是指圆角程度，用px表示<br>        6.1.2.4 <gradient> 与solid标签是相互排斥的，其中solid表示纯色填充，而gradient则表示渐变效果<br>    6.1.3 LayerDrawable<br>        6.1.3.1 对应的标签是 <layer-list>,它表示一种层次化的Drawable集合，通过将不同的Drawable放置在不同的层上面从而达到一种叠加后的效果<br>    6.1.4 StateListDrawable<br>        6.1.4.1 对应的标签是<selector>，也是表示Drawable集合，每个Drawable都对应着View的一种状态<br>    6.1.5 LevelListDrawable<br>        6.1.5.1 <level-list>，集合中的每个Drawable都有一个等级的概念（level 0~10000）<br>        6.1.5.2 如果被用来作为ImageView的前景Drawable，那么还可以通过ImageView的setImageLevel方法来切换Drawable<br>    6.1.6 TransitionDrawable<br>        6.1.6.1 <transition>，用于实现两个Drawable之间的淡入淡出效果<br>        6.1.6.2 可以用作View的背景，也可以在ImageView中直接作为Drawable来使用<br>    6.1.7 InsertDrawable<br>        6.1.7.1 <insert>，可以将其他Drawable内嵌到自身当中，当一个View希望自己的背景比自己的实际区域小时可以采用<br>    6.1.8 ScaleDrawable<br>        6.1.8.1 <scale>，<br>    6.1.9 ClipDrawable<br>        6.1.9.1 <clip>，根据自己当前level来裁剪另一个Drawable<br>  6.2 自定义Drawable<br>    6.2.1 通常我们很少自定义Drawable，因为自定义的Drawable无法再xml中使用<br>7 7. 动画<br>  7.1 View动画<br>    7.1.1 四个子类：TranslateAnimation、ScaleAnimation、RotateAnimation、AlphaAnimation<br>        7.1.1.1 可以通过代码设置，也可用XML<br>        7.1.1.2 既可以是单个动画，也可以由一系列动画组成<br>    7.1.2 自定义View动画<br>        7.1.2.1 方式：继承Animation类，重写initialize和applyTransformation方法，在initialize中做一些初始化工作，在applyTransformation中进行相应的矩阵变换即可，很多时候需要采用Camera来简化矩阵变换过程<br>    7.1.3 帧动画<br>        7.1.3.1 AnimationDrawable 顺序播放一组预先定义好的图片，类似于电影播放<br>        7.1.3.2 帧动画使用比较简单，但是比较容易引起OOM，在使用时应尽量避免使用过多尺寸较大的图片<br>  7.2 View动画的特殊使用场景<br>    7.2.1 LayoutAnimation<br>        7.2.1.1 作用于ViewGroup，为ViewGroup指定一个动画，这样当它的子元素出场时都会具有这种动画效果<br>        7.2.1.2 步骤<br>                7.2.1.2.1 定义LayoutAnimation<br>                7.2.1.2.2 为子元素指定具体入场动画<br>                7.2.1.2.3 为ViewGroup指定android:layoutAnimation属性<br>                7.2.1.2.3.1 对ListView来说，这样Listview的item就具有出场动画了<br>                7.2.1.2.3.2 除了xml指定，还可以通过LayoutAnimationController来实现<br>    7.2.2 Activity切换效果<br>  7.3 属性动画<br>    7.3.1 简介： ValueAnimation、ObjectAnimation、AnimatorSet<br>    7.3.2 使用属性动画<br>        7.3.2.1 属性动画从API 11 才有，可以使用nineoldandroids来兼容老版<br>        7.3.2.2 可以利用代码、XML形式实现 一般会采用代码形式<br>    7.3.3 理解插值器和估值器<br>    7.3.4 属性动画的监听器<br>        7.3.4.1 主要接口：AnimatorUpdateListener和AnimatorListener<br>        7.3.4.2 AnimatorUpdateListener比较特殊，它会对整个动画过程进行监听，动画每播放一帧，onAnimationUpdate就会被调用一次<br>    7.3.5 对任意属性做动画<br>        7.3.5.1 我们对object的属性abc做动画，如果想让动画生效，要同时满足两个条件：<br>                7.3.5.1.1 object必须提供setAbc方法，如果动画的时候没有传递初始值，那么还要提供getAbc方法<br>                7.3.5.1.2 object的setAbc对属性abc所做的改变必须能够通过某种方法反映出来，比如带来UI的改变之类<br>        7.3.5.2 如果无法满足条件<br>                7.3.5.2.1 1. 给你的对象加上get和set方法，如果有权限的话<br>                7.3.5.2.2 2. 用一个类来包装原始对象，间接为其提供get和set方法<br>                7.3.5.2.3 3. 采用ValueAnimator，监听动画过程，自己实现属性的改变<br>    7.3.6 工作原理<br>  7.4 使用动画的注意事项<br>    7.4.1 OOM<br>    7.4.2 memory leak<br>        7.4.2.1 无限循环动画需要在Activity退出时及时停止，否则将导致Activity无法释放从而造成内存泄露<br>        7.4.2.2 兼容性问题<br>        7.4.2.3 View动画的问题<br>                7.4.2.3.1 View动画是对View的影像做动画，不不是真正改变View的状态，有时会出现动画完成后View无法隐藏的现象，即setVisiblity(View.GONE)失效了，这时只要调用View.clearAnimation()清除View动画即可解决此问题<br>        7.4.2.4 不要使用px<br>        7.4.2.5 动画元素交互<br>                7.4.2.5.1 新位置将无法触发单击事件<br>        7.4.2.6 硬件加速<br>8 8. Window和WindowManager<br>  8.1 简介<br>    8.1.1 Flags参数、Type参数<br>    8.1.2 windowManger提供三个常用方法：添加view、更新View、删除View<br>  8.2 Window的内部机制<br>    8.2.1 Window添加<br>        8.2.1.1 使用到了桥接模式，内部使用WindowManagerGlobal统一委托实现<br>        8.2.1.2 添加过程其实是一次IPC调用，binder模式<br>    8.2.2 Window删除<br>    8.2.3 Window 更新<br>  8.3 Window的创建过程<br>    8.3.1 Activity的Window创建<br>        8.3.1.1 Window对象的创建是通过PolicyManager的makeNewWindow实现的<br>                8.3.1.1.1 Window的具体实现类是PhoneWindow<br>        8.3.1.2 步骤<br>                8.3.1.2.1 如果没有DecorView，创建它<br>                8.3.1.2.2 将View添加到DecorView的mContentParent中<br>                8.3.1.2.3 回调Activity的onContentChanged方法通知Activity视图已经发生改变<br>    8.3.2 Dialog的Window创建<br>        8.3.2.1 创建Window<br>        8.3.2.2 初始化DecorView并将Dialog视图添加到DecorView中<br>        8.3.2.3 将DecorView添加到Window中并显示<br>                8.3.2.3.1 Dialog的context必须使用Activity的，不能使用Application的context；一定要使用的话可以设定Window类型，声明alert权限（见书本P310）<br>    8.3.3 Toast的Window创建<br>9 9. 四大组件工作过程<br>  9.1 运行状态<br>    9.1.1 除BroadcastReceiver外，其他三个都要在Manifest中注册<br>  9.2 Activity的工作过程<br>    9.2.1 performLauncherActivity最终完成Activity对象的创建和启动过程，并且ActivityThread通过handleResumeActivity方法来调用被启动的Activity<br>        9.2.1.1 1. 从ActivityClientRecord中获取待启动的Activity组件信息<br>        9.2.1.2 2. 通过instrumentation的newActivity方法使用类加载器创建Activity对象<br>        9.2.1.3 3. 通过LoadedApk的makeApplication方法来尝试创建Application对象<br>        9.2.1.4 4. 创建ContextImpl对象并通过Activity的attach方法来完成一些重要数据的初始化<br>        9.2.1.5 5. 调用Activity的onCreate方法<br>  9.3 Service工作过程<br>    9.3.1 分类<br>        9.3.1.1 启动状态，用于执行后台计算任务<br>        9.3.1.2 绑定状态，用户其它组件和Service交互<br>    9.3.2 启动过程<br>        9.3.2.1 利用ActivityManagerService<br>    9.3.3 绑定过程<br>        9.3.3.1 当多次绑定同一个Service时，onBind方法只会执行一次，除非Service被终止<br>  9.4 BroadcastReceiver工作过程<br>    9.4.1 注册<br>    9.4.2 发送接受<br>  9.5 ContentProvider<br>    9.5.1 onCreate要先于Application的onCreate执行，这在四大组件中是比较少见的现象<br>    9.5.2 步骤<br>        9.5.2.1 1. 创建ContextImpl和Instrumentation<br>        9.5.2.2 2. 创建Application<br>        9.5.2.3 3. 启动当前进程的ContentProvider并调用其onCreate方法<br>        9.5.2.4 4. 调用Application的onCreate方法<br>10 10. Android消息机制<br>  10.1 概述<br>    10.1.1 MessageQueue内部是单链表<br>    10.1.2 Handler创建时会采用当前线程的Looper来构建内部消息循环系统<br>  10.2 消息机制分析<br>    10.2.1 ThreadLocal<br>        10.2.1.1 是一个线程内部的数据存储类，通过它可以在指定的线程中存储数据，数据存储后只有在指定线程中可以获取到数据<br>        10.2.1.2 若数据以线程为作用域且不同线程具有不同的数据副本时，可以考虑采用ThreadLocal<br>        10.2.1.3 另一个使用场景是复杂逻辑下的对象传递<br>        10.2.1.4 实现原理<br>                10.2.1.4.1 set方法： public void set(T value){ Thread currentThread = Thread.currentThread(); Values values = values(currentThread); if(values == null) values = initializeValues(currentThread); values.put(this, value); }<br>    10.2.2 MessageQueue<br>        10.2.2.1 插入和读取，数据结构为单链表<br>        10.2.2.2 读取操作中的next实质上是无限循环<br>    10.2.3 Looper<br>        10.2.3.1 退出：quit、quitSately quit——直接退出Looper； quitSafely——把消息队列中的已有消息处理完毕后才安全退出<br>        10.2.3.2 在子线程中，如果手动为其创建了Looper，那么在所有事情完成后应该调用quit方法来终止Looper，否则这个子线程就会一直处于等待状态<br>    10.2.4 Handler工作原理<br>  10.3 主线程的消息循环<br>    10.3.1 Android的主线程就是ActivityThread<br>11 11. Android线程和线程池<br>  11.1 概述<br>    11.1.1 AsyncTask底部用到了线程池和Handler<br>    11.1.2 IntentService和HandlerThread则是直接使用了线程<br>    11.1.3 IntentService内部采用HandlerThread来执行任务，当任务执行完毕后IntentService会自动退出；IntentService作用很想一个后台线程，但是IntentService是一种服务，它不容易被系统杀死从而可以尽量保证任务的执行，直接使用后台线程的话，则很容易被系统杀死；<br>    11.1.4 HandlerThread是一种具有消息循环的线程<br>  11.2 主线程和子线程<br>    11.2.1 主：进程所拥有的线程<br>    11.2.2 子：执行耗时任务<br>  11.3 线程形态<br>    11.3.1 AsyncTask<br>        11.3.1.1 封装了Thread和Handler，但不适合特别耗时的任务<br>        11.3.1.2 泛型参数：Params、Progress、Result<br>        11.3.1.3 核心方法<br>                11.3.1.3.1 onPreExecute()<br>                11.3.1.3.2 doInBackground(Params… params)<br>                11.3.1.3.3 onProgressUpdate(Progress…values)<br>                11.3.1.3.4 onPostExecute(Result result)<br>        11.3.1.4 限制<br>                11.3.1.4.1 必须在主线程中加载<br>                11.3.1.4.2 对象必须在主线程中创建<br>                11.3.1.4.3 execute必行在UI线程调用<br>                11.3.1.4.4 不直接调用核心方法<br>                11.3.1.4.5 兵行、串行的来回改版<br>        11.3.1.5 工作原理<br>                11.3.1.5.1 串行线程池<br>                11.3.1.5.2 Handler切换线程，要求Handler来自主线程<br>    11.3.2 HandlerThread<br>        11.3.2.1 run中通过Looper.prepare()来创建消息队列，并通过Looper.loop()来开启消息循环<br>        11.3.2.2 由于其run方法是一个无限循环，因此当明确不需要再使用HandlerThread时可以通过quit或者quitSafely来终止线程执行<br>    11.3.3 IntentService<br>        11.3.3.1 抽象类，必须建立它的子类才能使用<br>        11.3.3.2 可以执行后台耗时任务，执行完成后自动停止<br>  11.4 线程池<br>    11.4.1 ThreadPoolExecutor<br>        11.4.1.1 参数<br>                11.4.1.1.1 corePoolSize<br>                11.4.1.1.2 maximumPoolSize<br>                11.4.1.1.3 keepAliveTime<br>                11.4.1.1.4 unit<br>                11.4.1.1.5 workQueue<br>                11.4.1.1.6 threadFactory<br>                11.4.1.1.7 RejectedExecutionHandler handler<br>    11.4.2 分类<br>        11.4.2.1 FixedThreadPool<br>        11.4.2.2 CachedThreadPool<br>        11.4.2.3 ScheduledThreadPool<br>        11.4.2.4 SingleThreadExecutor<br>12 12. Bitmap的加载和Cache<br>  12.1 高效加载<br>    12.1.1 使用BitmapFactory.Options来加载所需尺寸的图片<br>        12.1.1.1 使用inSampleSize设置采样率<br>        12.1.1.2 如何获取采样率<br>                12.1.1.2.1 1. 将inJustDecodeBounds 参数设为true并加载图片<br>                12.1.1.2.2 2. 取出图片原始宽高信息，对应于outWidth和outHeight<br>                12.1.1.2.3 3. 根据采样率规则并结合目标View所需大小计算出采样率inSampleSize<br>                12.1.1.2.4 4. 将inJustDecodeBounds参数设为false，然后重新加载图片<br>  12.2 缓存策略<br>    12.2.1 常用LRU算法：Least Recently Used<br>        12.2.1.1 LruCache实现内存缓存，DiskLruCache充当存储设备缓存<br>    12.2.2 LruCache<br>        12.2.2.1 使用support-v4包中的LruCache兼容性更好<br>        12.2.2.2 是线程安全的<br>        12.2.2.3 引用的几种类别<br>                12.2.2.3.1 强引用<br>                12.2.2.3.2 软引用<br>                12.2.2.3.2.1 内存不足时会被gc<br>                12.2.2.3.3 弱引用<br>    12.2.3 DiskLruCache<br>        12.2.3.1 创建<br>        12.2.3.2 添加<br>        12.2.3.3 查找<br>    12.2.4 ImageLoader的实现<br>13 13. 综合技术<br>  13.1 使用CrashHandler来获取应用信息<br>    13.1.1 UncaughtExceptionHandler处理crash——记录、上报、用户提醒<br>    13.1.2 使用方法<br>        13.1.2.1 在Application初始化时为线程设置CrashHandler<br>  13.2 multiDex解决方法数越界<br>    13.2.1 1. 在build.gradle中添加multidex配置<br>    13.2.2 2. 在代码中支持multidex功能<br>        13.2.2.1 一、 在manifest中指定Application 为MultiDexApplication<br>        13.2.2.2 二、 让应用继承自MultiDexApplication<br>        13.2.2.3 三、 重写 application中的attachBaseContext方法（因为这个方法在onCreate之前执行）<br>    13.2.3 3. 指定主dex文件所要包含的类——可以通过– main-dex-list指定<br>        13.2.3.1 在build.gradle文件中添加afterEvaluate区域（见书P460）<br>  13.3 动态加载技术<br>  13.4 反编译<br>14 14. JNI和NDK<br>15 15. Android性能优化<br>  15.1 性能优化方法<br>    15.1.1 布局优化<br>        15.1.1.1 include标签<br>        15.1.1.2 merge标签<br>        15.1.1.3 ViewStub<br>                15.1.1.3.1 使用时才加载<br>                15.1.1.3.2 暂时不支持merge<br>    15.1.2 绘制优化<br>        15.1.2.1 onDraw要避免执行大量操作<br>    15.1.3 内存泄露优化<br>        15.1.3.1 静态变量导致<br>        15.1.3.2 单例导致<br>        15.1.3.3 属性动画导致<br>    15.1.4 响应速度优化和ANR日志分析<br>        15.1.4.1 进程ANR会在/data/anr目录下创建traces.txt记录<br>    15.1.5 ListView和Bitmap优化<br>        15.1.5.1 避免getView中耗时<br>        15.1.5.2 根据滑动状态来控制任务执行频率<br>        15.1.5.3 BitmapFactory.Options进行采样<br>    15.1.6 线程优化<br>        15.1.6.1 线程池<br>    15.1.7 建议<br>        15.1.7.1 避免过多对象<br>        15.1.7.2 不要过多使用enum<br>        15.1.7.3 const使用static final修饰<br>        15.1.7.4 使用Android特有的数据结构，如SparseArray和Pair，它们都具有更好的性能<br>        15.1.7.5 适当使用软引用和弱引用<br>        15.1.7.6 采用内存缓存和磁盘缓存<br>        15.1.7.7 尽量采用静态内部类，可以避免潜在的由于内部类而导致的内存泄露</clip></scale></insert></transition></level-list></selector></layer-list></gradient></corners></attr></declare-styleable></pathpattern></pathprefix></port></host></scheme></p>
 
       
 
@@ -961,7 +781,143 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/日记/">日记</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-每周一书/【读书笔记】《一生的学习》--印度哲学家--克里希拉穆提"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《一生的学习》--印度哲学家--克里希拉穆提/">【读书笔记】《一生的学习》--印度哲学家--克里希拉穆提</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/13/每周一书/【读书笔记】《一生的学习》--印度哲学家--克里希拉穆提/" class="article-date">
+	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>（引自<a href="https://zh.wikipedia.org/zh-cn/吉杜·克里希那穆提" target="_blank" rel="noopener">维基百科</a>）–【大中华区局域网用户–<a href="http://baike.baidu.com/view/77458.htm" target="_blank" rel="noopener">百度百科传送门</a>】<br>吉杜·克里希那穆提（英语：Jiddu Krishnamurti）（1895年－1986年），印度哲学家，同时被誉为二十世纪最伟大的灵性导师。他一生中走访过全球超过70个国家演讲，其演讲被辑录成超过80本书，更被翻译成超过50种语言。克里希那穆提是第一位用通俗的语言，向西方全面深入阐述东方哲学智慧的印度哲人。在二十世纪一度对西方哲学、宗教产生过重大的影响。他的一生颇具传奇色彩。被印度的佛教徒肯定为“中观”与“禅”的导师，而印度教徒则承认他是彻悟的觉者。全球多国均设有克里希那穆提基金会和学校，包括美国、欧洲、印度和澳洲，并致力推广克氏的慈悲与当世解脱的理念。</p>
+</blockquote>
+<p><em>友人引荐，东方哲学导读；</em></p>
+<hr>
+<p>其实Jiddu一生都没有写过一本书，现在流传的一整套书都是他的<strong>演讲文集</strong>。可能是我愚钝，他的言论，好多现在读来还不太理解。比如：</p>
+<blockquote>
+<p><em>如果我们受教育只是为了成为科学家，成为死守书本的学者，或者沉迷于某种知识的专家，那么，我们将助长世界上的毁灭与不幸</em></p>
+</blockquote>
+<hr>
+<p>不过有些观点看起来就比较理想化，比如：</p>
+<blockquote>
+<p>教育，应该帮助我们发现恒久不灭的价值，使我们不至于只依附公式或重复口号；教育应该帮助我们拆除国籍与社会上所竖起的栅栏，而非强化它们</p>
+</blockquote>
+<hr>
+<p>他的关于<strong>宗教与国家</strong>的观点还是值得一读的，虽说依然比较理想化，但没准不久的将来整体人类观念会进化到接近他所描述的那个level</p>
+<blockquote>
+<p>在悲哀的时候，我们转向所谓的上帝——这只是我们内心的意向而已<br>教条、奇迹和仪式，这些都无助于精神生活<br>政府控制教育，根本是一种错误</p>
+</blockquote>
+<hr>
+<p>他推崇了解<strong>自我</strong>，了解自身从而获得智慧；友人说是与远播日韩的王阳明的“心学”有些联系</p>
+<blockquote>
+<p>真正的教育，乃是帮助个人，使其成熟、自由，绽放爱与善良之花</p>
+</blockquote>
+<hr>
+<p>#下面是整体文档、图片、文字Evernote链接<br><a href="https://www.evernote.com/l/ARseBX0AsWdObrLNqMR_QfK8gmjPiYC49fI" target="_blank" rel="noopener">《一生的学习》</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-392bc392e9b38b59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Education and Significance of Life.png"></p>
+<hr>
+<p>论文求过</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-每周一书/【读书笔记】《多余的话》——瞿秋白"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《多余的话》——瞿秋白/">【读书笔记】《多余的话》——瞿秋白</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/13/每周一书/【读书笔记】《多余的话》——瞿秋白/" class="article-date">
+	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>曾经的党领袖，在临终前的“谈天”，说自己当领袖是众多“历史的误会”，然而这误会一误就是五年<br>或许是造化弄人，不过以书中的内容来看，他确实难当此大任<br>书中说他自己最大的梦想是读书写字、舞文弄墨，然而在历史的转折点他并没有认清现实，急流勇退，这些字越发显得矫情</p>
+</blockquote>
+<hr>
+<p><a href="https://www.evernote.com/l/ARu9r-8vdxNER7qC8eSFNJvRAXfslBK26ns" target="_blank" rel="noopener">笔记链接</a></p>
+<hr>
+<p>思维导图图片：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7a3cce80aaba91e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多余的话 overview.png"></p>
+<hr>
+<p>文字：</p>
+<blockquote>
+<p>《多余的话》——瞿秋白<br>1 多余的话<br>  1.1 历史的误会<br>    1.1.1 误打误撞学俄文<br>    1.1.2 时势进入政局<br>    1.1.3 党内无人出特，意外变成领袖<br>    1.1.4 旧人无能人，新人未成熟——当领袖五年<br>  1.2 脆弱的二元人物<br>    1.2.1 本心想着：读书写字、舞文弄墨<br>  1.3 我和马克思主义<br>    1.3.1 不做国师，但闻共产主义终极理想<br>    1.3.2 对其学说不感兴趣，只事翻译<br>  1.4 盲动主义和立三路线<br>    1.4.1 过分估量革命形势的盲动主义错误<br>    1.4.2 对立三问题的不敏感<br>  1.5 “文人“<br>    1.5.1 一为文人便无足观<br>    1.5.2 若为戏子，或有所为<br>  1.6 告别<br>    1.6.1 无友寡亲<br>    1.6.2 要磨练自己，要有非常巨大的毅力，去克服一切种种“异己的”意识以至最微弱的“异己的”感情，然后才能从“异己的”阶级里完全跳出来，而在无产阶级里站稳脚跟<br>    1.6.3 我留恋什么？我最亲爱的人，这美丽世界欣欣向荣的儿童。“我的”女儿，以及一切幸福的孩子们<br>    1.6.4 永别了，美丽的世界<br>2 乱弹<br>  2.1 世纪末的悲哀<br>    2.1.1 病就在于世纪末，病就在于世纪末的悲哀，那是衷心不可救药的无穷无尽的悲哀<br>  2.2 画狗罢<br>    2.2.1 与其绘鬼，不如画狗<br>  2.3 哑巴文学<br>    2.3.1 朗诵运动，听得懂的新文学<br>  2.4 一种云<br>    2.4.1 从春天到夏天，从秋天到冬天，这样一年年过去，淫虐的雨，凄厉的风和肃杀的霜雪更番地来去，一点儿光明也没有。这都是云在作祟<br>    2.4.2 难怪总是漫漫长夜了！ 什么时候才黎明呢？<br>  2.5 非洲鬼话<br>  2.6 狗样的英雄<br>  2.7 猫样的诗人<br>  2.8 堂吉诃德时代<br>    2.8.1 中国的《水浒》是一部名贵的文学典籍。模仿的有一万部<br>    2.8.2 英雄所侍候的主人，充其量只是一个青天大老爷，英雄本身又会高明到什么地方去呢？<br>  2.9 苦力的翻译<br>    2.9.1 讽刺违心翻译<br>  2.10 水陆道场<br>    2.10.1 他们爱呢？又要害羞 思想，也要赶走。 出卖着自己的自由， 对着偶像磕头； 讨那一点儿钱， 还带一根锁链。<br>  2.11 财神还是反财神？<br>    2.11.1 财神的神通<br>    2.11.2 狗道主义<br>    2.11.3 红萝卜<br>    2.11.4 ‘‘忏悔“<br>    2.11.5 反财神<br>    2.11.6 小白龙<br>  2.12 《流铁》在巴黎<br>  2.13 谈谈《三人行》<br>3 散论<br>  3.1 《鲁迅杂感选集》序言<br>  3.2 猪八戒<br>  3.3 美国的真正悲剧<br>  3.4 萧伯纳并非西洋唐伯虎<br>  3.5 慈善家的妈妈<br>  3.6 鬼脸的辩护<br>  3.7 王道诗话<br>  3.8 关于女人<br>  3.9 真假堂吉诃德<br>  3.10 透底<br>  3.11 中国文与中国人<br>  3.12 关于高尔基的书<br>  3.13 ”非政治化“的高尔基<br>  3.14 “美“<br>  3.15 最艺术的国家<br>  3.16 人才易得<br>  3.17 择吉<br>  3.18 《子夜》和国货年<br>  3.19 ”打倒帝国主义“的古典</p>
+</blockquote>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
 
     </footer>
   </div>
