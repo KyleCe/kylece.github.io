@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/KyleCe/kylece.github.io/"/>
-  <updated>2018-03-15T15:50:57.187Z</updated>
+  <updated>2018-03-17T15:26:12.546Z</updated>
   <id>https://github.com/KyleCe/kylece.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>atoi源码</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/17/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95--atoi%E6%BA%90%E7%A0%81/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/17/技术/算法/算法--atoi源码/</id>
+    <published>2018-03-17T15:16:35.000Z</published>
+    <updated>2018-03-17T15:26:12.546Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>面试中比较偏重基础的可能会考察到这一类的具体实现</p></blockquote><h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>atoi：将字符串转换为数字</p><h3 id="如何处理"><a href="#如何处理" class="headerlink" title="如何处理"></a>如何处理</h3><p>字符如何隐式的转换为数字：<br>一个char型的字符减去‘0’就会隐式的转换为数字，一个数字加上‘0’则会隐式的转换为字符，明白了这一点，就可以尝试着写atoi了</p><h3 id="SourceCode-–-C语言"><a href="#SourceCode-–-C语言" class="headerlink" title="SourceCode – C语言"></a>SourceCode – C语言</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> <span class="title">my_atoi</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *c)</span></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> value = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> sign = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>( *c == <span class="string">'+'</span> || *c == <span class="string">'-'</span> )&#123; <span class="comment">//符号判断</span></span><br><span class="line">        <span class="keyword">if</span>( *c == <span class="string">'-'</span> ) sign = <span class="number">-1</span>; <span class="comment">//记录负数</span></span><br><span class="line">        c++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">isdigit</span>(*c))&#123; <span class="comment">//处理所有的数字，非数字字符会被过滤掉</span></span><br><span class="line">        value *= <span class="number">10</span>; <span class="comment">//已经处理过的位左移（* 10实现）</span></span><br><span class="line">        value += (<span class="keyword">int</span>) (*c-<span class="string">'0'</span>); <span class="comment">//加上心的位，通过-'0'实现</span></span><br><span class="line">        c++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (value * sign);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    assert(<span class="number">5</span> == my_atoi(<span class="string">"5"</span>));</span><br><span class="line">    assert(<span class="number">-2</span> == my_atoi(<span class="string">"-2"</span>));</span><br><span class="line">    assert(<span class="number">-1098273980709871235</span> == my_atoi(<span class="string">"-1098273980709871235"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;面试中比较偏重基础的可能会考察到这一类的具体实现&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;是什么&quot;&gt;&lt;a href=&quot;#是什么&quot; class=&quot;headerlink&quot; title=&quot;是什么&quot;&gt;&lt;/a&gt;是什么&lt;/h3&gt;&lt;p&gt;atoi：将字
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="算法" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="面经" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%9D%A2%E7%BB%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>面经--连续最长数字串</title>
@@ -159,187 +189,6 @@
       <category term="项目管理" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
     
       <category term="读书" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E8%AF%BB%E4%B9%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Note-PM】《项目管理修炼之道》提要</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E3%80%90Note-PM%E3%80%91%E3%80%8A%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93%E3%80%8B%E6%8F%90%E8%A6%81/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.048Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>第18届Jolt生产效率大奖图书<br>作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富</p></blockquote><p><a href="https://pan.baidu.com/s/1cAaOxw" target="_blank" rel="noopener">XMind文档链接</a></p><p><a href="https://pan.baidu.com/s/1mhZO5Fa" target="_blank" rel="noopener">导图PDF版链接</a></p><p><strong>导图</strong></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-d20195caa4e17ed9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第一部分：规划与日程"></p><p><strong>文本</strong></p><p> 项目管理修炼之道<br>    Johanna Rothman<br>    规划与日程<br>        启动项目<br>            0.KEY——定义项目、项目约束、决定项目关键驱动因素、章程决策<br>            章程决策<br>                远景、需求、目标、成功标准、ROI<br>        规划项目<br>            0.KEY——足以启动的规划、规划模板、制定发布条件<br>            规划模板<br>                意图<br>                记录<br>                发布条件<br>                目标<br>                项目组织<br>                日程总览<br>                人员配备<br>                建议日程<br>                制订项目风险列表<br>        使用生命周期组织项目<br>            0.KEY——理解生命周期、概览、反馈、大规模项目需要组合多种生命周期、管理架构风险、从瀑布中解脱<br>        安排项目日程<br>            0.KEY——注重实效的日程安排、可选择安排技术、用低技术含量工具安排日程<br>        估算工作<br>            0.KEY——实用估算方式、里程碑切分项目、能不做什么？、多项目时的估算、主动安排人们进行多任务、实用波浪式规划、决定迭代的持续时间、“小石子”<br>            估算<br>                对比历史数据<br>                通过Delphi和宽带Delphi估算<br>                何时不应相信团队的话<br>                    减掉每个任务的缓冲时间、要得到的是更准确的估算结果<br>                用日期范围进行估计<br>                用自信心估计<br>                用三个日期估计：最佳、可能、墨菲<br>            小石子<br>                任务不清时使用<br>                如何得到“小石子”<br>                为什么使用<br>        识别和避免日程安排游戏<br>            0.KEY——“希望”是我们最重要的策略、拒绝女王、把灰扫到地毯下面、幸福日期、分散注意力、日程等于承诺<br>    团队与节奏<br>        创建出色的项目团队<br>            0.KEY——招募需要的人、形成团队凝聚力、让组织配合你的工作、对必必需的团队规模了如指掌、知道何时应该加入、成为出色的项目经理、知道何时全身而退<br>            凝聚力<br>                好工具让团队有更好的发挥<br>                软件配置管理系统应满足的最低要求<br>                缺陷跟踪系统应满足的最低要求<br>                发展5阶段<br>            让组织配合<br>                以项目经理的方式管理单一职能团队<br>                管理矩阵式项目团队<br>                管理跨职能团队<br>            项目经理<br>                人际交往能力<br>                提升功能性技能<br>                专业领域技能<br>                工具和技术的专业技能<br>            退<br>                不适合的组织、团队、产品<br>        掌控项目<br>            0.KEY——节奏、中途回顾、为需求排序、是时间盒限定需求相关的工作、将迭代限制在4周以下、使用波浪式规划和日程安排、创建跨职能团队、根据项目风险选择生命周期模型、保持合理的工作时间、使用“小石子”、管理干扰、管理缺陷<br>            “小石子“<br>                将计划的粒度细化，能提高规划时项目的估算准确率<br>        保持项目节奏<br>            0.KEY——使用持续集成、自动化冒烟测试、按功能实现而不是按架构、盯着产品、准备重构、通过用例、用户故事、角色和场景定义需求、分离需求与GUI设计、尽可能用低保真度原型<br>            按功能而不是按框架<br>                首先实现具有最高价值的功能<br>                按功能调试、测试<br>            低保真原型<br>                “使用低保真度原型，人们可以更全面地评估要解决的问题。高保真度原型会限制反馈。”<br>        管理会议<br>            0.KEY——取消部分会议、举行必要会议、项目启动会议、发布版本规划会议、进度报告会议、向管理层报告进度、项目团队会议、迭代审查会议、会议疑难问题解答、远程电话会议<br>            取消<br>                不需要你解决问题<br>                多人参加的顺序式进度报告会议<br>        创建并使用项目仪表板<br>            0.KEY——测量有风险、根据项目完成度来衡量进度、为出资人创建项目仪表盘、使用项目气象报告<br>            衡量进度<br>                速度图表跟踪日程安排进度<br>                用迭代内容图跟踪总体进度<br>                用图表展示团队统一采用的实践<br>    非简单项目<br>        管理多地点项目<br>            0.KEY——提问成本、识别项目文化差异、团队间培养信任、团队间使用互补实践、寻找潜在问题、外包时的注意事项<br>        在项目中集成测试<br>            0.KEY——“减少技术债”、小规模测试以降低风险、TDD是集成的最简单方法、使用多种测试、确定成员在测试工作中的角色、开发人员测试人员比率、让测试与开发同步进行、为项目制定测试策略、系统测试策略模板、QA与测试的区别<br>        管理项目群<br>            0.KEY——管理项目群、将多个相关项目组织到一个发布版本中、随时间推移组织多个相关项目、管理项目经理、创建项目仪表盘<br>        结束项目<br>            0.KEY——管理发布早期版本的请求、管理beta版本、项目经理何时知道无法按时发布项目、知道项目走向完成、取消项目<br>            何时知道无法按时发布<br>                避免小偏差<br>                承诺新日期<br>                估算系统测试时间<br>        管理项目组合<br>            0.KEY——构建所有项目的组合、评估项目、决定现在为那个项目提供资金、对组合中的项目进行排序、尽快启动项目、使用产品待办事项列表管理新功能需求<br>            答疑<br>                说服管理层：“切换上下文”是个坏主意<br>                如何对多任务说不</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;第18届Jolt生产效率大奖图书&lt;br&gt;作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;https://pan.baidu.com/s/1cAaOxw&quot; target=&quot;_
-      
-    
-    </summary>
-    
-      <category term="阅读" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-      <category term="项目管理" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
-    
-      <category term="读书" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E8%AF%BB%E4%B9%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【算法】BinarySearch--二分搜索-折半查找法</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91BinarySearch--%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2-%E6%8A%98%E5%8D%8A%E6%9F%A5%E6%89%BE%E6%B3%95/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.084Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下</p></blockquote><p>wiki 图示：(<a href="https://zh.wikipedia.org/wiki/二分搜索算法" target="_blank" rel="noopener">Link</a>)</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-c0e03f78ac559fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search wiki pic.png"></p><p>Android中util.ContainerHelpers中的实现api：</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-53135a5bb2e3e281.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search.png"></p><p><em>排序前提：array本身已为有序数组</em></p><p>查找过程：<br>0.向右无符号移位1位，得到middle位值；<br>1.以mid为准比对midIndex位置值与参数value大小，大则hi位移至现mid位前一位，小则lo位移至现mid位后一位，相等则返回mid；<br>2.重复以上过程直至不满足循环条件或是又查找结果</p><p>从low、high可以看出，结果返回的是value在数组中对应的index，如果为负则代表不存在（最后一行，返回~lo会得到一个负数，因为lo计算结果一定为正，个人感觉直接返回一个负数可以连按位取反都省略掉，是不是性能更优？）</p><hr><blockquote><p>Java 位操作符：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-a2c49bbb981fa6c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Java bit calculate.png"></p></blockquote><hr><p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="夕识.jpeg"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;wiki 图示：(&lt;a href=&quot;https://
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="算法" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E3%80%90%E5%B7%A5%E5%85%B7-%E7%A8%8B%E5%BA%8F%E4%B8%93%E4%BE%9B%E3%80%91IntelliJ-IDEA-Android-Studio-Plugin%E6%8E%A8%E4%BB%8B/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.105Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>工欲善其事必先利其器<br>今天介绍几个plugin工具（奇淫巧技）</p></blockquote><blockquote><p><em>（适用平台：IntelliJ IDEA内核的各类IDE）</em></p></blockquote><hr><p><strong>效果图</strong></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-5b8d8a86fda8eca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ide_tools.png"></p><p>按图中标示顺序介绍：</p><p>####1.Translation<br>_ 顾名思义是中英翻译，令人意外的是自带英美两种发音（默认快捷键：ALT + 1/3，OSX 不详）_</p><p>####2.Background Image Plus<br><em>可以对IDE背景进行自定义，可以设置图片质量/明暗等，对内存有一定消耗，小霸王请绕道</em></p><p>####3.CodeGlance<br><em>提供一个代码文件的全局概览缩略图，主要可用于快速定位</em></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;工欲善其事必先利其器&lt;br&gt;今天介绍几个plugin工具（奇淫巧技）&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;（适用平台：IntelliJ IDEA内核的各类IDE）&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
-    
-      <category term="Tool" scheme="https://github.com/KyleCe/kylece.github.io/tags/Tool/"/>
-    
-      <category term="AndroidStudio" scheme="https://github.com/KyleCe/kylece.github.io/tags/AndroidStudio/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>降低内存占用Route</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E9%99%8D%E4%BD%8E%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8Route/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/降低内存占用Route/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.089Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="已执行"><a href="#已执行" class="headerlink" title="已执行"></a>已执行</h3><ul><li>修复LeakCanary报出的问题（内网、外网）<ul><li>直接检测泄露</li><li>外网beta用户上报</li></ul></li><li>分析dumpheap文件，查内存占用（直接分析、对比分析）<ul><li>占用大户<ul><li>Bitmap</li><li>FinalizerReference</li></ul></li><li>场景分析，进出场景、发现可疑场景，查内存dumpheap文件<ul><li>已有发现：WebView、主题切换泄露</li></ul></li></ul></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;已执行&quot;&gt;&lt;a href=&quot;#已执行&quot; class=&quot;headerlink&quot; title=&quot;已执行&quot;&gt;&lt;/a&gt;已执行&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;修复LeakCanary报出的问题（内网、外网）&lt;ul&gt;
-&lt;li&gt;直接检测泄露&lt;/li&gt;
-&lt;li&gt;外网beta用户上报&lt;
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
-    
-      <category term="内存" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E5%86%85%E5%AD%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>枚举enum必知必会</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E6%9E%9A%E4%B8%BEenum%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/枚举enum必知必会/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.098Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="内容大纲"><a href="#内容大纲" class="headerlink" title="内容大纲"></a>内容大纲</h3><ul><li>常规范式——替代int保安全</li><li>高阶范式——实现单例模式</li><li>复杂范式——实现方法</li><li>Android中的替代方案——IntDef/StringDef</li><li>纯 Java中的替代方案——MagicConstant</li></ul><h3 id="常规范式"><a href="#常规范式" class="headerlink" title="常规范式"></a>常规范式</h3><ul><li>取代int常量，确保类型安全性</li></ul><p><img src="../../pic_resource/enum_general.png" alt=""></p><p>可以看到，上例中，直接使用1，2之类的int值编译器是会报错的，因为enum是一种class，不止具有int值这一属性</p><p>相较于int值，enum会有类型安全检查，代码会更安全</p><h3 id="高阶范式"><a href="#高阶范式" class="headerlink" title="高阶范式"></a>高阶范式</h3><ul><li>实现单例模式</li></ul><p><img src="../../pic_resource/enum_singleton.png" alt=""></p><p>这样实现的单例模式，不需要处理线程同步的问题，相较于传统的懒汉-饿汉-doublecheck的优势显而易见</p><blockquote><p>实际上单例模式特别容易导致内存泄露，应该尽量减少使用，用更易用的架构设计模式来避免使用单例模式</p></blockquote><h3 id="复杂范式"><a href="#复杂范式" class="headerlink" title="复杂范式"></a>复杂范式</h3><ul><li>添加成员变量</li></ul><p><img src="../../pic_resource/enum_memeber.png" alt=""></p><p>在利用这一属性时，我们可以直接将enum当成一个类来使用，不一样的地方在于，enum的各项是直接给出了实例化的instance，所以带参构造函数需要我直接在定义中给出初始化参数（如上例中的hour）</p><ul><li>提供有差异的API </li></ul><p><img src="../../pic_resource/enum_method.png" alt=""></p><p>如上图所示，DayType的两个类型，各自实现了free方法，实现了差异化的API，这一属性可以用于策略模式，针对不同的类型，我们的enum可以提供不同的策略算法，满足差异化的需求</p><ul><li>实现接口</li></ul><p><img src="../../pic_resource/enum_interface.png" alt=""></p><p>上面的抽象方法free，也可以抽象成接口形式，让枚举去实现，这一特性在工程中的应用极为有利，这样一来，就与我们的“面向接口编程”对上号了</p><blockquote><p>注意API的访问级别需要升级为public</p></blockquote><h3 id="Android中的替代办法"><a href="#Android中的替代办法" class="headerlink" title="Android中的替代办法"></a>Android中的替代办法</h3><p>我们都知道Android的内存非常宝贵，纵使enum有如此多的优点，但我们有时可能只想用它的一个替代int的属性，来增强代码的安全性，有没有其它更轻量的办法的？</p><p>答案是有的，@IntDef, @StringDef就能满足这一要求（属于注解范畴），以IntDef为例:</p><p><img src="../../pic_resource/enum_replace.png" alt=""></p><p>扒一扒IntDef的源码，我们会发现它其实自己也是一个注解，我们上例中应用的是它的value域，还可以利用的有flag域，鉴于flag一般都不会使用，不做过多介绍</p><p><img src="../../pic_resource/enum_intDef.png" alt=""></p><h3 id="Java模块中的替代办法"><a href="#Java模块中的替代办法" class="headerlink" title="Java模块中的替代办法"></a>Java模块中的替代办法</h3><p>有的同学可能碰到这样的业务需要：</p><p>实际的工程是纯Java的，根本无法使用Android中的注解，这时该怎么办？</p><p>好吧，其实是我自己碰到这样的问题了，解决方案其实也很容易找到，查IntDef的设计思路，可以找到它的出处，最后的解决lib是</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.intellij.lang.annotations.MagicConstant</span><br></pre></td></tr></table></figure><p>可以看到，这一lib是intellij的注解，感谢伟大的程序员们的杰作intellij</p><p><img src="../../pic_resource/enum_magic_constant.png" alt=""></p><p>与IntDef不一样的地方在于：</p><ul><li>需要添加intValues关键字，不可以省略（IntDef中对应的可省略关键字是value）</li><li>具体的值可以相同（IntDef中不可以）</li><li>值变为String类型时只需要改关键字为 stringValues</li></ul><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>enum还有一些特性，比如ordinal()取值、初始值从0开始、用EnumSet/EnumMap代替序数</p><p>实际也不推荐使用（ordinal取值不确定性强，程序稳定性差，实在要使用可以用成员变量代替）</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;内容大纲&quot;&gt;&lt;a href=&quot;#内容大纲&quot; class=&quot;headerlink&quot; title=&quot;内容大纲&quot;&gt;&lt;/a&gt;内容大纲&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;常规范式——替代int保安全&lt;/li&gt;
-&lt;li&gt;高阶范式——实现单例模式&lt;/li&gt;
-&lt;li&gt;复杂范式——实现方法
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
-    
-      <category term="Enum" scheme="https://github.com/KyleCe/kylece.github.io/tags/Enum/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【分享】Project ANR</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90%E5%88%86%E4%BA%AB%E3%80%91Project%20ANR/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【分享】Project ANR/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.081Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>ActivityThread  waitToFinish</p><p>SharePreferenceImpl   </p><h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><blockquote><p>Project  SP操作统一到同一个进程</p></blockquote><ul><li>每次edit都直接apply（初衷— 保证所有数据都生效）</li></ul><h3 id="分析及解决"><a href="#分析及解决" class="headerlink" title="分析及解决"></a>分析及解决</h3><p>6.0 — 7.x ，6.0占比 &gt;96%，6.0及以前的读操作是阻塞的（阻塞ActivityThread）</p><p>SharePreference提交记录：</p><ul><li>第一次读操作不加锁（AndroidFramework7.0开始）</li><li>合并写（最后一次改动才写）（AndroidFramework8.0开始）<ul><li>用generation的概念区分最近的一次改动</li></ul></li></ul><h3 id="优化点"><a href="#优化点" class="headerlink" title="优化点"></a>优化点</h3><ul><li>少用</li><li>消减不必要写操作</li><li>存储是分类型的<ul><li>SP是xml文件，真的需要都写到xml文件里吗？<ul><li>2进制文件写速度快于xml文件</li></ul></li></ul></li></ul><h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ul><li>先清理无用SP写（优化了50%）</li><li>减少操作</li><li>最后才是check架构（动架构有风险，Project此例中有丢config的风险）</li></ul><h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><blockquote><p> GP后台关于ANR、Crash是基于session统计的</p><p>检查ANR、Crash时可以看看源代码，或许Android有主动修正</p><p>做应用，不看Framework</p><p>做业务，先到Framework里搜，看是否有提示</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;p&gt;ActivityThread  waitToFinish&lt;/p&gt;
-&lt;p&gt;SharePreferenceImpl   &lt;/p&gt;
-&lt;h3 id=
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
-    
-      <category term="ANR" scheme="https://github.com/KyleCe/kylece.github.io/tags/ANR/"/>
     
   </entry>
   
@@ -599,6 +448,145 @@
     
     
       <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶——接口优于抽象类</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%E8%A2%AB%E7%94%A8%E7%83%82%E7%9A%84%22%E7%BB%A7%E6%89%BF%22/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶--被用烂的&quot;继承&quot;/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:52:09.918Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>继承很强大，但也有问题</p><p>确实是is-a关系时才使用继承</p><p>如果处在不同的包中，并且SuperClass不是为继承设计的，这时会导致脆弱性</p><p>可以使用复合和转发机制来代替继承来避免这种脆弱性</p><p>关键字:</p><p><strong>继承、复合、装饰者模式、包装类、转发</strong></p><blockquote><p>keywords:</p><p>继承(inheritance)、复合(composition)、装饰者模式(decorator)、包装类(WrapperClass)、转发(forwarding)</p></blockquote><p><em>为叙述方便，下文以CC代表子类，SC代表超类，也就是父类</em></p><h3 id="问题体现"><a href="#问题体现" class="headerlink" title="问题体现"></a>问题体现</h3><p><strong>继承打破了封装性</strong></p><p>CC依赖于SC的实现细节，在SC更新换代时，CC会受影响，严重的会导致错误，为了避免出现错误，时常要做的事情是跟着SC的更新而更新CC</p><p>其实你可以直接使用<strong>复合</strong>来避免这一问题出现——也就是，在原来的CC中添加一个SC的实例</p><p>这样新的类中可以直接使用SC的方法逻辑，而不用担心SC更新时要升级API的问题（概念：<strong>转发</strong>）</p><p>这样的类也被称为<strong>包装类</strong></p><p>这也引出了设计模式中的Decorator模式概念（<strong>装饰者模式</strong>）</p><h3 id="强制使用的弊端"><a href="#强制使用的弊端" class="headerlink" title="强制使用的弊端"></a>强制使用的弊端</h3><ul><li>暴露不必要的SC细节</li><li>永远地限制了CC的性能（使用复合模式则可以在需要时更换转发的具体实现）</li><li>导致语义混淆</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;摘要与关键字&quot;&gt;&lt;a href=&quot;#摘要与关键字&quot; class=&quot;headerlink&quot; title=&quot;摘要与关键字&quot;&gt;&lt;/a&gt;摘要与关键字&lt;/h3&gt;&lt;p&gt;继承很强大，但也有问题&lt;/p&gt;
+&lt;p&gt;确实是is-a关系时才使用继承&lt;/p&gt;
+&lt;p&gt;如果处在不同的包中，并且
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶--for-each与传统for</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--for-each%E4%B8%8E%E4%BC%A0%E7%BB%9Ffor/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶--for-each与传统for/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.145Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>for-each 相较于 传统的 for-i更优</p><p>自己编写的类在代表一组元素时，即使不实现Collection也要让它实现Iterable</p><h3 id="体现"><a href="#体现" class="headerlink" title="体现"></a>体现</h3><p>for-each循环在预防bug方面与传统for循环有着无可比拟的优势</p><ul><li>传统for</li><li>for-each</li></ul><h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>implement Iterable接口，示例：</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;结论&quot;&gt;&lt;a href=&quot;#结论&quot; class=&quot;headerlink&quot; title=&quot;结论&quot;&gt;&lt;/a&gt;结论&lt;/h3&gt;&lt;p&gt;for-each 相较于 传统的 for-i更优&lt;/p&gt;
+&lt;p&gt;自己编写的类在代表一组元素时，即使不实现Collection也要让它实现It
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+      <category term="for-each" scheme="https://github.com/KyleCe/kylece.github.io/tags/for-each/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶-- 利用有限制通配符来提升API的灵活性</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20%E5%88%A9%E7%94%A8%E6%9C%89%E9%99%90%E5%88%B6%E9%80%9A%E9%85%8D%E7%AC%A6%E6%9D%A5%E6%8F%90%E5%8D%87API%E7%9A%84%E7%81%B5%E6%B4%BB%E6%80%A7/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.142Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="词条"><a href="#词条" class="headerlink" title="词条"></a>词条</h3><p>通配符— ‘?’</p><p>有限制的通配符 —</p><ul><li>? extends E</li><li>? super E</li></ul><p>PECS — producer-extends, consumer-super</p><h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>输入参数是生产者或消费者时使用’?’</p><p>所有的compare和comparator都是consumer</p><p>声明方法时，用’?’取代仅出现一次的的类型参数</p><h3 id="优势体现——论其必要性"><a href="#优势体现——论其必要性" class="headerlink" title="优势体现——论其必要性"></a>优势体现——论其必要性</h3><p>我们先看之前讲 <strong>优先考虑泛型</strong>时的一个示例：</p><p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p><p>考虑为它增加一个方法：</p><p><img src="../../pic_resource/StackPushAll.png" alt=""></p><p>这样的定义，在使用中会存在不灵活的问题：因为类型在定义之后就不可变了，如果想要将一个非E类型的Iterable  push到Stack中是不可能的，这样的事实我们显然不能接受，那么该如何修改呢？答案就在本篇的主角——通配符’?’上</p><p>将上述API的参数修改为：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Iterable&lt;? extends E&gt; src</span><br></pre></td></tr></table></figure><p>即可达到目的</p><p>说完? extends，再来看? super，同样考虑Stack的API，这一次是将Stack中的元素全部弹出到目标集合</p><p><img src="../../pic_resource/StackPopAll.png" alt=""></p><p>理想状态下，所有的子类型的Stack都可以弹出到父类型的集合，但上图的API并不能实现这一目的；我们需要这样修改：</p><p>将参数类型修改为：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collection&lt;? <span class="keyword">super</span> E&gt; dst</span><br></pre></td></tr></table></figure><p>这样一来，任意继承自父类型的Stack就都可以pop到父类型集合了，是不是很带感</p><p>有的同学可能会产生疑惑了，一会儿extends，一会儿super，好晕</p><p>还好有规律可总结：</p><p>PECS——producer-extends, consumer-super</p><p>即参数列表中  生产者总是使用? extends，而消费者则总是使用 ? super（不了解生产者、消费者设计模式的同学请自行翻书）</p><h3 id="高级应用"><a href="#高级应用" class="headerlink" title="高级应用"></a>高级应用</h3><p>原始API声明：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;T&gt;&gt; <span class="function">T <span class="title">max1</span><span class="params">(List&lt;T&gt; list)</span></span></span><br></pre></td></tr></table></figure><p>修改后的API声明：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;? <span class="keyword">super</span> T&gt;&gt; <span class="function">T <span class="title">max2</span><span class="params">(List&lt;? extends T&gt; list)</span></span></span><br></pre></td></tr></table></figure><p>这一修改后的API，pecs都用上了，真有必要弄这么复杂了？</p><p>答案是肯定的</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;ScheduleFuture&lt;?&gt;&gt; futures = ...;</span><br></pre></td></tr></table></figure><p>这一futures不能调用max1方法，原因在于ScheduleFuture扩展的是Compare接口的Delayed接口的子接口，它可以与任意Delayed进行compare；而max2方法这样的声明就不会有这问题</p><h3 id="E-与-‘-’"><a href="#E-与-‘-’" class="headerlink" title="E 与 ‘?’"></a>E 与 ‘?’</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br></pre></td></tr></table></figure><p>你看上哪个了呢？</p><p>从灵活性的角度考虑，肯定是第二种好一些，但在类型参数不止一个时，就不能用’?’ 而要用类型参数了</p><p>使用第二种时需要注意：</p><p>只能把null放入List&lt;?&gt;中，这时为了保证灵活性，就需要写一个辅助捕捉类型的方法</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">  swapTrick(list, i, j);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swapTrick</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    list.set(i, list.set(j, list.get(i)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>这一篇看起来似乎有点绕，但我们真正在项目中写公共库API时，其实是需要用到’?’的，不是为了装，是真的能提升API的适用范围，减少工作量</p><p>不过任何收获都是要付出代价的，在写出高适用度的API时，一定记得写单元测试，进行高覆盖度的验证，保证准确性</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;词条&quot;&gt;&lt;a href=&quot;#词条&quot; class=&quot;headerlink&quot; title=&quot;词条&quot;&gt;&lt;/a&gt;词条&lt;/h3&gt;&lt;p&gt;通配符— ‘?’&lt;/p&gt;
+&lt;p&gt;有限制的通配符 —&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;? extends E&lt;/li&gt;
+&lt;li&gt;? super E&lt;
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶-- 优先考虑泛型方法</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E6%B3%9B%E5%9E%8B%E6%96%B9%E6%B3%95/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.163Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h3><p>类可以从泛型中受益，静态工具API更适合泛型</p><blockquote><p>Collections 的算法方法都已泛型化(如binarySearch、sort)</p></blockquote><h3 id="优势示例"><a href="#优势示例" class="headerlink" title="优势示例"></a>优势示例</h3><ul><li>例1：精简API</li></ul><p><img src="../../pic_resource/GenericMethodEg.png" alt=""></p><p>代码所示是一个简单的设置字体的Util的static API的泛型化代码；</p><p>如果不是使用这种泛型化的API，则需要为TextView的扩展类（Button、CheckBox等等）编写数不清的函数</p><ul><li>例2：确保类型安全的情况下提升API的易用性</li></ul><p><img src="../../pic_resource/GenericMethodEg2.png" alt=""></p><p>可以看到上面的API可以轻易的操作所有以View为基类的类的集合；</p><ul><li>例3：类级别的泛型化</li></ul><p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p><blockquote><p>在配合集合使用时需要注意类型cast的警告，这些警告实际上是编译时不会有问题，但真正在运行时可能会抛出ClassCastException，我们在实际项目中应该将这些潜在的威胁清除掉；</p><p>对于十分确定不会出问题的类型操作API上，可以用@SuppressWarning(“unckecked”)消除这类警告</p></blockquote><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>赶紧用起来吧，你的小伙伴会爱上你写的极简API的</p><blockquote><p>源码里的代码有很多写的极好的点，同学们平时可以扒一扒</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;适用范围&quot;&gt;&lt;a href=&quot;#适用范围&quot; class=&quot;headerlink&quot; title=&quot;适用范围&quot;&gt;&lt;/a&gt;适用范围&lt;/h3&gt;&lt;p&gt;类可以从泛型中受益，静态工具API更适合泛型&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Collections 的算法方法都已
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java进阶-- volatile关键字</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20volatile%E5%85%B3%E9%94%AE%E5%AD%97/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- volatile关键字/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:22:18.153Z</updated>
+    
+    <content type="html"><![CDATA[<p>volatile含有部分synchronized的特性，效率更高，但使用时需要注意细节，不然容易出错</p><h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>Java中被volatile修饰的变量，每次读写都会直接使用“内存”介质，而不是使用CPU缓存</p><blockquote><p>音 — UK <strong> /ˈvɒl.ə.taɪl/  US </strong> /ˈvɑː.lə.t̬əl/</p><p>英 — <strong>likely to change suddenly and unexpectedly or suddenly become violent or angry</strong></p><p>中 — 易变的</p></blockquote><h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul><li>保证变量可见性</li><li>禁止指令进行重排序</li></ul><blockquote><p>基础概念：可见性、有序性、原子性</p><ol><li>可见性：对所有线程来说，任一线程对变量的改动都立即可见</li><li>有序性：代码可能会被编译器混编，有序性即指代码按顺序执行</li><li>原子性：所有操作不会被打断，谁也不行（除非断电）</li></ol></blockquote><p>实际上我们对变量的修改，虽然可能Java就一行代码（如 y=x），但被解释成汇编语言会变成多行（y=x就需要进行两步操作：读x值，写入y所在内存，学过汇编的同学应该比较清楚）</p><h3 id="与synchronized的区别"><a href="#与synchronized的区别" class="headerlink" title="与synchronized的区别"></a>与synchronized的区别</h3><p>按字面理解，volatile关键字只是标记变量为易变的，并不能保证对变量的所有操作都是同步的，即不能保证具有synchronized一样的效果</p><p>实际上，对volatile修饰的变量的读/写操作是可以保证其原子性的，但还要注意一个问题，即同时写变量的线程可能不止一个，如此一来，其中部分的写操作就有可能丢失</p><p>听起来好像volatile使用起来很危险，但它也是有它的用途的</p><h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul><li>对于写不依赖历史状态的变量，可以考虑使用volatile修饰字代替synchronized来提高程序效率</li><li>保证代码的有序性：volatile变量的读写操作之前的代码，编译器是不会进行重排序的</li></ul><h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在volatile满足不了要求的场景可以考虑使用synchronized、lock、Atomic变量来保证特性</p><p>对变量的写不依赖历史状态的变量使用volatile修饰可以提高效率</p><p>对于需要保证部分程序语句有序性的场景可以考虑使用volatile代替锁定整个代码块，提高效率</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;volatile含有部分synchronized的特性，效率更高，但使用时需要注意细节，不然容易出错&lt;/p&gt;
+&lt;h3 id=&quot;是什么&quot;&gt;&lt;a href=&quot;#是什么&quot; class=&quot;headerlink&quot; title=&quot;是什么&quot;&gt;&lt;/a&gt;是什么&lt;/h3&gt;&lt;p&gt;Java中被vo
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+      <category term="volatile" scheme="https://github.com/KyleCe/kylece.github.io/tags/volatile/"/>
     
   </entry>
   

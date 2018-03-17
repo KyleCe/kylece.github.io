@@ -255,295 +255,6 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/程序/Java进阶--被用烂的&#34;继承&#34;"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶--被用烂的"继承"/">Java进阶——接口优于抽象类</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Java进阶--被用烂的"继承"/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>继承很强大，但也有问题</p>
-<p>确实是is-a关系时才使用继承</p>
-<p>如果处在不同的包中，并且SuperClass不是为继承设计的，这时会导致脆弱性</p>
-<p>可以使用复合和转发机制来代替继承来避免这种脆弱性</p>
-<p>关键字:</p>
-<p><strong>继承、复合、装饰者模式、包装类、转发</strong></p>
-<blockquote>
-<p>keywords:</p>
-<p>继承(inheritance)、复合(composition)、装饰者模式(decorator)、包装类(WrapperClass)、转发(forwarding)</p>
-</blockquote>
-<p><em>为叙述方便，下文以CC代表子类，SC代表超类，也就是父类</em></p>
-<h3 id="问题体现"><a href="#问题体现" class="headerlink" title="问题体现"></a>问题体现</h3><p><strong>继承打破了封装性</strong></p>
-<p>CC依赖于SC的实现细节，在SC更新换代时，CC会受影响，严重的会导致错误，为了避免出现错误，时常要做的事情是跟着SC的更新而更新CC</p>
-<p>其实你可以直接使用<strong>复合</strong>来避免这一问题出现——也就是，在原来的CC中添加一个SC的实例</p>
-<p>这样新的类中可以直接使用SC的方法逻辑，而不用担心SC更新时要升级API的问题（概念：<strong>转发</strong>）</p>
-<p>这样的类也被称为<strong>包装类</strong></p>
-<p>这也引出了设计模式中的Decorator模式概念（<strong>装饰者模式</strong>）</p>
-<h3 id="强制使用的弊端"><a href="#强制使用的弊端" class="headerlink" title="强制使用的弊端"></a>强制使用的弊端</h3><ul>
-<li>暴露不必要的SC细节</li>
-<li>永远地限制了CC的性能（使用复合模式则可以在需要时更换转发的具体实现）</li>
-<li>导致语义混淆</li>
-</ul>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/Java进阶--for-each与传统for"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶--for-each与传统for/">Java进阶--for-each与传统for</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Java进阶--for-each与传统for/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>for-each 相较于 传统的 for-i更优</p>
-<p>自己编写的类在代表一组元素时，即使不实现Collection也要让它实现Iterable</p>
-<h3 id="体现"><a href="#体现" class="headerlink" title="体现"></a>体现</h3><p>for-each循环在预防bug方面与传统for循环有着无可比拟的优势</p>
-<ul>
-<li>传统for</li>
-<li>for-each</li>
-</ul>
-<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>implement Iterable接口，示例：</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/for-each/">for-each</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性/">Java进阶-- 利用有限制通配符来提升API的灵活性</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="词条"><a href="#词条" class="headerlink" title="词条"></a>词条</h3><p>通配符— ‘?’</p>
-<p>有限制的通配符 —</p>
-<ul>
-<li>? extends E</li>
-<li>? super E</li>
-</ul>
-<p>PECS — producer-extends, consumer-super</p>
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>输入参数是生产者或消费者时使用’?’</p>
-<p>所有的compare和comparator都是consumer</p>
-<p>声明方法时，用’?’取代仅出现一次的的类型参数</p>
-<h3 id="优势体现——论其必要性"><a href="#优势体现——论其必要性" class="headerlink" title="优势体现——论其必要性"></a>优势体现——论其必要性</h3><p>我们先看之前讲 <strong>优先考虑泛型</strong>时的一个示例：</p>
-<p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p>
-<p>考虑为它增加一个方法：</p>
-<p><img src="../../pic_resource/StackPushAll.png" alt=""></p>
-<p>这样的定义，在使用中会存在不灵活的问题：因为类型在定义之后就不可变了，如果想要将一个非E类型的Iterable  push到Stack中是不可能的，这样的事实我们显然不能接受，那么该如何修改呢？答案就在本篇的主角——通配符’?’上</p>
-<p>将上述API的参数修改为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Iterable&lt;? extends E&gt; src</span><br></pre></td></tr></table></figure>
-<p>即可达到目的</p>
-<p>说完? extends，再来看? super，同样考虑Stack的API，这一次是将Stack中的元素全部弹出到目标集合</p>
-<p><img src="../../pic_resource/StackPopAll.png" alt=""></p>
-<p>理想状态下，所有的子类型的Stack都可以弹出到父类型的集合，但上图的API并不能实现这一目的；我们需要这样修改：</p>
-<p>将参数类型修改为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collection&lt;? <span class="keyword">super</span> E&gt; dst</span><br></pre></td></tr></table></figure>
-<p>这样一来，任意继承自父类型的Stack就都可以pop到父类型集合了，是不是很带感</p>
-<p>有的同学可能会产生疑惑了，一会儿extends，一会儿super，好晕</p>
-<p>还好有规律可总结：</p>
-<p>PECS——producer-extends, consumer-super</p>
-<p>即参数列表中  生产者总是使用? extends，而消费者则总是使用 ? super（不了解生产者、消费者设计模式的同学请自行翻书）</p>
-<h3 id="高级应用"><a href="#高级应用" class="headerlink" title="高级应用"></a>高级应用</h3><p>原始API声明：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;T&gt;&gt; <span class="function">T <span class="title">max1</span><span class="params">(List&lt;T&gt; list)</span></span></span><br></pre></td></tr></table></figure>
-<p>修改后的API声明：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;? <span class="keyword">super</span> T&gt;&gt; <span class="function">T <span class="title">max2</span><span class="params">(List&lt;? extends T&gt; list)</span></span></span><br></pre></td></tr></table></figure>
-<p>这一修改后的API，pecs都用上了，真有必要弄这么复杂了？</p>
-<p>答案是肯定的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;ScheduleFuture&lt;?&gt;&gt; futures = ...;</span><br></pre></td></tr></table></figure>
-<p>这一futures不能调用max1方法，原因在于ScheduleFuture扩展的是Compare接口的Delayed接口的子接口，它可以与任意Delayed进行compare；而max2方法这样的声明就不会有这问题</p>
-<h3 id="E-与-‘-’"><a href="#E-与-‘-’" class="headerlink" title="E 与 ‘?’"></a>E 与 ‘?’</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br></pre></td></tr></table></figure>
-<p>你看上哪个了呢？</p>
-<p>从灵活性的角度考虑，肯定是第二种好一些，但在类型参数不止一个时，就不能用’?’ 而要用类型参数了</p>
-<p>使用第二种时需要注意：</p>
-<p>只能把null放入List&lt;?&gt;中，这时为了保证灵活性，就需要写一个辅助捕捉类型的方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">  swapTrick(list, i, j);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swapTrick</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    list.set(i, list.set(j, list.get(i)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>这一篇看起来似乎有点绕，但我们真正在项目中写公共库API时，其实是需要用到’?’的，不是为了装，是真的能提升API的适用范围，减少工作量</p>
-<p>不过任何收获都是要付出代价的，在写出高适用度的API时，一定记得写单元测试，进行高覆盖度的验证，保证准确性</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/Java进阶-- 优先考虑泛型方法"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/">Java进阶-- 优先考虑泛型方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h3><p>类可以从泛型中受益，静态工具API更适合泛型</p>
-<blockquote>
-<p>Collections 的算法方法都已泛型化(如binarySearch、sort)</p>
-</blockquote>
-<h3 id="优势示例"><a href="#优势示例" class="headerlink" title="优势示例"></a>优势示例</h3><ul>
-<li>例1：精简API</li>
-</ul>
-<p><img src="../../pic_resource/GenericMethodEg.png" alt=""></p>
-<p>代码所示是一个简单的设置字体的Util的static API的泛型化代码；</p>
-<p>如果不是使用这种泛型化的API，则需要为TextView的扩展类（Button、CheckBox等等）编写数不清的函数</p>
-<ul>
-<li>例2：确保类型安全的情况下提升API的易用性</li>
-</ul>
-<p><img src="../../pic_resource/GenericMethodEg2.png" alt=""></p>
-<p>可以看到上面的API可以轻易的操作所有以View为基类的类的集合；</p>
-<ul>
-<li>例3：类级别的泛型化</li>
-</ul>
-<p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p>
-<blockquote>
-<p>在配合集合使用时需要注意类型cast的警告，这些警告实际上是编译时不会有问题，但真正在运行时可能会抛出ClassCastException，我们在实际项目中应该将这些潜在的威胁清除掉；</p>
-<p>对于十分确定不会出问题的类型操作API上，可以用@SuppressWarning(“unckecked”)消除这类警告</p>
-</blockquote>
-<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>赶紧用起来吧，你的小伙伴会爱上你写的极简API的</p>
-<blockquote>
-<p>源码里的代码有很多写的极好的点，同学们平时可以扒一扒</p>
-</blockquote>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-技术/程序/Java进阶-- 以函数对象代表策略"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -588,83 +299,6 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/Java进阶-- volatile关键字"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/">Java进阶-- volatile关键字</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>volatile含有部分synchronized的特性，效率更高，但使用时需要注意细节，不然容易出错</p>
-<h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>Java中被volatile修饰的变量，每次读写都会直接使用“内存”介质，而不是使用CPU缓存</p>
-<blockquote>
-<p>音 — UK <strong> /ˈvɒl.ə.taɪl/  US </strong> /ˈvɑː.lə.t̬əl/</p>
-<p>英 — <strong>likely to change suddenly and unexpectedly or suddenly become violent or angry</strong></p>
-<p>中 — 易变的</p>
-</blockquote>
-<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
-<li>保证变量可见性</li>
-<li>禁止指令进行重排序</li>
-</ul>
-<blockquote>
-<p>基础概念：可见性、有序性、原子性</p>
-<ol>
-<li>可见性：对所有线程来说，任一线程对变量的改动都立即可见</li>
-<li>有序性：代码可能会被编译器混编，有序性即指代码按顺序执行</li>
-<li>原子性：所有操作不会被打断，谁也不行（除非断电）</li>
-</ol>
-</blockquote>
-<p>实际上我们对变量的修改，虽然可能Java就一行代码（如 y=x），但被解释成汇编语言会变成多行（y=x就需要进行两步操作：读x值，写入y所在内存，学过汇编的同学应该比较清楚）</p>
-<h3 id="与synchronized的区别"><a href="#与synchronized的区别" class="headerlink" title="与synchronized的区别"></a>与synchronized的区别</h3><p>按字面理解，volatile关键字只是标记变量为易变的，并不能保证对变量的所有操作都是同步的，即不能保证具有synchronized一样的效果</p>
-<p>实际上，对volatile修饰的变量的读/写操作是可以保证其原子性的，但还要注意一个问题，即同时写变量的线程可能不止一个，如此一来，其中部分的写操作就有可能丢失</p>
-<p>听起来好像volatile使用起来很危险，但它也是有它的用途的</p>
-<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
-<li>对于写不依赖历史状态的变量，可以考虑使用volatile修饰字代替synchronized来提高程序效率</li>
-<li>保证代码的有序性：volatile变量的读写操作之前的代码，编译器是不会进行重排序的</li>
-</ul>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在volatile满足不了要求的场景可以考虑使用synchronized、lock、Atomic变量来保证特性</p>
-<p>对变量的写不依赖历史状态的变量使用volatile修饰可以提高效率</p>
-<p>对于需要保证部分程序语句有序性的场景可以考虑使用volatile代替锁定整个代码块，提高效率</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/volatile/">volatile</a></li></ul>
 
     </footer>
   </div>
@@ -929,7 +563,7 @@
 
 
   
-    <article id="post-技术/Android/由 Java GC 看 Android 内存泄露"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/【Note-PM】《项目管理修炼之道》提要"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -937,7 +571,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/由 Java GC 看 Android 内存泄露/">由 Java GC 看 Android 内存泄露</a>
+      <a class="article-title" href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/">【Note-PM】《项目管理修炼之道》提要</a>
     </h1>
   
 
@@ -945,7 +579,63 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/由 Java GC 看 Android 内存泄露/" class="article-date">
+	<a href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>第18届Jolt生产效率大奖图书<br>作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富</p>
+</blockquote>
+<p><a href="https://pan.baidu.com/s/1cAaOxw" target="_blank" rel="noopener">XMind文档链接</a></p>
+<p><a href="https://pan.baidu.com/s/1mhZO5Fa" target="_blank" rel="noopener">导图PDF版链接</a></p>
+<p><strong>导图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-d20195caa4e17ed9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第一部分：规划与日程"></p>
+<p><strong>文本</strong></p>
+<p> 项目管理修炼之道<br>    Johanna Rothman<br>    规划与日程<br>        启动项目<br>            0.KEY——定义项目、项目约束、决定项目关键驱动因素、章程决策<br>            章程决策<br>                远景、需求、目标、成功标准、ROI<br>        规划项目<br>            0.KEY——足以启动的规划、规划模板、制定发布条件<br>            规划模板<br>                意图<br>                记录<br>                发布条件<br>                目标<br>                项目组织<br>                日程总览<br>                人员配备<br>                建议日程<br>                制订项目风险列表<br>        使用生命周期组织项目<br>            0.KEY——理解生命周期、概览、反馈、大规模项目需要组合多种生命周期、管理架构风险、从瀑布中解脱<br>        安排项目日程<br>            0.KEY——注重实效的日程安排、可选择安排技术、用低技术含量工具安排日程<br>        估算工作<br>            0.KEY——实用估算方式、里程碑切分项目、能不做什么？、多项目时的估算、主动安排人们进行多任务、实用波浪式规划、决定迭代的持续时间、“小石子”<br>            估算<br>                对比历史数据<br>                通过Delphi和宽带Delphi估算<br>                何时不应相信团队的话<br>                    减掉每个任务的缓冲时间、要得到的是更准确的估算结果<br>                用日期范围进行估计<br>                用自信心估计<br>                用三个日期估计：最佳、可能、墨菲<br>            小石子<br>                任务不清时使用<br>                如何得到“小石子”<br>                为什么使用<br>        识别和避免日程安排游戏<br>            0.KEY——“希望”是我们最重要的策略、拒绝女王、把灰扫到地毯下面、幸福日期、分散注意力、日程等于承诺<br>    团队与节奏<br>        创建出色的项目团队<br>            0.KEY——招募需要的人、形成团队凝聚力、让组织配合你的工作、对必必需的团队规模了如指掌、知道何时应该加入、成为出色的项目经理、知道何时全身而退<br>            凝聚力<br>                好工具让团队有更好的发挥<br>                软件配置管理系统应满足的最低要求<br>                缺陷跟踪系统应满足的最低要求<br>                发展5阶段<br>            让组织配合<br>                以项目经理的方式管理单一职能团队<br>                管理矩阵式项目团队<br>                管理跨职能团队<br>            项目经理<br>                人际交往能力<br>                提升功能性技能<br>                专业领域技能<br>                工具和技术的专业技能<br>            退<br>                不适合的组织、团队、产品<br>        掌控项目<br>            0.KEY——节奏、中途回顾、为需求排序、是时间盒限定需求相关的工作、将迭代限制在4周以下、使用波浪式规划和日程安排、创建跨职能团队、根据项目风险选择生命周期模型、保持合理的工作时间、使用“小石子”、管理干扰、管理缺陷<br>            “小石子“<br>                将计划的粒度细化，能提高规划时项目的估算准确率<br>        保持项目节奏<br>            0.KEY——使用持续集成、自动化冒烟测试、按功能实现而不是按架构、盯着产品、准备重构、通过用例、用户故事、角色和场景定义需求、分离需求与GUI设计、尽可能用低保真度原型<br>            按功能而不是按框架<br>                首先实现具有最高价值的功能<br>                按功能调试、测试<br>            低保真原型<br>                “使用低保真度原型，人们可以更全面地评估要解决的问题。高保真度原型会限制反馈。”<br>        管理会议<br>            0.KEY——取消部分会议、举行必要会议、项目启动会议、发布版本规划会议、进度报告会议、向管理层报告进度、项目团队会议、迭代审查会议、会议疑难问题解答、远程电话会议<br>            取消<br>                不需要你解决问题<br>                多人参加的顺序式进度报告会议<br>        创建并使用项目仪表板<br>            0.KEY——测量有风险、根据项目完成度来衡量进度、为出资人创建项目仪表盘、使用项目气象报告<br>            衡量进度<br>                速度图表跟踪日程安排进度<br>                用迭代内容图跟踪总体进度<br>                用图表展示团队统一采用的实践<br>    非简单项目<br>        管理多地点项目<br>            0.KEY——提问成本、识别项目文化差异、团队间培养信任、团队间使用互补实践、寻找潜在问题、外包时的注意事项<br>        在项目中集成测试<br>            0.KEY——“减少技术债”、小规模测试以降低风险、TDD是集成的最简单方法、使用多种测试、确定成员在测试工作中的角色、开发人员测试人员比率、让测试与开发同步进行、为项目制定测试策略、系统测试策略模板、QA与测试的区别<br>        管理项目群<br>            0.KEY——管理项目群、将多个相关项目组织到一个发布版本中、随时间推移组织多个相关项目、管理项目经理、创建项目仪表盘<br>        结束项目<br>            0.KEY——管理发布早期版本的请求、管理beta版本、项目经理何时知道无法按时发布项目、知道项目走向完成、取消项目<br>            何时知道无法按时发布<br>                避免小偏差<br>                承诺新日期<br>                估算系统测试时间<br>        管理项目组合<br>            0.KEY——构建所有项目的组合、评估项目、决定现在为那个项目提供资金、对组合中的项目进行排序、尽快启动项目、使用产品待办事项列表管理新功能需求<br>            答疑<br>                说服管理层：“切换上下文”是个坏主意<br>                如何对多任务说不</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/">【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -956,420 +646,275 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="由-Java-GC-看-Android-内存泄露"><a href="#由-Java-GC-看-Android-内存泄露" class="headerlink" title="由 Java GC 看 Android 内存泄露"></a>由 <em>Java GC</em> 看 <em>Android</em> 内存泄露</h1><blockquote>
-<p><strong>标题</strong>：<em>《由 Java GC 看 Android 内存泄露》</em><br><strong>作者</strong>：<em>KyleCe</em><br><strong>关键词</strong>：<em>JavaGC、Android、内存泄露</em></p>
-<p>@Email: <a href="mailto:chengong90@gmail.com" target="_blank" rel="noopener">chengong90@gmail.com</a><br>@date: 2017年07月31日</p>
-</blockquote>
-<p>内存泄露，一个老生常谈的话题，本文将从Java GC的角度出发，着眼JavaGC收集器，一探Android内存泄露的究竟，最后总结实战经验，希望能给读者带来些许启发。</p>
-<p><em>本篇涵盖：</em></p>
-<ul>
-<li><em><strong>准备</strong>——基础知识要求及名字解释</em></li>
-<li><em><strong>背景</strong>——Android内存泄露的本质与危害</em></li>
-<li><em><strong>原因</strong>——为什么会产生泄露</em></li>
-<li><em><strong>基础</strong>——Java内存分配与回收</em></li>
-<li><em><strong>引申</strong>——JVM与Android虚拟机</em></li>
-<li><em><strong>实战</strong>——内存泄露攻防</em></li>
-</ul>
-<h2 id="零、准备"><a href="#零、准备" class="headerlink" title="零、准备"></a>零、准备</h2><h3 id="0-0-要求："><a href="#0-0-要求：" class="headerlink" title="0.0 要求："></a>0.0 要求：</h3><p>  阅读本文，需要读者具有一定的JAVA基础与Android基础</p>
-<h3 id="0-1-名词解释："><a href="#0-1-名词解释：" class="headerlink" title="0.1 名词解释："></a>0.1 名词解释：</h3><ul>
-<li>GC——Garbage Collector垃圾收集器</li>
-<li>MAT——Eclipse  Memory Analyzer Tool 内存分析工具</li>
-<li>LeakCanary——第三方内存泄露监测工具</li>
-<li>StrictMode——Android严格模式，调优时可以参考</li>
-<li>HotSpot——Sun公司开发的Java虚拟机类别，现属Oracle</li>
-<li>堆、栈——Heap、Stack，一般指内存堆，方法栈</li>
-<li>finalize——Object在被GC回收时可能会被调用的方法</li>
-<li>GC Roots——GC引用路径，通常有好几种类别，是一个集合</li>
-<li>StrongReference/SoftReference/WeakReference/PhantomReference——强/弱/软/虚引用</li>
-<li>STW——StopTheWorld GC时需要暂停所有用户线程</li>
-<li>SafePoint &amp; SafeRegion——安全点/安全区，分别为内存/线程在GC 欲Stop The World时可以停留的点</li>
-<li>OopMap——Ordinary Object Pointer Map，HotSpot实现准备式GC的基础</li>
-<li>年轻代、老年代、永久代、MetaSpace</li>
-<li>Eden/Survivor——年轻代的区域划分</li>
-<li>MinorGC &amp; FullGC/MajorGC——轻量GC/Full GC</li>
-<li>Age——对象年龄，每活过一次GC，Age+1</li>
-<li>JVM/DVM/ART——Java虚拟机/Android Dalvik/ Android Runtime</li>
-</ul>
-<h3 id="0-2-演示环境："><a href="#0-2-演示环境：" class="headerlink" title="0.2 演示环境："></a>0.2 演示环境：</h3><ul>
-<li>Android Studio——3.0 Canary 8</li>
-<li>Eclipse MAT——V1.7.0</li>
-<li>LeakCanary——V1.5.1</li>
-<li>HotSpot——Java Hotspot JVM(SE6/7)</li>
-</ul>
-<h2 id="一、本质与危害"><a href="#一、本质与危害" class="headerlink" title="一、本质与危害"></a>一、本质与危害</h2><h3 id="1-1-何谓内存泄露"><a href="#1-1-何谓内存泄露" class="headerlink" title="1.1 何谓内存泄露"></a>1.1 何谓内存泄露</h3><p>在计算机科学中，内存泄漏指由于疏忽或错误造成程序未能释放已经不再使用的内存。内存泄漏并非指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误，导致在释放该段内存之前就失去了对该段内存的控制，从而造成了内存的浪费。</p>
-<p>在安卓中，内存泄露主要是指应用程序进程在运行过程中有不能释放而不再使用的内存，占用了比实际需要多的空间。</p>
-<p>图1.1.1是使用MAT分析手机内存快照得到的OverView结果：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ca4c6177eb55ae69.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图1.1.1 ORG某款应用的Debug版内存泄露OverView"></p>
-<p>图1.1.1 ORG某款应用的Debug版内存泄露OverView</p>
-<h3 id="1-2-恶劣影响"><a href="#1-2-恶劣影响" class="headerlink" title="1.2 恶劣影响"></a>1.2 恶劣影响</h3><p>内存泄漏会因为减少可用内存的数量从而降低计算机的性能。最终，在最糟糕的情况下，过多的可用内存被分配掉导致全部或部分设备停止正常工作，或者应用程序崩溃。在以下情況，内存泄漏导致较嚴重的后果：</p>
-<ul>
-<li>程序运行后置之不理，消耗越来越多的内存（比如服务器上的后台任务，尤其是嵌入式系统中的后台任务，这些任务可能被运行后很多年内都置之不理）；</li>
-<li>频繁分配新内存；</li>
-<li>程序能够请求未被释放的内存（比如共享内存）；</li>
-<li>内存非常有限，比如在嵌入式系统或便携设备中；</li>
-<li>…</li>
-</ul>
-<p>针对安卓，内存泄露轻则导致应用占用内存虚高、增加CPU占用、耗电，重则导致应用程序无法开辟所需大小的内存，引发OOM，触发崩溃，这在内存小的机器上尤为明显（我们平时在测试应用内存占用表现时，可以多使用低端机）。<br>结合上一节所举例子，由图1.1.1可见该应用的泄露足有35M之多，这一内存结果还是应用刚启动时的情况，随着用户使用时间加长，泄露只会越来越多，直到用户杀死应用或者应用主动崩溃（如图1.2.1）。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-b460f38cafbd927b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图1.2.1 AndroidStudio 某OutOfMemory 堆栈"></p>
-<p>图1.2.1 AndroidStudio 某OutOfMemory 堆栈</p>
-<h2 id="二、产生缘由"><a href="#二、产生缘由" class="headerlink" title="二、产生缘由"></a>二、产生缘由</h2><p>内存泄露诱因有很多，安卓中比较常见的有：</p>
-<ul>
-<li>静态变量持有引用(集合类、单例造成的内存泄漏)</li>
-<li>匿名内部类/非静态内部类和异步线程</li>
-<li>Handler 、UI线程的post、AnimatorListener等使用不当</li>
-<li>资源未关闭(或在finalize中关闭)</li>
-<li>监听器的使用，在释放对象的同时没有相应删除监听器</li>
-<li>…</li>
-</ul>
-<p>下面针对部分诱因进行说明，具体解决办法此处按下不表。</p>
-<h3 id="2-1-静态变量导致的泄露"><a href="#2-1-静态变量导致的泄露" class="headerlink" title="2.1 静态变量导致的泄露"></a>2.1 静态变量导致的泄露</h3><p>静态集合导致的泄露可以分析为：长生命周期的对象，持有了短生命周期对象的引用，在后者生命周期结束时未释放长周期对象对它的引用，导致对象无法被GC回收。</p>
-<p>以如下代码为示例：即使在循环内有设置集合对象为null，但集合中的对象还是存在，GC并不能回收它（这种在集合中不断创建新对象的写法也是极其臭名昭著的）。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExampleUnitTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Vector sVector = <span class="keyword">new</span> Vector();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            Object o = <span class="keyword">new</span> Object();</span><br><span class="line">            sVector.add(o);</span><br><span class="line">            o = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>图2.1为某APP静态集合泄露的对象汇总，可以看到总大小有11.7M之大。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5a2e015b3d5de3b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600/h/600" alt="图2.1 某静态泄露的汇总结果"></p>
-<p>图2.1 某静态泄露的汇总结果</p>
-<h3 id="2-2-匿名内部类引发的内存泄露"><a href="#2-2-匿名内部类引发的内存泄露" class="headerlink" title="2.2 匿名内部类引发的内存泄露"></a>2.2 匿名内部类引发的内存泄露</h3><p>匿名内部类极易引发内存泄露，纵使这样的写法在代码层面会简洁很多，但在涉及到匿名内部类生命周期不依附于外部类时，需要我们谨慎处理，不然就很有可能引发泄露。</p>
-<p>如下代码为AppsFlayer SDK 4.7.1 Foreground.java中某段代码的近似版本（该泄露在SDK v4.7.4中已修复，图2.2.1 为两版本代码的对比图，中间截图为监测工具上报的泄露路径）：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">async</span><span class="params">(<span class="keyword">final</span> Activity activity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">new</span> AsyncTask&lt;Void, Void, Void&gt;() &#123;</span><br><span class="line">        <span class="function"><span class="keyword">protected</span> Void <span class="title">doInBackground</span><span class="params">(Void... params)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500L</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException var4) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                WeakReference&lt;Activity&gt; weakActivity = <span class="keyword">new</span> WeakReference(activity);</span><br><span class="line">                weakActivity.get().setContentView(<span class="keyword">null</span>);</span><br><span class="line">                weakActivity.clear();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception var3) &#123;</span><br><span class="line">                <span class="keyword">this</span>.cancel(<span class="keyword">true</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;.execute();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-783169a523910316.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图2.2.1 AppsFlyer leak and resolution"></p>
-<p>图2.2.1 AppsFlyer leak and resolution</p>
-<p>如下代码展示了常见的Handler写法可能引发的内存泄露：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> Handler mHandler = <span class="keyword">new</span> Handler() &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (!onMessage(msg)) &#123;</span><br><span class="line">			<span class="keyword">super</span>.handleMessage(msg);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>如下代码展示了内部类持有外部类的成员变量，存在泄露隐患<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ImageContext</span> <span class="keyword">implements</span> <span class="title">ThemeDataManager</span>.<span class="title">Context</span>&lt;<span class="title">Pair</span>&lt;<span class="title">String</span>, <span class="title">Bitmap</span>&gt;&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSucc</span><span class="params">(<span class="keyword">final</span> JSONObject extendData, Pair&lt;String, Bitmap&gt; p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(p == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mCoverView.setImageBitmap(p.second);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFail</span><span class="params">(<span class="keyword">final</span> JSONObject extendData, <span class="keyword">int</span> result</span></span></span><br><span class="line"><span class="function"><span class="params">                                    , Pair&lt;String, Bitmap&gt; cache)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>一般在一个质量欠佳的工程中，匿名内部类或异步线程操作导致的内存泄露随处可见。</p>
-<h3 id="2-3-Handler任务管理不当"><a href="#2-3-Handler任务管理不当" class="headerlink" title="2.3 Handler任务管理不当"></a>2.3 Handler任务管理不当</h3><p>Handler、AnimationListener、AnimatorUpdateListener使用不当也极易导致泄露:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mHandler.postDelayed(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(TAG + TAG + <span class="string">"  running"</span> + parent);</span><br><span class="line">        mHandler.postDelayed(<span class="keyword">this</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, <span class="number">200</span>);</span><br></pre></td></tr></table></figure></p>
-<h3 id="2-4-资源未及时关闭"><a href="#2-4-资源未及时关闭" class="headerlink" title="2.4 资源未及时关闭"></a>2.4 资源未及时关闭</h3><p>Android资源不及时关闭会出现内存泄露的地方有很多，诸如在使用I/O流、Cursor（图2.4.1展示了在APP开启StrictMode时会收到的FileIO未close的异常Throwable）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-cbf5aa5529865f5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图2.4.1 closable close未调用"></p>
-<p>图2.4.1 closable close未调用</p>
-<h3 id="2-5-绑定-解绑、注册-反注册未成对调用"><a href="#2-5-绑定-解绑、注册-反注册未成对调用" class="headerlink" title="2.5 绑定/解绑、注册/反注册未成对调用"></a>2.5 绑定/解绑、注册/反注册未成对调用</h3><p>绑定/解绑、注册/反注册同时出现这一点毋庸置疑，但实际工程中发现有开发者对于成对调用的理解不够透彻，会有前后条件不一致的情况，导致内存泄露（如注册时无条件注册，反注册时加入不能100%保证成立的判定条件）</p>
-<h2 id="三、Java内存分配与垃圾回收策略"><a href="#三、Java内存分配与垃圾回收策略" class="headerlink" title="三、Java内存分配与垃圾回收策略"></a>三、Java内存分配与垃圾回收策略</h2><h3 id="3-0-虚拟机架构（HotSpot）"><a href="#3-0-虚拟机架构（HotSpot）" class="headerlink" title="3.0 虚拟机架构（HotSpot）"></a>3.0 虚拟机架构（HotSpot）</h3><p>图3.0.1为HotSpot虚拟机架构，具体的划分将在下文中描述，这里只需要了解大致概念。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-1bf9a615abb8e4d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.0.1 HotSpot Structure"></p>
-<p>图3.0.1 HotSpot Structure</p>
-<p>本文所谈论的GC，处理的内存区块针对的主要是虚拟机的Heap，亦即堆。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7061db0196475abb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.0.2 HotSpot JVM components"></p>
-<p>图3.0.2 HotSpot JVM components</p>
-<h3 id="3-1-内存分配"><a href="#3-1-内存分配" class="headerlink" title="3.1 内存分配"></a>3.1 内存分配</h3><h4 id="3-1-1-对象生命周期"><a href="#3-1-1-对象生命周期" class="headerlink" title="3.1.1 对象生命周期"></a>3.1.1 对象生命周期</h4><ul>
-<li>至少两次标记——一次标记、筛选是否finalize</li>
-<li>finalize()——不承诺完成、一次机会、不承诺调 用顺序——避免无良操作引发JVM崩溃</li>
-</ul>
-<h4 id="3-1-2-引用计数收集器"><a href="#3-1-2-引用计数收集器" class="headerlink" title="3.1.2 引用计数收集器"></a>3.1.2 引用计数收集器</h4><ul>
-<li>为对象添加引用计数器</li>
-<li>弊端:无法解决对象相互循环引用的问题</li>
-</ul>
-<h4 id="3-1-3-可达性分析（Reachability-Analysis）"><a href="#3-1-3-可达性分析（Reachability-Analysis）" class="headerlink" title="3.1.3 可达性分析（Reachability Analysis）"></a>3.1.3 可达性分析（Reachability Analysis）</h4><ul>
-<li>GC-Roots是否可达</li>
-<li>枚举 GC Roots</li>
-</ul>
-<p>可达性分析，可以解决对象循环引用的问题</p>
-<p>如图3.1.1所示的对象中，ObjD、ObjE、ObjF均为GC不可达，可以被GC回收掉</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-473f69299d0029a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.1.1 GC Roots reachable analyze"></p>
-<p>图3.1.1 GC Roots reachable analyze</p>
-<h4 id="3-1-4-引用方式"><a href="#3-1-4-引用方式" class="headerlink" title="3.1.4 引用方式"></a>3.1.4 引用方式</h4><p>引用方式的回收时机强调的是该引用方式为对象仅存的形式。</p>
-<ul>
-<li>（<strong>强</strong>）<strong>StrongReference</strong>—protects the referred object from collection by GC</li>
-<li>（<strong>软</strong>）<strong>SoftReference</strong>—won’t be collected until its memory is needed</li>
-<li>（<strong>弱</strong>）<strong>WeakReference</strong>—garbage collects when no Strong or Soft refs</li>
-<li>（<strong>虚</strong>）<strong>PhantomReference</strong>—after finalized, before reclaimed</li>
-</ul>
-<p>强引用即为一般引用，软引用会在内存不足时回收，弱引用则是在GC时立即回收，虚引用一般用于标记GC对对象内存的操作。</p>
-<h4 id="3-1-5-内存回收方式"><a href="#3-1-5-内存回收方式" class="headerlink" title="3.1.5 内存回收方式"></a>3.1.5 内存回收方式</h4><ul>
-<li>GC、收集算法、收集器种类 枚举根节点</li>
-<li>SafePoint &amp; SafeRegion（只有到达SafePoint，非运行状态的用户线程处于SafeRegion时才可以STW）</li>
-<li>分代回收?</li>
-</ul>
-<p>GC运行时，需要Stop The World，HotSpot中，利用OopMap存储对象引用</p>
-<p>图3.1.5.1展示了HotSpot的堆结构，可以看到整个堆内存分为三代（年轻代、老年代、永久代”JAVA 8已放弃永久代”）</p>
-<p>其中年轻代又分为三个区域（一个Eden，两个Survivor，如此划分是为GC收集算法所做的准备，后面的篇幅有具体介绍）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-0cc80185075e1e36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.1.5.1 HotSpot Heap Structure"></p>
-<p>图3.1.5.1 HotSpot Heap Structure</p>
-<p>图3.1.5.2 为本文2.1中示例代码的样式堆占用情况（具体数据依机器而变，参考价值有限）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5def65145209ff4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.1.5.2 Heap Usage ratio"></p>
-<p>图3.1.5.2 Heap Usage ratio</p>
-<h4 id="3-1-6-Java-的-GC-Roots"><a href="#3-1-6-Java-的-GC-Roots" class="headerlink" title="3.1.6 Java 的 GC Roots"></a>3.1.6 Java 的 GC Roots</h4><p>可以作为GC Roots的有：</p>
-<ul>
-<li>JVM Stack(Stack Frame 的本地变量表)中引用的对象</li>
-<li>Native Method Stack 中</li>
-<li>JNI(Native 方法)引用 的对象</li>
-<li>Method Area 中类静态属性引用的对象</li>
-<li>Method Area 中常量引用的对象</li>
-</ul>
-<h4 id="3-1-7-SafePoint-amp-SafeRegion"><a href="#3-1-7-SafePoint-amp-SafeRegion" class="headerlink" title="3.1.7 SafePoint &amp; SafeRegion"></a>3.1.7 SafePoint &amp; SafeRegion</h4><ul>
-<li>只有SafePoint才能STW(方法调用、循环跳 转、异常跳转)(抢先中断、主动中断)</li>
-<li>SafeRegion 无CPU时间程序——扩展的 SafePoint、离开时检查是否在进行GC</li>
-<li>-XX:SurvivorRatio</li>
-<li>可以把SafeRegion看成是扩大了的SafePoint</li>
-</ul>
-<h3 id="3-2-内存空间划分"><a href="#3-2-内存空间划分" class="headerlink" title="3.2 内存空间划分"></a>3.2 内存空间划分</h3><p>在上一节中，我们可以了解到，虚拟机可以分为如下五个部分：</p>
-<ul>
-<li>方法区</li>
-<li>堆</li>
-<li>虚拟机栈</li>
-<li>程序计数器 </li>
-<li>本地方法栈</li>
-</ul>
-<p>其中，方法区与堆是进程之间共享的，剩余的三个区块，都是线程级别做出的划分。方法区的回收管理相比于GC原理更为复杂，我们不作介绍。</p>
-<p>针对每个线程，后三个区块的协作机理是：<br>程序计数器记录当前栈帧，在线程运行本地方法时计数器不做记录。</p>
-<h3 id="3-3-垃圾回收"><a href="#3-3-垃圾回收" class="headerlink" title="3.3 垃圾回收"></a>3.3 垃圾回收</h3><h4 id="3-3-1-分代回收"><a href="#3-3-1-分代回收" class="headerlink" title="3.3.1 分代回收"></a>3.3.1 分代回收</h4><p>配置参数：</p>
-<ul>
-<li>-XX:NewRatio(Client/ Server差异化配置)</li>
-<li>-XX:PermSize</li>
-<li>…</li>
-</ul>
-<p>分代回收主要是为了提升效率，减少不不要的GC（对于需要长时间保留在内存中的对象进行频次更低的GC扫描）</p>
-<h4 id="3-3-2-部分JVM配置参数"><a href="#3-3-2-部分JVM配置参数" class="headerlink" title="3.3.2 部分JVM配置参数"></a>3.3.2 部分JVM配置参数</h4><p>图3.3.2.1为部分JVM常规参数一览表，JVM的可配置参数极其丰富，有兴趣读者可查阅其它资料</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c09be6dd982fbba3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.2.1 部分JVM常规参数一览表"></p>
-<p>图3.3.2.1 部分JVM常规参数一览表</p>
-<h4 id="3-3-3-内存分配与回收策略"><a href="#3-3-3-内存分配与回收策略" class="headerlink" title="3.3.3 内存分配与回收策略"></a>3.3.3 内存分配与回收策略</h4><ul>
-<li>Eden为主，TLAB为辅</li>
-<li>直接进入Old-generation的情况、OOM</li>
-<li>MinorGC &amp; FullGC/MajorGC（图3.3.3.3 MinorGC &amp; MajorGC）</li>
-</ul>
-<p>在年轻代内存够用的情况下，内存会被直接分配到年轻代中的Eden区域。（图3.3.3.1 写入年轻代Eden区）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-242a868f2c4d6c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.3.1 写入年轻代Eden区"></p>
-<p>图3.3.3.1 写入年轻代Eden区</p>
-<p>在多次GC后，仍然存活的内存会在满足虚拟机配置参数的条件下被晋升到老年区。（图3.3.3.1 展示了年代之间的晋升）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2540999a7248fa74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.3.2 晋升概览图"></p>
-<p>图3.3.3.2 晋升概览图</p>
-<p>针对不同年代，虚拟机会采用不同的收集器分时机进行收集，总结来看，年轻代的GC会比老年代的GC <strong>更频繁，效率也更高</strong>。（图3.3.3.3 展示了MinorGC 与 MajorGC的回收成效示例）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-facf61f82cf12b67.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.3.3 MinorGC &amp; MajorGC"></p>
-<p>图3.3.3.3 MinorGC &amp; MajorGC</p>
-<h4 id="3-3-4-内存分配"><a href="#3-3-4-内存分配" class="headerlink" title="3.3.4 内存分配"></a>3.3.4 内存分配</h4><ul>
-<li>优先分配Eden（图3.3.4.1 展示直接分配至Eden区的情况）</li>
-<li>大对象直接进入old-generation</li>
-<li>长期存活对象进入old-generation(年龄判定)</li>
-<li>空间分配担保（风险、担保失败、OOM）</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-09da3e69c1e7de12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.4.1 对象空间分配"></p>
-<p>图3.3.4.1 对象空间分配</p>
-<p>图3.3.4.2-图3.3.4.4展示了对象年龄的计算方法</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-099ba10858c1daac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.4.2 对象年龄"></p>
-<p>图3.3.4.2 对象年龄</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-f1b583b94f371c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.4.3 对象年龄的增长示例"></p>
-<p>图3.3.4.3 对象年龄的增长示例</p>
-<p>除了满足晋升年龄限制条件的对象外，当年轻代的Survivor中对象平均年龄超过一定限度时，有可能会被整体直接晋升到老年区，而不用等到累加到限定的年龄。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-65c85ce0940865cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.4.4 从年轻代晋升到老年代"></p>
-<p>图3.3.4.4 从年轻代晋升到老年代</p>
-<p>在Minor GC进行之前，如果年轻代的内存之和超过了老年代可用内存大小，会涉及到一个担保的概念，如果不允许老年代担保，会直接抛出OOM异常。<br>图3.3.4.5 描述了整个内存分配的概览</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-a9b46c9c1ef158eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.4.5 直接分配至Eden区"></p>
-<p>图3.3.4.5 直接分配至Eden区</p>
-<h4 id="3-3-5-垃圾收集算法"><a href="#3-3-5-垃圾收集算法" class="headerlink" title="3.3.5 垃圾收集算法"></a>3.3.5 垃圾收集算法</h4><ul>
-<li>标记-清除</li>
-<li>复制</li>
-<li>标记-整理</li>
-</ul>
-<p>标记清除是最简单的办法，但是它有一个弊端：会产生内存碎片（当可用内存不够时，会提前触发FullGC）。</p>
-<p>复制算法能够解决这一问题，但是会造成空间的浪费，之所以HotSpot年轻代GC能够采用复制算法，是因为临时变量都比较”短命”（MinorGC回收效率基本都能达到80%以上），这样一来就可以考虑使用复制算法，”浪费”掉的内存处于可接受范围内。（Eden:Survivor1:Survivor2 常见比例会维持在 8:1:1左右）</p>
-<h5 id="3-3-5-1-标记整理"><a href="#3-3-5-1-标记整理" class="headerlink" title="3.3.5.1 标记整理"></a>3.3.5.1 标记整理</h5><p>需要先标记，而后对标记可清楚的内存进行清理：</p>
-<p>图3.3.5.1.1 为标记过程，图3.3.5.1.2 为直接清除后的内存情况，可以看到未被回收的内存之间会有大小不等的间隔，这就是”内存碎片”。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-dffef12d27e0440c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.5.1.1 Marking"></p>
-<p>图3.3.5.1.1 Marking</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7d913bf3a474dcd0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.5.1.2 Normal Deletion"></p>
-<p>图3.3.5.1.2 Normal Deletion</p>
-<h5 id="3-3-5-2-复制算法"><a href="#3-3-5-2-复制算法" class="headerlink" title="3.3.5.2 复制算法"></a>3.3.5.2 复制算法</h5><p>年轻代一般会采用的算法，简单高效。</p>
-<p>图3.3.5.2 为HotSpot年轻代复制算法示意图，GC时，会把无法回收的内存对象”复制”至Survivor中的一块区域——Survivor 0/1会在两次相邻MinorGC之间来回切换 Copy的 From/To角色</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-50f18bb588311844.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.5.2 Coping Referenced Object"></p>
-<p>图3.3.5.2 Coping Referenced Object</p>
-<h5 id="3-3-5-3-标记整理算法"><a href="#3-3-5-3-标记整理算法" class="headerlink" title="3.3.5.3 标记整理算法"></a>3.3.5.3 标记整理算法</h5><p>标记整理与标记清理的不同点在于，多了一步整理的操作，而不是直接的清除可清除内存（图3.3.5.3 展示了操作过程，可以看到内存碎片不存在了）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-e57595176a60153f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.5.3 删除整理"></p>
-<p>图3.3.5.3 删除整理</p>
-<h4 id="3-3-6-垃圾收集器种类"><a href="#3-3-6-垃圾收集器种类" class="headerlink" title="3.3.6 垃圾收集器种类"></a>3.3.6 垃圾收集器种类</h4><p>垃圾收集器从运行方式上来分，主要分串行、并行两类。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-d44647bb58bf7c2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.0.1 串行-并行收集器"></p>
-<p>图3.3.6.0.1 串行-并行收集器</p>
-<p>由图3.3.6.1可见两种方式的主要区别是在STW时运行GC的线程数量不一样，然而并不能简单得理解”pause 时间越短”越好，在低性能的Client上需要考虑多线程切换的消耗。</p>
-<blockquote>
-<p>Stop the world 会暂停所有用户线程</p>
-</blockquote>
-<p>具体细化，HotSpot中的收集器有如下几种（JDK1.7U14）：</p>
-<ul>
-<li>Serial(串行)</li>
-<li>ParNew</li>
-<li>Parallel Scavenge</li>
-<li>Serial Old(串行)</li>
-<li>Parallel Old</li>
-<li>CMS</li>
-<li>G1—Garbage First(JDK 7U14)</li>
-</ul>
-<p>可以依照各收集器的试用内存年代做划分：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-a5848042f2a13510.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.0.2 GC收集器"></p>
-<p>图3.3.6.0.2 GC收集器</p>
-<p><strong>下面就各收集器特点做要点说明：</strong></p>
-<h5 id="3-3-6-1-Serial"><a href="#3-3-6-1-Serial" class="headerlink" title="3.3.6.1 Serial"></a>3.3.6.1 Serial</h5><ul>
-<li>简单高效——没有线程交互的开销</li>
-<li>常用于Client</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-26a178b15d61c0d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.1 Serial运行示意图"></p>
-<p>图3.3.6.1 Ser<br>ial运行示意图</p>
-<h5 id="3-3-6-2-ParNew"><a href="#3-3-6-2-ParNew" class="headerlink" title="3.3.6.2 ParNew"></a>3.3.6.2 ParNew</h5><ul>
-<li>常用于Server模式</li>
-<li>只能与CMS配合工作</li>
-<li>单CPU效果不如Serial</li>
-<li>-XX:ParallelGCThreads限制线程数量</li>
-<li>关注吞吐量</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-0ba80f3d07039584.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.2 ParNew运行示意图"></p>
-<p>图3.3.6.2 P<br>arNew运行示意图</p>
-<h5 id="3-3-6-3-Parallel-Scavenge"><a href="#3-3-6-3-Parallel-Scavenge" class="headerlink" title="3.3.6.3 Parallel Scavenge"></a>3.3.6.3 Parallel Scavenge</h5><ul>
-<li>-XX:MaxGCPauseMillis——停顿时间以牺牲吞吐量和新生代空间为代价</li>
-<li>-XX:GCTimeRatio</li>
-<li>自适应调节策略——无需手动设置-Xmn、SurvivorRatio、晋升 OldGeneration大小等参数</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-8c509f9d210e2339.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.3 Parallel Scavenge运行示意图"></p>
-<p>图3.3.6.3 Parallel Scavenge运行示意图</p>
-<h5 id="3-3-6-4-Serial-Old"><a href="#3-3-6-4-Serial-Old" class="headerlink" title="3.3.6.4 Serial Old"></a>3.3.6.4 Serial Old</h5><ul>
-<li>主要用于Client</li>
-<li>可作为CMS的后备选项</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-8927a9cb7340b35b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.4 Serial Old运行示意图"></p>
-<p>图3.3.6.4 Serial O<br>ld运行示意图</p>
-<h5 id="3-3-6-5-Parallel-Old"><a href="#3-3-6-5-Parallel-Old" class="headerlink" title="3.3.6.5 Parallel Old"></a>3.3.6.5 Parallel Old</h5><ul>
-<li>Parallel Scavenge的Old generation版本</li>
-<li>多线程 标记-整理</li>
-<li>配合ps使用在注重吞吐量及CPU敏感场合</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-3d1db4efd09b12db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.5 Parallel Old运行示意图"></p>
-<p>图3.3.6.5 Parallel Old运行示意图</p>
-<h5 id="3-3-6-6-CMS"><a href="#3-3-6-6-CMS" class="headerlink" title="3.3.6.6 CMS"></a>3.3.6.6 CMS</h5><ul>
-<li>目标:获取最短回收停顿时间(标记-清除算法)</li>
-<li>步骤:初始标记-并发标记-重新标记-并发清除</li>
-<li>缺点:CPU资源敏感、无法处理浮动垃圾(OG68%启用 CMS，失败时启用Serial Old)、产生大量碎片</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-962ab459822c3a93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt=""></p>
-<p>图3.3.6.6.1 CMS运行示意图</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-0d5f648b819bd823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.6.2 Serial收集器与CMS收集器操作线程比较"></p>
-<p>图3.3.6.6.2 Serial收集器与CMS收集器操作线程比较</p>
-<h5 id="3-3-6-7-G1"><a href="#3-3-6-7-G1" class="headerlink" title="3.3.6.7 G1"></a>3.3.6.7 G1</h5><p>G1 相比于前面所述的收集器格外不一样，因为G1在内存的划分上，将内存平分为大小相等的几个区域，年轻代与老年代之间不在是物理隔离，总结起来，G1特点有：</p>
-<ul>
-<li>并行与并发</li>
-<li>分代收集</li>
-<li>空间整合</li>
-<li>可预测停顿</li>
-<li>将堆划分为多个大小相等的Region</li>
-<li>Y/O不再物理隔离</li>
-<li>有计划避免全盘GC</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-d3f472e8f57f4507.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.7.1 G1 运行示意图"></p>
-<p>图3.3.6.7.1 G1 运行示意图</p>
-<p>G1会维护一个Region回收优先级列表（根据Region回收价值排序），RememberedSet可保证不全堆扫描也不会遗漏，线程要保证暂停在安全点，就需要维护一个RememberSetLog，这些列表需要在最终标记时与RememberedSet合并，确保不会出错。</p>
-<h4 id="3-3-7-性能指标"><a href="#3-3-7-性能指标" class="headerlink" title="3.3.7 性能指标"></a>3.3.7 性能指标</h4><ul>
-<li>吞吐量(Throughput):在一段长时间内，没有花费在垃圾收集上的时间所 占的比例。</li>
-<li>垃圾收集代价(Garbage Collection Overhead):垃圾收集时间所占的比例。</li>
-<li>暂停时间(Pause Time): 当执行垃圾收集时，程序被迫暂停的时间长度。</li>
-<li>垃圾收集频率(Frequency Of Collection):相对于程序的执行，垃圾收集执 行的频率。</li>
-<li>覆盖区(Footprint): 大小度量，如堆的大小。</li>
-<li>敏捷度(Promptness): 从一个对象成为垃圾时到内存被回收时之间的时间 长度。</li>
-</ul>
-<h4 id="3-3-8-收集器策略"><a href="#3-3-8-收集器策略" class="headerlink" title="3.3.8 收集器策略"></a>3.3.8 收集器策略</h4><ul>
-<li>Server:<ul>
-<li>低停顿：ParNew + CMS(Serial Old)</li>
-<li>高吞吐/低CPU：Parallel Scavenge + Parallel Old</li>
-</ul>
-</li>
-<li>Client:<ul>
-<li>Serial + Serial Old</li>
-</ul>
-</li>
-</ul>
-<h2 id="四、JVM与Android虚拟机的异同"><a href="#四、JVM与Android虚拟机的异同" class="headerlink" title="四、JVM与Android虚拟机的异同"></a>四、JVM与Android虚拟机的异同</h2><h3 id="4-1-JVM"><a href="#4-1-JVM" class="headerlink" title="4.1 JVM"></a>4.1 JVM</h3><p>JAVA虚拟机运行的是JAVA字节码,JVM基于栈</p>
-<ul>
-<li>JAVA程序经过编译，生成JAVA字节码保存在class文件中，JVM通过解码class文件中的内容来运行程序。</li>
-</ul>
-<p>关于栈式虚拟机：</p>
-<ul>
-<li>代码必须使用这些指令来移动变量(即push和pop)</li>
-<li>代码尺寸小和解码效率会更高些</li>
-<li>堆栈虚拟机指令有隐含的操作数。</li>
-</ul>
-<h3 id="4-2-安卓虚拟机"><a href="#4-2-安卓虚拟机" class="headerlink" title="4.2 安卓虚拟机"></a>4.2 安卓虚拟机</h3><h4 id="4-2-1-DVM与JVM："><a href="#4-2-1-DVM与JVM：" class="headerlink" title="4.2.1 DVM与JVM："></a>4.2.1 DVM与JVM：</h4><ul>
-<li>JVM基于栈，Dalvik基于寄存器。Dalvik运行dex文件，而JVM运行java字节码自Android 2.2开始，Dalvik支持JIT（just-in-time，即时编译技术）</li>
-<li>与一般标准Java虚拟机不同在于：<ul>
-<li>占用更少空间</li>
-<li>为简化翻译，常量池只使用32位索引</li>
-<li>标准Java字节码实行8位堆栈指令,Dalvik使用16位指令集直接作用于局部变量。局部变量通常来自4位的“虚拟寄存器”区。这样减少了Dalvik的指令计数，提高了翻译速度。</li>
-</ul>
-</li>
-<li>Dalvik虚拟机运行的是Dalvik字节码<ul>
-<li>DVM运行的是Dalvik字节码，所有的Dalvik字节码由JAVA字节码转换而来，并被打包到一个DEX（Dalvik Executable）可执行文件中，DVM通过解释DEX文件来执行这些字节码。</li>
-</ul>
-</li>
-<li>Dalvik可执行文件体积更小</li>
-</ul>
-<h4 id="4-2-2-DVM与ART"><a href="#4-2-2-DVM与ART" class="headerlink" title="4.2.2 DVM与ART"></a>4.2.2 DVM与ART</h4><ul>
-<li>区别：Dalvik虚拟机执行的是dex字节码，ART虚拟机执行的是本地机器码</li>
-<li>ART相比于DVM（空间换时间）：<ul>
-<li>(优点)系统性能显著提升</li>
-<li>(优点)应用启动更快、运行更快、体验更流畅、触感反馈更及时</li>
-<li>(优点)续航能力提升</li>
-<li>(优点)支持更低的硬件</li>
-<li>(缺点)更大的存储空间占用，可能增加10%-20%</li>
-<li>(缺点)更长的应用安装时间</li>
-</ul>
-</li>
-</ul>
-<h2 id="五、如何“防治”"><a href="#五、如何“防治”" class="headerlink" title="五、如何“防治”"></a>五、如何“防治”</h2><h3 id="5-1-攻"><a href="#5-1-攻" class="headerlink" title="5.1 攻"></a>5.1 攻</h3><p>Android内存泄露判定-解决方法</p>
-<ul>
-<li>工具<ul>
-<li>IDE自带工具（图5.1.1为AS分析出的引用路径）</li>
-<li>MAT/Android Studio Profiler/第三方(图5.1.2为MAT分析出的某例泄露)</li>
-<li>LeakCanary 等监测工具(图5.1.3为LeakCanary监测出的未反注册及未取消动画更新监听的泄露GC-Root引用路径)</li>
-</ul>
-</li>
-</ul>
-<p><em>各大工具的使用方法因篇幅所限，就不具体介绍，相关资料亦是汗牛充犊。</em></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ca53c4d2e0fd72d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="5.1.1"></p>
-<p>图5.1.1 AS分析出的泄露现场</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c29f25476bbacbe2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="5.1.2"></p>
-<p>图5.1.2 Leak by MAT</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-97d976558b387970.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="5.1.3"></p>
-<p>图5.1.3 by LeakCanary</p>
-<ul>
-<li>查找内存泄露步骤:<ul>
-<li>了解OutOfMemoryError 情况</li>
-<li>重现<ul>
-<li>Heap Dump</li>
-<li>计算这个对象到 GC roots 的最短强引用路径。</li>
-<li>剔除无用引用<h3 id="5-2-防"><a href="#5-2-防" class="headerlink" title="5.2 防"></a>5.2 防</h3><h4 id="5-2-1-Java"><a href="#5-2-1-Java" class="headerlink" title="5.2.1 Java:"></a>5.2.1 Java:</h4></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>减少临时对象的使用</li>
-<li>尽量使用StringBuffer,而不用String来累加字符串</li>
-<li>尽量避免使用 static 成员变量</li>
-<li>分散对象创建或删除的时间</li>
-<li>勿override finalize()</li>
-</ul>
-<h4 id="5-2-2-Android"><a href="#5-2-2-Android" class="headerlink" title="5.2.2 Android:"></a>5.2.2 Android:</h4><ul>
-<li>生命周期最小化(如用ApplicationContext替代Activity)</li>
-<li>不要在静态变量或者静态内部类中使用非静态外部成员变量，实在要用——<ul>
-<li>将内部类改为静态内部类</li>
-<li>静态内部类中使用弱引用来引用外部类的成员变量</li>
-</ul>
-</li>
-<li>Handler 尽量不持有对象、依赖场景结束时cancelMessageAndCallback</li>
-<li>关闭资源(集合清除、Bitmap.recycle、Closable.close、Register.unregister、 Observer.remove、WebView处理)<br>  及时终止或取消异步任务</li>
-<li>时刻记得不要加载过大的Bitmap对象；(BitmapFactory.Options)</li>
-<li>优化界面交互过程中频繁的内存使用；</li>
-<li>有些地方避免使用强引用，替换为弱引用等操作。</li>
-<li>对批量加载等操作进行缓存设计，譬如列表图片显示，Adapter的convertView缓存等。</li>
-<li>尽可能的复用资源；譬如系统本身有很多字符串、颜色、图片、动画、样式，尽量复用style以节约内存。</li>
-<li>对于有缓存等存在的应用尽量实现onLowMemory()和onTrimMemory()方法。</li>
-<li>尽量使用线程池替代多线程操作，这样可以节约内存及CPU占用率。</li>
-<li>尽量管理好自己的Service、Thread等后台的生命周期，不要浪费内存占用。</li>
-<li>尽量的优化自己的代码，减少冗余，进行编译打包等优化对齐处理，避免类加载时浪费内存。</li>
-</ul>
-<blockquote>
-<p>参考：</p>
-<ul>
-<li><a href="https://zh.wikipedia.org/wiki/内存泄漏" target="_blank" rel="noopener">内存泄漏Wiki词条</a></li>
-<li><a href="https://www.amazon.cn/gp/product/B00D2ID4PK/ref=od_aui_detailpages00?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">《深入理解Java虚拟机:JVM高级特性与最佳实践(第2版)》周志明著</a></li>
-<li><a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html" target="_blank" rel="noopener">Java Garbage Collection Basics</a></li>
-<li><a href="http://bugs.java.com/view_bug.do?bug_id=6668279" target="_blank" rel="noopener">System.gc() should indicate that we don’t recommend use and don’t<br> guarantee behaviour</a></li>
-<li><a href="https://stackoverflow.com/questions/2414105/why-is-it-bad-practice-to-call-system-gc" target="_blank" rel="noopener">Why is it bad practice to call System.gc()?</a></li>
-<li><a href="http://www.jianshu.com/p/8edac8e09b3e" target="_blank" rel="noopener">JAVA虚拟机与Android虚拟机的区别</a></li>
-<li><a href="http://blog.csdn.net/u010299178/article/details/52059998" target="_blank" rel="noopener">Android优化改动——java代码</a></li>
-<li><a href="http://www.jb51.net/article/88708.htm" target="_blank" rel="noopener">Android DVM/ART 区分</a></li>
-</ul>
+        <blockquote>
+<p>工欲善其事必先利其器<br>今天介绍几个plugin工具（奇淫巧技）</p>
 </blockquote>
 <blockquote>
-<p>拍砖：<br><a href="mailto:chengong90@gmail.com" target="_blank" rel="noopener">chengong90@gmail.com</a></p>
+<p><em>（适用平台：IntelliJ IDEA内核的各类IDE）</em></p>
+</blockquote>
+<hr>
+<p><strong>效果图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5b8d8a86fda8eca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ide_tools.png"></p>
+<p>按图中标示顺序介绍：</p>
+<p>####1.Translation<br>_ 顾名思义是中英翻译，令人意外的是自带英美两种发音（默认快捷键：ALT + 1/3，OSX 不详）_</p>
+<p>####2.Background Image Plus<br><em>可以对IDE背景进行自定义，可以设置图片质量/明暗等，对内存有一定消耗，小霸王请绕道</em></p>
+<p>####3.CodeGlance<br><em>提供一个代码文件的全局概览缩略图，主要可用于快速定位</em></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tool/">Tool</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/降低内存占用Route"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/降低内存占用Route/">降低内存占用Route</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/降低内存占用Route/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="已执行"><a href="#已执行" class="headerlink" title="已执行"></a>已执行</h3><ul>
+<li>修复LeakCanary报出的问题（内网、外网）<ul>
+<li>直接检测泄露</li>
+<li>外网beta用户上报</li>
+</ul>
+</li>
+<li>分析dumpheap文件，查内存占用（直接分析、对比分析）<ul>
+<li>占用大户<ul>
+<li>Bitmap</li>
+<li>FinalizerReference</li>
+</ul>
+</li>
+<li>场景分析，进出场景、发现可疑场景，查内存dumpheap文件<ul>
+<li>已有发现：WebView、主题切换泄露</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存/">内存</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/枚举enum必知必会"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/枚举enum必知必会/">枚举enum必知必会</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/枚举enum必知必会/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="内容大纲"><a href="#内容大纲" class="headerlink" title="内容大纲"></a>内容大纲</h3><ul>
+<li>常规范式——替代int保安全</li>
+<li>高阶范式——实现单例模式</li>
+<li>复杂范式——实现方法</li>
+<li>Android中的替代方案——IntDef/StringDef</li>
+<li>纯 Java中的替代方案——MagicConstant</li>
+</ul>
+<h3 id="常规范式"><a href="#常规范式" class="headerlink" title="常规范式"></a>常规范式</h3><ul>
+<li>取代int常量，确保类型安全性</li>
+</ul>
+<p><img src="../../pic_resource/enum_general.png" alt=""></p>
+<p>可以看到，上例中，直接使用1，2之类的int值编译器是会报错的，因为enum是一种class，不止具有int值这一属性</p>
+<p>相较于int值，enum会有类型安全检查，代码会更安全</p>
+<h3 id="高阶范式"><a href="#高阶范式" class="headerlink" title="高阶范式"></a>高阶范式</h3><ul>
+<li>实现单例模式</li>
+</ul>
+<p><img src="../../pic_resource/enum_singleton.png" alt=""></p>
+<p>这样实现的单例模式，不需要处理线程同步的问题，相较于传统的懒汉-饿汉-doublecheck的优势显而易见</p>
+<blockquote>
+<p>实际上单例模式特别容易导致内存泄露，应该尽量减少使用，用更易用的架构设计模式来避免使用单例模式</p>
+</blockquote>
+<h3 id="复杂范式"><a href="#复杂范式" class="headerlink" title="复杂范式"></a>复杂范式</h3><ul>
+<li>添加成员变量</li>
+</ul>
+<p><img src="../../pic_resource/enum_memeber.png" alt=""></p>
+<p>在利用这一属性时，我们可以直接将enum当成一个类来使用，不一样的地方在于，enum的各项是直接给出了实例化的instance，所以带参构造函数需要我直接在定义中给出初始化参数（如上例中的hour）</p>
+<ul>
+<li>提供有差异的API </li>
+</ul>
+<p><img src="../../pic_resource/enum_method.png" alt=""></p>
+<p>如上图所示，DayType的两个类型，各自实现了free方法，实现了差异化的API，这一属性可以用于策略模式，针对不同的类型，我们的enum可以提供不同的策略算法，满足差异化的需求</p>
+<ul>
+<li>实现接口</li>
+</ul>
+<p><img src="../../pic_resource/enum_interface.png" alt=""></p>
+<p>上面的抽象方法free，也可以抽象成接口形式，让枚举去实现，这一特性在工程中的应用极为有利，这样一来，就与我们的“面向接口编程”对上号了</p>
+<blockquote>
+<p>注意API的访问级别需要升级为public</p>
+</blockquote>
+<h3 id="Android中的替代办法"><a href="#Android中的替代办法" class="headerlink" title="Android中的替代办法"></a>Android中的替代办法</h3><p>我们都知道Android的内存非常宝贵，纵使enum有如此多的优点，但我们有时可能只想用它的一个替代int的属性，来增强代码的安全性，有没有其它更轻量的办法的？</p>
+<p>答案是有的，@IntDef, @StringDef就能满足这一要求（属于注解范畴），以IntDef为例:</p>
+<p><img src="../../pic_resource/enum_replace.png" alt=""></p>
+<p>扒一扒IntDef的源码，我们会发现它其实自己也是一个注解，我们上例中应用的是它的value域，还可以利用的有flag域，鉴于flag一般都不会使用，不做过多介绍</p>
+<p><img src="../../pic_resource/enum_intDef.png" alt=""></p>
+<h3 id="Java模块中的替代办法"><a href="#Java模块中的替代办法" class="headerlink" title="Java模块中的替代办法"></a>Java模块中的替代办法</h3><p>有的同学可能碰到这样的业务需要：</p>
+<p>实际的工程是纯Java的，根本无法使用Android中的注解，这时该怎么办？</p>
+<p>好吧，其实是我自己碰到这样的问题了，解决方案其实也很容易找到，查IntDef的设计思路，可以找到它的出处，最后的解决lib是</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.intellij.lang.annotations.MagicConstant</span><br></pre></td></tr></table></figure>
+<p>可以看到，这一lib是intellij的注解，感谢伟大的程序员们的杰作intellij</p>
+<p><img src="../../pic_resource/enum_magic_constant.png" alt=""></p>
+<p>与IntDef不一样的地方在于：</p>
+<ul>
+<li>需要添加intValues关键字，不可以省略（IntDef中对应的可省略关键字是value）</li>
+<li>具体的值可以相同（IntDef中不可以）</li>
+<li>值变为String类型时只需要改关键字为 stringValues</li>
+</ul>
+<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>enum还有一些特性，比如ordinal()取值、初始值从0开始、用EnumSet/EnumMap代替序数</p>
+<p>实际也不推荐使用（ordinal取值不确定性强，程序稳定性差，实在要使用可以用成员变量代替）</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Enum/">Enum</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/【分享】Project ANR"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/【分享】Project ANR/">【分享】Project ANR</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【分享】Project ANR/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>ActivityThread  waitToFinish</p>
+<p>SharePreferenceImpl   </p>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><blockquote>
+<p>Project  SP操作统一到同一个进程</p>
+</blockquote>
+<ul>
+<li>每次edit都直接apply（初衷— 保证所有数据都生效）</li>
+</ul>
+<h3 id="分析及解决"><a href="#分析及解决" class="headerlink" title="分析及解决"></a>分析及解决</h3><p>6.0 — 7.x ，6.0占比 &gt;96%，6.0及以前的读操作是阻塞的（阻塞ActivityThread）</p>
+<p>SharePreference提交记录：</p>
+<ul>
+<li>第一次读操作不加锁（AndroidFramework7.0开始）</li>
+<li>合并写（最后一次改动才写）（AndroidFramework8.0开始）<ul>
+<li>用generation的概念区分最近的一次改动</li>
+</ul>
+</li>
+</ul>
+<h3 id="优化点"><a href="#优化点" class="headerlink" title="优化点"></a>优化点</h3><ul>
+<li>少用</li>
+<li>消减不必要写操作</li>
+<li>存储是分类型的<ul>
+<li>SP是xml文件，真的需要都写到xml文件里吗？<ul>
+<li>2进制文件写速度快于xml文件</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ul>
+<li>先清理无用SP写（优化了50%）</li>
+<li>减少操作</li>
+<li>最后才是check架构（动架构有风险，Project此例中有丢config的风险）</li>
+</ul>
+<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><blockquote>
+<p> GP后台关于ANR、Crash是基于session统计的</p>
+<p>检查ANR、Crash时可以看看源代码，或许Android有主动修正</p>
+<p>做应用，不看Framework</p>
+<p>做业务，先到Framework里搜，看是否有提示</p>
 </blockquote>
 
       
@@ -1380,7 +925,70 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GC/">GC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存泄露/">内存泄露</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ANR/">ANR</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/算法/【算法】BinarySearch--二分搜索-折半查找法"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/">【算法】BinarySearch--二分搜索-折半查找法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下</p>
+</blockquote>
+<p>wiki 图示：(<a href="https://zh.wikipedia.org/wiki/二分搜索算法" target="_blank" rel="noopener">Link</a>)</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c0e03f78ac559fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search wiki pic.png"></p>
+<p>Android中util.ContainerHelpers中的实现api：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-53135a5bb2e3e281.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search.png"></p>
+<p><em>排序前提：array本身已为有序数组</em></p>
+<p>查找过程：<br>0.向右无符号移位1位，得到middle位值；<br>1.以mid为准比对midIndex位置值与参数value大小，大则hi位移至现mid位前一位，小则lo位移至现mid位后一位，相等则返回mid；<br>2.重复以上过程直至不满足循环条件或是又查找结果</p>
+<p>从low、high可以看出，结果返回的是value在数组中对应的index，如果为负则代表不存在（最后一行，返回~lo会得到一个负数，因为lo计算结果一定为正，个人感觉直接返回一个负数可以连按位取反都省略掉，是不是性能更优？）</p>
+<hr>
+<blockquote>
+<p>Java 位操作符：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-a2c49bbb981fa6c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Java bit calculate.png"></p>
+</blockquote>
+<hr>
+<p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="夕识.jpeg"></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
 
     </footer>
   </div>

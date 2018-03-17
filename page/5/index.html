@@ -255,6 +255,73 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
+</blockquote>
+<blockquote>
+<p>这样的话，注意定期检查各lib版本就好</p>
+</blockquote>
+<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
+<p>总结一下步骤：</p>
+<ol>
+<li>获取二维码（QRCode）</li>
+<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
+<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
+</li>
+<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
+</li>
+</ol>
+<p>时序图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -525,83 +592,6 @@
 
 
   
-    <article id="post-技术/Android/GL check point"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/GL check point/">GL check point</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/GL check point/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="调查点："><a href="#调查点：" class="headerlink" title="调查点："></a>调查点：</h2><ol>
-<li><p>纹理是否压缩</p>
-<ul>
-<li>疑问：不同GPU支持的纹理格式不一样，需要对GPU做适配，工作量不小</li>
-</ul>
-<blockquote>
-<p>志文：壁纸或许可以做一些处理（go-org反编译代码未发现类似处理），理想情况下，可以减7-8M内存占用</p>
-</blockquote>
-</li>
-<li><p>Mipmap</p>
-<blockquote>
-<p>虽然Mipmap包会比原始图像多用掉33%的内存，但它不仅可以提升性能，也会提高图像质量</p>
-<blockquote>
-<p>ARM Mali GPU Texture Compression Tool可以生成Mipmap</p>
-</blockquote>
-</blockquote>
-<ul>
-<li>结论：这个功能会更耗内存，适用于游戏场景，org不适用</li>
-</ul>
-</li>
-<li><p>纹理参数设置</p>
-<blockquote>
-<p>基本越慢的函数，视觉质量越高</p>
-<p>参数配置参考链接：<a href="https://www.khronos.org/registry/OpenGL-Refpages/es2.0/" target="_blank" rel="noopener">https://www.khronos.org/registry/OpenGL-Refpages/es2.0/</a></p>
-</blockquote>
-</li>
-<li><p>RenderScript 3D 渲染</p>
-</li>
-</ol>
-<p>高斯模糊之类的优化</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GL/">GL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Performance/">Performance</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-技术/Android/GL Launcher memory consume test report"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -669,6 +659,83 @@
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">23770</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">20416</span>    <span class="number">20388</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">33280</span>    <span class="number">27504</span>     <span class="number">5775</span></span><br><span class="line">  Dalvik Heap    <span class="number">34972</span>    <span class="number">34900</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">60660</span>    <span class="number">44452</span>    <span class="number">16208</span></span><br><span class="line"> Dalvik Other     <span class="number">3228</span>     <span class="number">3228</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1088</span>     <span class="number">1088</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">150</span>      <span class="number">136</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">59148</span>    <span class="number">59148</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev        <span class="number">8</span>        <span class="number">0</span>        <span class="number">8</span>        <span class="number">0</span></span><br><span class="line">     .so mmap    <span class="number">12463</span>      <span class="number">284</span>     <span class="number">9176</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap     <span class="number">2967</span>        <span class="number">0</span>     <span class="number">2524</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">110</span>        <span class="number">0</span>      <span class="number">108</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">31520</span>       <span class="number">52</span>    <span class="number">26864</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">3170</span>        <span class="number">0</span>     <span class="number">1560</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">1701</span>     <span class="number">1348</span>       <span class="number">20</span>        <span class="number">0</span></span><br><span class="line">   Other mmap     <span class="number">1359</span>        <span class="number">8</span>     <span class="number">1120</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">44880</span>    <span class="number">44880</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">3652</span>     <span class="number">3652</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">220832</span>   <span class="number">169112</span>    <span class="number">41380</span>        <span class="number">0</span>    <span class="number">93940</span>    <span class="number">71956</span>    <span class="number">21983</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">36268</span></span><br><span class="line">         Native Heap:    <span class="number">20388</span></span><br><span class="line">                Code:    <span class="number">40568</span></span><br><span class="line">               Stack:     <span class="number">1088</span></span><br><span class="line">            Graphics:   <span class="number">104028</span></span><br><span class="line">       Private Other:     <span class="number">8152</span></span><br><span class="line">              System:    <span class="number">10340</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">220832</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
 <h3 id="从3D切回2D"><a href="#从3D切回2D" class="headerlink" title="从3D切回2D"></a>从3D切回2D</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">** MEMINFO in pid <span class="number">23770</span> [com.org.test] **</span><br><span class="line">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span><br><span class="line">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span><br><span class="line">                ------   ------   ------   ------   ------   ------   ------</span><br><span class="line">  Native Heap    <span class="number">23624</span>    <span class="number">23596</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">37376</span>    <span class="number">31068</span>     <span class="number">6307</span></span><br><span class="line">  Dalvik Heap    <span class="number">48127</span>    <span class="number">48056</span>        <span class="number">0</span>        <span class="number">0</span>    <span class="number">69274</span>    <span class="number">53190</span>    <span class="number">16084</span></span><br><span class="line"> Dalvik Other     <span class="number">3368</span>     <span class="number">3368</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        Stack     <span class="number">1256</span>     <span class="number">1256</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">       Ashmem      <span class="number">150</span>      <span class="number">136</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Gfx dev    <span class="number">70896</span>    <span class="number">70896</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">    Other dev        <span class="number">8</span>        <span class="number">0</span>        <span class="number">8</span>        <span class="number">0</span></span><br><span class="line">     .so mmap     <span class="number">4425</span>      <span class="number">320</span>      <span class="number">968</span>        <span class="number">0</span></span><br><span class="line">    .apk mmap      <span class="number">654</span>        <span class="number">0</span>       <span class="number">64</span>        <span class="number">0</span></span><br><span class="line">    .ttf mmap      <span class="number">118</span>        <span class="number">0</span>      <span class="number">108</span>        <span class="number">0</span></span><br><span class="line">    .dex mmap    <span class="number">13328</span>       <span class="number">52</span>     <span class="number">8816</span>        <span class="number">0</span></span><br><span class="line">    .oat mmap     <span class="number">1996</span>        <span class="number">0</span>      <span class="number">380</span>        <span class="number">0</span></span><br><span class="line">    .art mmap     <span class="number">2020</span>     <span class="number">1440</span>      <span class="number">332</span>        <span class="number">0</span></span><br><span class="line">   Other mmap       <span class="number">88</span>        <span class="number">8</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">   EGL mtrack    <span class="number">53520</span>    <span class="number">53520</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">      Unknown     <span class="number">3668</span>     <span class="number">3668</span>        <span class="number">0</span>        <span class="number">0</span></span><br><span class="line">        TOTAL   <span class="number">227246</span>   <span class="number">206316</span>    <span class="number">10676</span>        <span class="number">0</span>   <span class="number">106650</span>    <span class="number">84258</span>    <span class="number">22391</span></span><br><span class="line"></span><br><span class="line"> App Summary</span><br><span class="line">                       Pss(KB)</span><br><span class="line">                        ------</span><br><span class="line">           Java Heap:    <span class="number">49828</span></span><br><span class="line">         Native Heap:    <span class="number">23596</span></span><br><span class="line">                Code:    <span class="number">10708</span></span><br><span class="line">               Stack:     <span class="number">1256</span></span><br><span class="line">            Graphics:   <span class="number">124416</span></span><br><span class="line">       Private Other:     <span class="number">7188</span></span><br><span class="line">              System:    <span class="number">10254</span></span><br><span class="line"></span><br><span class="line">               TOTAL:   <span class="number">227246</span>      <span class="function">TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">------------------------              </span></span><br><span class="line"><span class="function">After 5Min------------------              </span></span><br><span class="line"><span class="function">------------------------              </span></span><br><span class="line"><span class="function">** MEMINFO in pid 23770 [com.org.test] **</span></span><br><span class="line"><span class="function">                   Pss  Private  Private  Swapped     Heap     Heap     Heap</span></span><br><span class="line"><span class="function">                 Total    Dirty    Clean    Dirty     Size    Alloc     Free</span></span><br><span class="line"><span class="function">                ------   ------   ------   ------   ------   ------   ------</span></span><br><span class="line"><span class="function">  Native Heap    23368    23340        0        0    37120    30598     6521</span></span><br><span class="line"><span class="function">  Dalvik Heap    43928    43856        0        0    69379    65551     3828</span></span><br><span class="line"><span class="function"> Dalvik Other     3560     3560        0        0</span></span><br><span class="line"><span class="function">        Stack     1244     1244        0        0</span></span><br><span class="line"><span class="function">       Ashmem      150      136        0        0</span></span><br><span class="line"><span class="function">      Gfx dev    72440    72440        0        0</span></span><br><span class="line"><span class="function">    Other dev        8        0        8        0</span></span><br><span class="line"><span class="function">     .so mmap     3636      320      788        0</span></span><br><span class="line"><span class="function">    .apk mmap      395        0        0        0</span></span><br><span class="line"><span class="function">    .ttf mmap       26        0        8        0</span></span><br><span class="line"><span class="function">    .dex mmap    12470       52     8176        0</span></span><br><span class="line"><span class="function">    .oat mmap     2610        0      260        0</span></span><br><span class="line"><span class="function">    .art mmap     2159     1456       28        0</span></span><br><span class="line"><span class="function">   Other mmap       58        8       20        0</span></span><br><span class="line"><span class="function">   EGL mtrack    44880    44880        0        0</span></span><br><span class="line"><span class="function">      Unknown     3668     3668        0        0</span></span><br><span class="line"><span class="function">        TOTAL   214600   194960     9288        0   106499    96149    10349</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"> App Summary</span></span><br><span class="line"><span class="function">                       <span class="title">Pss</span><span class="params">(KB)</span></span></span><br><span class="line"><span class="function">                        ------</span></span><br><span class="line"><span class="function">           Java Heap:    45340</span></span><br><span class="line"><span class="function">         Native Heap:    23340</span></span><br><span class="line"><span class="function">                Code:     9604</span></span><br><span class="line"><span class="function">               Stack:     1244</span></span><br><span class="line"><span class="function">            Graphics:   117320</span></span><br><span class="line"><span class="function">       Private Other:     7400</span></span><br><span class="line"><span class="function">              System:    10352</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">               TOTAL:   214600      TOTAL <span class="title">SWAP</span> <span class="params">(KB)</span>:        0</span></span><br></pre></td></tr></table></figure>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GL/">GL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Performance/">Performance</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/GL check point"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/GL check point/">GL check point</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/GL check point/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="调查点："><a href="#调查点：" class="headerlink" title="调查点："></a>调查点：</h2><ol>
+<li><p>纹理是否压缩</p>
+<ul>
+<li>疑问：不同GPU支持的纹理格式不一样，需要对GPU做适配，工作量不小</li>
+</ul>
+<blockquote>
+<p>志文：壁纸或许可以做一些处理（go-org反编译代码未发现类似处理），理想情况下，可以减7-8M内存占用</p>
+</blockquote>
+</li>
+<li><p>Mipmap</p>
+<blockquote>
+<p>虽然Mipmap包会比原始图像多用掉33%的内存，但它不仅可以提升性能，也会提高图像质量</p>
+<blockquote>
+<p>ARM Mali GPU Texture Compression Tool可以生成Mipmap</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>结论：这个功能会更耗内存，适用于游戏场景，org不适用</li>
+</ul>
+</li>
+<li><p>纹理参数设置</p>
+<blockquote>
+<p>基本越慢的函数，视觉质量越高</p>
+<p>参数配置参考链接：<a href="https://www.khronos.org/registry/OpenGL-Refpages/es2.0/" target="_blank" rel="noopener">https://www.khronos.org/registry/OpenGL-Refpages/es2.0/</a></p>
+</blockquote>
+</li>
+<li><p>RenderScript 3D 渲染</p>
+</li>
+</ol>
+<p>高斯模糊之类的优化</p>
 
       
 
@@ -989,7 +1056,7 @@
 
 
   
-    <article id="post-每周一书/《褚时健传》"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-每周一书/【Note】《软件项目管理》概览提要"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -997,7 +1064,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/《褚时健传》/">《褚时健传》</a>
+      <a class="article-title" href="/2017/08/13/每周一书/【Note】《软件项目管理》概览提要/">【Note】《软件项目管理》概览提要</a>
     </h1>
   
 
@@ -1005,7 +1072,7 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/每周一书/《褚时健传》/" class="article-date">
+	<a href="/2017/08/13/每周一书/【Note】《软件项目管理》概览提要/" class="article-date">
 	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
 	</a>
 
@@ -1016,40 +1083,21 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>“回想这么多年来，我自己做的最问心无愧的就是：‘没有庸庸碌碌地生活’”<br>“我不期望别人在说起我的人生时有多少褒奖，我只希望人家说起我时，会说上一句：‘褚时健这个人，还是做了一些事。’”<br>——褚时健</p>
-<p>不积跬步无以至千里，一屋不扫何以扫天下。<br>真正从小事做起，精益求精态度的践行者，他之所以能走这么远，按照友人常说的，“必定不是运气”。</p>
-<p>想起《苦难辉煌》，苦难并不一定会带来辉煌，但辉煌，必定是由苦难锻造的。</p>
-<p>听起来稍显鸡汤，不过这本传记虽说文笔谈不上优美，但确实是王石传记的同一撰写者，文中细节还原或许有一定可信度。</p>
-<p>值得一提的是，他背后也俗套地有一位贤内助。</p>
-<p>老年丧女，白发人送黑发人的撕心裂肺或许只有当事人能够体会吧。</p>
-<blockquote>
-<p>父亲早逝后，一度辍学，幸有堂兄指引，遂得续造</p>
+        <blockquote>
+<p>《软件项目管理》着眼于软件项目的策划、监督、控制；</p>
 </blockquote>
 <blockquote>
-<p>找准关键点，精益求精，一步一个脚印，才有红塔山的传奇</p>
-</blockquote>
-<blockquote>
-<p>波澜起伏，一度失女入狱，耳后自困荒山，东山再起，褚橙横空出世</p>
-</blockquote>
-<blockquote>
-<p>父亲早逝、少年参军、后被打为右派，沉着冷静，脚踏实地，才有再起之势</p>
-</blockquote>
-<blockquote>
-<p>这不是一部普通的传记，它描写了一个人如何在17年时间里缔造了一个商业王国，然后如何陨落、自困荒山，然后又如何用17年时间走出心理和职业的巨大困局。</p>
-</blockquote>
-<blockquote>
-<p>正如尼采所言，一个伟大的人格，可以在自己的身上克服这个时代</p>
+<p>主要对从项目选择开始，到项目交付整个流程中关键步骤进行释疑解惑，<strong>涵盖项目管理</strong>（评价、策划、评估、实施）、<strong>技术管理</strong>（评审、质量控制、敏捷开发）、<strong>风险管理</strong>（评估、规避、转移）、<strong>合同管理</strong>、<strong>成员管理</strong>（选择、激励、激励）、<strong>团队管理</strong>等几个方面</p>
 </blockquote>
 <hr>
-<p><a href="https://www.amazon.cn/gp/product/B017SAZAD6/ref=oh_aui_detailpage_o03_s00?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接</a></p>
+<p><a href="https://www.evernote.com/l/ARuMImpZpL9FQbiZNC9LGNCYsUd8ITNmmYE" target="_blank" rel="noopener">Evernote链接</a></p>
+<p><a href="https://www.evernote.com/shard/s283/sh/8c226a59-a4bf-4541-b899-342f4b18d098/b1477c2133669981/res/bd8cbb92-d0f3-4149-8d0c-9129765d7537/软件项目管理.xmind" target="_blank" rel="noopener">XMind文档下载</a></p>
+<p><strong>导图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-43035d3944e2e17c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目管理overview.png"></p>
 <hr>
-<p>导图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-6433421a9297d513.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="褚时健传  overview.png"></p>
-<hr>
-<p>笔记文本：</p>
-<blockquote>
-<p>褚时健传<br>1 第一篇 早年故事<br>  1.1 第一章 起始<br>    1.1.1 褚姓人家<br>    1.1.2 矣则<br>  1.2 第二章 童年浪花<br>  1.3 第三章 少年故事<br>    1.3.1 年少逝父<br>  1.4 第四章 离家的日子<br>  1.5 第五章 所谓长大<br>  1.6 第六章 思变<br>2 第二篇 激情的青春十年<br>  2.1 第一章 当上了游击队员<br>  2.2 第二章 战火纷飞<br>  2.3 第三章 迎来解放<br>  2.4 第四章 革命意味着牺牲<br>  2.5 第五章 平静或不平静的生活<br>  2.6 第六章 波澜骤起<br>3 第三篇 生活的断层<br>  3.1 第一章 跌入生活底层<br>  3.2 第二章 一家人要在一起<br>  3.3 第三章 到了另一个农场<br>  3.4 第四章 新平、新平<br>  3.5 第五章 迅速进入角色<br>  3.6 第六章 戛洒缘分<br>  3.7 第七章 动乱岁月中的平静生活<br>  3.8 第八章 希望的光就要来了<br>4 第四篇 华彩人生篇章<br>  4.1 第一章 预备<br>  4.2 第二章 完事开头难<br>  4.3 第三章 启动改革<br>  4.4 第四章 出手改革<br>  4.5 第五章 设备之战<br>  4.6 第六章 烟叶的故事<br>  4.7 第七章 内部管理大小事<br>5 第五篇 行在人生巅峰时期<br>  5.1 第一章 名烟翻番<br>  5.2 第二章 关索坝工程<br>  5.3 第三章 快马加鞭<br>  5.4 第四章 谢幕<br>  5.5 第五章 人生间隙<br>6 第六篇 果夺锦标<br>  6.1 第一章 是结束，也是开始<br>  6.2 第二章 土地、水和树<br>  6.3 第三章 橙树在长大<br>  6.4 第四章 一年比一年丰收<br>  6.5 第五章 每一条路都指向未来<br>  6.6 第六章 江山无限<br>这不是一部普通的传记，它描写了一个人如何在17年时间里缔造了一个商业王国，然后如何陨落、自困荒山，然后又如何用17年时间走出心理和职业的巨大困局。 正如尼采所言，一个伟大的人格，可以在自己的身上克服这个时代</p>
-</blockquote>
+<p><strong>文本</strong></p>
+<p>软件项目管理</p>
+<p>1 概述<br>  1.1 合同/技术项目管理<br>    1.1.1 可行性研究、策划、实施<br>  1.2 计划、方法、方法学<br>  1.3 分类方式<br>    1.3.1 用户、系统、目标与产品<br>  1.4 设定目标<br>    1.4.1 目标与子目标<br>    1.4.2 有效性度量<br>  1.5 管理控制<br>    1.5.1 瀑布流控制、反馈迭代直至达成目标<br>2 评价项目与项目集管理<br>  2.1 项目组合管理<br>    2.1.1 新品开发、改进项目<br>    2.1.2 组合优化<br>  2.2 单项目管理<br>    2.2.1 单项目评估<br>        2.2.1.1 技术评估<br>        2.2.1.2 成本效益分析<br>                2.2.1.2.1 评价技术<br>                2.2.1.2.1.1 净利润<br>                2.2.1.2.1.2 回收期<br>                2.2.1.2.1.3 投资回报率<br>                2.2.1.2.1.4 净现值<br>                2.2.1.2.1.5 内部回报率<br>        2.2.1.3 现金流预测<br>    2.2.2 风险评价<br>        2.2.2.1 风险标识与等级<br>        2.2.2.2 风险与净现值<br>        2.2.2.3 风险剖面分析<br>        2.2.2.4 使用决策树<br>  2.3 项目集管理<br>    2.3.1 管理项目集内的资源分配<br>    2.3.2 策略<br>    2.3.3 创建<br>        2.3.3.1 命令（目标）<br>        2.3.3.2 摘要<br>        2.3.3.3 构想<br>        2.3.3.4 蓝图<br>    2.3.4 辅助<br>        2.3.4.1 依赖关系图<br>        2.3.4.2 交付计划<br>  2.4 收益管理<br>    2.4.1 量化收益<br>3 项目策划概述<br>  3.1 步进式策划概述<br>  3.2 步骤<br>    3.2.1 选择<br>    3.2.2 标识范围和目标<br>    3.2.3 标识基础设施<br>    3.2.4 分析特征<br>        3.2.4.1 驱动因素<br>        3.2.4.2 质量特征<br>        3.2.4.3 用户需求<br>        3.2.4.4 开发方法学与生命周期法<br>        3.2.4.5 整体资源需求估计<br>    3.2.5 标识产品与活动<br>        3.2.5.1 可交付物<br>        3.2.5.2 文档化产品流<br>        3.2.5.3 活动图网络<br>    3.2.6 估算每个活动工作量<br>        3.2.6.1 使活动可控<br>    3.2.7 标识活动风险<br>        3.2.7.1 标识、量化基于活动的风险<br>        3.2.7.2 风险缓解策略与应急措施<br>        3.2.7.3 根据风险调整计划与估计<br>    3.2.8 分配资源<br>        3.2.8.1 根据资源约束修改计划与估计<br>    3.2.9 评审/发布计划<br>    3.2.10 执行、细节策划<br>4 选择合适的项目方法<br>  4.1 build or buy<br>  4.2 选择方法学和技术<br>  4.3 过程模型的选择<br>  4.4 结构与交付速度<br>  4.5 模型<br>    4.5.1 瀑布模型<br>    4.5.2 螺旋模型<br>    4.5.3 软件原型开发<br>    4.5.4 其它<br>        4.5.4.1 原型收获<br>        4.5.4.2 具象化程度<br>        4.5.4.3 取舍<br>        4.5.4.4 控制变更<br>  4.6 增量式交付<br>    4.6.1 优缺点<br>    4.6.2 交付计划<br>    4.6.3 系统目标<br>    4.6.4 开放的技术计划<br>    4.6.5 增量式计划<br>  4.7 敏捷<br>    4.7.1 水晶方法<br>    4.7.2 Atern<br>    4.7.3 特性驱动<br>    4.7.4 Scrum<br>    4.7.5 XP<br>5 软件工作量估计<br>  5.1 何处评估<br>    5.1.1 战略策划<br>    5.1.2 可行性研究<br>    5.1.3 项目策划<br>  5.2 过高/过低问题<br>  5.3 软件估计基础<br>    5.3.1 历史数据<br>    5.3.2 工作度量<br>  5.4 估计技术<br>    5.4.1 自底向上<br>    5.4.2 自顶向下<br>    5.4.3 专家判断<br>    5.4.4 类比估计<br>  5.5 功能点分析<br>6 活动策划<br>  6.1 目的<br>    6.1.1 可行性评估、资源分配、成本核算、动机、协调<br>  6.2 何时<br>    6.2.1 逐步细化<br>  6.3 进度表<br>  6.4 项目与活动<br>    6.4.1 甘特图<br>  6.5 确定活动次序与进度<br>  6.6 网络策划模型<br>  6.7 网络模型的公式化表示<br>  6.8 增加时间维<br>  6.9 正向遍历<br>  6.10 反向遍历<br>  6.11 表示关键路径<br>  6.12 活动缓冲期<br>  6.13 标识关键活动<br>  6.14 活动-箭头网络<br>7 风险管理<br>  7.1 风险<br>  7.2 分类<br>  7.3 处理框架<br>  7.4 识别<br>  7.5 评估<br>  7.6 策划<br>    7.6.1 接受、规避、降低与缓解、转移<br>  7.7 管理<br>    7.7.1 应急、应对策略<br>  7.8 评价进度风险<br>  7.9 应用PERT技术<br>    7.9.1 活动评估网络图<br>  7.10 蒙特卡洛仿真<br>  7.11 关键链概念<br>    7.11.1 甘特图<br>8 资源分配<br>  8.1 资源性质<br>  8.2 标识资源需求<br>  8.3 资源调度<br>  8.4 创建关键路径<br>  8.5 计算成本<br>  8.6 特定细节<br>  8.7 发布资源进度表<br>  8.8 成本进度<br>  8.9 调度顺序<br>9 监督与控制<br>  9.1 创建框架<br>    9.1.1 责任<br>    9.1.2 进展评估<br>    9.1.3 设置检查点<br>    9.1.4 取快照<br>  9.2 收集数据<br>    9.2.1 局部完成报告<br>    9.2.2 红黄绿交通灯报告<br>  9.3 进展可视化<br>    9.3.1 甘特图<br>    9.3.2 延迟图<br>    9.3.3 时间线<br>  9.4 成本监督<br>  9.5 优先级控制<br>    9.5.1 关键路径活动、无自由浮动的活动、少于规定浮动的活动、高风险活动、使用关键资源活动<br>  9.6 使项目回归目标<br>    9.6.1 缩短关键路径、重新评估优先需求、异常计划<br>  9.7 变更控制<br>    9.7.1 规程、维度、职责<br>10 管理合同<br>  10.1 合同种类<br>  10.2 部署阶段<br>    10.2.1 需求分析、评估计划、邀请投标、评估提议<br>  10.3 典型合同条款<br>  10.4 管理<br>  10.5 验收<br>11 人员管理<br>  11.1 理解行为<br>    11.1.1 解释主义、实证主义<br>  11.2 组织行为：背景<br>    11.2.1 合适的人、对指导方法择优、薪酬激励<br>  11.3 选择合适人选<br>  11.4 用最好的方法进行教育<br>    11.4.1 培训<br>  11.5 激励<br>    11.5.1 Taylorise模型<br>        11.5.1.1 制造业计件<br>    11.5.2 Maslow需求层次<br>        11.5.2.1 发现个人的需求所处层次<br>    11.5.3 Herzberg双因素理论<br>        11.5.3.1 维护因素、工作热情<br>  11.6 oldham-Hackman工作特征模型<br>    11.6.1 技术多样性、任务鉴别、重要性、自主权、反馈<br>  11.7 压力<br>    11.7.1 任务控制、角色冲突<br>  11.8 健康和安全<br>  11.9 职业道德注意事项<br>12 团队管理<br>  12.1 组成<br>  12.2 决策制定<br>    12.2.1 心里障碍<br>        12.2.1.1 故障启发、恶性增资、信息超载<br>    12.2.2 小组综合制定<br>    12.2.3 主程序组<br>    12.2.4 敏捷<br>  12.3 组织结构<br>  12.4 合作依赖<br>  12.5 分散或虚拟团队<br>  12.6 沟通风格<br>  12.7 沟通计划<br>    12.7.1 what、who、purpose、when、method、responsibility<br>  12.8 领导能力<br>13 软件质量<br>  13.1 质量在项目策划中的位置<br>  13.2 重要性<br>    13.2.1 危险程度、不定因素、缺陷累积<br>  13.3 定义<br>  13.4 产品与过程质量管理<br>  13.5 质量管理体系<br>  13.6 能力过程模型<br>  13.7 助力提高技术<br>    13.7.1 增加可见性<br>    13.7.2 过程性结构<br>    13.7.3 检查中间阶段<br>  13.8 测试<br>  13.9 质量计划<br>（Bob Hunghes &amp; Mike Cotterell 著）</p>
 
       
 
@@ -1059,72 +1107,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-每周一书/周读-- 创业维艰"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/周读-- 创业维艰/">周读-- 创业维艰</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/每周一书/周读-- 创业维艰/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><blockquote>
-<p>分类——管理</p>
-<p>推荐指数——三星半</p>
-</blockquote>
-<blockquote>
-<p>这是一本关于<strong>创业</strong>的书，读起来更像是一本回忆录，不一样的是会有一些比较实操的逆境中求生的经验总结归纳</p>
-</blockquote>
-<blockquote>
-<p>作者系 Loadcloud及Opsware创始人（后者被惠普以15.6亿美元收购），真正实现了从0到0.1，再到1的转变，这些创业之后又开始涉入风险投资，比较符合现在流行的“企投家”标准</p>
-</blockquote>
-<p>虽然是一位CEO关于创业的经验总结，我们大家也没有那么多人创业，但读来感觉会对像我这样“一般员工”的认识产生影响，会更能体会老板是怎么想的，领导是怎么想的</p>
-<p>如果我们能够把平时的工作真正当成自己的事业来做，拿出那份责任感、使命感，我相信最后的结果不会坏</p>
-<p>当然，书中还谈到了很多具体的诸如如何组织、如何就平时的棘手问题进行沟通的细节，纵使作者的故事是在硅谷，但最本质的东西是相通的，虽书中论述不及专业的管理专家（如格鲁夫）之谈，但也具有相当的启发意义，毕竟他的故事算是逆境生长的极其成功的典范，能够在互联网经济泡沫时力挽狂澜，作者的各方面能力可略知一二</p>
-<p>说了这么多好，该扒一扒缺点了。因为是英文翻译过来的，所以有些语义语境读来不那么舒服，再加上中美文化本身的差异，书中描述的一些细节有时看来比较离谱，部分事情可能在我们看来天经地义。还有一点，总结的理论算不上太专业，不太成体系，真正想钻研企业管理，还是得看大师之作（格鲁夫的《给经理人的第一课》拿来当入门就不错）</p>
-<h3 id="部分小结、摘录"><a href="#部分小结、摘录" class="headerlink" title="部分小结、摘录"></a>部分小结、摘录</h3><p>印象笔记 图文链接：</p>
-<p><a href="https://www.evernote.com/l/ARvmQ23Tvs5JKZAmlWM9hqdhqTouO4fRyO8" target="_blank" rel="noopener">https://www.evernote.com/l/ARvmQ23Tvs5JKZAmlWM9hqdhqTouO4fRyO8</a> </p>
-<p>导图：</p>
-<p><img src="../pic_resource/创业维艰overview.png" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
 
     </footer>
   </div>
