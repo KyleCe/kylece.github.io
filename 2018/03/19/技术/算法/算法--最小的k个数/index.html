@@ -3,28 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>【note】《构建之法》提要 | KyleCe</title>
+  <title>最小的k个数 | KyleCe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="项目管理读书" />
+  <meta name="keywords" content="算法面经" />
   
   
   
   
-  <meta name="description" content="《软件工程  构建之法》作者邹欣系Windows中国工程师团队首席研发总监 （Link：亚马逊）   整本书，极其认真，结构组织的有点像学术论文了。涵盖面比较全，涉及到了现代软件工程的整个流程，从需求的挖掘产生，到中间各个环节地循序渐进，直至最后的交付与维护支持。必然也就导致每个点深入程度相对较有限。   除了项目本身，本书另一个关注重点是项目中的人：项目经理、用户、测试、开发，讲到各种角色各自">
-<meta name="keywords" content="项目管理,读书">
+  <meta name="description" content="题 输入n个整数，找出其中最小的k个数 例：输入4、5、1、6、2、7、3、8 则最小的3个数是1、2、3 分析首先想到最直观的解法是：将数组排序（正序），然后前面k个数字就是最小的k个数时间复杂度就完全取决于所采用的排序算法，并且不借助辅助空间的话，排序也会对原数组的内容造成影响 思路一递归地进行如下操作：基于数组的第k个数来调整，比k小的数都位于数组左边，比k大的数字都位于数组右边——这样就可">
+<meta name="keywords" content="算法,面经">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Note】《构建之法》提要">
-<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/【Note】《构建之法》提要/index.html">
+<meta property="og:title" content="最小的k个数">
+<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2018/03/19/技术/算法/算法--最小的k个数/index.html">
 <meta property="og:site_name" content="KyleCe">
-<meta property="og:description" content="《软件工程  构建之法》作者邹欣系Windows中国工程师团队首席研发总监 （Link：亚马逊）   整本书，极其认真，结构组织的有点像学术论文了。涵盖面比较全，涉及到了现代软件工程的整个流程，从需求的挖掘产生，到中间各个环节地循序渐进，直至最后的交付与维护支持。必然也就导致每个点深入程度相对较有限。   除了项目本身，本书另一个关注重点是项目中的人：项目经理、用户、测试、开发，讲到各种角色各自">
+<meta property="og:description" content="题 输入n个整数，找出其中最小的k个数 例：输入4、5、1、6、2、7、3、8 则最小的3个数是1、2、3 分析首先想到最直观的解法是：将数组排序（正序），然后前面k个数字就是最小的k个数时间复杂度就完全取决于所采用的排序算法，并且不借助辅助空间的话，排序也会对原数组的内容造成影响 思路一递归地进行如下操作：基于数组的第k个数来调整，比k小的数都位于数组左边，比k大的数字都位于数组右边——这样就可">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-7bcaba0014f30279.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-03-09T15:32:43.046Z">
+<meta property="og:updated_time" content="2018-03-19T15:39:00.554Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【Note】《构建之法》提要">
-<meta name="twitter:description" content="《软件工程  构建之法》作者邹欣系Windows中国工程师团队首席研发总监 （Link：亚马逊）   整本书，极其认真，结构组织的有点像学术论文了。涵盖面比较全，涉及到了现代软件工程的整个流程，从需求的挖掘产生，到中间各个环节地循序渐进，直至最后的交付与维护支持。必然也就导致每个点深入程度相对较有限。   除了项目本身，本书另一个关注重点是项目中的人：项目经理、用户、测试、开发，讲到各种角色各自">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1481332-7bcaba0014f30279.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="最小的k个数">
+<meta name="twitter:description" content="题 输入n个整数，找出其中最小的k个数 例：输入4、5、1、6、2、7、3、8 则最小的3个数是1、2、3 分析首先想到最直观的解法是：将数组排序（正序），然后前面k个数字就是最小的k个数时间复杂度就完全取决于所采用的排序算法，并且不借助辅助空间的话，排序也会对原数组的内容造成影响 思路一递归地进行如下操作：基于数组的第k个数来调整，比k小的数都位于数组左边，比k大的数字都位于数组右边——这样就可">
   
     <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
   
@@ -162,7 +160,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-技术/【Note】《构建之法》提要" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-技术/算法/算法--最小的k个数" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -170,7 +168,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      【Note】《构建之法》提要
+      最小的k个数
     </h1>
   
 
@@ -178,12 +176,12 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/【Note】《构建之法》提要/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	<a href="/2018/03/19/技术/算法/算法--最小的k个数/" class="article-date">
+	  <time datetime="2018-03-19T15:13:18.000Z" itemprop="datePublished">2018-03-19</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+    <a class="article-category-link" href="/categories/技术/">技术</a>
 
       
 	<a class="article-views">
@@ -195,28 +193,26 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>《软件工程  构建之法》作者邹欣系Windows中国工程师团队首席研发总监 （Link：<a href="https://www.amazon.cn/图书/dp/B011LPUAYI/ref=sr_1_1?ie=UTF8&amp;qid=1487685207&amp;sr=8-1&amp;keywords=构建之法" target="_blank" rel="noopener">亚马逊</a>）</p>
-</blockquote>
+        <h3 id="题"><a href="#题" class="headerlink" title="题"></a>题</h3><p> 输入n个整数，找出其中最小的k个数<br> 例：输入4、5、1、6、2、7、3、8<br> 则最小的3个数是1、2、3</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>首先想到最直观的解法是：将数组排序（正序），然后前面k个数字就是最小的k个数<br>时间复杂度就完全取决于所采用的排序算法，并且不借助辅助空间的话，排序也会对原数组的内容造成影响</p>
+<h4 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h4><p>递归地进行如下操作：<br>基于数组的第k个数来调整，比k小的数都位于数组左边，比k大的数字都位于数组右边——这样就可以使得数组前的k个数字就是最小的k个数字</p>
+<h4 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h4><p>创建一个大小为k的数据容器来存储最小的k个数字，接下来每次从输入的n个整数中读入一个数。如果容器中已有的数字少于k个，则直接放入；若容器中已满，则将容器中最大值与读入数字进行比较，保留更小的数在容器中</p>
+<p>当容器满时，我们需要做3件事：</p>
+<ol>
+<li>找到max</li>
+<li>可能需要删除这个max</li>
+<li>可能插入一个新数字</li>
+</ol>
+<p>如果用一个二叉树来当容器，那么我们能在O(logk)时间内完成上述3步</p>
+<p>我们可以选用不同的二叉树来实现。鉴于每次都要找到Max，可以使用最大堆</p>
 <blockquote>
-<p>整本书，极其认真，结构组织的有点像学术论文了。涵盖面比较全，涉及到了现代软件工程的整个流程，从需求的挖掘产生，到中间各个环节地循序渐进，直至最后的交付与维护支持。必然也就导致每个点深入程度相对较有限。</p>
+<p>在最大堆中，根节点总是大于它的任意结点——可以在O(1)时间内找到Max（即为根节点）</p>
 </blockquote>
+<p>亦可以用红黑树来实现。</p>
 <blockquote>
-<p>除了项目本身，本书另一个关注重点是项目中的人：项目经理、用户、测试、开发，讲到各种角色各自的职责，相互之间的协作关系、合作方法，最后一章中还有提到职业道德~（感觉有点偏向股东与雇主）</p>
+<p>红黑树通过把结点分为红、黑两种颜色并根据一些规则来保证树在一定程度上是平衡的，从而确保在红黑树中查找、删除、插入操作都只需要O(logk)时间<br>在STL中 set与 meltiset都是基于红黑树实现的，可以直接利用</p>
 </blockquote>
-<blockquote>
-<p>全书更多的是探讨方法论，关于开发、关于敏捷迭代、关于项目管理、关于结对编程、关于测试流程与种类、关于用户体验的获得与改进、关于需求分析与评审、关于软件工程师的成长。当然作者只是提供了一些自己的见解，很多观点并不一定准确，其中也有一些落伍的工具、模型。</p>
-</blockquote>
-<blockquote>
-<p>更大的意义许是全面地概述一些需要注意的点，真正贯彻落实这些方法需要耗费极大成本。很多观点引人深思。</p>
-</blockquote>
-<hr>
-<p><a href="https://www.evernote.com/l/ARsVoFkwFjJCdY6Llj0jxODvRc2NPL8xgTI" target="_blank" rel="noopener">EverNote链接</a></p>
-<p><a href="https://www.evernote.com/shard/s283/sh/15a05930-1632-4275-8e8b-963d23c4e0ef/45cd8d3cbf318132/res/7853730d-412e-4220-9b6a-4fda39ca66a8/构建之法.xmind" target="_blank" rel="noopener">XMind文档</a></p>
-<p><strong>导图</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7bcaba0014f30279.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="构建之法 overview.png"></p>
-<p><strong>文本</strong><br>构建之法</p>
-<p>1 个人<br>  1.1 2 个人和技术流程<br>    1.1.1 单元测试<br>        1.1.1.1 着眼于基本点；当事人编写；不改变机器状态；快；可重现；覆盖所有代码路径；与产品代码一同维护<br>    1.1.2 效能分析工具<br>        1.1.2.1 抽样、代码注入<br>    1.1.3 个人开发流程<br>        1.1.3.1 计划、开发、记录用时、测试报告、计算工作量、事后总结、提出过程改进计划<br>  1.2 3 软件工程师的成长<br>    1.2.1 大江东去，浪淘尽，千古风流人物<br>2 团队<br>  2.1 4 两人合作<br>    2.1.1 代码规范、设计规范、复审（驳回，选择性同意，放行）、结对编程、不同阶段的技巧<br>  2.2 5 团队和流程<br>    2.2.1 团队模式、开发流程<br>  2.3 6 敏捷流程<br>    2.3.1 敏捷问题与解法、敏捷团队（自主）、敏捷总结<br>  2.4 7 MSF<br>    2.4.1 MSF基本原则（共享、沟通、为共同目标努力、充分授权和信任、各司其职、敏捷）；MSF团队模型<br>3 产品<br>  3.1 8 需求分析<br>    3.1.1 软件需求（获取引导、分析定义、验证、管理）；利益相关者；用户调研（焦点小组、人类学、快速原型、AB测试）；竞争性需求分析框架（Need、Approach、Benefit、Competitors、Delivery）；功能定位与优先级（必要与辅助、核心与外围）；计划与估计；分而治之<br>  3.2 9 项目经理<br>    3.2.1 来历；职责（开发与测试之外的所有）；PM与风险管理；能力要求与任务（观察理解快速学习、分析管理、专业、自省）<br>  3.3 10 典型用户和场景<br>  3.4 12 用户体验<br>    3.4.1 要素（第一印象、换位思考、记住用户选择…）；设计的步骤与目标；评价标准（快反馈、贴近现实、暴露控制权、一致性与标准化、适合各种用户、帮助修复；提示语帮助）<br>4 质量<br>  4.1 11 软件设计与实现<br>    4.1.1 分析与设计方法；团队建模和分析方法；日常管理；<br>  4.2 13 软件测试<br>    4.2.1 分类方法（黑白、功能非功能、时机作用分类）；测试方法（UnitTest、BuildTest、AcceptanceTest、探索测试、回归测试、场景/集成/系统测试、伙伴测试、效能测试、压力测试、内外部测试、易用性测试）<br>  4.3 14 质量保障<br>    4.3.1 软件质量（程序、工程、如何衡量、成本）；质量保障工作（测试角色）<br>  4.4 15 稳定和发布阶段<br>    4.4.1 从完成到发布；渐进发布；发布之后——事后诸葛亮会议（赏罚、总结经验教训）<br>5 IT<br>  5.1 16 IT行业的创新<br>    5.1.1 争议点（创新与跟随、鼻祖与布道、专家？、技术创新为核心？、成功者更能创新？）；时机；招数<br>  5.2 17 人、绩效和职业道德<br>    5.2.1 猪鸡鹦鹉（成员投入程度不一）；人；绩效管理；职业道德（与公众利益一致、客户与雇主利益最大化、产出物满足高标准、专业判断、管理软件与开发维护、职业的诚信与声誉、对同事的支持与帮助、自身不断提高）</p>
+<h3 id="SourceCode-–-C"><a href="#SourceCode-–-C" class="headerlink" title="SourceCode – C++"></a>SourceCode – C++</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">multiset</span>&lt;<span class="keyword">int</span>, greater&lt;<span class="keyword">int</span>&gt;&gt; intSet;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">multiset</span>&lt;<span class="keyword">int</span>, greater&lt;<span class="keyword">int</span>&gt;&gt;::iterator setIterator;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GetLeastNumber</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; data, intSet&amp; leastNumvers, <span class="keyword">int</span> k)</span></span>&#123;  </span><br><span class="line">    leastNumvers.clear();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(k &lt; <span class="number">1</span> || data.size() &lt; k)&#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::const_iterator iter = data.begin();</span><br><span class="line">    <span class="keyword">for</span>(; iter != data.end(); ++iter)&#123;</span><br><span class="line">      <span class="keyword">if</span>(leastNumvers.size() &lt; k)&#123;</span><br><span class="line">        leastNumvers.insert(*iter);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span>&#123;</span><br><span class="line">        setIterator iterGreatest = leastNumvers.begin();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>( *iter &lt; *(leastNumvers.begin()))&#123;</span><br><span class="line">          leastNumvers.erase(iterGreatest);</span><br><span class="line">          leastNumvers.insert(*iter);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -251,7 +247,7 @@
 
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面经/">面经</a></li></ul>
 
     </footer>
   </div>
@@ -259,19 +255,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/03/09/技术/程序/Android--Monkey测试/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          Android Monkey 测试时防止通知栏下拉
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/03/09/技术/程序/降低内存占用Route/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/03/18/技术/算法/算法--itoa源码/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">降低内存占用Route</div>
+      <div class="article-nav-title">itoa源码</div>
     </a>
   
 </nav>
@@ -285,7 +272,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav">无</ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题"><span class="nav-number">1.</span> <span class="nav-text">题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路一"><span class="nav-number">2.1.</span> <span class="nav-text">思路一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路二"><span class="nav-number">2.2.</span> <span class="nav-text">思路二</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SourceCode-–-C"><span class="nav-number">3.</span> <span class="nav-text">SourceCode – C++</span></a></li></ol>
     
     </div>
   </aside>

@@ -255,54 +255,6 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/程序/Android--Monkey测试"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Android--Monkey测试/">Android Monkey 测试时防止通知栏下拉</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Android--Monkey测试/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><p>Android monkey test — <a href="http://einverne.github.io/post/2016/09/android-monkey-test.html#防止通知栏下拉" target="_blank" rel="noopener">http://einverne.github.io/post/2016/09/android-monkey-test.html#防止通知栏下拉</a></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monkey/">Monkey</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SystemBar/">SystemBar</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-技术/Android/由 Java GC 看 Android 内存泄露"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -755,6 +707,127 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GC/">GC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存泄露/">内存泄露</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/【Note-程序】变量类型"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/【Note-程序】变量类型/">【Note-程序】变量类型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【Note-程序】变量类型/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近考了部分面试者关于变量访问的一些问题，总结一下</p>
+</blockquote>
+<hr>
+<p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325" target="_blank" rel="noopener"><em>EverNote链接</em></a></p>
+<p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325/res/b21eeb36-a66c-488e-a682-5af7f7b7a990/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B.xmind" target="_blank" rel="noopener"><em>XMind文档</em></a></p>
+<p><strong>导图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2e270ca767cdba41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="parameter type overview.png"></p>
+<p><strong>文本</strong></p>
+<p>变量类型</p>
+<p>1 static<br>  1.1 随着类的加载而加载<br>  1.2 附注：Java 类操作流程<br>2 volitale<br>  2.1 从内存中读取（并不能保证原子性）<br>  2.2 使用原则<br>    2.2.1 写入变量不依赖此变量的值(或者只有一个线程修改此变量)<br>    2.2.2 变量的状态不需要与其它变量共同参与不变约束<br>    2.2.3 访问变量不需要加锁<br>3 Atomic<br>  3.1 原子性变量<br>  3.2 缺点<br>    3.2.1 必须用特定API对变量进行操作<br>    3.2.2 只有有限的几种类型<br>4 synchronized<br>  4.1 缺点<br>    4.1.1 性能考量<br>  4.2 注意点<br>    4.2.1 尽量减小锁的范围与程度<br>    4.2.2 多锁时保证操作顺序以防死锁<br>5 concurrent工具包<br>  5.1 CountDownLatch<br>  5.2 ConcurrentHashMap<br>  5.3 CopyOnWriteArrayList/CopyOnWriteArraySet<br>  5.4 ReadWriteLock/ReentrantReadWriteLock<br>  5.5 LinkedBlockingQueue<br>  5.6 CyclicBarrier<br>  5.7 …</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/算法/【算法】BinarySearch--二分搜索-折半查找法"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/">【算法】BinarySearch--二分搜索-折半查找法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下</p>
+</blockquote>
+<p>wiki 图示：(<a href="https://zh.wikipedia.org/wiki/二分搜索算法" target="_blank" rel="noopener">Link</a>)</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c0e03f78ac559fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search wiki pic.png"></p>
+<p>Android中util.ContainerHelpers中的实现api：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-53135a5bb2e3e281.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search.png"></p>
+<p><em>排序前提：array本身已为有序数组</em></p>
+<p>查找过程：<br>0.向右无符号移位1位，得到middle位值；<br>1.以mid为准比对midIndex位置值与参数value大小，大则hi位移至现mid位前一位，小则lo位移至现mid位后一位，相等则返回mid；<br>2.重复以上过程直至不满足循环条件或是又查找结果</p>
+<p>从low、high可以看出，结果返回的是value在数组中对应的index，如果为负则代表不存在（最后一行，返回~lo会得到一个负数，因为lo计算结果一定为正，个人感觉直接返回一个负数可以连按位取反都省略掉，是不是性能更优？）</p>
+<hr>
+<blockquote>
+<p>Java 位操作符：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-a2c49bbb981fa6c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Java bit calculate.png"></p>
+</blockquote>
+<hr>
+<p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="夕识.jpeg"></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
 
     </footer>
   </div>
@@ -1383,78 +1456,6 @@ c. 更好的debug支持
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android】Android-Clean-Architecture推介"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】Android-Clean-Architecture推介/">Android-Clean-Architecture推介</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】Android-Clean-Architecture推介/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p><a href="https://medium.com/@dmilicic/a-detailed-guide-on-developing-android-apps-using-the-clean-architecture-pattern-d38d71e94029#.c9wgdy880" target="_blank" rel="noopener">A detailed guide on developing Android apps using the Clean Architecture pattern</a></p>
-</blockquote>
-<p>本文为Clean Architecture在Android App开发中的guideline</p>
-<hr>
-<p>Bob大叔所作Clean Architecture结构图如下：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-d8356f0cf9fa5894.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clean architecture.jpg"></p>
-<p>使用Clean Architecture具有如下优点：</p>
-<pre><code>1. 独立于Frameworks
-2. 易测试.
-3. 独立于UI.
-4. 独立于Database.
-5. 独立于外部 agency.
-</code></pre><hr>
-<p>Android应用常用的3层架构：</p>
-<pre><code>Outer: Implementation layer  实现层
-Middle: Interface adapter layer 接口适配层
-Inner: Business logic layer 业务逻辑层（——应可用独立于Android的测试用例进行测试）
-</code></pre><p>分别为：</p>
-<ol>
-<li><strong>Outer layer</strong><br>UI、Storage、Network等</li>
-<li><strong>Middle layer</strong><br>Presenters、Converters        </li>
-<li><strong>Inner layer</strong><br>POJOs、Interactors、Model、Repositories、Executors</li>
-</ol>
-<hr>
-<p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li></ul>
 
     </footer>
   </div>
