@@ -255,6 +255,132 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/程序/【Java-基础系列】Synchronized关键字"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/">【Java-基础系列】Synchronized关键字</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="初识"><a href="#初识" class="headerlink" title="初识"></a>初识</h2><p><code>synchronize</code></p>
+<blockquote>
+<p> 翻译——同步（cause to occur or operate at the same time or rate.）</p>
+</blockquote>
+<p>一般用于多线程操作，保证操作的同步性</p>
+<p>消除线程切换时导致的共享内存的内容不可预测性</p>
+<h2 id="典型应用"><a href="#典型应用" class="headerlink" title="典型应用"></a>典型应用</h2><p>单例模式的<code>double-check</code></p>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.45.47 AM.png" alt="MacGesture MacGesture, Today at 12.45.47 AM"></p>
+<blockquote>
+<p>题外话：单例模式很容易引发内存泄露，在项目中要少用；</p>
+<p>另外单例模式的实现形式中，使用<code>enum</code>枚举是比较简洁的形式</p>
+</blockquote>
+<h2 id="常见使用形式"><a href="#常见使用形式" class="headerlink" title="常见使用形式"></a>常见使用形式</h2><ul>
+<li><p>锁方法</p>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p>
+</li>
+<li><p>锁代码段</p>
+<ul>
+<li>用this关键字 <code>sychronized(this)</code></li>
+</ul>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.21.38 AM.png" alt="MacGesture MacGesture, Today at 12.21.38 AM"></p>
+<ul>
+<li>用锁对象 <code>sychronized(lockObjct)</code></li>
+</ul>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.17.56 AM.png" alt="MacGesture MacGesture, Today at 12.17.56 AM"></p>
+</li>
+</ul>
+<h2 id="官方教程"><a href="#官方教程" class="headerlink" title="官方教程"></a>官方教程</h2><p>在Oracle的Java 文档里头有对Synchronization的详细解释，分为如下五部分展开：</p>
+<ol>
+<li><p>线程接口（Thread Interference）</p>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM.png" alt="【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM"></p>
+<blockquote>
+<p>不同线程对同一份数据的操作如果是穿插进行的，会导致不可预料的结果，这主要是因为CPU会让多个线程分片执行，各个线程对此数据的操作也是互不可知的，这样就很容易引发内存不按照预期改变的情况</p>
+</blockquote>
+</li>
+<li><p>内存连续性错误（Memory Consistency Errors）<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.17 AM.png" alt=""></p>
+<blockquote>
+<p>例子如上图，若三步操作不仅由一个线程执行，就很有可能导致打印出的并不是1而是0</p>
+</blockquote>
+</li>
+<li><p>同步方法（Synchronized Methods)<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.41 AM.png" alt=""></p>
+<blockquote>
+<ul>
+<li>Java中在方法体上添加<code>synchronized</code>关键字，能够保证同一时间仅有一个线程在调用某个对象的该方法；</li>
+</ul>
+<ul>
+<li>同时Java还会为该方法在与对象之间建立一个happens-before关系，保证对象的该状态对所有线程都是可见的</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<ol>
+<li><p>固有锁与同步（Intrinsic Locks and Synchronization)</p>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p>
+<blockquote>
+<p>当一个线程调用<code>synchronized</code>方法时，它会自动获取该方法对象的固有锁，并在方法返回时释放它。即使返回是由未捕获的异常引起的，也会释放锁。</p>
+</blockquote>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.56 AM.png" alt="MacGesture MacGesture, Today at 12.16.56 AM"></p>
+<blockquote>
+<p>直接使用this当做锁的关键字时，改对象的所有使用this当关键字的操作都必须保证同时只有一个线程访问，这样做虽然简便，但时间上有效率浪费，因为该对象的所有操作并不一定要保持完全同步，👇的代码段就解决了这一问题：</p>
+<p>通过细粒度的锁来提高并发性：</p>
+</blockquote>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.22.45 AM.png" alt="MacGesture MacGesture, Today at 12.22.45 AM"></p>
+<blockquote>
+<p>类<code>MsLunch</code>有两个实例字段，<code>c1</code>并且<code>c2</code>从不一起使用。这些字段的所有更新必须同步，但是没有理由阻止c1的更新与c2的更新进行交错 - 这样做会通过创建不必要的阻止来降低并发性。而不是使用同步方法或以其他方式使用与之关联的锁<code>this</code></p>
+</blockquote>
+</li>
+<li><p>原子操作（<code>Atomic</code> Access ）</p>
+<blockquote>
+<p>原子操作保证了操作的完整性：要么不执行，执行的话就一定要完全执行（即使虚拟机GC也不能打断）</p>
+</blockquote>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.35.40 AM.png" alt="MacGesture MacGesture, Today at 12.35.40 AM"></p>
+<p> 第一条指的是我们可以使用<code>Java</code>内附的<code>AtomicInteger</code>、<code>AtomicBoolean</code>等变量来直接利用这一特性</p>
+<p> 第二条引出了另一个关键字<code>volatile</code>，这实际上需要另起一篇进行介绍了</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>synchronize在解决多线程编程问题时有奇效，但有一定的效率牺牲</p>
+<p>使用时应尽量减小锁定的范围</p>
+<p>对并发性有要求的地方需要注意看是否有细化锁粒度的必要</p>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3>
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Synchronized/">Synchronized</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/程序/【Alibaba-Java开发手册】-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -295,75 +421,6 @@
 <p>文本</p>
 <p>Alibaba Java 开发手册</p>
 <p>1 编程规约<br>  1.1 命名规约<br>    1.1.1 8. POJO类中的布尔型变量不要加is，否则会引起序列化错误<br>  1.2 常量定义<br>    1.2.1 1. 不允许代码中出现任何魔法数<br>        1.2.1.1 （即硬编码变量）<br>    1.2.2 3. 不要再一个常量类中维护所以常量，应按功能归类维护<br>    1.2.3 4. 常量复用有五个层次<br>        1.2.3.1 跨应用、应用内、子工程、包内、类内<br>  1.3 格式规约<br>    1.3.1 一系列Google Java编码规则，不赘述<br>  1.4 OOP规约<br>    1.4.1 1. 避免通过对象引用static域<br>    1.4.2 2. 不可使用 Deprecated方法；自己做弃用注解时也应该 注明替代的新API<br>    1.4.3 10. 序列化新增属性时不要修改serialVersionUID字段；仅在完全不兼容升级避免反序列化混乱时修改<br>    1.4.4 15. 方法排序： public/ protected &gt; private &gt; getter/setter ——为维护者关心的方法展示于前<br>    1.4.5 16. setter/getter 确定为仅有的set get方法，勿要放入业务逻辑<br>    1.4.6 17. 循环体内，字符串联接方式，使用StringBuilder的append方法扩展——String 操作编译后会生成count 个StringBuilder对象，影响程序性能<br>    1.4.7 18. final可提高程序响应效率<br>    1.4.8 20. 访问控制从严（private、protected、public）<br>  1.5 集合处理<br>    1.5.1 1. hashCode equals<br>        1.5.1.1 重写equals时必须重写hashCode<br>        1.5.1.2 Set存储的对象必须重写<br>        1.5.1.3 用作Map的键时必须重写<br>    1.5.2 9. 集合初始化时尽量指定大小<br>        1.5.2.1 注：出于优化内存占用、响应速度考虑；集合默认size为10<br>    1.5.3 10. Map 类集合 K/V 存储null可行性问题<br>        1.5.3.1 HashMap KV均可为null<br>        1.5.3.2 TreeMap仅V可为null<br>        1.5.3.3 其它Map KV一律不可为null<br>    1.5.4 11. 合理利用好集合的有序性和稳定性，避免负面影响<br>  1.6 并发处理<br>    1.6.1 2. 创建线程、线程池时指定有意义的名称，便于出错时回溯<br>    1.6.2 4. 线程池不允许使用Executors创建，而要使用ThreadPoolExecutor<br>        1.6.2.1 Executor创建的几个类型都有大量请求或线程堆积导致OOM的可能<br>    1.6.3 5. SimpleDateFormat 是线程不安全类，一般不要定义为static变量，如果定义为static，必须加锁，或者使用DateUtils工具类<br>    1.6.4 6. 高并发时的同步调用注意锁的性能损耗<br>    1.6.5 10. CountDownLatch异步转同步操作时，每个线程退出前必须调用countDown，避免await超时<br>    1.6.6 11. 避免Random实例被多线程使用，竞争同一seed会导致性能下降；（实例包括Random、Math.random()）<br>    1.6.7 14. HashMap在容量不够进行resize时由于高并发可能出现死链，导致CPU飙升，开发中注意规避<br>  1.7 控制语句<br>    1.7.1 3. if-else 勿超过3层，超过时使用状态设计模式<br>    1.7.2 5. 循环体中考虑性能问题，避免不必要的语句、避免不必要的try-catch<br>    1.7.3 7-8. 注意参数检验的必要性，尽可能提升性能<br>2 日志<br>3 MySQL<br>4 工程规约<br>5 安全规约</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/Java进阶——接口优于抽象类"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶——接口优于抽象类/">Java进阶——接口优于抽象类</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Java进阶——接口优于抽象类/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本篇系Java进阶系列 篇4.18，介绍<strong>接口</strong>相较于<strong>抽象类</strong>的优点</p>
-<p>跑题1——一直牢记的一点“100%的坚持比百分之九十几的坚持更容易”又一次体会到，上周跟随部门团建出去旅游，一旦停更就是将近一周，希望能把原则秉持下来</p>
-<p>跑题2——今天看了new iPhone的发布会，依旧很精致，不知何时Android能有赶上iPhone水准的机器面世</p>
-</blockquote>
-<h3 id="两者区别"><a href="#两者区别" class="headerlink" title="两者区别"></a>两者区别</h3><p>抽象类可以包含部分实现，接口不可以（Java8接口中可以定义默认方法，但不推荐如此使用接口）</p>
-<p>为了实现抽象类定义的类型，必须extends 抽象类，限制了其可扩展性</p>
-<h3 id="接口的优势"><a href="#接口的优势" class="headerlink" title="接口的优势"></a>接口的优势</h3><ul>
-<li>已有类可以很容易被更新，以实现新接口</li>
-<li>接口是定义mixin（像中文“迷信”，实则取自此词，代表混合类型）的理想选择</li>
-<li>允许我们构造非层次结构的类型框架（就像我们每个人身怀多技一样，每个类也可能有多种特性）</li>
-<li>使得增强类的功能更加安全</li>
-</ul>
-<h3 id="pay-attention"><a href="#pay-attention" class="headerlink" title="pay attention"></a>pay attention</h3><ul>
-<li><p>公共接口一旦被公开，修改起来就极其麻烦，所谓牵一发而动全身，所以设计接口时要谨慎；</p>
-<blockquote>
-<p>实际项目中发现这个点其实是一个经验问题，又要最小化接口，又要把接口设计得符合<strong>SOLID</strong>设计模式五大原则，就要求我们在实际工作中训练好这个技能，把握好接口设计的度</p>
-</blockquote>
-</li>
-<li><p>抽象类也并非一无是处，它的改变就比接口要简易的多，实际使用时也是体验很好的一种设计方法，不过抽象类的使用也要有所衡量，只有在确实是属于一个类别的类时才好去使用抽象类，否则就违背了我们的编程原则</p>
-</li>
-</ul>
 
       
 
@@ -483,6 +540,75 @@
 <p>ImageLoaderLoadImageFromNet<br>ImageLoaderLoadAdmobImageCore<br>VolleyDisplayImage<br>VolleyDecodeImage<br>VolleyDecodeImageFix</p>
 </li>
 </ol>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/Java进阶——接口优于抽象类"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶——接口优于抽象类/">Java进阶——接口优于抽象类</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/Java进阶——接口优于抽象类/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本篇系Java进阶系列 篇4.18，介绍<strong>接口</strong>相较于<strong>抽象类</strong>的优点</p>
+<p>跑题1——一直牢记的一点“100%的坚持比百分之九十几的坚持更容易”又一次体会到，上周跟随部门团建出去旅游，一旦停更就是将近一周，希望能把原则秉持下来</p>
+<p>跑题2——今天看了new iPhone的发布会，依旧很精致，不知何时Android能有赶上iPhone水准的机器面世</p>
+</blockquote>
+<h3 id="两者区别"><a href="#两者区别" class="headerlink" title="两者区别"></a>两者区别</h3><p>抽象类可以包含部分实现，接口不可以（Java8接口中可以定义默认方法，但不推荐如此使用接口）</p>
+<p>为了实现抽象类定义的类型，必须extends 抽象类，限制了其可扩展性</p>
+<h3 id="接口的优势"><a href="#接口的优势" class="headerlink" title="接口的优势"></a>接口的优势</h3><ul>
+<li>已有类可以很容易被更新，以实现新接口</li>
+<li>接口是定义mixin（像中文“迷信”，实则取自此词，代表混合类型）的理想选择</li>
+<li>允许我们构造非层次结构的类型框架（就像我们每个人身怀多技一样，每个类也可能有多种特性）</li>
+<li>使得增强类的功能更加安全</li>
+</ul>
+<h3 id="pay-attention"><a href="#pay-attention" class="headerlink" title="pay attention"></a>pay attention</h3><ul>
+<li><p>公共接口一旦被公开，修改起来就极其麻烦，所谓牵一发而动全身，所以设计接口时要谨慎；</p>
+<blockquote>
+<p>实际项目中发现这个点其实是一个经验问题，又要最小化接口，又要把接口设计得符合<strong>SOLID</strong>设计模式五大原则，就要求我们在实际工作中训练好这个技能，把握好接口设计的度</p>
+</blockquote>
+</li>
+<li><p>抽象类也并非一无是处，它的改变就比接口要简易的多，实际使用时也是体验很好的一种设计方法，不过抽象类的使用也要有所衡量，只有在确实是属于一个类别的类时才好去使用抽象类，否则就违背了我们的编程原则</p>
+</li>
+</ul>
 
       
 
@@ -782,83 +908,6 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/Java进阶-- volatile关键字"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/">Java进阶-- volatile关键字</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>volatile含有部分synchronized的特性，效率更高，但使用时需要注意细节，不然容易出错</p>
-<h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>Java中被volatile修饰的变量，每次读写都会直接使用“内存”介质，而不是使用CPU缓存</p>
-<blockquote>
-<p>音 — UK <strong> /ˈvɒl.ə.taɪl/  US </strong> /ˈvɑː.lə.t̬əl/</p>
-<p>英 — <strong>likely to change suddenly and unexpectedly or suddenly become violent or angry</strong></p>
-<p>中 — 易变的</p>
-</blockquote>
-<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
-<li>保证变量可见性</li>
-<li>禁止指令进行重排序</li>
-</ul>
-<blockquote>
-<p>基础概念：可见性、有序性、原子性</p>
-<ol>
-<li>可见性：对所有线程来说，任一线程对变量的改动都立即可见</li>
-<li>有序性：代码可能会被编译器混编，有序性即指代码按顺序执行</li>
-<li>原子性：所有操作不会被打断，谁也不行（除非断电）</li>
-</ol>
-</blockquote>
-<p>实际上我们对变量的修改，虽然可能Java就一行代码（如 y=x），但被解释成汇编语言会变成多行（y=x就需要进行两步操作：读x值，写入y所在内存，学过汇编的同学应该比较清楚）</p>
-<h3 id="与synchronized的区别"><a href="#与synchronized的区别" class="headerlink" title="与synchronized的区别"></a>与synchronized的区别</h3><p>按字面理解，volatile关键字只是标记变量为易变的，并不能保证对变量的所有操作都是同步的，即不能保证具有synchronized一样的效果</p>
-<p>实际上，对volatile修饰的变量的读/写操作是可以保证其原子性的，但还要注意一个问题，即同时写变量的线程可能不止一个，如此一来，其中部分的写操作就有可能丢失</p>
-<p>听起来好像volatile使用起来很危险，但它也是有它的用途的</p>
-<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
-<li>对于写不依赖历史状态的变量，可以考虑使用volatile修饰字代替synchronized来提高程序效率</li>
-<li>保证代码的有序性：volatile变量的读写操作之前的代码，编译器是不会进行重排序的</li>
-</ul>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在volatile满足不了要求的场景可以考虑使用synchronized、lock、Atomic变量来保证特性</p>
-<p>对变量的写不依赖历史状态的变量使用volatile修饰可以提高效率</p>
-<p>对于需要保证部分程序语句有序性的场景可以考虑使用volatile代替锁定整个代码块，提高效率</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/volatile/">volatile</a></li></ul>
 
     </footer>
   </div>

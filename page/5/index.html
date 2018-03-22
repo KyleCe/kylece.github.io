@@ -255,6 +255,65 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/Android/【Android】JNI-Tips-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/">JNI-Tips-提要</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>引：<br>项目需要用到JNI，实际上还需要在native跟Java之间写一些代码，来连接二位，需要做进一步了解。本文主要对官方的JNI Tips做一些简单的关键提取<br>参考：<br><a href="">JNI Tips</a></p>
+</blockquote>
+<hr>
+<p><a href="https://www.evernote.com/l/ARunDTJCHX9AQ5Zm7URUjILWW2iFBUVWGRc" target="_blank" rel="noopener">Evernote连接</a></p>
+<p><a href="https://www.evernote.com/shard/s283/sh/a70d3242-1d7f-4043-9666-ed44548c82d6/5b68850545561917/res/ba76fe6f-7df9-41f8-a0cd-1f0dcbe4349c/JNI%20Tips.xmind" target="_blank" rel="noopener">XMind 文档下载</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ce0301d2d61fe60b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JNI Tips.png"></p>
+<p>文本：</p>
+<p>JNI Tips</p>
+<p>definition<br>  Java Native Interface<br>  how it works<br>    <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html</a><br>JavaVM and JNIEnv<br>  JavaVM<br>    one process can only create one JavaVM in Android<br>  JNIEnv<br>    provides most of JNI functions. Your native functions all receive a JNIEnv as first argument<br>    used for thread-local, so you cannot share a JNIEnv between threads (GetEnv can be used to discover the thread’s JNIEnv when no other way)<br>Threads<br>  a thread will have no JNIEnv unless it’s attached, before this it cannot make JNI calls (all threads are Linux threads, scheduled by the kernel)<br>  Threads attached through JNI must call DetachCurrentThread before they exit<br>jclass, jmethodID, and jfieldID<br>  steps to access an object’s field from native code<br>    FindClass:—&gt; get the class object reference for the class<br>    GetFieldID:—&gt;Get the field ID for the field with GetFieldID<br>    GetIntField:—&gt;Get the contents of the field with something appropriate<br>  call a method—&gt; get a class object reference and then a method ID<br>  it’s useful to look the values up once and cache the results in your native code. Because there is a limit of one JAVAVM per process<br>  if want to cache IDs when a class is loaded, add a piece of code that allow the native code to cache field offsets<br>Local and Global Reference<br>  almost every object returned by a JNI function is a “local reference”—&gt;it’s valid for the duration of the current native method in the current thread. Even if the object itself continues to live on after the native method returns, the reference is not valid<br>  the only way to get non-local references is via the functions NewGlobalRef and NewWeakGlobalRef (the global reference is guaranteed to be valid until you call DeleteGlobalRef)<br>  to see if two reference refer to the same object, you must use the IsSameObject function, never use == in native code<br>  jfieldIDs, jmethod are opaque types, not object references, should not be passed to NewGlobalRef<br>  if you attach a native thread with AttachCurrentThread, the code you are running will never automatically free local references until the thread detaches. Any local references you create will have to be deleted manually.<br>UTF-8 and UTF-16 Strings<br>  java use UTF-16, JNI provides methods that work with Modified UTF-8 as well.<br>  you cannot pass arbitrary UTF-8 data to JNI and expect it to work correctly<br>  Android currently does not require a copy in GetStringChars,however GetStringUTFChars requires an allocation and a conversion to UTF-8. UTF-16 strings are not zero-terminated, \u0000 is allowed, so you need to hang on to the string length like jchar pointer<br>  Don’t forget to Release the strings you Get. the string functions return jchar<em> or jbyte</em><br>  Data passed to NewStringUTF must be in Modified UTF-8 format<br>Primitive Arrays<br>  You must Release every array you Get<br>  release mode arguments alternative values<br>    0<br>        buffer freed<br>    JNI_COMMIT<br>        do nothing/ buffer not freed<br>    JNI_ABORT<br>        buffer freed, Earlier wirtes are not aborted<br>Region calls<br>  advantages<br>    reducing overhead by reducing JNI call requirements<br>    do not require pinning or extra data copies<br>    reduces the risk of programmer error–&gt; no risk of forgetting to call Release<br>Exception<br>  your must not call JNI functions while an exception is pending, except several special kinds of API: delete/ exception process/stack process/ release process …<br>Extended Checking<br>  JNI does very little error checking ~~!<br>  Android offers a mode called CheckJNI<br>    array, bad pointers, Class names, Critical call,Direct ByteBuffers, Exceptions, JNIEnv<em>s, jmethodIDs, References,Release modes, Type safety, UTF-8<br>Native Libraries<br>  steps<br>    call System.loadLibrary<br>    provide a native function : jint JNI_OnLoad(JavaVM</em> vm void* reserved)<br>    in JNI_OnLoad, register all your native methods<br>64-bit Considerations<br>  you need to stash your native pointers in a long field rather than an int<br>Unsupported Features/ Backwards Compatibility<br>  Define class<br>  dynamic lookup of native functions<br>  detaching threads<br>  weak global references<br>  Local references<br>  determining reference type with GetObjectRefType</p>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/【Android】Clean-Architecture--初析"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -519,6 +578,73 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 
 
   
+    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
+</blockquote>
+<blockquote>
+<p>这样的话，注意定期检查各lib版本就好</p>
+</blockquote>
+<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
+<p>总结一下步骤：</p>
+<ol>
+<li>获取二维码（QRCode）</li>
+<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
+<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
+</li>
+<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
+</li>
+</ol>
+<p>时序图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/retrofit2"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -699,73 +825,6 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/retrofit/">retrofit</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
-</blockquote>
-<blockquote>
-<p>这样的话，注意定期检查各lib版本就好</p>
-</blockquote>
-<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
-<p>总结一下步骤：</p>
-<ol>
-<li>获取二维码（QRCode）</li>
-<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
-<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
-</li>
-<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
-</li>
-</ol>
-<p>时序图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
 
     </footer>
   </div>
@@ -1020,7 +1079,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 
 
   
-    <article id="post-技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/【Note】《构建之法》提要"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -1028,7 +1087,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/">【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介</a>
+      <a class="article-title" href="/2018/03/09/技术/【Note】《构建之法》提要/">【Note】《构建之法》提要</a>
     </h1>
   
 
@@ -1036,30 +1095,39 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/" class="article-date">
+	<a href="/2018/03/09/技术/【Note】《构建之法》提要/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/技术/">技术</a>
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>工欲善其事必先利其器<br>今天介绍几个plugin工具（奇淫巧技）</p>
+<p>《软件工程  构建之法》作者邹欣系Windows中国工程师团队首席研发总监 （Link：<a href="https://www.amazon.cn/图书/dp/B011LPUAYI/ref=sr_1_1?ie=UTF8&amp;qid=1487685207&amp;sr=8-1&amp;keywords=构建之法" target="_blank" rel="noopener">亚马逊</a>）</p>
 </blockquote>
 <blockquote>
-<p><em>（适用平台：IntelliJ IDEA内核的各类IDE）</em></p>
+<p>整本书，极其认真，结构组织的有点像学术论文了。涵盖面比较全，涉及到了现代软件工程的整个流程，从需求的挖掘产生，到中间各个环节地循序渐进，直至最后的交付与维护支持。必然也就导致每个点深入程度相对较有限。</p>
+</blockquote>
+<blockquote>
+<p>除了项目本身，本书另一个关注重点是项目中的人：项目经理、用户、测试、开发，讲到各种角色各自的职责，相互之间的协作关系、合作方法，最后一章中还有提到职业道德~（感觉有点偏向股东与雇主）</p>
+</blockquote>
+<blockquote>
+<p>全书更多的是探讨方法论，关于开发、关于敏捷迭代、关于项目管理、关于结对编程、关于测试流程与种类、关于用户体验的获得与改进、关于需求分析与评审、关于软件工程师的成长。当然作者只是提供了一些自己的见解，很多观点并不一定准确，其中也有一些落伍的工具、模型。</p>
+</blockquote>
+<blockquote>
+<p>更大的意义许是全面地概述一些需要注意的点，真正贯彻落实这些方法需要耗费极大成本。很多观点引人深思。</p>
 </blockquote>
 <hr>
-<p><strong>效果图</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5b8d8a86fda8eca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ide_tools.png"></p>
-<p>按图中标示顺序介绍：</p>
-<p>####1.Translation<br>_ 顾名思义是中英翻译，令人意外的是自带英美两种发音（默认快捷键：ALT + 1/3，OSX 不详）_</p>
-<p>####2.Background Image Plus<br><em>可以对IDE背景进行自定义，可以设置图片质量/明暗等，对内存有一定消耗，小霸王请绕道</em></p>
-<p>####3.CodeGlance<br><em>提供一个代码文件的全局概览缩略图，主要可用于快速定位</em></p>
+<p><a href="https://www.evernote.com/l/ARsVoFkwFjJCdY6Llj0jxODvRc2NPL8xgTI" target="_blank" rel="noopener">EverNote链接</a></p>
+<p><a href="https://www.evernote.com/shard/s283/sh/15a05930-1632-4275-8e8b-963d23c4e0ef/45cd8d3cbf318132/res/7853730d-412e-4220-9b6a-4fda39ca66a8/构建之法.xmind" target="_blank" rel="noopener">XMind文档</a></p>
+<p><strong>导图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7bcaba0014f30279.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="构建之法 overview.png"></p>
+<p><strong>文本</strong><br>构建之法</p>
+<p>1 个人<br>  1.1 2 个人和技术流程<br>    1.1.1 单元测试<br>        1.1.1.1 着眼于基本点；当事人编写；不改变机器状态；快；可重现；覆盖所有代码路径；与产品代码一同维护<br>    1.1.2 效能分析工具<br>        1.1.2.1 抽样、代码注入<br>    1.1.3 个人开发流程<br>        1.1.3.1 计划、开发、记录用时、测试报告、计算工作量、事后总结、提出过程改进计划<br>  1.2 3 软件工程师的成长<br>    1.2.1 大江东去，浪淘尽，千古风流人物<br>2 团队<br>  2.1 4 两人合作<br>    2.1.1 代码规范、设计规范、复审（驳回，选择性同意，放行）、结对编程、不同阶段的技巧<br>  2.2 5 团队和流程<br>    2.2.1 团队模式、开发流程<br>  2.3 6 敏捷流程<br>    2.3.1 敏捷问题与解法、敏捷团队（自主）、敏捷总结<br>  2.4 7 MSF<br>    2.4.1 MSF基本原则（共享、沟通、为共同目标努力、充分授权和信任、各司其职、敏捷）；MSF团队模型<br>3 产品<br>  3.1 8 需求分析<br>    3.1.1 软件需求（获取引导、分析定义、验证、管理）；利益相关者；用户调研（焦点小组、人类学、快速原型、AB测试）；竞争性需求分析框架（Need、Approach、Benefit、Competitors、Delivery）；功能定位与优先级（必要与辅助、核心与外围）；计划与估计；分而治之<br>  3.2 9 项目经理<br>    3.2.1 来历；职责（开发与测试之外的所有）；PM与风险管理；能力要求与任务（观察理解快速学习、分析管理、专业、自省）<br>  3.3 10 典型用户和场景<br>  3.4 12 用户体验<br>    3.4.1 要素（第一印象、换位思考、记住用户选择…）；设计的步骤与目标；评价标准（快反馈、贴近现实、暴露控制权、一致性与标准化、适合各种用户、帮助修复；提示语帮助）<br>4 质量<br>  4.1 11 软件设计与实现<br>    4.1.1 分析与设计方法；团队建模和分析方法；日常管理；<br>  4.2 13 软件测试<br>    4.2.1 分类方法（黑白、功能非功能、时机作用分类）；测试方法（UnitTest、BuildTest、AcceptanceTest、探索测试、回归测试、场景/集成/系统测试、伙伴测试、效能测试、压力测试、内外部测试、易用性测试）<br>  4.3 14 质量保障<br>    4.3.1 软件质量（程序、工程、如何衡量、成本）；质量保障工作（测试角色）<br>  4.4 15 稳定和发布阶段<br>    4.4.1 从完成到发布；渐进发布；发布之后——事后诸葛亮会议（赏罚、总结经验教训）<br>5 IT<br>  5.1 16 IT行业的创新<br>    5.1.1 争议点（创新与跟随、鼻祖与布道、专家？、技术创新为核心？、成功者更能创新？）；时机；招数<br>  5.2 17 人、绩效和职业道德<br>    5.2.1 猪鸡鹦鹉（成员投入程度不一）；人；绩效管理；职业道德（与公众利益一致、客户与雇主利益最大化、产出物满足高标准、专业判断、管理软件与开发维护、职业的诚信与声誉、对同事的支持与帮助、自身不断提高）</p>
 
       
 
@@ -1069,116 +1137,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tool/">Tool</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/ExampleModel_leak_fix_side_effect_correct_strategy"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/08/技术/Android/ExampleModel_leak_fix_side_effect_correct_strategy/">exampleModuleModel_leak_fix_side_effect_correct_strategy</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/08/技术/Android/ExampleModel_leak_fix_side_effect_correct_strategy/" class="article-date">
-	  <time datetime="2018-03-07T16:35:35.000Z" itemprop="datePublished">2018-03-08</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##</p>
-<h3 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h3><ul>
-<li>解决因修改exampleModule泄露导致的onUnBind/unbind调用模糊的问题</li>
-<li>梳理exampleModule的主题切换流程逻辑</li>
-</ul>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ul>
-<li>部分类实现了onUnBind/unbind，但具体逻辑并不符合unbind（即完全释放）的预期</li>
-<li>有些类实现了onUnBind/unbind，但并不是在销毁时调用（如：切换主题），直接调用会出问题</li>
-<li>部分逻辑调用了onUnBind/unbind，但具体的类里却是空实现</li>
-<li>有的类同时实现了onUnBind/unbind两者，onUnBind为空/unbind为空</li>
-</ul>
-<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>在unbind方法中加参数，对解绑动作做出具体的调用级区分，差异化实现逻辑，而不是像之前的方案一样统一都做销毁级别的处理</p>
-<h3 id="主题切换流程"><a href="#主题切换流程" class="headerlink" title="主题切换流程"></a>主题切换流程</h3><ul>
-<li>入口：ThemeMineList</li>
-<li>具体调用栈<ul>
-<li>流程图：</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">A[ThemeMineList] --&gt;|onClick-applyTheme| B(PageAcitvity)</span><br><span class="line">    B --&gt;|applyTheme| C[进程间通信ThemeApplyControllerImpl]</span><br><span class="line">    C --&gt;|applyTheme| D[ThemeResourceManager]</span><br><span class="line">    	D --&gt;|startApplyTheme -- applyAll | E[HostThemeCallBack]</span><br><span class="line">    	E --&gt;|onApplyAll| F[rebind flow]</span><br><span class="line">    	F --&gt;|Flow| H[callBindRunnable unbind/bind]</span><br></pre></td></tr></table></figure>
-<ul>
-<li>具体类名、方法名：<ul>
-<li>ThemeMineList – onClick() – applyTheme()<ul>
-<li>PageAcitvity.applyTheme() – 进程间通信<ul>
-<li>ThemeManagerService$ThemeApplyControllerImpl.applyTheme<ul>
-<li>ThemeResourceManager.startApplyTheme – applyAll<ul>
-<li>exampleModuleModel$HostThemeCallBack.onApplyAll() – rebind – callBindRunnable() – unbind/bind</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="涉及场景"><a href="#涉及场景" class="headerlink" title="涉及场景"></a>涉及场景</h3><ol>
-<li>点击清理图标动画没有完成时，切换主题</li>
-<li>不保留活动，点击清理图标动画没有完成时进另一个Activity</li>
-<li>改变AlertClockAppWidget的3D模式，原本的exampleModule代码里并没有实现具体onUnBind逻辑</li>
-<li>删除快捷方式/删除桌面Widget</li>
-<li>卸载应用</li>
-<li>不保留活动，反复切换exampleModule至前台/后台</li>
-</ol>
-<h3 id="具体内容"><a href="#具体内容" class="headerlink" title="具体内容"></a>具体内容</h3><h3 id="onUnBind"><a href="#onUnBind" class="headerlink" title="onUnBind"></a>onUnBind</h3><p>调用——</p>
-<ol>
-<li>exampleModuleModel——MarketShortcutInfo</li>
-<li>DeleteDropTarget——CustomShortcutInfo</li>
-<li>AllAppsView——CustomShortcutInfo</li>
-<li>DeleteDropTarget——CustomAppWidgetInfo // remove widget from workspace</li>
-<li>exampleModule——AlertClockAppWidget// switch alert clock widget</li>
-</ol>
-<ul>
-<li>destroy — MarketShortcutInfo</li>
-<li>switchAlertClockWidget — AlertClockAppWidget</li>
-<li>uninstallApp — CustomShortcutInfo</li>
-<li>deleteDropTarget — CustomAppWidgetInfo</li>
-<li>— CleanMemoryShortcutInfo</li>
-<li>— ThemeShortcutInfo</li>
-</ul>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Performance/">Performance</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
 
     </footer>
   </div>

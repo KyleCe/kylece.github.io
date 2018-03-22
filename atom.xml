@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/KyleCe/kylece.github.io/"/>
-  <updated>2018-03-20T15:21:28.671Z</updated>
+  <updated>2018-03-22T15:27:51.511Z</updated>
   <id>https://github.com/KyleCe/kylece.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>从1到n整数中1出现的次数</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/22/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95--%E4%BB%8E1%E5%88%B0n%E6%95%B4%E6%95%B0%E4%B8%AD1%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/22/技术/算法/算法--从1到n整数中1出现的次数/</id>
+    <published>2018-03-22T14:50:23.000Z</published>
+    <updated>2018-03-22T15:27:51.511Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="题"><a href="#题" class="headerlink" title="题"></a>题</h3><p>输入一个整数n，求从1到n这n个整数的十进制表示中1出现的次数<br>例： 输入12，从1到12的这些整数中包含1的数字有 1，10，11，12， 一共出现5次</p><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>暴力解法：就是遍历，处理每个数的位数，除10取余，判断整数的个位是否为1<br>显然不能用这样的办法来答题</p><h4 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h4><blockquote><p>暴力——遍历，除10取余看个位，不再展开介绍</p></blockquote><h4 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h4><blockquote><p>能不能找到一些别的规律，来提高计算效率</p></blockquote><p>我们举个例子：n = 21345<br>将1到n分为两段： 1~1345，1346~21345</p><p>先看第二段 1246~21345：<br>1分两种情况出现。首先分析最高位， 10000~19999这1万个数中，最高位全是1，一共记10^4个，所以对于12345这样的数字，最高位1出现的次数为：<br>2345+1= 2346 次<br>接下来分析1出现在除次高位的情况， 1346~21345这2w个数中，次高位上出现1的次数是2000次（1346~1999，21000~21345），由于最高位是2，我们可以再把1346~21345分成两段，1346~11345，11346~21345，每一段剩下的4位数字中，选择其中一位是1，其余三位为0~9的Any，根据排列组合，总共出现的次数是 2 * 10^3 = 2000次<br>对于1到1345之间的计数，就可以通过递归来求得了：<br>1~21345分成 1~1345， 1346~21345 ，接着，把21345的最高位去掉就变成1345了</p><blockquote><p>分段时候其实有有意这样区分的，目的就是为了使用递归</p></blockquote><h3 id="SourceCode"><a href="#SourceCode" class="headerlink" title="SourceCode"></a>SourceCode</h3><blockquote><p>先将数字转换成字符串</p></blockquote><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">NumberOf1Between1AndN</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(n &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">char</span> strN[<span class="number">50</span>];</span><br><span class="line">  <span class="built_in">sprintf</span>(strN, <span class="string">"%d"</span>, n);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> NumberOf1(strN);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">NumberOf1</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* strN)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!strN || *strN &lt; <span class="string">'0'</span> || *strN &gt; <span class="string">'9'</span> || *strN == <span class="string">'\0'</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> first = *strN - <span class="string">'0'</span>;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> length = <span class="keyword">static_cast</span>&lt;<span class="keyword">unsigned</span> <span class="keyword">int</span>&gt;(<span class="built_in">strlen</span>(strN));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(length == <span class="number">1</span> &amp;&amp; first == <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(length == <span class="number">1</span> &amp;&amp; first &gt; <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> numberFirstDigit = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span>(first &gt; <span class="number">1</span>)</span><br><span class="line">    numberFirstDigit = PoserBase10(length - <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(first = <span class="number">1</span>)</span><br><span class="line">    numberFirstDigit = atoi(strN + <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> numOtherDigits = first * (length - <span class="number">1</span>) * PoserBase10(length <span class="number">-2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> numRecursive = NumberOf1(strN + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> numberFirstDigit + numOtherDigits + numRecursive;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">PoserBase10</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> result = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">unsigned</span> <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">    result *= <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;题&quot;&gt;&lt;a href=&quot;#题&quot; class=&quot;headerlink&quot; title=&quot;题&quot;&gt;&lt;/a&gt;题&lt;/h3&gt;&lt;p&gt;输入一个整数n，求从1到n这n个整数的十进制表示中1出现的次数&lt;br&gt;例： 输入12，从1到12的这些整数中包含1的数字有 1，10，11，12， 
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="算法" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="面经" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%9D%A2%E7%BB%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>算法--连续子数组的最大和</title>
@@ -276,6 +303,40 @@
   </entry>
   
   <entry>
+    <title>【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E3%80%90%E5%B7%A5%E5%85%B7-%E7%A8%8B%E5%BA%8F%E4%B8%93%E4%BE%9B%E3%80%91IntelliJ-IDEA-Android-Studio-Plugin%E6%8E%A8%E4%BB%8B/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:32:43.105Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>工欲善其事必先利其器<br>今天介绍几个plugin工具（奇淫巧技）</p></blockquote><blockquote><p><em>（适用平台：IntelliJ IDEA内核的各类IDE）</em></p></blockquote><hr><p><strong>效果图</strong></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-5b8d8a86fda8eca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ide_tools.png"></p><p>按图中标示顺序介绍：</p><p>####1.Translation<br>_ 顾名思义是中英翻译，令人意外的是自带英美两种发音（默认快捷键：ALT + 1/3，OSX 不详）_</p><p>####2.Background Image Plus<br><em>可以对IDE背景进行自定义，可以设置图片质量/明暗等，对内存有一定消耗，小霸王请绕道</em></p><p>####3.CodeGlance<br><em>提供一个代码文件的全局概览缩略图，主要可用于快速定位</em></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;工欲善其事必先利其器&lt;br&gt;今天介绍几个plugin工具（奇淫巧技）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;（适用平台：IntelliJ IDEA内核的各类IDE）&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
+    
+      <category term="Tool" scheme="https://github.com/KyleCe/kylece.github.io/tags/Tool/"/>
+    
+      <category term="AndroidStudio" scheme="https://github.com/KyleCe/kylece.github.io/tags/AndroidStudio/"/>
+    
+  </entry>
+  
+  <entry>
     <title>【Note-PM】《项目管理修炼之道》提要</title>
     <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E3%80%90Note-PM%E3%80%91%E3%80%8A%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93%E3%80%8B%E6%8F%90%E8%A6%81/"/>
     <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/</id>
@@ -292,34 +353,6 @@
 &lt;p&gt;第18届Jolt生产效率大奖图书&lt;br&gt;作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;a href=&quot;https://pan.baidu.com/s/1cAaOxw&quot; target=&quot;_
-      
-    
-    </summary>
-    
-      <category term="阅读" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-      <category term="项目管理" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
-    
-      <category term="读书" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E8%AF%BB%E4%B9%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Note】《构建之法》提要</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E3%80%90Note%E3%80%91%E3%80%8A%E6%9E%84%E5%BB%BA%E4%B9%8B%E6%B3%95%E3%80%8B%E6%8F%90%E8%A6%81/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/【Note】《构建之法》提要/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.046Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>《软件工程  构建之法》作者邹欣系Windows中国工程师团队首席研发总监 （Link：<a href="https://www.amazon.cn/图书/dp/B011LPUAYI/ref=sr_1_1?ie=UTF8&amp;qid=1487685207&amp;sr=8-1&amp;keywords=构建之法" target="_blank" rel="noopener">亚马逊</a>）</p></blockquote><blockquote><p>整本书，极其认真，结构组织的有点像学术论文了。涵盖面比较全，涉及到了现代软件工程的整个流程，从需求的挖掘产生，到中间各个环节地循序渐进，直至最后的交付与维护支持。必然也就导致每个点深入程度相对较有限。</p></blockquote><blockquote><p>除了项目本身，本书另一个关注重点是项目中的人：项目经理、用户、测试、开发，讲到各种角色各自的职责，相互之间的协作关系、合作方法，最后一章中还有提到职业道德~（感觉有点偏向股东与雇主）</p></blockquote><blockquote><p>全书更多的是探讨方法论，关于开发、关于敏捷迭代、关于项目管理、关于结对编程、关于测试流程与种类、关于用户体验的获得与改进、关于需求分析与评审、关于软件工程师的成长。当然作者只是提供了一些自己的见解，很多观点并不一定准确，其中也有一些落伍的工具、模型。</p></blockquote><blockquote><p>更大的意义许是全面地概述一些需要注意的点，真正贯彻落实这些方法需要耗费极大成本。很多观点引人深思。</p></blockquote><hr><p><a href="https://www.evernote.com/l/ARsVoFkwFjJCdY6Llj0jxODvRc2NPL8xgTI" target="_blank" rel="noopener">EverNote链接</a></p><p><a href="https://www.evernote.com/shard/s283/sh/15a05930-1632-4275-8e8b-963d23c4e0ef/45cd8d3cbf318132/res/7853730d-412e-4220-9b6a-4fda39ca66a8/构建之法.xmind" target="_blank" rel="noopener">XMind文档</a></p><p><strong>导图</strong></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-7bcaba0014f30279.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="构建之法 overview.png"></p><p><strong>文本</strong><br>构建之法</p><p>1 个人<br>  1.1 2 个人和技术流程<br>    1.1.1 单元测试<br>        1.1.1.1 着眼于基本点；当事人编写；不改变机器状态；快；可重现；覆盖所有代码路径；与产品代码一同维护<br>    1.1.2 效能分析工具<br>        1.1.2.1 抽样、代码注入<br>    1.1.3 个人开发流程<br>        1.1.3.1 计划、开发、记录用时、测试报告、计算工作量、事后总结、提出过程改进计划<br>  1.2 3 软件工程师的成长<br>    1.2.1 大江东去，浪淘尽，千古风流人物<br>2 团队<br>  2.1 4 两人合作<br>    2.1.1 代码规范、设计规范、复审（驳回，选择性同意，放行）、结对编程、不同阶段的技巧<br>  2.2 5 团队和流程<br>    2.2.1 团队模式、开发流程<br>  2.3 6 敏捷流程<br>    2.3.1 敏捷问题与解法、敏捷团队（自主）、敏捷总结<br>  2.4 7 MSF<br>    2.4.1 MSF基本原则（共享、沟通、为共同目标努力、充分授权和信任、各司其职、敏捷）；MSF团队模型<br>3 产品<br>  3.1 8 需求分析<br>    3.1.1 软件需求（获取引导、分析定义、验证、管理）；利益相关者；用户调研（焦点小组、人类学、快速原型、AB测试）；竞争性需求分析框架（Need、Approach、Benefit、Competitors、Delivery）；功能定位与优先级（必要与辅助、核心与外围）；计划与估计；分而治之<br>  3.2 9 项目经理<br>    3.2.1 来历；职责（开发与测试之外的所有）；PM与风险管理；能力要求与任务（观察理解快速学习、分析管理、专业、自省）<br>  3.3 10 典型用户和场景<br>  3.4 12 用户体验<br>    3.4.1 要素（第一印象、换位思考、记住用户选择…）；设计的步骤与目标；评价标准（快反馈、贴近现实、暴露控制权、一致性与标准化、适合各种用户、帮助修复；提示语帮助）<br>4 质量<br>  4.1 11 软件设计与实现<br>    4.1.1 分析与设计方法；团队建模和分析方法；日常管理；<br>  4.2 13 软件测试<br>    4.2.1 分类方法（黑白、功能非功能、时机作用分类）；测试方法（UnitTest、BuildTest、AcceptanceTest、探索测试、回归测试、场景/集成/系统测试、伙伴测试、效能测试、压力测试、内外部测试、易用性测试）<br>  4.3 14 质量保障<br>    4.3.1 软件质量（程序、工程、如何衡量、成本）；质量保障工作（测试角色）<br>  4.4 15 稳定和发布阶段<br>    4.4.1 从完成到发布；渐进发布；发布之后——事后诸葛亮会议（赏罚、总结经验教训）<br>5 IT<br>  5.1 16 IT行业的创新<br>    5.1.1 争议点（创新与跟随、鼻祖与布道、专家？、技术创新为核心？、成功者更能创新？）；时机；招数<br>  5.2 17 人、绩效和职业道德<br>    5.2.1 猪鸡鹦鹉（成员投入程度不一）；人；绩效管理；职业道德（与公众利益一致、客户与雇主利益最大化、产出物满足高标准、专业判断、管理软件与开发维护、职业的诚信与声誉、对同事的支持与帮助、自身不断提高）</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;《软件工程  构建之法》作者邹欣系Windows中国工程师团队首席研发总监 （Link：&lt;a href=&quot;https://www.amazon.cn/图书/dp/B011LPUAYI/ref=sr_1_1?ie=UTF8&amp;amp;qid=14876
       
     
     </summary>
@@ -567,35 +600,6 @@
       <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
     
       <category term="FinalizerReference" scheme="https://github.com/KyleCe/kylece.github.io/tags/FinalizerReference/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Java-基础系列】Synchronized关键字</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Java-%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%E3%80%91Synchronized%E5%85%B3%E9%94%AE%E5%AD%97/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:22:18.171Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="初识"><a href="#初识" class="headerlink" title="初识"></a>初识</h2><p><code>synchronize</code></p><blockquote><p> 翻译——同步（cause to occur or operate at the same time or rate.）</p></blockquote><p>一般用于多线程操作，保证操作的同步性</p><p>消除线程切换时导致的共享内存的内容不可预测性</p><h2 id="典型应用"><a href="#典型应用" class="headerlink" title="典型应用"></a>典型应用</h2><p>单例模式的<code>double-check</code></p><p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.45.47 AM.png" alt="MacGesture MacGesture, Today at 12.45.47 AM"></p><blockquote><p>题外话：单例模式很容易引发内存泄露，在项目中要少用；</p><p>另外单例模式的实现形式中，使用<code>enum</code>枚举是比较简洁的形式</p></blockquote><h2 id="常见使用形式"><a href="#常见使用形式" class="headerlink" title="常见使用形式"></a>常见使用形式</h2><ul><li><p>锁方法</p><p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p></li><li><p>锁代码段</p><ul><li>用this关键字 <code>sychronized(this)</code></li></ul><p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.21.38 AM.png" alt="MacGesture MacGesture, Today at 12.21.38 AM"></p><ul><li>用锁对象 <code>sychronized(lockObjct)</code></li></ul><p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.17.56 AM.png" alt="MacGesture MacGesture, Today at 12.17.56 AM"></p></li></ul><h2 id="官方教程"><a href="#官方教程" class="headerlink" title="官方教程"></a>官方教程</h2><p>在Oracle的Java 文档里头有对Synchronization的详细解释，分为如下五部分展开：</p><ol><li><p>线程接口（Thread Interference）</p><p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM.png" alt="【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM"></p><blockquote><p>不同线程对同一份数据的操作如果是穿插进行的，会导致不可预料的结果，这主要是因为CPU会让多个线程分片执行，各个线程对此数据的操作也是互不可知的，这样就很容易引发内存不按照预期改变的情况</p></blockquote></li><li><p>内存连续性错误（Memory Consistency Errors）<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.17 AM.png" alt=""></p><blockquote><p>例子如上图，若三步操作不仅由一个线程执行，就很有可能导致打印出的并不是1而是0</p></blockquote></li><li><p>同步方法（Synchronized Methods)<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.41 AM.png" alt=""></p><blockquote><ul><li>Java中在方法体上添加<code>synchronized</code>关键字，能够保证同一时间仅有一个线程在调用某个对象的该方法；</li></ul><ul><li>同时Java还会为该方法在与对象之间建立一个happens-before关系，保证对象的该状态对所有线程都是可见的</li></ul></blockquote></li></ol><ol><li><p>固有锁与同步（Intrinsic Locks and Synchronization)</p><p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p><blockquote><p>当一个线程调用<code>synchronized</code>方法时，它会自动获取该方法对象的固有锁，并在方法返回时释放它。即使返回是由未捕获的异常引起的，也会释放锁。</p></blockquote><p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.56 AM.png" alt="MacGesture MacGesture, Today at 12.16.56 AM"></p><blockquote><p>直接使用this当做锁的关键字时，改对象的所有使用this当关键字的操作都必须保证同时只有一个线程访问，这样做虽然简便，但时间上有效率浪费，因为该对象的所有操作并不一定要保持完全同步，👇的代码段就解决了这一问题：</p><p>通过细粒度的锁来提高并发性：</p></blockquote><p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.22.45 AM.png" alt="MacGesture MacGesture, Today at 12.22.45 AM"></p><blockquote><p>类<code>MsLunch</code>有两个实例字段，<code>c1</code>并且<code>c2</code>从不一起使用。这些字段的所有更新必须同步，但是没有理由阻止c1的更新与c2的更新进行交错 - 这样做会通过创建不必要的阻止来降低并发性。而不是使用同步方法或以其他方式使用与之关联的锁<code>this</code></p></blockquote></li><li><p>原子操作（<code>Atomic</code> Access ）</p><blockquote><p>原子操作保证了操作的完整性：要么不执行，执行的话就一定要完全执行（即使虚拟机GC也不能打断）</p></blockquote><p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.35.40 AM.png" alt="MacGesture MacGesture, Today at 12.35.40 AM"></p><p> 第一条指的是我们可以使用<code>Java</code>内附的<code>AtomicInteger</code>、<code>AtomicBoolean</code>等变量来直接利用这一特性</p><p> 第二条引出了另一个关键字<code>volatile</code>，这实际上需要另起一篇进行介绍了</p></li></ol><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>synchronize在解决多线程编程问题时有奇效，但有一定的效率牺牲</p><p>使用时应尽量减小锁定的范围</p><p>对并发性有要求的地方需要注意看是否有细化锁粒度的必要</p><h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;初识&quot;&gt;&lt;a href=&quot;#初识&quot; class=&quot;headerlink&quot; title=&quot;初识&quot;&gt;&lt;/a&gt;初识&lt;/h2&gt;&lt;p&gt;&lt;code&gt;synchronize&lt;/code&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt; 翻译——同步（cause to occur or
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
-    
-      <category term="Synchronized" scheme="https://github.com/KyleCe/kylece.github.io/tags/Synchronized/"/>
     
   </entry>
   

@@ -3,26 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>荣耀时刻——你和演讲达人之间只差一页纸 | KyleCe</title>
+  <title>从1到n整数中1出现的次数 | KyleCe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="社科分享会演讲" />
+  <meta name="keywords" content="算法面经" />
   
   
   
   
-  <meta name="description" content="title: 荣耀时刻——你和演讲达人之间只差一页纸date: 2018-03-09 00:35:35 tags: [拓展, 社科]荣耀时刻——你和演讲达人之间只差一页纸 演讲一般  准备时间 = 演讲时间 * 10 组成部分三部分：  银瓶乍裂 掷地有声 一锤定音  银瓶乍裂引发大家的兴趣，实际上没有人愿意听你说 开场篇，克服紧张；持续紧张的克服办法（内心当中有一个熟悉的自己）  激发兴趣（断">
-<meta name="keywords" content="社科,分享会,演讲">
+  <meta name="description" content="题输入一个整数n，求从1到n这n个整数的十进制表示中1出现的次数例： 输入12，从1到12的这些整数中包含1的数字有 1，10，11，12， 一共出现5次 分析暴力解法：就是遍历，处理每个数的位数，除10取余，判断整数的个位是否为1显然不能用这样的办法来答题 思路一 暴力——遍历，除10取余看个位，不再展开介绍  思路二 能不能找到一些别的规律，来提高计算效率  我们举个例子：n = 21345将">
+<meta name="keywords" content="算法,面经">
 <meta property="og:type" content="article">
-<meta property="og:title" content="荣耀时刻——你和演讲达人之间只差一页纸">
-<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2017/08/13/社科/荣耀时刻——你和演讲达人之间只差一页纸/index.html">
+<meta property="og:title" content="从1到n整数中1出现的次数">
+<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2018/03/22/技术/算法/算法--从1到n整数中1出现的次数/index.html">
 <meta property="og:site_name" content="KyleCe">
-<meta property="og:description" content="title: 荣耀时刻——你和演讲达人之间只差一页纸date: 2018-03-09 00:35:35 tags: [拓展, 社科]荣耀时刻——你和演讲达人之间只差一页纸 演讲一般  准备时间 = 演讲时间 * 10 组成部分三部分：  银瓶乍裂 掷地有声 一锤定音  银瓶乍裂引发大家的兴趣，实际上没有人愿意听你说 开场篇，克服紧张；持续紧张的克服办法（内心当中有一个熟悉的自己）  激发兴趣（断">
+<meta property="og:description" content="题输入一个整数n，求从1到n这n个整数的十进制表示中1出现的次数例： 输入12，从1到12的这些整数中包含1的数字有 1，10，11，12， 一共出现5次 分析暴力解法：就是遍历，处理每个数的位数，除10取余，判断整数的个位是否为1显然不能用这样的办法来答题 思路一 暴力——遍历，除10取余看个位，不再展开介绍  思路二 能不能找到一些别的规律，来提高计算效率  我们举个例子：n = 21345将">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-09T15:44:28.775Z">
+<meta property="og:updated_time" content="2018-03-22T15:27:51.511Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="荣耀时刻——你和演讲达人之间只差一页纸">
-<meta name="twitter:description" content="title: 荣耀时刻——你和演讲达人之间只差一页纸date: 2018-03-09 00:35:35 tags: [拓展, 社科]荣耀时刻——你和演讲达人之间只差一页纸 演讲一般  准备时间 = 演讲时间 * 10 组成部分三部分：  银瓶乍裂 掷地有声 一锤定音  银瓶乍裂引发大家的兴趣，实际上没有人愿意听你说 开场篇，克服紧张；持续紧张的克服办法（内心当中有一个熟悉的自己）  激发兴趣（断">
+<meta name="twitter:title" content="从1到n整数中1出现的次数">
+<meta name="twitter:description" content="题输入一个整数n，求从1到n这n个整数的十进制表示中1出现的次数例： 输入12，从1到12的这些整数中包含1的数字有 1，10，11，12， 一共出现5次 分析暴力解法：就是遍历，处理每个数的位数，除10取余，判断整数的个位是否为1显然不能用这样的办法来答题 思路一 暴力——遍历，除10取余看个位，不再展开介绍  思路二 能不能找到一些别的规律，来提高计算效率  我们举个例子：n = 21345将">
   
     <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
   
@@ -160,7 +160,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-社科/荣耀时刻——你和演讲达人之间只差一页纸" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-技术/算法/算法--从1到n整数中1出现的次数" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -168,7 +168,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      荣耀时刻——你和演讲达人之间只差一页纸
+      从1到n整数中1出现的次数
     </h1>
   
 
@@ -176,12 +176,12 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/社科/荣耀时刻——你和演讲达人之间只差一页纸/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	<a href="/2018/03/22/技术/算法/算法--从1到n整数中1出现的次数/" class="article-date">
+	  <time datetime="2018-03-22T14:50:23.000Z" itemprop="datePublished">2018-03-22</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/效率/">效率</a>
+    <a class="article-category-link" href="/categories/技术/">技术</a>
 
       
 	<a class="article-views">
@@ -193,66 +193,23 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<p>title: 荣耀时刻——你和演讲达人之间只差一页纸<br>date: 2018-03-09 00:35:35</p>
-<h2 id="tags-拓展-社科"><a href="#tags-拓展-社科" class="headerlink" title="tags: [拓展, 社科]"></a>tags: [拓展, 社科]</h2><p>荣耀时刻——你和演讲达人之间只差一页纸</p>
-<p>演讲一般  准备时间 = 演讲时间 * 10</p>
-<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>三部分：</p>
-<ul>
-<li>银瓶乍裂</li>
-<li>掷地有声</li>
-<li>一锤定音</li>
-</ul>
-<h4 id="银瓶乍裂"><a href="#银瓶乍裂" class="headerlink" title="银瓶乍裂"></a>银瓶乍裂</h4><p>引发大家的兴趣，实际上没有人愿意听你说</p>
-<p>开场篇，克服紧张；持续紧张的克服办法（内心当中有一个熟悉的自己）</p>
-<ul>
-<li>激发兴趣（断言、共情、顺承、道具）</li>
-<li>提炼主题（主张、情怀）</li>
-</ul>
-<blockquote>
-<p>实战例子：</p>
-<ol>
-<li>找一段名篇（比如《寒门再慢出贵子》）</li>
-<li>说熟悉（语音、声音、节奏、肢体语言）</li>
-<li>​</li>
-</ol>
+        <h3 id="题"><a href="#题" class="headerlink" title="题"></a>题</h3><p>输入一个整数n，求从1到n这n个整数的十进制表示中1出现的次数<br>例： 输入12，从1到12的这些整数中包含1的数字有 1，10，11，12， 一共出现5次</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>暴力解法：就是遍历，处理每个数的位数，除10取余，判断整数的个位是否为1<br>显然不能用这样的办法来答题</p>
+<h4 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h4><blockquote>
+<p>暴力——遍历，除10取余看个位，不再展开介绍</p>
 </blockquote>
-<h4 id="掷地有声"><a href="#掷地有声" class="headerlink" title="掷地有声"></a>掷地有声</h4><p><strong>三个桩</strong></p>
-<p>分三个点进行展开（2个太少、4个太多）</p>
-<p>左脑结构，右脑内容</p>
-<h5 id="结构："><a href="#结构：" class="headerlink" title="结构："></a>结构：</h5><ul>
-<li>时间</li>
-<li>层进</li>
-<li>列举（并列法对听众挑战较大）</li>
-<li>变焦</li>
-<li>折中</li>
-</ul>
-<p>时间、层进更好</p>
-<h5 id="内容："><a href="#内容：" class="headerlink" title="内容："></a>内容：</h5><ul>
-<li>故事</li>
-<li>数据</li>
-<li>修辞（排比、比喻）</li>
-<li>细节</li>
-</ul>
-<blockquote>
-<p>优秀的演讲者——都是在讲故事</p>
-<p>好电影——一个故事接一个故事</p>
+<h4 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h4><blockquote>
+<p>能不能找到一些别的规律，来提高计算效率</p>
 </blockquote>
-<p>夹叙夹议</p>
-<p>只说数据——人是没有任何印象的（去年开放2胎，一年生出两个香港；）——数据一定要与听众相关联（与受众熟悉的事情）</p>
-<h4 id="一锤定音"><a href="#一锤定音" class="headerlink" title="一锤定音"></a>一锤定音</h4><ul>
-<li>总结回顾</li>
-<li>点睛升华</li>
-</ul>
-<p>——承诺式收尾</p>
-<p>（快）、（响亮）</p>
-<h3 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h3><ul>
-<li>左右并重 ==不忘初心，方得始终==</li>
-<li>说明式 ==笨蛋，问题在经济==</li>
-<li>疑问式 ==你比四年前过的好吗？==</li>
-<li>肯定式 ==永远别说你不会！==</li>
-</ul>
-<p>加标点、断句</p>
+<p>我们举个例子：n = 21345<br>将1到n分为两段： 1~1345，1346~21345</p>
+<p>先看第二段 1246~21345：<br>1分两种情况出现。首先分析最高位， 10000~19999这1万个数中，最高位全是1，一共记10^4个，所以对于12345这样的数字，最高位1出现的次数为：<br>2345+1= 2346 次<br>接下来分析1出现在除次高位的情况， 1346~21345这2w个数中，次高位上出现1的次数是2000次（1346~1999，21000~21345），由于最高位是2，我们可以再把1346~21345分成两段，1346~11345，11346~21345，每一段剩下的4位数字中，选择其中一位是1，其余三位为0~9的Any，根据排列组合，总共出现的次数是 2 * 10^3 = 2000次<br>对于1到1345之间的计数，就可以通过递归来求得了：<br>1~21345分成 1~1345， 1346~21345 ，接着，把21345的最高位去掉就变成1345了</p>
+<blockquote>
+<p>分段时候其实有有意这样区分的，目的就是为了使用递归</p>
+</blockquote>
+<h3 id="SourceCode"><a href="#SourceCode" class="headerlink" title="SourceCode"></a>SourceCode</h3><blockquote>
+<p>先将数字转换成字符串</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">NumberOf1Between1AndN</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(n &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">char</span> strN[<span class="number">50</span>];</span><br><span class="line">  <span class="built_in">sprintf</span>(strN, <span class="string">"%d"</span>, n);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> NumberOf1(strN);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">NumberOf1</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* strN)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!strN || *strN &lt; <span class="string">'0'</span> || *strN &gt; <span class="string">'9'</span> || *strN == <span class="string">'\0'</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> first = *strN - <span class="string">'0'</span>;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> length = <span class="keyword">static_cast</span>&lt;<span class="keyword">unsigned</span> <span class="keyword">int</span>&gt;(<span class="built_in">strlen</span>(strN));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(length == <span class="number">1</span> &amp;&amp; first == <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(length == <span class="number">1</span> &amp;&amp; first &gt; <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> numberFirstDigit = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span>(first &gt; <span class="number">1</span>)</span><br><span class="line">    numberFirstDigit = PoserBase10(length - <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(first = <span class="number">1</span>)</span><br><span class="line">    numberFirstDigit = atoi(strN + <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> numOtherDigits = first * (length - <span class="number">1</span>) * PoserBase10(length <span class="number">-2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> numRecursive = NumberOf1(strN + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> numberFirstDigit + numOtherDigits + numRecursive;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">PoserBase10</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> result = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">unsigned</span> <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">    result *= <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -287,7 +244,7 @@
 
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分享会/">分享会</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/演讲/">演讲</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面经/">面经</a></li></ul>
 
     </footer>
   </div>
@@ -295,19 +252,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/08/13/每周一书/【Note】《软件项目管理》概览提要/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          【Note】《软件项目管理》概览提要
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/08/13/社科/CODEX  创新体系/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/03/20/技术/算法/算法--连续子数组的最大和/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">CODEX  创新体系</div>
+      <div class="article-nav-title">算法--连续子数组的最大和</div>
     </a>
   
 </nav>
@@ -321,7 +269,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tags-拓展-社科"><span class="nav-number">1.</span> <span class="nav-text">tags: [拓展, 社科]</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#组成部分"><span class="nav-number">1.1.</span> <span class="nav-text">组成部分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#银瓶乍裂"><span class="nav-number">1.1.1.</span> <span class="nav-text">银瓶乍裂</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#掷地有声"><span class="nav-number">1.1.2.</span> <span class="nav-text">掷地有声</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#结构："><span class="nav-number">1.1.2.1.</span> <span class="nav-text">结构：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#内容："><span class="nav-number">1.1.2.2.</span> <span class="nav-text">内容：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一锤定音"><span class="nav-number">1.1.3.</span> <span class="nav-text">一锤定音</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主题"><span class="nav-number">1.2.</span> <span class="nav-text">主题</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题"><span class="nav-number">1.</span> <span class="nav-text">题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思路一"><span class="nav-number">2.1.</span> <span class="nav-text">思路一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路二"><span class="nav-number">2.2.</span> <span class="nav-text">思路二</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SourceCode"><span class="nav-number">3.</span> <span class="nav-text">SourceCode</span></a></li></ol>
     
     </div>
   </aside>
