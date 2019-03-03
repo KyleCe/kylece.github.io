@@ -255,7 +255,7 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/程序/Java进阶--被用烂的&#34;继承&#34;"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -263,7 +263,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶--被用烂的"继承"/">Java进阶——接口优于抽象类</a>
+      <a class="article-title" href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/">【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介</a>
     </h1>
   
 
@@ -271,7 +271,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/程序/Java进阶--被用烂的"继承"/" class="article-date">
+	<a href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -282,28 +282,19 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>继承很强大，但也有问题</p>
-<p>确实是is-a关系时才使用继承</p>
-<p>如果处在不同的包中，并且SuperClass不是为继承设计的，这时会导致脆弱性</p>
-<p>可以使用复合和转发机制来代替继承来避免这种脆弱性</p>
-<p>关键字:</p>
-<p><strong>继承、复合、装饰者模式、包装类、转发</strong></p>
-<blockquote>
-<p>keywords:</p>
-<p>继承(inheritance)、复合(composition)、装饰者模式(decorator)、包装类(WrapperClass)、转发(forwarding)</p>
+        <blockquote>
+<p>工欲善其事必先利其器<br>今天介绍几个plugin工具（奇淫巧技）</p>
 </blockquote>
-<p><em>为叙述方便，下文以CC代表子类，SC代表超类，也就是父类</em></p>
-<h3 id="问题体现"><a href="#问题体现" class="headerlink" title="问题体现"></a>问题体现</h3><p><strong>继承打破了封装性</strong></p>
-<p>CC依赖于SC的实现细节，在SC更新换代时，CC会受影响，严重的会导致错误，为了避免出现错误，时常要做的事情是跟着SC的更新而更新CC</p>
-<p>其实你可以直接使用<strong>复合</strong>来避免这一问题出现——也就是，在原来的CC中添加一个SC的实例</p>
-<p>这样新的类中可以直接使用SC的方法逻辑，而不用担心SC更新时要升级API的问题（概念：<strong>转发</strong>）</p>
-<p>这样的类也被称为<strong>包装类</strong></p>
-<p>这也引出了设计模式中的Decorator模式概念（<strong>装饰者模式</strong>）</p>
-<h3 id="强制使用的弊端"><a href="#强制使用的弊端" class="headerlink" title="强制使用的弊端"></a>强制使用的弊端</h3><ul>
-<li>暴露不必要的SC细节</li>
-<li>永远地限制了CC的性能（使用复合模式则可以在需要时更换转发的具体实现）</li>
-<li>导致语义混淆</li>
-</ul>
+<blockquote>
+<p><em>（适用平台：IntelliJ IDEA内核的各类IDE）</em></p>
+</blockquote>
+<hr>
+<p><strong>效果图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5b8d8a86fda8eca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ide_tools.png"></p>
+<p>按图中标示顺序介绍：</p>
+<p>####1.Translation<br>_ 顾名思义是中英翻译，令人意外的是自带英美两种发音（默认快捷键：ALT + 1/3，OSX 不详）_</p>
+<p>####2.Background Image Plus<br><em>可以对IDE背景进行自定义，可以设置图片质量/明暗等，对内存有一定消耗，小霸王请绕道</em></p>
+<p>####3.CodeGlance<br><em>提供一个代码文件的全局概览缩略图，主要可用于快速定位</em></p>
 
       
 
@@ -313,7 +304,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tool/">Tool</a></li></ul>
 
     </footer>
   </div>
@@ -555,7 +546,7 @@
 
 
   
-    <article id="post-每周一书/周读-- 创业维艰"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-每周一书/【Note】《软件项目管理》概览提要"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -563,7 +554,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/周读-- 创业维艰/">周读-- 创业维艰</a>
+      <a class="article-title" href="/2017/08/13/每周一书/【Note】《软件项目管理》概览提要/">【Note】《软件项目管理》概览提要</a>
     </h1>
   
 
@@ -571,7 +562,7 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/每周一书/周读-- 创业维艰/" class="article-date">
+	<a href="/2017/08/13/每周一书/【Note】《软件项目管理》概览提要/" class="article-date">
 	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
 	</a>
 
@@ -582,24 +573,21 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><blockquote>
-<p>分类——管理</p>
-<p>推荐指数——三星半</p>
+        <blockquote>
+<p>《软件项目管理》着眼于软件项目的策划、监督、控制；</p>
 </blockquote>
 <blockquote>
-<p>这是一本关于<strong>创业</strong>的书，读起来更像是一本回忆录，不一样的是会有一些比较实操的逆境中求生的经验总结归纳</p>
+<p>主要对从项目选择开始，到项目交付整个流程中关键步骤进行释疑解惑，<strong>涵盖项目管理</strong>（评价、策划、评估、实施）、<strong>技术管理</strong>（评审、质量控制、敏捷开发）、<strong>风险管理</strong>（评估、规避、转移）、<strong>合同管理</strong>、<strong>成员管理</strong>（选择、激励、激励）、<strong>团队管理</strong>等几个方面</p>
 </blockquote>
-<blockquote>
-<p>作者系 Loadcloud及Opsware创始人（后者被惠普以15.6亿美元收购），真正实现了从0到0.1，再到1的转变，这些创业之后又开始涉入风险投资，比较符合现在流行的“企投家”标准</p>
-</blockquote>
-<p>虽然是一位CEO关于创业的经验总结，我们大家也没有那么多人创业，但读来感觉会对像我这样“一般员工”的认识产生影响，会更能体会老板是怎么想的，领导是怎么想的</p>
-<p>如果我们能够把平时的工作真正当成自己的事业来做，拿出那份责任感、使命感，我相信最后的结果不会坏</p>
-<p>当然，书中还谈到了很多具体的诸如如何组织、如何就平时的棘手问题进行沟通的细节，纵使作者的故事是在硅谷，但最本质的东西是相通的，虽书中论述不及专业的管理专家（如格鲁夫）之谈，但也具有相当的启发意义，毕竟他的故事算是逆境生长的极其成功的典范，能够在互联网经济泡沫时力挽狂澜，作者的各方面能力可略知一二</p>
-<p>说了这么多好，该扒一扒缺点了。因为是英文翻译过来的，所以有些语义语境读来不那么舒服，再加上中美文化本身的差异，书中描述的一些细节有时看来比较离谱，部分事情可能在我们看来天经地义。还有一点，总结的理论算不上太专业，不太成体系，真正想钻研企业管理，还是得看大师之作（格鲁夫的《给经理人的第一课》拿来当入门就不错）</p>
-<h3 id="部分小结、摘录"><a href="#部分小结、摘录" class="headerlink" title="部分小结、摘录"></a>部分小结、摘录</h3><p>印象笔记 图文链接：</p>
-<p><a href="https://www.evernote.com/l/ARvmQ23Tvs5JKZAmlWM9hqdhqTouO4fRyO8" target="_blank" rel="noopener">https://www.evernote.com/l/ARvmQ23Tvs5JKZAmlWM9hqdhqTouO4fRyO8</a> </p>
-<p>导图：</p>
-<p><img src="../pic_resource/创业维艰overview.png" alt=""></p>
+<hr>
+<p><a href="https://www.evernote.com/l/ARuMImpZpL9FQbiZNC9LGNCYsUd8ITNmmYE" target="_blank" rel="noopener">Evernote链接</a></p>
+<p><a href="https://www.evernote.com/shard/s283/sh/8c226a59-a4bf-4541-b899-342f4b18d098/b1477c2133669981/res/bd8cbb92-d0f3-4149-8d0c-9129765d7537/软件项目管理.xmind" target="_blank" rel="noopener">XMind文档下载</a></p>
+<p><strong>导图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-43035d3944e2e17c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目管理overview.png"></p>
+<hr>
+<p><strong>文本</strong></p>
+<p>软件项目管理</p>
+<p>1 概述<br>  1.1 合同/技术项目管理<br>    1.1.1 可行性研究、策划、实施<br>  1.2 计划、方法、方法学<br>  1.3 分类方式<br>    1.3.1 用户、系统、目标与产品<br>  1.4 设定目标<br>    1.4.1 目标与子目标<br>    1.4.2 有效性度量<br>  1.5 管理控制<br>    1.5.1 瀑布流控制、反馈迭代直至达成目标<br>2 评价项目与项目集管理<br>  2.1 项目组合管理<br>    2.1.1 新品开发、改进项目<br>    2.1.2 组合优化<br>  2.2 单项目管理<br>    2.2.1 单项目评估<br>        2.2.1.1 技术评估<br>        2.2.1.2 成本效益分析<br>                2.2.1.2.1 评价技术<br>                2.2.1.2.1.1 净利润<br>                2.2.1.2.1.2 回收期<br>                2.2.1.2.1.3 投资回报率<br>                2.2.1.2.1.4 净现值<br>                2.2.1.2.1.5 内部回报率<br>        2.2.1.3 现金流预测<br>    2.2.2 风险评价<br>        2.2.2.1 风险标识与等级<br>        2.2.2.2 风险与净现值<br>        2.2.2.3 风险剖面分析<br>        2.2.2.4 使用决策树<br>  2.3 项目集管理<br>    2.3.1 管理项目集内的资源分配<br>    2.3.2 策略<br>    2.3.3 创建<br>        2.3.3.1 命令（目标）<br>        2.3.3.2 摘要<br>        2.3.3.3 构想<br>        2.3.3.4 蓝图<br>    2.3.4 辅助<br>        2.3.4.1 依赖关系图<br>        2.3.4.2 交付计划<br>  2.4 收益管理<br>    2.4.1 量化收益<br>3 项目策划概述<br>  3.1 步进式策划概述<br>  3.2 步骤<br>    3.2.1 选择<br>    3.2.2 标识范围和目标<br>    3.2.3 标识基础设施<br>    3.2.4 分析特征<br>        3.2.4.1 驱动因素<br>        3.2.4.2 质量特征<br>        3.2.4.3 用户需求<br>        3.2.4.4 开发方法学与生命周期法<br>        3.2.4.5 整体资源需求估计<br>    3.2.5 标识产品与活动<br>        3.2.5.1 可交付物<br>        3.2.5.2 文档化产品流<br>        3.2.5.3 活动图网络<br>    3.2.6 估算每个活动工作量<br>        3.2.6.1 使活动可控<br>    3.2.7 标识活动风险<br>        3.2.7.1 标识、量化基于活动的风险<br>        3.2.7.2 风险缓解策略与应急措施<br>        3.2.7.3 根据风险调整计划与估计<br>    3.2.8 分配资源<br>        3.2.8.1 根据资源约束修改计划与估计<br>    3.2.9 评审/发布计划<br>    3.2.10 执行、细节策划<br>4 选择合适的项目方法<br>  4.1 build or buy<br>  4.2 选择方法学和技术<br>  4.3 过程模型的选择<br>  4.4 结构与交付速度<br>  4.5 模型<br>    4.5.1 瀑布模型<br>    4.5.2 螺旋模型<br>    4.5.3 软件原型开发<br>    4.5.4 其它<br>        4.5.4.1 原型收获<br>        4.5.4.2 具象化程度<br>        4.5.4.3 取舍<br>        4.5.4.4 控制变更<br>  4.6 增量式交付<br>    4.6.1 优缺点<br>    4.6.2 交付计划<br>    4.6.3 系统目标<br>    4.6.4 开放的技术计划<br>    4.6.5 增量式计划<br>  4.7 敏捷<br>    4.7.1 水晶方法<br>    4.7.2 Atern<br>    4.7.3 特性驱动<br>    4.7.4 Scrum<br>    4.7.5 XP<br>5 软件工作量估计<br>  5.1 何处评估<br>    5.1.1 战略策划<br>    5.1.2 可行性研究<br>    5.1.3 项目策划<br>  5.2 过高/过低问题<br>  5.3 软件估计基础<br>    5.3.1 历史数据<br>    5.3.2 工作度量<br>  5.4 估计技术<br>    5.4.1 自底向上<br>    5.4.2 自顶向下<br>    5.4.3 专家判断<br>    5.4.4 类比估计<br>  5.5 功能点分析<br>6 活动策划<br>  6.1 目的<br>    6.1.1 可行性评估、资源分配、成本核算、动机、协调<br>  6.2 何时<br>    6.2.1 逐步细化<br>  6.3 进度表<br>  6.4 项目与活动<br>    6.4.1 甘特图<br>  6.5 确定活动次序与进度<br>  6.6 网络策划模型<br>  6.7 网络模型的公式化表示<br>  6.8 增加时间维<br>  6.9 正向遍历<br>  6.10 反向遍历<br>  6.11 表示关键路径<br>  6.12 活动缓冲期<br>  6.13 标识关键活动<br>  6.14 活动-箭头网络<br>7 风险管理<br>  7.1 风险<br>  7.2 分类<br>  7.3 处理框架<br>  7.4 识别<br>  7.5 评估<br>  7.6 策划<br>    7.6.1 接受、规避、降低与缓解、转移<br>  7.7 管理<br>    7.7.1 应急、应对策略<br>  7.8 评价进度风险<br>  7.9 应用PERT技术<br>    7.9.1 活动评估网络图<br>  7.10 蒙特卡洛仿真<br>  7.11 关键链概念<br>    7.11.1 甘特图<br>8 资源分配<br>  8.1 资源性质<br>  8.2 标识资源需求<br>  8.3 资源调度<br>  8.4 创建关键路径<br>  8.5 计算成本<br>  8.6 特定细节<br>  8.7 发布资源进度表<br>  8.8 成本进度<br>  8.9 调度顺序<br>9 监督与控制<br>  9.1 创建框架<br>    9.1.1 责任<br>    9.1.2 进展评估<br>    9.1.3 设置检查点<br>    9.1.4 取快照<br>  9.2 收集数据<br>    9.2.1 局部完成报告<br>    9.2.2 红黄绿交通灯报告<br>  9.3 进展可视化<br>    9.3.1 甘特图<br>    9.3.2 延迟图<br>    9.3.3 时间线<br>  9.4 成本监督<br>  9.5 优先级控制<br>    9.5.1 关键路径活动、无自由浮动的活动、少于规定浮动的活动、高风险活动、使用关键资源活动<br>  9.6 使项目回归目标<br>    9.6.1 缩短关键路径、重新评估优先需求、异常计划<br>  9.7 变更控制<br>    9.7.1 规程、维度、职责<br>10 管理合同<br>  10.1 合同种类<br>  10.2 部署阶段<br>    10.2.1 需求分析、评估计划、邀请投标、评估提议<br>  10.3 典型合同条款<br>  10.4 管理<br>  10.5 验收<br>11 人员管理<br>  11.1 理解行为<br>    11.1.1 解释主义、实证主义<br>  11.2 组织行为：背景<br>    11.2.1 合适的人、对指导方法择优、薪酬激励<br>  11.3 选择合适人选<br>  11.4 用最好的方法进行教育<br>    11.4.1 培训<br>  11.5 激励<br>    11.5.1 Taylorise模型<br>        11.5.1.1 制造业计件<br>    11.5.2 Maslow需求层次<br>        11.5.2.1 发现个人的需求所处层次<br>    11.5.3 Herzberg双因素理论<br>        11.5.3.1 维护因素、工作热情<br>  11.6 oldham-Hackman工作特征模型<br>    11.6.1 技术多样性、任务鉴别、重要性、自主权、反馈<br>  11.7 压力<br>    11.7.1 任务控制、角色冲突<br>  11.8 健康和安全<br>  11.9 职业道德注意事项<br>12 团队管理<br>  12.1 组成<br>  12.2 决策制定<br>    12.2.1 心里障碍<br>        12.2.1.1 故障启发、恶性增资、信息超载<br>    12.2.2 小组综合制定<br>    12.2.3 主程序组<br>    12.2.4 敏捷<br>  12.3 组织结构<br>  12.4 合作依赖<br>  12.5 分散或虚拟团队<br>  12.6 沟通风格<br>  12.7 沟通计划<br>    12.7.1 what、who、purpose、when、method、responsibility<br>  12.8 领导能力<br>13 软件质量<br>  13.1 质量在项目策划中的位置<br>  13.2 重要性<br>    13.2.1 危险程度、不定因素、缺陷累积<br>  13.3 定义<br>  13.4 产品与过程质量管理<br>  13.5 质量管理体系<br>  13.6 能力过程模型<br>  13.7 助力提高技术<br>    13.7.1 增加可见性<br>    13.7.2 过程性结构<br>    13.7.3 检查中间阶段<br>  13.8 测试<br>  13.9 质量计划<br>（Bob Hunghes &amp; Mike Cotterell 著）</p>
 
       
 
@@ -609,7 +597,114 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-社科/荣耀时刻——你和演讲达人之间只差一页纸"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/13/社科/荣耀时刻——你和演讲达人之间只差一页纸/">荣耀时刻——你和演讲达人之间只差一页纸</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/13/社科/荣耀时刻——你和演讲达人之间只差一页纸/" class="article-date">
+	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/效率/">效率</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title: 荣耀时刻——你和演讲达人之间只差一页纸<br>date: 2018-03-09 00:35:35</p>
+<h2 id="tags-拓展-社科"><a href="#tags-拓展-社科" class="headerlink" title="tags: [拓展, 社科]"></a>tags: [拓展, 社科]</h2><p>荣耀时刻——你和演讲达人之间只差一页纸</p>
+<p>演讲一般  准备时间 = 演讲时间 * 10</p>
+<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>三部分：</p>
+<ul>
+<li>银瓶乍裂</li>
+<li>掷地有声</li>
+<li>一锤定音</li>
+</ul>
+<h4 id="银瓶乍裂"><a href="#银瓶乍裂" class="headerlink" title="银瓶乍裂"></a>银瓶乍裂</h4><p>引发大家的兴趣，实际上没有人愿意听你说</p>
+<p>开场篇，克服紧张；持续紧张的克服办法（内心当中有一个熟悉的自己）</p>
+<ul>
+<li>激发兴趣（断言、共情、顺承、道具）</li>
+<li>提炼主题（主张、情怀）</li>
+</ul>
+<blockquote>
+<p>实战例子：</p>
+<ol>
+<li>找一段名篇（比如《寒门再慢出贵子》）</li>
+<li>说熟悉（语音、声音、节奏、肢体语言）</li>
+<li>​</li>
+</ol>
+</blockquote>
+<h4 id="掷地有声"><a href="#掷地有声" class="headerlink" title="掷地有声"></a>掷地有声</h4><p><strong>三个桩</strong></p>
+<p>分三个点进行展开（2个太少、4个太多）</p>
+<p>左脑结构，右脑内容</p>
+<h5 id="结构："><a href="#结构：" class="headerlink" title="结构："></a>结构：</h5><ul>
+<li>时间</li>
+<li>层进</li>
+<li>列举（并列法对听众挑战较大）</li>
+<li>变焦</li>
+<li>折中</li>
+</ul>
+<p>时间、层进更好</p>
+<h5 id="内容："><a href="#内容：" class="headerlink" title="内容："></a>内容：</h5><ul>
+<li>故事</li>
+<li>数据</li>
+<li>修辞（排比、比喻）</li>
+<li>细节</li>
+</ul>
+<blockquote>
+<p>优秀的演讲者——都是在讲故事</p>
+<p>好电影——一个故事接一个故事</p>
+</blockquote>
+<p>夹叙夹议</p>
+<p>只说数据——人是没有任何印象的（去年开放2胎，一年生出两个香港；）——数据一定要与听众相关联（与受众熟悉的事情）</p>
+<h4 id="一锤定音"><a href="#一锤定音" class="headerlink" title="一锤定音"></a>一锤定音</h4><ul>
+<li>总结回顾</li>
+<li>点睛升华</li>
+</ul>
+<p>——承诺式收尾</p>
+<p>（快）、（响亮）</p>
+<h3 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h3><ul>
+<li>左右并重 ==不忘初心，方得始终==</li>
+<li>说明式 ==笨蛋，问题在经济==</li>
+<li>疑问式 ==你比四年前过的好吗？==</li>
+<li>肯定式 ==永远别说你不会！==</li>
+</ul>
+<p>加标点、断句</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分享会/">分享会</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/演讲/">演讲</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li></ul>
 
     </footer>
   </div>
@@ -760,7 +855,7 @@
 
 
   
-    <article id="post-社科/荣耀时刻——你和演讲达人之间只差一页纸"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-每周一书/【读书笔记】深入理解Android内核设计思想"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -768,7 +863,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/社科/荣耀时刻——你和演讲达人之间只差一页纸/">荣耀时刻——你和演讲达人之间只差一页纸</a>
+      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】深入理解Android内核设计思想/">【读书笔记】深入理解Android内核设计思想</a>
     </h1>
   
 
@@ -776,136 +871,31 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/社科/荣耀时刻——你和演讲达人之间只差一页纸/" class="article-date">
+	<a href="/2017/08/13/每周一书/【读书笔记】深入理解Android内核设计思想/" class="article-date">
 	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/效率/">效率</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>title: 荣耀时刻——你和演讲达人之间只差一页纸<br>date: 2018-03-09 00:35:35</p>
-<h2 id="tags-拓展-社科"><a href="#tags-拓展-社科" class="headerlink" title="tags: [拓展, 社科]"></a>tags: [拓展, 社科]</h2><p>荣耀时刻——你和演讲达人之间只差一页纸</p>
-<p>演讲一般  准备时间 = 演讲时间 * 10</p>
-<h3 id="组成部分"><a href="#组成部分" class="headerlink" title="组成部分"></a>组成部分</h3><p>三部分：</p>
-<ul>
-<li>银瓶乍裂</li>
-<li>掷地有声</li>
-<li>一锤定音</li>
-</ul>
-<h4 id="银瓶乍裂"><a href="#银瓶乍裂" class="headerlink" title="银瓶乍裂"></a>银瓶乍裂</h4><p>引发大家的兴趣，实际上没有人愿意听你说</p>
-<p>开场篇，克服紧张；持续紧张的克服办法（内心当中有一个熟悉的自己）</p>
-<ul>
-<li>激发兴趣（断言、共情、顺承、道具）</li>
-<li>提炼主题（主张、情怀）</li>
-</ul>
-<blockquote>
-<p>实战例子：</p>
-<ol>
-<li>找一段名篇（比如《寒门再慢出贵子》）</li>
-<li>说熟悉（语音、声音、节奏、肢体语言）</li>
-<li>​</li>
-</ol>
-</blockquote>
-<h4 id="掷地有声"><a href="#掷地有声" class="headerlink" title="掷地有声"></a>掷地有声</h4><p><strong>三个桩</strong></p>
-<p>分三个点进行展开（2个太少、4个太多）</p>
-<p>左脑结构，右脑内容</p>
-<h5 id="结构："><a href="#结构：" class="headerlink" title="结构："></a>结构：</h5><ul>
-<li>时间</li>
-<li>层进</li>
-<li>列举（并列法对听众挑战较大）</li>
-<li>变焦</li>
-<li>折中</li>
-</ul>
-<p>时间、层进更好</p>
-<h5 id="内容："><a href="#内容：" class="headerlink" title="内容："></a>内容：</h5><ul>
-<li>故事</li>
-<li>数据</li>
-<li>修辞（排比、比喻）</li>
-<li>细节</li>
-</ul>
-<blockquote>
-<p>优秀的演讲者——都是在讲故事</p>
-<p>好电影——一个故事接一个故事</p>
-</blockquote>
-<p>夹叙夹议</p>
-<p>只说数据——人是没有任何印象的（去年开放2胎，一年生出两个香港；）——数据一定要与听众相关联（与受众熟悉的事情）</p>
-<h4 id="一锤定音"><a href="#一锤定音" class="headerlink" title="一锤定音"></a>一锤定音</h4><ul>
-<li>总结回顾</li>
-<li>点睛升华</li>
-</ul>
-<p>——承诺式收尾</p>
-<p>（快）、（响亮）</p>
-<h3 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h3><ul>
-<li>左右并重 ==不忘初心，方得始终==</li>
-<li>说明式 ==笨蛋，问题在经济==</li>
-<li>疑问式 ==你比四年前过的好吗？==</li>
-<li>肯定式 ==永远别说你不会！==</li>
-</ul>
-<p>加标点、断句</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分享会/">分享会</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/演讲/">演讲</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-日常记录/【工具】流程图-图形标准简介"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/日常记录/【工具】流程图-图形标准简介/">【工具】流程图-图形标准简介</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/日常记录/【工具】流程图-图形标准简介/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/效率/">效率</a>
+    <a class="article-category-link" href="/categories/阅读/">阅读</a><a class="article-category-link" href="/categories/阅读/技术/">技术</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>流程图可以提供一种简单扼要的“缩略俯瞰图”，帮助观众快速了解业务如何运转。可以极大地提高沟通效率、业务认知速率</p>
+<p>这本书太深了，不适合略读，可以在碰到相关问题时仔细研读，知识覆盖面较广</p>
 </blockquote>
+<p>这么多大块的时间来一条条钻研这些内核实现细节其实不如学习算法来的有用，毕竟一个是形式，一个是内功</p>
 <blockquote>
-<p>本篇介绍各个图形的标准含义与用法（基础篇）</p>
 </blockquote>
+<p>留待查阅</p>
 <hr>
-<p><strong>图示：</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-faca475f0e621d3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flow_chat_standard_icon.png"></p>
-<p><strong>来个例子</strong></p>
-<p>获取验证码的逻辑流程：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-306faf3145e4e6a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flow_chat_example.png"></p>
+<p><a href="https://www.evernote.com/l/ARvkJbs0vmxOJZn5WVExzJGV7jJHClXEVtY" target="_blank" rel="noopener">印象笔记链接（附带XMind文件）</a></p>
+<p>图片：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-228b08c1632f933b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="深入理解Android 内核设计思想 overview.png"></p>
+<hr>
+<p>#笔记文字</p>
+<p>深入理解Android内核思想<br>1 4 操作系统基础<br>  1.1 4.3 进程间通信的经典实现<br>    1.1.1 共享内存<br>    1.1.2 管道pipe<br>        1.1.2.1 管道是单向的<br>        1.1.2.2 有容量限制<br>    1.1.3 Unix domain socket<br>        1.1.3.1 专门针对单机的进程间通信，并不依赖Network socket 的那些TCP/IP协议<br>        1.1.3.2 Android上使用最多的一种IPC机制是Binder，其次就是UDS<br>    1.1.4 RPC（Remote Procedure Calls）<br>  1.2 4.4 同步机制的经典实现<br>    1.2.1 定义<br>        1.2.1.1 如果多个进程间存在时序关系，需要协同工作以完成一项任务，则称为同步<br>        1.2.1.2 如果它们并不满足协同条件，而只是因为共享具有排他性资源时所产生的关系，称为互斥<br>    1.2.2 信号量（Semaphore）<br>        1.2.2.1 信号量与PV原语操作 是使用最广泛的互斥方法之一<br>        1.2.2.2 PV原语都属于原子操作（Atomic Operations）<br>    1.2.3 Mutex（Mutual Exclusion）<br>    1.2.4 管程（Monitor）<br>        1.2.4.1 对Semaphore机制的延伸和改善，是一种控制更为简单的同步手段<br>        1.2.4.2 管程中的方法都是受Mutex保护的，意味着同一时刻只允许有一个访问者使用它们<br>  1.3 4.5 Android中的同步机制<br>    1.3.1 Mutex<br>    1.3.2 Condition<br>    1.3.3 Barrier<br>        1.3.3.1 Barrier是填充了具体条件的Condition<br>        1.3.3.2 专门为SurfaceFlinger而设计<br>  1.4 4.6 操作系统内存管理基础<br>    1.4.1 核心点：虚拟内存、内存分配与回收、内存保护<br>    1.4.2 虚拟内存<br>        1.4.2.1 地址空间<br>                1.4.2.1.1 逻辑地址，也称相对地址，是程序编译后所产生的地址<br>                1.4.2.1.1.1 组成部分： Segment Selector + Offset<br>                1.4.2.1.2 线性地址<br>                1.4.2.1.3 物理地址<br>    1.4.3 内存保护<br>    1.4.4 内存分配与内存回收<br>    1.4.5 进程间通信mmap<br>  1.5 4-7 Android中的Low Memory Killer<br>    1.5.1 OOMKiller<br>    1.5.2 策略考虑因素<br>        1.5.2.1 进程消耗的内存<br>        1.5.2.2 进程占用的CPU时间<br>        1.5.2.3 oom_adj（OOM权重）<br>    1.5.3 自己改变oom_adj？<br>        1.5.3.1 1 写文件 ： /proc/<pid>/oom_adj<br>        1.5.3.2 2 android:persistent 添加到application标签中，设置应用为常驻内存<br>  1.6 4-8 Android 匿名共享内存<br>    1.6.1 Anonymous Shared Memory<br>    1.6.2 Ashmem 设备<br>        1.6.2.1 创建时机<br>        1.6.2.2 操作函数及实现原理<br>        1.6.2.3 Linux 共享机制的区别与联系<br>    1.6.3 Ashmem应用实例<br>  1.7 4-9 JNI<br>2 5 Android 进程/线程管理<br>  2.1 5.1 Android进程和线程<br>    2.1.1 Activity启动后，除了主线程 ActivityThread之外还需要两个Binder线程<br>    2.1.2 Service与Activity一样，也寄存于ActivityThread之中，并且启动流程和Activity基本一致<br>    2.1.3 启动Service时，同样也需要两个Binder线程支持<br>    2.1.4 对于同一个AndroidManifest.xml中定义的四大组件，除非有特别声明，否则它们都运行于同一个进程中<br>    2.1.5 Android提供了特殊的方式让不是同一个包里的组件也可以运行于相同的进程中，优势是可以方便地进行资源共享<br>        2.1.5.1 针对个别组件，可以在标签中加入android:process<br>        2.1.5.2 针对整个包，直接在<application>标签中加入android:process属性来指明<br>  2.2 5.2 Handler， MessageQueue Runnable， Looper<br>    2.2.1 Handler<br>        2.2.1.1 功能：处理Message、将Message压入MessageQueue<br>        2.2.1.2 函数<br>                2.2.1.2.1 post<br>                2.2.1.2.1.1 post<br>                2.2.1.2.1.2 postAtTime<br>                2.2.1.2.1.3 postDelay<br>                2.2.1.2.2 send<br>                2.2.1.2.2.1 sendEmptyMessage<br>                2.2.1.2.2.2 sendMessageAtFrontOfQueue<br>                2.2.1.2.2.3 sendMessageAtTime<br>                2.2.1.2.2.4 sendMessageDelay<br>    2.2.2 MessageQueue<br>    2.2.3 Looper<br>        2.2.3.1 分为两种：主线程、普通线程<br>        2.2.3.2 ThreadLocal 成员变量<br>  2.3 5.3 UI主线程——ActivityThread<br>    2.3.1 prepareMainLooper<br>        2.3.1.1 prepare<br>        2.3.1.2 不允许退出<br>    2.3.2 sMainThreadHandler<br>        2.3.2.1 创建处理消息环境<br>        2.3.2.2 循环处理消息<br>  2.4 5.4 Thread类<br>    2.4.1 内部原理<br>        2.4.1.1 implements Runnable<br>        2.4.1.2 state<br>                2.4.1.2.1 NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, TERMINATED<br>    2.4.2 休眠和唤醒<br>        2.4.2.1 相关方法：wait,notify,notifyAll, interrupt,join, sleep<br>        2.4.2.2 wait和notify/notifyAll<br>        2.4.2.3 interrupt<br>        2.4.2.4 join<br>                2.4.2.4.1 保证两个线程顺序执行<br>                2.4.2.4.2 带时间参数的join，保证在规定时间没有执行完前面的线程，也会继续执行后面的语句，防止无限等待<br>        2.4.2.5 sleep<br>                2.4.2.5.1 wait等待某个object<br>                2.4.2.5.2 sleep则是等待时间<br>3 6. 进程间通信——Binder<br>  3.1 组成<br>    3.1.1 Binder驱动<br>    3.1.2 Service Manager<br>        3.1.2.1 在Binder通信中的唯一标志永远都是0<br>    3.1.3 Binder Client<br>    3.1.4 Binder Server<br>  3.2 智能指针<br>    3.2.1 引用计数器，由object自身持有<br>    3.2.2 强指针SP<br>    3.2.3 弱指针WP，主要使命是解决循环引用的问题<br>        3.2.3.1 弱指针必须升级为强指针才能访问它所指向的对象<br>  3.3 进程间的数据传递载体——Parcel<br>  3.4 Binder 驱动协议<br>  3.5 ServiceManager[Binder Server]<br>    3.5.1 类似“DNS”服务器<br>  3.6 Binder Client<br>  3.7 Android接口描述语言AIDL<br>  3.8 匿名Binder Server<br>4 7. Android启动过程简析<br>  4.1 第一个系统进程 init<br>  4.2 系统关键服务的启动简析<br>5 8. 管理Activity和组件运行状态的系统进程 Activity Manager Service（AMS）<br>  5.1 AMS功能概述<br>    5.1.1 寄存于SystemServer中。会在系统启动时创建一个线程来循环处理客户请求<br>  5.2 ActivityStack<br>    5.2.1 ActivityState<br>    5.2.2 ArrayList<br>    5.2.3 记录特殊状态下的Activity<br>  5.3 startActivity流程<br>  5.4 ActivityTask<br>    5.4.1 android:taskAffinity<br>        5.4.1.1 当启动Activity的Intent中带有FLAG_ACTIVITY_NEW_TASK标志时<br>                5.4.1.1.1 表示它希望为activity新开一个task， 如果有task的affinity与新Activity的affinity一样，则会复用此task，否则，新建task<br>        5.4.1.2 当Activity中的allowTaskReParenting属性设置为true时<br>                5.4.1.2.1 Activity具有动态转移能力<br>    5.4.2 android:alwaysRetainTaskState<br>6 9. GUI系统之SurfaceFlinger<br>7 11. View体系<br>  7.1 应用程序中的View框架<br>    7.1.1 ViewRoot是View的管理者，ViewRoot的核心任务就是与WindowManagerService进行通信<br>    7.1.2 Activity内部有一个mWindow成员变量<br>    7.1.3 Window与WindowManagerImpl的关系<br>        7.1.3.1 一个应用可能有很多个Window，不会让它们单独地与WMS通信<br>    7.1.4 ViewRoot与WindowManagerImpl的关系<br>  7.2 Activity中ViewTree的创建过程<br>    7.2.1 有了Window以后生成具体的内容由setContentView发起，设置mDecor<br>  7.3 在WMS中注册窗口<br>  7.4 ViewRoot的基本工作方式<br>  7.5 ViewTree的遍历时机<br>  7.6 ViewTree的遍历流程<br>  7.7 View 和 ViewGroup属性<br>  7.8 Canvas<br>  7.9 draw和onDraw<br>  7.10 View中的消息传递<br>  7.11 View动画<br>8 12. InputManager Service与输入事件<br>  8.1 事件分类<br>    8.1.1 KeyEvent<br>    8.1.2 TouchEvent<br>    8.1.3 MouseEvent<br>    8.1.4 TrackBallEvent<br>  8.2 事件的投递流程<br>9 13. 音频系统<br>  9.1 基础<br>  9.2 框架<br>  9.3 核心<br>  9.4 策略制定者<br>  9.5 回放<br>  9.6 数据流<br>  9.7 音量控制<br>  9.8 上层建筑<br>  9.9 支持的格式<br>  9.10 ID3简介<br>  9.11 多媒体文件管理<br>10 14. Intent匹配规则<br>  10.1 Intent 属性<br>  10.2 匹配规则<br>  10.3 源码简析<br>11 15. APK应用程序的资源适配<br>  11.1 资源类型<br>  11.2 可选资源<br>  11.3 最佳匹配流程<br>  11.4 屏幕适配<br>12 16. Android字符编码格式<br>  12.1 ISO/IEC 8859<br>  12.2 ISO/IEC 10646<br>  12.3 Unicode<br>  12.4 String类型<br>13 17. Android和OpenGL ES<br>  13.1 3D 基础<br>  13.2 OpenGL SE<br>  13.3 API-EGL<br>  13.4 GLSurfaceView<br>14 18. SystemUI<br>  14.1 组成元素<br>  14.2 实现<br>  14.3 壁纸<br>15 19. Widget<br>  15.1 AppWidgetProvider<br>  15.2 AppWidgetHost<br>16 20. 编译和打包<br>  16.1 Ant<br>  16.2 命令行<br>  16.3 编译过程<br>  16.4 信息安全<br>  16.5 签名<br>  16.6 签名源码<br>17 21. 版本控制<br>  17.1 Git<br>18 22. 调试工具<br>  18.1 Emulator<br>  18.2 ADB</application></pid></p>
 
       
 
@@ -915,7 +905,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tool/">Tool</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
 
     </footer>
   </div>
@@ -926,7 +916,7 @@
 
 
   
-    <article id="post-日常记录/心能转物即同如来"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-每周一书/【读书笔记】《重新认识你自己》——克里希拉穆提"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -934,7 +924,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/日常记录/心能转物即同如来/">心能转物即同如来</a>
+      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《重新认识你自己》——克里希拉穆提/">【读书笔记】《重新认识你自己》——克里希拉穆提</a>
     </h1>
   
 
@@ -942,7 +932,7 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/日常记录/心能转物即同如来/" class="article-date">
+	<a href="/2017/08/13/每周一书/【读书笔记】《重新认识你自己》——克里希拉穆提/" class="article-date">
 	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
 	</a>
 
@@ -954,48 +944,30 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>题引自佛经《楞严经》，闻自一师友<br>恐忘遂墨</p>
+<p>不知道是不是翻译的原因，这本书比《一生的学习》读起来感觉要更接地气，相对也更浅显易懂一些</p>
+</blockquote>
+<blockquote>
+<p>或许是因为是克里较为核心的思想体现</p>
 </blockquote>
 <hr>
-<p><strong>无住相布施</strong></p>
 <blockquote>
-<p>如果不是不求回报地帮助，就不要帮助</p>
+<p>书中主题涉及面较广，有：</p>
+<ul>
+<li>认识自我</li>
+<li>觉察力</li>
+<li>告别恐惧</li>
+<li>爱</li>
+<li>思想的起源</li>
+<li>昨日的重担</li>
+<li>…</li>
+</ul>
 </blockquote>
-<hr>
-<p><strong>心能转物即同如来</strong></p>
-<blockquote>
-<p>出自《楞严经》<br>此处物非“物质”<br>谓一切圣贤，能转万物，不被万物所转，随心自在，处处真如。<br>可以联想《礼记 大学》八目中的“格物致知”</p>
-</blockquote>
-<hr>
-<p><strong>收束万心做一事，再用一心做万事</strong></p>
-<hr>
-<p><strong><a href="https://zh.wikipedia.org/wiki/马太效应" target="_blank" rel="noopener">马太效应</a></strong></p>
-<blockquote>
-<p>（引自维基百科）<br><em>1968年，美国科学史学者罗伯特·莫顿提出这个术语用以概括一种社会心理现象：“相对于那些不知名的研究者，声名显赫的科学家通常得到更多的声望，即使他们的成就是相似的，同样地，在同一个项目上，声誉通常给予那些已经出名的研究者，例如，一个奖项几乎总是授予最资深的研究者，即使所有工作都是一个研究生完成的。”</em></p>
-</blockquote>
-<blockquote>
-<p><em>指科学界的名聲累加的一种反饋现象，最早由美國學者罗伯特·莫顿於1968年提出[1][2]。其名稱来自于《新约圣经·马太福音》中的一则寓言[3]。
-</em></p>
-</blockquote>
-<hr>
-<p><strong><a href="https://zh.wikipedia.org/zh-cn/复利" target="_blank" rel="noopener">复利效应</a></strong></p>
-<blockquote>
-<p>（引自维基百科）<br><em>复利是现代理财一个重要概念，由此产生的财富增长，称作“复利效应”，对财富可以带来深远的影响。假设投资每年的回报率是100%，本金10万，如果只按照普通利息计算，每年回报只有10万元，10年亦只有100万元，整体财富增长只是10倍，但按照复利方法计算，首年回报是10万元，令个人整体财富变成20万，第二年20万会变成40万，第三年40万再变80万元，10年累计增长将高达1024倍（2的10次方），亦即指10万元的本金，最后会变成1.024亿元。</em></p>
-</blockquote>
-<blockquote>
-<p><em>人类历史中，要长期达到每年100%回报是几近不可能，以华人首富李嘉诚为例，1950年以7,000美元成立长江塑胶厂（改组后成为长江和记实业有限公司，地产方面成为长江实业地产有限公司），在2006年拥有约188亿美元身家计算，撇开其他因素，他的财富在57年增长268.6万倍，其每年的复利回报亦仅为26.68%((188亿/7000)开57次方=1.2966)。</em></p>
-</blockquote>
-<hr>
-<p>听闻这些佛经小解之后，昨天回去迫不及待地查阅了一下《金刚经 心经》，发现对我来说就是天书：</p>
-<blockquote>
-<p>金刚经 第八品 依法出生分<br>“须菩提！于意云何？若人满三千大千世界七宝以用布施，是人所得福德，宁为多不？”须菩提言：“甚多，世尊！何以故？是福德即非福德性，是故如来说福德多。”“若复有人，于此经中受持，乃至四句偈等，为他人说，其福胜彼。何以故？须菩提！一切诸佛，及诸佛阿耨多罗三藐三菩提法，皆从此经出。须菩提！所谓佛法者，即非佛法。”</p>
-</blockquote>
-<p><strong>信，解，行，证</strong>——是为学经四部曲</p>
-<hr>
-<p>最后，附师诗一首：</p>
-<blockquote>
-<p>万物皆寂灭<br>法本一明觉<br>归源真性显<br>心如庙会生</p>
-</blockquote>
+<p><a href="https://www.amazon.cn/gp/product/B003DSI05I/ref=oh_aui_search_detailpage?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接</a></p>
+<p><a href="https://www.evernote.com/l/ARsTf26hwsZABorVzyzxFAdeYPtbL6fc8pU" target="_blank" rel="noopener">印象笔记链接</a></p>
+<p>导图图片：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-bd48a9f516415a7d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="重新认识你自己overview.png"></p>
+<p>笔记文本：</p>
+<p>《重新认识你自己》克里希拉穆提<br>1 一、 没有任何导向<br>  1.1 遍寻不着那冠以千名的无名本体，只得另谋出路，培养自己对救主或某种理想的信念，而这份信念迟早会酿成暴力<br>  1.2 多少世纪以来，我们被老师、尊长、书籍和圣人用汤匙喂大。我们充其量只是“二手货”人类<br>  1.3 传统的方式是由外向内包抄，通过时间、修炼和压离，逐渐才能开化结果，才能培育出内在的美及爱。然而事实上，这种方式反而使人变得更加狭隘、琐碎而低劣<br>  1.4 我们大多人都反对暴君式的专制政体，内心却接受了别人的权威或专断，允许他们来扭曲我们的心智和生活，这真是不可思议<br>  1.5 认识自己才是智慧的开端<br>  1.6 外在的社会结构，就是人际关系心理结构的成果，而个人则是整体人类的经验、知识和行为总结。每个人都是过去历史的库存，因此，个人就是整体人类。人类的历史就写在我们身上。<br>  1.7 其实真理根本是无路可循的，而它的美就在于此，因为它是活生生的<br>  1.8 人生哲学并不重要，重要的是如何观察日常生活中确实在发生的事，不论是内在的或外在的。<br>  1.9 如果我真的愚蠢到给你一套制度，而你也愚蠢到全盘接受的地步，那么你就任然在模仿、顺从与接受，在自己的内心树立另一个权威<br>  1.10 只有死于昨日种种，才能使你内在及外在的所有权威中解脱，你的心才能时时年轻、新鲜、天真无邪、充满热情活力。只有处于这种心境中，人才能观察和学习<br>2 二、 认识自我<br>  2.1 如果你不打算跟随任何导师，你会感到孤单，那么就让自己孤单吧<br>  2.2 我无法独自生存，我自能活在与外在人、事及概念的关系之中，因此观察我与外在人、事及内心种种活动的关系，我才开始认识自己<br>3 三、 觉察力<br>  3.1 只有当你觉察到自己的限制时，你才会明白自己所有层面的意识<br>  3.2 人究竟能否看到完整的意识领域，然后成为一个完整的人？<br>  3.3 我的心不再向外寻求，这就是关键所在<br>  3.4 若想开启那扇门，我们必行每天都保持全观而且充满觉察力，觉察自己的每一个思想和言行<br>  3.5 在没有拣择的心智状态下，也许大门会在刹那间开启，让你一睹那既无挣扎又超越时间的境界<br>4 四、 什么是快感<br>  4.1 你也许会问，那为什么不让快感来引导生活？原因极其简单：快感必定带来痛苦、沮丧、忧伤及恐惧，或是因恐惧而滋生的暴力<br>  4.2 意念只是记忆、经验及知识的反应，毫无创意可言<br>  4.3 好好观察你自己，你会发现，就是这种想重负快感的需求，才不断带给人挣扎及痛苦，因为它绝不可能和昨天的感受一样<br>  4.4 所谓“活在当下”，就是在刹那间领会其中的美及喜悦，而不眷恋它所带来的快感<br>5 五、告别恐惧<br>  5.1 这种对地位、权势的追求，希望在某方面被社会视为卓越的心理，都不过是一种驾驭他人的欲望。这种欲望本身就是某种形式的侵略性<br>  5.2 除非我们从恐惧中彻底解脱，否则我们只有继续追逐最高目标，制造出各种神来解救我们脱离黑暗<br>  5.3 你能不能注释着恐惧，既不加以判断，也不以你所累积的只是来干预它？如果不能，那么你所看到的便只是陈旧往事，而不是恐惧<br>  5.4 你一旦认清自己就是恐惧，和恐惧无二无别，自然会停止所有的斗争，然后恐惧就会完全止息下来<br>6 六、 暴力与愤怒<br>  6.1 我们能不能深入暴力的根源，然后从中解脱出来？<br>  6.2 暴力最通常的表达就是愤怒<br>  6.3 根本没试一试或尽力而为这件事，只有做与不做的选择而已<br>7 七、 人际冲突的真相<br>  7.1 人际关系时常是建立在塑造的假象与方位机制上<br>  7.2 当人心真的从社会的心理结构中解脱出来时，清贫才能变成一件美好的事。一个人应该先致力于内在的简朴，不再追寻，不再要求，也不再渴望，也就是一无所求了<br>  7.3 我们如何才能从社会的心理结构中解脱出来？<br>  7.4 如果你不再和别人比较，你就会接纳自己<br>  7.5 如果我们不能确切地了解欲望的本质，冲突时很难避免的<br>8 八、 与真实的自我相处<br>  8.1 反抗并不是自由，而只是一种反应，它必然又会形成自己的模式，于是你又陷入了那个模式之中。其实只是新瓶装旧酒<br>  8.2 只有当你能真正看清真相而付诸行动时，才有自由可言，反叛是无法带来自由的<br>  8.3 看清真相就是行动，也就是自由<br>  8.4 自由乃是一种心智状态，它不是某种东西挣脱的自由，而是一种自由的意识，一种可以怀疑和追问一切的自由，他强烈、活跃而富有生气，因此能清楚各式各样的依赖、奴役、臣服及逆来顺受的阴影<br>  8.5 这种自由意味着彻底的孤独<br>  8.6 如果你认清自己是如此乏味，充满嫉妒、恐惧，自以为感情丰富，实则相当无情，又这么容易受到伤害，容易得意也容易感到无聊，我们能够与这样的自我相处吗？<br>  8.7 我们不能不能既不接受它，也不排斥它，既不消沉，也不得意，而只是如实地关照？<br>9 九、时间与烦恼<br>  9.1 我们总认为自己将来会有所改变，我们内心所向往的和谐境界也会一点一点、一天一天地实现。事实上，时间并不会带来任何的和谐或平安，我们必行停止这种渐进的想法<br>  9.2 时间乃是观察者与被观察者之间的空隙<br>  9.3 一个人如果能够活得平安和谐，充满了美与爱，必然不会恐惧死亡，因为爱本身即是死亡<br>  9.4 你必行真的死了，才能发现死后究竟是怎么一回事。如果你能毫不勉强，也不讨价还价地死于任何令你快慰的事物，然后你料能了解死亡的意义。死亡就是彻底让心智空掉，把每天的渴望、快感以及痛苦完全空掉。死亡就是一种更新，一种突变<br>  9.5 从已知中解脱便是死亡，然后你才能真正地生活<br>10 十、 懂得爱<br>  10.1 一个人如果能真正地爱，必然享有自由，它不是从对方那里掠夺来的，而是自然由内心生起的<br>  10.2 如果你了解爱，你就不会再追随任何人，爱不是臣服，当你爱的时候，根本没有可敬或不可敬之分<br>  10.3 爱所到之处，既无责任，也无义务可言<br>  10.4 爱是新鲜、活泼而充满着生命力的，它没有昨日，也没有明天，更不受杂念的干扰。只有赤子之心才能人出它来<br>  10.5 所谓的爱，是属于完全不同次元的东西<br>11 十一、时空隔阂<br>  11.1 能够透视自己的内心，而不是外在的人事，是在是最难的事了<br>  11.2 长久相处在一起的伴侣，彼此间必定存有很深的印象，因此阻碍了关系的发展<br>  11.3 当你和所观之物产生空隙时，你就知道爱不存在了<br>12 十二、 观察者与被观察者<br>  12.1 觉察到观者与被观者不二，并不意味着一定要与那被观者认同<br>  12.2 如果他尚未领悟到观察者与被观察者不二的真理，则观察者的任何作为不过是在制造另一个意象而又使自己身陷其中<br>  12.3 从这种强烈的觉知中就会产生不同品质的专注力，这种专注力就会造成全然不同的心智状态。<br>  12.4 因为心智就是觉知本身，它会因此而变得极度敏锐，而且有高度智慧<br>13 十三、 思想的起源<br>  13.1 思想只不过是一些观念，它是积存在脑细胞中的记忆的一种反应<br>  13.2 思想是扭曲的，因为它总是任意发明和看到根本不存在的东西<br>  13.3 然后心智就会一改常态，不再一味强求和征服，它会变得出奇的宁静、柔软、敏感和空寂。在这种境界中，就不会再有任何的自欺欺人<br>14 十四、 昨日的重担<br>  14.1 我们极少有独处的机会，即使独自一人，生活仍然充满着各种外来的影响<br>  14.2 内心享有独处空间是十分重要的，因为那意味着存在的自由、行动的自由以及任意翱翔的自由。<br>  14.3 只有空寂才能滋生出良善，也只有自由才能培育出德行的花朵<br>  14.4 一个人如果总想获取或达成一些什么，这种拼命奋斗的态度，对我来说就是人生最大的绊脚石<br>  14.5 真正的自由乃是从锻炼的强制中解脱出来，能认识这份自由便是极深的修炼<br>  14.6 在地质所有的权威，必须先看清楚为什么我们会服从它们<br>15 十五、 冥想<br>  15.1 一个不听寻找和渴求更深更广经验的心，就是肤浅而迟钝的，因为它其实永远活在自己的记忆里<br>  15.2 冥想就是觉察每个念头和每个感受，绝不加以是非判断，而只是观察，随着它律动，从这份觉察中你会认清思想及感受的所有活动，几经就会在这份觉察中出现<br>  15.3 如果你用一小时全神贯注地读这本书，就是在冥想了<br>16 十六、 彻底革新<br>  16.1 任何有意义的运动或影响深远的行动，都必行从我们每一个人开始<br>  16.2 可惜我们从不质疑，只希望别人告诉我们如何去做。<br>  16.3 我们的心理结构中有一样奇怪的东西，就是喜欢听别人指使，这是上万年以来洗脑的结果</p>
 
       
 
@@ -1005,7 +977,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/佛经/">佛经</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
 
     </footer>
   </div>
@@ -1016,7 +988,7 @@
 
 
   
-    <article id="post-日常记录/8.13"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-每周一书/【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -1024,7 +996,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/日常记录/8.13/">8.13</a>
+      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock/">【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock</a>
     </h1>
   
 
@@ -1032,51 +1004,39 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/日常记录/8.13/" class="article-date">
+	<a href="/2017/08/13/每周一书/【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock/" class="article-date">
 	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/随笔/">随笔</a>
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="APP发版"><a href="#APP发版" class="headerlink" title="APP发版"></a>APP发版</h2><p> 前两天连续经历了晚上的发版，感受了一下大项目的流程性压力。</p>
-<ul>
-<li>项目规模大了也会限制到人的发挥，还好谷歌后台的分发流程极其智能，能做到分版分类型进行测试</li>
-<li>可以把beta测试的动作再放大一些，see what we will got, or the result will be amazing.</li>
-<li><p>有一些时间是浪费在build/test 上的</p>
-<ul>
-<li>过程是可以优化的，比如build加速，比如Test不要仅仅依赖手工测试，可以为流程引入自动化测试</li>
-</ul>
-<blockquote>
-<p>截止现在，我还是没有完全掌握ORG全部的流程，逻辑相对还是比较复杂的，领导们提倡的文档化在这种问题上就凸显出重要性了</p>
+        <blockquote>
+<p>“谷歌如何超越苹果、微软、亚马逊等公司，成为世界顶尖人才心目中的最佳雇主？<br>谷歌如何培养人才、留住人才，最大限度地发掘人的创造力？”</p>
 </blockquote>
-</li>
-</ul>
-<h2 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h2><p> 好友的老婆今天晚上可能就要生宝宝了，替他开心，不过他不能立刻回到爱人身边，小小遗憾</p>
 <blockquote>
-<p>我似乎也应该开始着手培养爱的能力了，你说对么？</p>
+<p>本书主要谈论：谷歌的人力资源管理，谷歌的招聘</p>
 </blockquote>
-<p>今天邀三位大学同学到家附近小聚，尔后到家中小坐，互通有无，收获还是不小的</p>
-<ul>
-<li><p>BG分享了不少网站前端的知识，还有一些亚历山大与始皇时期的一些历史细节、阳明心学、骑行服务的远大理想等等</p>
-</li>
-<li><p>从院士那了解到学术论文的一些微操，包括论文检索引擎的暴利，老教授的会议空谈惯性，还有一些学术奋斗的故事宏观始末等等</p>
-</li>
-<li><p>中哥的Linux服务号写起来了，你下次多说几句^_^</p>
-</li>
-<li><p>剩下的就是扯淡了，我也不记得我说了啥了，我好像扯淡比较多！</p>
-</li>
-</ul>
 <blockquote>
-<p>朋友的角色还是很重的，会影响思维、想法、拓宽见识</p>
-<p>读书如交友，这也凸显了读好书、交好友的重要性</p>
+<p>虽说谷歌受到的过度关注让它成为光环效应的最好示例，但书中的很多故事都是值得一读的</p>
 </blockquote>
-<h2 id="move-on"><a href="#move-on" class="headerlink" title="move on"></a>move on</h2><p>新的一周又要开始啦，预期工作上的责任与任务会更重，好好努力。</p>
-<p>自己的长期目标也要即刻开始准备，加油。</p>
+<blockquote>
+<p>本书实质上是很多实验的总结，从中可以看出谷歌的规章制度都是一点一点尝试、学习、改进不断循环的过程<br>但也不能忘记“盛名之下其实难副”，书中的很多观点或许并不准确</p>
+</blockquote>
+<blockquote>
+<p>书中的很多想法都对管理者或者公司的资源丰富度要求很高，可以参考借鉴的地方还是有一些</p>
+</blockquote>
+<p><a href="https://www.amazon.cn/gp/product/B0151H9SZY/ref=oh_aui_search_detailpage?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接</a></p>
+<hr>
+<p><a href="https://www.evernote.com/l/ARvFNXR8105IyYuow1VvarE9_1iS-6rI400" target="_blank" rel="noopener">印象笔记链接</a></p>
+<p>部分笔记图片：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-3d6811d6b5e1b02d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="重新定义团队 overview.png"></p>
+<p>笔记文本：</p>
+<p>《重新定义团队 谷歌如何工作》Laszlo Bock<br>1 十、 不公平薪酬<br>  1.1 以成就为荣，不以报酬为荣<br>    1.1.1 金钱带来的喜悦转瞬即逝，但是美好的记忆却永远保持<br>  1.2 创造易于传播爱的环境<br>  1.3 精心筹划却遭受失败的同样要奖励<br>  1.4 信念的飞跃<br>    1.4.1 如果你的目标足够有野心，足够疯狂，即使失败了也能有相当不错的成就<br>2 十一、 世界上最好的东西是免费的<br>  2.1 提高职业和个人生活的效率<br>  2.2 一个关联谷歌及周边的社区<br>  2.3 推动创新<br>  2.4 想办法说好<br>  2.5 员工最需要你的时候，请伸出援手<br>3 十二、 助推<br>  3.1 利用助推帮助员工变得更明智<br>  3.2 更富有<br>    3.2.1 激励储蓄<br>  3.3 更健康<br>  3.4 精心设计，用心设计<br>4 十三、 谷歌的教训<br>  4.1 透明的代价<br>  4.2 摒弃应得权利<br>  4.3 一次失败的绩效管理变革<br>  4.4 珍视怪人<br>  4.5 有的放矢<br>    4.5.1 创新因创造力和实验而蓬勃发展，但同时也需要细心地修剪<br>5 十四、 从明天起你可以做些什么<br>  5.1 赋予工作意义<br>  5.2 相信员工<br>  5.3 只聘用比你更优秀的人<br>  5.4 不要将职业发展与管理绩效混为一谈<br>  5.5 关注团队的两端<br>  5.6 既要节俭，又要慷慨<br>  5.7 不公平薪酬<br>  5.8 助推<br>  5.9 管理日益提升的期望<br>  5.10 享受</p>
 
       
 
@@ -1086,7 +1046,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/日记/">日记</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
 
     </footer>
   </div>

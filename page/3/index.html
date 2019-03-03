@@ -255,102 +255,6 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--/">【Note-程序】HashMap-Integer,-V--SparseArray--</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>众所周知，基础数组的处理效率要比集合的处理效率高出指数倍（内存寻址优势，指哪打哪，直截了当）</p>
-</blockquote>
-<blockquote>
-<p>在HashMap&lt;K, V&gt; 中K为Integer类型时，简单考虑，使用K作为数组下标可以使用基础数组替代HashMap，但这样处理的话会有一个问题，那就是K值较大时，直接使用数组会导致极大的内存空间浪费（很多数组内容都由null填充）——由此想到“稀疏数组”</p>
-</blockquote>
-<p><strong>SparseArray</strong>就是针对这一场景设计的<br><em>数组中仅仅保存有内容的空间</em> 这样一来，就既可以利用数组高效的优势，又避免了内存空间的浪费。</p>
-<p><strong>取android.util.SparseArray源码中的put API如下：</strong></p>
-<pre><code>/**
- * Adds a mapping from the specified key to the specified value,
- * replacing the previous mapping from the specified key if there
- * was one.
- */
-public void put(int key, E value) {
-    int i = ContainerHelpers.binarySearch(mKeys, mSize, key);
-
-    if (i &gt;= 0) {
-        mValues[i] = value;
-    } else {
-        i = ~i;
-
-        if (i &lt; mSize &amp;&amp; mValues[i] == DELETED) {
-            mKeys[i] = key;
-            mValues[i] = value;
-            return;
-        }
-
-        if (mGarbage &amp;&amp; mSize &gt;= mKeys.length) {
-            gc();
-
-            // Search again because indices may have changed.
-            i = ~ContainerHelpers.binarySearch(mKeys, mSize, key);
-        }
-
-        mKeys = GrowingArrayUtils.insert(mKeys, mSize, i, key);
-        mValues = GrowingArrayUtils.insert(mValues, mSize, i, value);
-        mSize++;
-    }
-}
-</code></pre><blockquote>
-<p><em>可以看到，在查找是否包含时使用了BinarySearch（二分搜索），在插入时又做了一次容量、size检查，有无用内存时手动gc，此gc为private函数，只是对内存进行了整理，无效内容置为null</em></p>
-</blockquote>
-<blockquote>
-<p>查看DELETED定义：<br>private static final Object DELETED = new Object();<br>在删除时，只是将有效索引的内容至为DELETED，将mGarbage至为true，在下次有增/改操作时进行统一的容量整理；个人感觉这一api逻辑是经验设计，为的是避免连续删除时的频繁容量整理；</p>
-</blockquote>
-<p><strong>结论：</strong></p>
-<blockquote>
-<p>使用HashMap&lt;Integer, V&gt;时，用SparseArray替代，可以极大地提高性能</p>
-</blockquote>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashMap-Integer/">HashMap-Integer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SparseArray/">SparseArray</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-技术/程序/【Java】神奇的内存占用大户FinalizerReference"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -618,56 +522,6 @@ public void put(int key, E value) {
 
 
   
-    <article id="post-技术/程序/gc-pictures"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/gc-pictures/">gc-pictures</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/gc-pictures/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://upload-images.jianshu.io/upload_images/1481332-7061db0196475abb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Hotspot JVM components.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-1bf9a615abb8e4d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Structure.png"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c29f25476bbacbe2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Leak by MAT.png"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-783169a523910316.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AppsFlyer leak and resolution.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-ca53c4d2e0fd72d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AS分析出的泄露现场.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-962ab459822c3a93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CMS运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-50f18bb588311844.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Coping Referenced Object.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a4320ea3b641d3cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Example Allocation Code.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d3f472e8f57f4507.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="G1 运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-473f69299d0029a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="GC Roots reachable analyze.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a5848042f2a13510.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="GC收集器.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-5def65145209ff4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Heap Usage ratio.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0cc80185075e1e36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Heap Structure.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-01af30bab5fb201f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Structure.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a252ca7dcb958038.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JVM Architecture.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-35782e1de1365e82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Key JVM Components.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-dffef12d27e0440c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Marking.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-facf61f82cf12b67.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MinorGC &amp; MajorGC.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-7d913bf3a474dcd0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Normal Deletion.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-3d1db4efd09b12db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Parallel Old运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-8c509f9d210e2339.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Parallel Scavenge运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0ba80f3d07039584.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ParNew运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-8927a9cb7340b35b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial Old运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0d5f648b819bd823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial收集器与CMS收集器操作线程比较.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-26a178b15d61c0d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-351394496f49338a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="static collection cause leak.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d44647bb58bf7c2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="串并行收集.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-65c85ce0940865cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="从年轻代晋升到老年代.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-242a868f2c4d6c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="写入年轻代Eden区.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-e57595176a60153f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="删除整理.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d2c22b62ee39e595.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图2.2.1 匿名内部类引发的内存泄露示例.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-099ba10858c1daac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象年龄.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-f1b583b94f371c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象年龄的增长示例.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-09da3e69c1e7de12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象空间分配.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a9b46c9c1ef158eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="收集器策略.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-2540999a7248fa74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="晋升概览图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-97d976558b387970.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="未反注册及未取消动画更新监听的泄露GC-Root引用路径.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-c09be6dd982fbba3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="部分GVM常规参数一览表.png"></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GC/">GC</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-技术/程序/LogFoQATest"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -717,6 +571,130 @@ public void put(int key, E value) {
 <p>ImageLoaderLoadImageFromNet<br>ImageLoaderLoadAdmobImageCore<br>VolleyDisplayImage<br>VolleyDecodeImage<br>VolleyDecodeImageFix</p>
 </li>
 </ol>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/Java进阶--for-each与传统for"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶--for-each与传统for/">Java进阶--for-each与传统for</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/Java进阶--for-each与传统for/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>for-each 相较于 传统的 for-i更优</p>
+<p>自己编写的类在代表一组元素时，即使不实现Collection也要让它实现Iterable</p>
+<h3 id="体现"><a href="#体现" class="headerlink" title="体现"></a>体现</h3><p>for-each循环在预防bug方面与传统for循环有着无可比拟的优势</p>
+<ul>
+<li>传统for</li>
+<li>for-each</li>
+</ul>
+<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>implement Iterable接口，示例：</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/for-each/">for-each</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/Java进阶--被用烂的&#34;继承&#34;"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶--被用烂的"继承"/">Java进阶——接口优于抽象类</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/Java进阶--被用烂的"继承"/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>继承很强大，但也有问题</p>
+<p>确实是is-a关系时才使用继承</p>
+<p>如果处在不同的包中，并且SuperClass不是为继承设计的，这时会导致脆弱性</p>
+<p>可以使用复合和转发机制来代替继承来避免这种脆弱性</p>
+<p>关键字:</p>
+<p><strong>继承、复合、装饰者模式、包装类、转发</strong></p>
+<blockquote>
+<p>keywords:</p>
+<p>继承(inheritance)、复合(composition)、装饰者模式(decorator)、包装类(WrapperClass)、转发(forwarding)</p>
+</blockquote>
+<p><em>为叙述方便，下文以CC代表子类，SC代表超类，也就是父类</em></p>
+<h3 id="问题体现"><a href="#问题体现" class="headerlink" title="问题体现"></a>问题体现</h3><p><strong>继承打破了封装性</strong></p>
+<p>CC依赖于SC的实现细节，在SC更新换代时，CC会受影响，严重的会导致错误，为了避免出现错误，时常要做的事情是跟着SC的更新而更新CC</p>
+<p>其实你可以直接使用<strong>复合</strong>来避免这一问题出现——也就是，在原来的CC中添加一个SC的实例</p>
+<p>这样新的类中可以直接使用SC的方法逻辑，而不用担心SC更新时要升级API的问题（概念：<strong>转发</strong>）</p>
+<p>这样的类也被称为<strong>包装类</strong></p>
+<p>这也引出了设计模式中的Decorator模式概念（<strong>装饰者模式</strong>）</p>
+<h3 id="强制使用的弊端"><a href="#强制使用的弊端" class="headerlink" title="强制使用的弊端"></a>强制使用的弊端</h3><ul>
+<li>暴露不必要的SC细节</li>
+<li>永远地限制了CC的性能（使用复合模式则可以在需要时更换转发的具体实现）</li>
+<li>导致语义混淆</li>
+</ul>
 
       
 
@@ -806,7 +784,7 @@ public void put(int key, E value) {
 
 
   
-    <article id="post-技术/【Note-PM】《项目管理修炼之道》提要"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -814,7 +792,7 @@ public void put(int key, E value) {
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/">【Note-PM】《项目管理修炼之道》提要</a>
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性/">Java进阶-- 利用有限制通配符来提升API的灵活性</a>
     </h1>
   
 
@@ -822,63 +800,7 @@ public void put(int key, E value) {
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>第18届Jolt生产效率大奖图书<br>作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富</p>
-</blockquote>
-<p><a href="https://pan.baidu.com/s/1cAaOxw" target="_blank" rel="noopener">XMind文档链接</a></p>
-<p><a href="https://pan.baidu.com/s/1mhZO5Fa" target="_blank" rel="noopener">导图PDF版链接</a></p>
-<p><strong>导图</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-d20195caa4e17ed9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第一部分：规划与日程"></p>
-<p><strong>文本</strong></p>
-<p> 项目管理修炼之道<br>    Johanna Rothman<br>    规划与日程<br>        启动项目<br>            0.KEY——定义项目、项目约束、决定项目关键驱动因素、章程决策<br>            章程决策<br>                远景、需求、目标、成功标准、ROI<br>        规划项目<br>            0.KEY——足以启动的规划、规划模板、制定发布条件<br>            规划模板<br>                意图<br>                记录<br>                发布条件<br>                目标<br>                项目组织<br>                日程总览<br>                人员配备<br>                建议日程<br>                制订项目风险列表<br>        使用生命周期组织项目<br>            0.KEY——理解生命周期、概览、反馈、大规模项目需要组合多种生命周期、管理架构风险、从瀑布中解脱<br>        安排项目日程<br>            0.KEY——注重实效的日程安排、可选择安排技术、用低技术含量工具安排日程<br>        估算工作<br>            0.KEY——实用估算方式、里程碑切分项目、能不做什么？、多项目时的估算、主动安排人们进行多任务、实用波浪式规划、决定迭代的持续时间、“小石子”<br>            估算<br>                对比历史数据<br>                通过Delphi和宽带Delphi估算<br>                何时不应相信团队的话<br>                    减掉每个任务的缓冲时间、要得到的是更准确的估算结果<br>                用日期范围进行估计<br>                用自信心估计<br>                用三个日期估计：最佳、可能、墨菲<br>            小石子<br>                任务不清时使用<br>                如何得到“小石子”<br>                为什么使用<br>        识别和避免日程安排游戏<br>            0.KEY——“希望”是我们最重要的策略、拒绝女王、把灰扫到地毯下面、幸福日期、分散注意力、日程等于承诺<br>    团队与节奏<br>        创建出色的项目团队<br>            0.KEY——招募需要的人、形成团队凝聚力、让组织配合你的工作、对必必需的团队规模了如指掌、知道何时应该加入、成为出色的项目经理、知道何时全身而退<br>            凝聚力<br>                好工具让团队有更好的发挥<br>                软件配置管理系统应满足的最低要求<br>                缺陷跟踪系统应满足的最低要求<br>                发展5阶段<br>            让组织配合<br>                以项目经理的方式管理单一职能团队<br>                管理矩阵式项目团队<br>                管理跨职能团队<br>            项目经理<br>                人际交往能力<br>                提升功能性技能<br>                专业领域技能<br>                工具和技术的专业技能<br>            退<br>                不适合的组织、团队、产品<br>        掌控项目<br>            0.KEY——节奏、中途回顾、为需求排序、是时间盒限定需求相关的工作、将迭代限制在4周以下、使用波浪式规划和日程安排、创建跨职能团队、根据项目风险选择生命周期模型、保持合理的工作时间、使用“小石子”、管理干扰、管理缺陷<br>            “小石子“<br>                将计划的粒度细化，能提高规划时项目的估算准确率<br>        保持项目节奏<br>            0.KEY——使用持续集成、自动化冒烟测试、按功能实现而不是按架构、盯着产品、准备重构、通过用例、用户故事、角色和场景定义需求、分离需求与GUI设计、尽可能用低保真度原型<br>            按功能而不是按框架<br>                首先实现具有最高价值的功能<br>                按功能调试、测试<br>            低保真原型<br>                “使用低保真度原型，人们可以更全面地评估要解决的问题。高保真度原型会限制反馈。”<br>        管理会议<br>            0.KEY——取消部分会议、举行必要会议、项目启动会议、发布版本规划会议、进度报告会议、向管理层报告进度、项目团队会议、迭代审查会议、会议疑难问题解答、远程电话会议<br>            取消<br>                不需要你解决问题<br>                多人参加的顺序式进度报告会议<br>        创建并使用项目仪表板<br>            0.KEY——测量有风险、根据项目完成度来衡量进度、为出资人创建项目仪表盘、使用项目气象报告<br>            衡量进度<br>                速度图表跟踪日程安排进度<br>                用迭代内容图跟踪总体进度<br>                用图表展示团队统一采用的实践<br>    非简单项目<br>        管理多地点项目<br>            0.KEY——提问成本、识别项目文化差异、团队间培养信任、团队间使用互补实践、寻找潜在问题、外包时的注意事项<br>        在项目中集成测试<br>            0.KEY——“减少技术债”、小规模测试以降低风险、TDD是集成的最简单方法、使用多种测试、确定成员在测试工作中的角色、开发人员测试人员比率、让测试与开发同步进行、为项目制定测试策略、系统测试策略模板、QA与测试的区别<br>        管理项目群<br>            0.KEY——管理项目群、将多个相关项目组织到一个发布版本中、随时间推移组织多个相关项目、管理项目经理、创建项目仪表盘<br>        结束项目<br>            0.KEY——管理发布早期版本的请求、管理beta版本、项目经理何时知道无法按时发布项目、知道项目走向完成、取消项目<br>            何时知道无法按时发布<br>                避免小偏差<br>                承诺新日期<br>                估算系统测试时间<br>        管理项目组合<br>            0.KEY——构建所有项目的组合、评估项目、决定现在为那个项目提供资金、对组合中的项目进行排序、尽快启动项目、使用产品待办事项列表管理新功能需求<br>            答疑<br>                说服管理层：“切换上下文”是个坏主意<br>                如何对多任务说不</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/Java进阶-- volatile关键字"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/">Java进阶-- volatile关键字</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/" class="article-date">
+	<a href="/2018/03/09/技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -889,91 +811,50 @@ public void put(int key, E value) {
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>volatile含有部分synchronized的特性，效率更高，但使用时需要注意细节，不然容易出错</p>
-<h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>Java中被volatile修饰的变量，每次读写都会直接使用“内存”介质，而不是使用CPU缓存</p>
-<blockquote>
-<p>音 — UK <strong> /ˈvɒl.ə.taɪl/  US </strong> /ˈvɑː.lə.t̬əl/</p>
-<p>英 — <strong>likely to change suddenly and unexpectedly or suddenly become violent or angry</strong></p>
-<p>中 — 易变的</p>
-</blockquote>
-<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
-<li>保证变量可见性</li>
-<li>禁止指令进行重排序</li>
-</ul>
-<blockquote>
-<p>基础概念：可见性、有序性、原子性</p>
-<ol>
-<li>可见性：对所有线程来说，任一线程对变量的改动都立即可见</li>
-<li>有序性：代码可能会被编译器混编，有序性即指代码按顺序执行</li>
-<li>原子性：所有操作不会被打断，谁也不行（除非断电）</li>
-</ol>
-</blockquote>
-<p>实际上我们对变量的修改，虽然可能Java就一行代码（如 y=x），但被解释成汇编语言会变成多行（y=x就需要进行两步操作：读x值，写入y所在内存，学过汇编的同学应该比较清楚）</p>
-<h3 id="与synchronized的区别"><a href="#与synchronized的区别" class="headerlink" title="与synchronized的区别"></a>与synchronized的区别</h3><p>按字面理解，volatile关键字只是标记变量为易变的，并不能保证对变量的所有操作都是同步的，即不能保证具有synchronized一样的效果</p>
-<p>实际上，对volatile修饰的变量的读/写操作是可以保证其原子性的，但还要注意一个问题，即同时写变量的线程可能不止一个，如此一来，其中部分的写操作就有可能丢失</p>
-<p>听起来好像volatile使用起来很危险，但它也是有它的用途的</p>
-<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
-<li>对于写不依赖历史状态的变量，可以考虑使用volatile修饰字代替synchronized来提高程序效率</li>
-<li>保证代码的有序性：volatile变量的读写操作之前的代码，编译器是不会进行重排序的</li>
-</ul>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在volatile满足不了要求的场景可以考虑使用synchronized、lock、Atomic变量来保证特性</p>
-<p>对变量的写不依赖历史状态的变量使用volatile修饰可以提高效率</p>
-<p>对于需要保证部分程序语句有序性的场景可以考虑使用volatile代替锁定整个代码块，提高效率</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/volatile/">volatile</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/Java进阶--for-each与传统for"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶--for-each与传统for/">Java进阶--for-each与传统for</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Java进阶--for-each与传统for/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>for-each 相较于 传统的 for-i更优</p>
-<p>自己编写的类在代表一组元素时，即使不实现Collection也要让它实现Iterable</p>
-<h3 id="体现"><a href="#体现" class="headerlink" title="体现"></a>体现</h3><p>for-each循环在预防bug方面与传统for循环有着无可比拟的优势</p>
+        <h3 id="词条"><a href="#词条" class="headerlink" title="词条"></a>词条</h3><p>通配符— ‘?’</p>
+<p>有限制的通配符 —</p>
 <ul>
-<li>传统for</li>
-<li>for-each</li>
+<li>? extends E</li>
+<li>? super E</li>
 </ul>
-<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>implement Iterable接口，示例：</p>
+<p>PECS — producer-extends, consumer-super</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>输入参数是生产者或消费者时使用’?’</p>
+<p>所有的compare和comparator都是consumer</p>
+<p>声明方法时，用’?’取代仅出现一次的的类型参数</p>
+<h3 id="优势体现——论其必要性"><a href="#优势体现——论其必要性" class="headerlink" title="优势体现——论其必要性"></a>优势体现——论其必要性</h3><p>我们先看之前讲 <strong>优先考虑泛型</strong>时的一个示例：</p>
+<p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p>
+<p>考虑为它增加一个方法：</p>
+<p><img src="../../pic_resource/StackPushAll.png" alt=""></p>
+<p>这样的定义，在使用中会存在不灵活的问题：因为类型在定义之后就不可变了，如果想要将一个非E类型的Iterable  push到Stack中是不可能的，这样的事实我们显然不能接受，那么该如何修改呢？答案就在本篇的主角——通配符’?’上</p>
+<p>将上述API的参数修改为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Iterable&lt;? extends E&gt; src</span><br></pre></td></tr></table></figure>
+<p>即可达到目的</p>
+<p>说完? extends，再来看? super，同样考虑Stack的API，这一次是将Stack中的元素全部弹出到目标集合</p>
+<p><img src="../../pic_resource/StackPopAll.png" alt=""></p>
+<p>理想状态下，所有的子类型的Stack都可以弹出到父类型的集合，但上图的API并不能实现这一目的；我们需要这样修改：</p>
+<p>将参数类型修改为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collection&lt;? <span class="keyword">super</span> E&gt; dst</span><br></pre></td></tr></table></figure>
+<p>这样一来，任意继承自父类型的Stack就都可以pop到父类型集合了，是不是很带感</p>
+<p>有的同学可能会产生疑惑了，一会儿extends，一会儿super，好晕</p>
+<p>还好有规律可总结：</p>
+<p>PECS——producer-extends, consumer-super</p>
+<p>即参数列表中  生产者总是使用? extends，而消费者则总是使用 ? super（不了解生产者、消费者设计模式的同学请自行翻书）</p>
+<h3 id="高级应用"><a href="#高级应用" class="headerlink" title="高级应用"></a>高级应用</h3><p>原始API声明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;T&gt;&gt; <span class="function">T <span class="title">max1</span><span class="params">(List&lt;T&gt; list)</span></span></span><br></pre></td></tr></table></figure>
+<p>修改后的API声明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;? <span class="keyword">super</span> T&gt;&gt; <span class="function">T <span class="title">max2</span><span class="params">(List&lt;? extends T&gt; list)</span></span></span><br></pre></td></tr></table></figure>
+<p>这一修改后的API，pecs都用上了，真有必要弄这么复杂了？</p>
+<p>答案是肯定的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;ScheduleFuture&lt;?&gt;&gt; futures = ...;</span><br></pre></td></tr></table></figure>
+<p>这一futures不能调用max1方法，原因在于ScheduleFuture扩展的是Compare接口的Delayed接口的子接口，它可以与任意Delayed进行compare；而max2方法这样的声明就不会有这问题</p>
+<h3 id="E-与-‘-’"><a href="#E-与-‘-’" class="headerlink" title="E 与 ‘?’"></a>E 与 ‘?’</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br></pre></td></tr></table></figure>
+<p>你看上哪个了呢？</p>
+<p>从灵活性的角度考虑，肯定是第二种好一些，但在类型参数不止一个时，就不能用’?’ 而要用类型参数了</p>
+<p>使用第二种时需要注意：</p>
+<p>只能把null放入List&lt;?&gt;中，这时为了保证灵活性，就需要写一个辅助捕捉类型的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">  swapTrick(list, i, j);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swapTrick</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    list.set(i, list.set(j, list.get(i)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>这一篇看起来似乎有点绕，但我们真正在项目中写公共库API时，其实是需要用到’?’的，不是为了装，是真的能提升API的适用范围，减少工作量</p>
+<p>不过任何收获都是要付出代价的，在写出高适用度的API时，一定记得写单元测试，进行高覆盖度的验证，保证准确性</p>
 
       
 
@@ -983,7 +864,135 @@ public void put(int key, E value) {
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/for-each/">for-each</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/Java进阶-- 以函数对象代表策略"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/">Java进阶-- 以函数对象代表策略</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>介绍设计模式中的策略模式（strategy）</p>
+<p>C++、C语言中的函数指针在Java中的替代形式</p>
+<p>面向接口编程</p>
+<p>keywords：</p>
+<p><strong>策略、函数对象、面向接口</strong></p>
+<h3 id="出发点"><a href="#出发点" class="headerlink" title="出发点"></a>出发点</h3><p>函数指针，或是实现代理模式、lambda表达式</p>
+<p>### </p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/Java进阶-- 优先考虑泛型方法"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/">Java进阶-- 优先考虑泛型方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h3><p>类可以从泛型中受益，静态工具API更适合泛型</p>
+<blockquote>
+<p>Collections 的算法方法都已泛型化(如binarySearch、sort)</p>
+</blockquote>
+<h3 id="优势示例"><a href="#优势示例" class="headerlink" title="优势示例"></a>优势示例</h3><ul>
+<li>例1：精简API</li>
+</ul>
+<p><img src="../../pic_resource/GenericMethodEg.png" alt=""></p>
+<p>代码所示是一个简单的设置字体的Util的static API的泛型化代码；</p>
+<p>如果不是使用这种泛型化的API，则需要为TextView的扩展类（Button、CheckBox等等）编写数不清的函数</p>
+<ul>
+<li>例2：确保类型安全的情况下提升API的易用性</li>
+</ul>
+<p><img src="../../pic_resource/GenericMethodEg2.png" alt=""></p>
+<p>可以看到上面的API可以轻易的操作所有以View为基类的类的集合；</p>
+<ul>
+<li>例3：类级别的泛型化</li>
+</ul>
+<p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p>
+<blockquote>
+<p>在配合集合使用时需要注意类型cast的警告，这些警告实际上是编译时不会有问题，但真正在运行时可能会抛出ClassCastException，我们在实际项目中应该将这些潜在的威胁清除掉；</p>
+<p>对于十分确定不会出问题的类型操作API上，可以用@SuppressWarning(“unckecked”)消除这类警告</p>
+</blockquote>
+<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>赶紧用起来吧，你的小伙伴会爱上你写的极简API的</p>
+<blockquote>
+<p>源码里的代码有很多写的极好的点，同学们平时可以扒一扒</p>
+</blockquote>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
     </footer>
   </div>
