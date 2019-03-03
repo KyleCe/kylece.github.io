@@ -255,7 +255,7 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/程序/Java进阶-- 优先考虑泛型方法"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/程序/Java进阶-- 以函数对象代表策略"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -263,7 +263,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/">Java进阶-- 优先考虑泛型方法</a>
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/">Java进阶-- 以函数对象代表策略</a>
     </h1>
   
 
@@ -271,7 +271,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/" class="article-date">
+	<a href="/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -282,33 +282,13 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h3><p>类可以从泛型中受益，静态工具API更适合泛型</p>
-<blockquote>
-<p>Collections 的算法方法都已泛型化(如binarySearch、sort)</p>
-</blockquote>
-<h3 id="优势示例"><a href="#优势示例" class="headerlink" title="优势示例"></a>优势示例</h3><ul>
-<li>例1：精简API</li>
-</ul>
-<p><img src="../../pic_resource/GenericMethodEg.png" alt=""></p>
-<p>代码所示是一个简单的设置字体的Util的static API的泛型化代码；</p>
-<p>如果不是使用这种泛型化的API，则需要为TextView的扩展类（Button、CheckBox等等）编写数不清的函数</p>
-<ul>
-<li>例2：确保类型安全的情况下提升API的易用性</li>
-</ul>
-<p><img src="../../pic_resource/GenericMethodEg2.png" alt=""></p>
-<p>可以看到上面的API可以轻易的操作所有以View为基类的类的集合；</p>
-<ul>
-<li>例3：类级别的泛型化</li>
-</ul>
-<p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p>
-<blockquote>
-<p>在配合集合使用时需要注意类型cast的警告，这些警告实际上是编译时不会有问题，但真正在运行时可能会抛出ClassCastException，我们在实际项目中应该将这些潜在的威胁清除掉；</p>
-<p>对于十分确定不会出问题的类型操作API上，可以用@SuppressWarning(“unckecked”)消除这类警告</p>
-</blockquote>
-<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>赶紧用起来吧，你的小伙伴会爱上你写的极简API的</p>
-<blockquote>
-<p>源码里的代码有很多写的极好的点，同学们平时可以扒一扒</p>
-</blockquote>
+        <h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>介绍设计模式中的策略模式（strategy）</p>
+<p>C++、C语言中的函数指针在Java中的替代形式</p>
+<p>面向接口编程</p>
+<p>keywords：</p>
+<p><strong>策略、函数对象、面向接口</strong></p>
+<h3 id="出发点"><a href="#出发点" class="headerlink" title="出发点"></a>出发点</h3><p>函数指针，或是实现代理模式、lambda表达式</p>
+<p>### </p>
 
       
 
@@ -438,60 +418,6 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GC/">GC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/Java进阶-- 以函数对象代表策略"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/">Java进阶-- 以函数对象代表策略</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>介绍设计模式中的策略模式（strategy）</p>
-<p>C++、C语言中的函数指针在Java中的替代形式</p>
-<p>面向接口编程</p>
-<p>keywords：</p>
-<p><strong>策略、函数对象、面向接口</strong></p>
-<h3 id="出发点"><a href="#出发点" class="headerlink" title="出发点"></a>出发点</h3><p>函数指针，或是实现代理模式、lambda表达式</p>
-<p>### </p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
     </footer>
   </div>
@@ -1099,7 +1025,7 @@
 
 
   
-    <article id="post-技术/Android/【Android】JNI-Tips-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/Android/冻结帧"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -1107,7 +1033,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/">JNI-Tips-提要</a>
+      <a class="article-title" href="/2018/03/09/技术/Android/冻结帧/">冻结帧</a>
     </h1>
   
 
@@ -1115,7 +1041,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/" class="article-date">
+	<a href="/2018/03/09/技术/Android/冻结帧/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -1126,18 +1052,138 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>引：<br>项目需要用到JNI，实际上还需要在native跟Java之间写一些代码，来连接二位，需要做进一步了解。本文主要对官方的JNI Tips做一些简单的关键提取<br>参考：<br><a href="">JNI Tips</a></p>
+        <h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><h4 id="基本知识准备"><a href="#基本知识准备" class="headerlink" title="基本知识准备"></a>基本知识准备</h4><ul>
+<li>认识冻结帧FrozenFrame（FF）</li>
+<li>Google Play Console（GPC）针对FF的各项指标含义</li>
+<li>FF所属大类——SlowRendering</li>
+<li>testing UI performance</li>
+</ul>
+<h4 id="GPC-FF告警解决办法"><a href="#GPC-FF告警解决办法" class="headerlink" title="GPC FF告警解决办法"></a>GPC FF告警解决办法</h4><p>手动测试、自动测试、解决关键问题——后续输出指南/标准</p>
+<ul>
+<li>手动测试重要场景，找到问题场景，解决痛点</li>
+<li>自动化测试——搭建自动化测试、完善UI测试标准、足够好用的情况下考虑加入到后续新入UI的考量手段中</li>
+<li>主动防御——对UI的实现标准化操作进行总结、输出至业务开发人员，提高UI质量</li>
+</ul>
+<h3 id="基本知识"><a href="#基本知识" class="headerlink" title="基本知识"></a>基本知识</h3><h4 id="认识冻结帧FrozenFrame（FF）"><a href="#认识冻结帧FrozenFrame（FF）" class="headerlink" title="认识冻结帧FrozenFrame（FF）"></a>认识冻结帧FrozenFrame（FF）</h4><ul>
+<li>定义</li>
+<li>why 60 fps</li>
+<li>16.67ms</li>
+</ul>
+<h4 id="Google-Play-Console（GPC）针对FF的各项指标含义"><a href="#Google-Play-Console（GPC）针对FF的各项指标含义" class="headerlink" title="Google Play Console（GPC）针对FF的各项指标含义"></a>Google Play Console（GPC）针对FF的各项指标含义</h4><blockquote>
+<h4 id="Data-collection-details"><a href="#Data-collection-details" class="headerlink" title="Data collection details"></a>Data collection details</h4><p>Google collects the render time of each frame rendered by your app when using the UI Toolkit framework, <strong>not when using OpenGL directly.</strong></p>
 </blockquote>
-<hr>
-<p><a href="https://www.evernote.com/l/ARunDTJCHX9AQ5Zm7URUjILWW2iFBUVWGRc" target="_blank" rel="noopener">Evernote连接</a></p>
-<p><a href="https://www.evernote.com/shard/s283/sh/a70d3242-1d7f-4043-9666-ed44548c82d6/5b68850545561917/res/ba76fe6f-7df9-41f8-a0cd-1f0dcbe4349c/JNI%20Tips.xmind" target="_blank" rel="noopener">XMind 文档下载</a></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ce0301d2d61fe60b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JNI Tips.png"></p>
-<p>文本：</p>
-<p>JNI Tips</p>
-<p>definition<br>  Java Native Interface<br>  how it works<br>    <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html</a><br>JavaVM and JNIEnv<br>  JavaVM<br>    one process can only create one JavaVM in Android<br>  JNIEnv<br>    provides most of JNI functions. Your native functions all receive a JNIEnv as first argument<br>    used for thread-local, so you cannot share a JNIEnv between threads (GetEnv can be used to discover the thread’s JNIEnv when no other way)<br>Threads<br>  a thread will have no JNIEnv unless it’s attached, before this it cannot make JNI calls (all threads are Linux threads, scheduled by the kernel)<br>  Threads attached through JNI must call DetachCurrentThread before they exit<br>jclass, jmethodID, and jfieldID<br>  steps to access an object’s field from native code<br>    FindClass:—&gt; get the class object reference for the class<br>    GetFieldID:—&gt;Get the field ID for the field with GetFieldID<br>    GetIntField:—&gt;Get the contents of the field with something appropriate<br>  call a method—&gt; get a class object reference and then a method ID<br>  it’s useful to look the values up once and cache the results in your native code. Because there is a limit of one JAVAVM per process<br>  if want to cache IDs when a class is loaded, add a piece of code that allow the native code to cache field offsets<br>Local and Global Reference<br>  almost every object returned by a JNI function is a “local reference”—&gt;it’s valid for the duration of the current native method in the current thread. Even if the object itself continues to live on after the native method returns, the reference is not valid<br>  the only way to get non-local references is via the functions NewGlobalRef and NewWeakGlobalRef (the global reference is guaranteed to be valid until you call DeleteGlobalRef)<br>  to see if two reference refer to the same object, you must use the IsSameObject function, never use == in native code<br>  jfieldIDs, jmethod are opaque types, not object references, should not be passed to NewGlobalRef<br>  if you attach a native thread with AttachCurrentThread, the code you are running will never automatically free local references until the thread detaches. Any local references you create will have to be deleted manually.<br>UTF-8 and UTF-16 Strings<br>  java use UTF-16, JNI provides methods that work with Modified UTF-8 as well.<br>  you cannot pass arbitrary UTF-8 data to JNI and expect it to work correctly<br>  Android currently does not require a copy in GetStringChars,however GetStringUTFChars requires an allocation and a conversion to UTF-8. UTF-16 strings are not zero-terminated, \u0000 is allowed, so you need to hang on to the string length like jchar pointer<br>  Don’t forget to Release the strings you Get. the string functions return jchar<em> or jbyte</em><br>  Data passed to NewStringUTF must be in Modified UTF-8 format<br>Primitive Arrays<br>  You must Release every array you Get<br>  release mode arguments alternative values<br>    0<br>        buffer freed<br>    JNI_COMMIT<br>        do nothing/ buffer not freed<br>    JNI_ABORT<br>        buffer freed, Earlier wirtes are not aborted<br>Region calls<br>  advantages<br>    reducing overhead by reducing JNI call requirements<br>    do not require pinning or extra data copies<br>    reduces the risk of programmer error–&gt; no risk of forgetting to call Release<br>Exception<br>  your must not call JNI functions while an exception is pending, except several special kinds of API: delete/ exception process/stack process/ release process …<br>Extended Checking<br>  JNI does very little error checking ~~!<br>  Android offers a mode called CheckJNI<br>    array, bad pointers, Class names, Critical call,Direct ByteBuffers, Exceptions, JNIEnv<em>s, jmethodIDs, References,Release modes, Type safety, UTF-8<br>Native Libraries<br>  steps<br>    call System.loadLibrary<br>    provide a native function : jint JNI_OnLoad(JavaVM</em> vm void* reserved)<br>    in JNI_OnLoad, register all your native methods<br>64-bit Considerations<br>  you need to stash your native pointers in a long field rather than an int<br>Unsupported Features/ Backwards Compatibility<br>  Define class<br>  dynamic lookup of native functions<br>  detaching threads<br>  weak global references<br>  Local references<br>  determining reference type with GetObjectRefType</p>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>控制面板</p>
+<ul>
+<li>Impacted sessions——每日会话中，绘制时间&gt;700ms的帧总数超过所有会话帧0.1%的用户占比</li>
+<li>Number of sessions——被记录的帧数量</li>
+<li>90th/99th percentile(ms)——90%/99%的用户的所有帧绘制时间都低于这一值</li>
+</ul>
+<p>图表指标（比率均是针对所有绘制超过16.67ms的帧）</p>
+<ul>
+<li>Missed Vsync——<a href="https://stackoverflow.com/questions/27947848/understanding-necessity-of-android-vsync-signals" target="_blank" rel="noopener">丢失系统Vsync</a>信号的占比（理解<a href="https://www.youtube.com/watch?v=1iaHxmfZGGc&amp;list=PLOU2XLYxmsIKEOXh5TwZEv89aofHzNCiu&amp;index=23" target="_blank" rel="noopener">VSYNC</a>）</li>
+<li>High input latency——这些超过16.67ms的帧中输入法用时超过24ms的帧占比</li>
+<li>Slow UI thread——UI thread用时超过8ms</li>
+<li>Slow draw commands——给GPU发送绘制指令用时超过12ms</li>
+<li>Slow bitmap uploads——bitmap上传至GPU用时超过3.2ms</li>
+</ul>
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p>ORG Google play console data</p>
+<h4 id="FF所属大类——SlowRendering"><a href="#FF所属大类——SlowRendering" class="headerlink" title="FF所属大类——SlowRendering"></a>FF所属大类——<a href="https://developer.android.com/topic/performance/vitals/render.html" target="_blank" rel="noopener">SlowRendering</a></h4><ul>
+<li>identifying jank<ul>
+<li><a href="https://developer.android.com/topic/performance/vitals/render.html#visual-inspection" target="_blank" rel="noopener">Visual inspection</a></li>
+<li><a href="https://developer.android.com/topic/performance/vitals/render.html#systrace" target="_blank" rel="noopener">Systrace</a></li>
+<li><a href="https://developer.android.com/topic/performance/vitals/render.html#custom-monitoring" target="_blank" rel="noopener">Custom performance monitoring</a></li>
+</ul>
+</li>
+<li>fixing jank<ul>
+<li>查看常规的反面示例</li>
+<li>如何避免——耗时操作应在非UI线程完成</li>
+<li>UI复杂时<ul>
+<li><a href="https://developer.android.com/training/testing/espresso/index.html" target="_blank" rel="noopener">写UI自动化测试代码</a></li>
+<li><a href="https://codelabs.developers.google.com/codelabs/android-perf-testing/index.html#0" target="_blank" rel="noopener">自动化性能测试UI篇</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Common sources of janks<ul>
+<li>Scrollable lists<ul>
+<li>RecycleView:notifyDataSetChanged</li>
+<li>RecycleView:Nested RecyclerViews</li>
+<li>RecyclerView: Too much inflation / Create taking too long</li>
+<li>RecyclerView: Bind taking too long</li>
+<li>RecyclerView or ListView: layout / draw taking too long</li>
+<li>ListView: Inflation</li>
+</ul>
+</li>
+<li>Layout performance<ul>
+<li>Layout performance: Cost</li>
+<li>Layout performance: Frequency</li>
+</ul>
+</li>
+<li>Rendering performance<ul>
+<li>Rendering performance: UI Thread<ul>
+<li>If <strong>Record View#draw</strong> is taking a long time, it’s often the case that a bitmap is being painted on the UI thread. Painting to a bitmap uses CPU rendering, so should generally should be avoided. 使用<a href="https://developer.android.com/studio/profile/cpu-profiler.html#method_traces" target="_blank" rel="noopener">Android CPU Profiler</a> 确诊问题</li>
+</ul>
+</li>
+<li>Rendering performance: RenderThread<ul>
+<li>Canvas.saveLayer()</li>
+<li>Animating large Paths</li>
+<li>Canvas.clipPath</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Thread scheduling delays</li>
+<li>Object allocation and garbage collection</li>
+</ul>
+</li>
+</ul>
+<h4 id="testing-UI-performance"><a href="#testing-UI-performance" class="headerlink" title="testing UI performance"></a>testing UI performance</h4><ul>
+<li>measuring UI performance</li>
+<li>automating UI performance Tests</li>
+</ul>
+<h3 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h3><p>可能诱因</p>
+<h3 id="How——定位问题"><a href="#How——定位问题" class="headerlink" title="How——定位问题"></a>How——定位问题</h3><h4 id="Visual-inspection"><a href="#Visual-inspection" class="headerlink" title="Visual inspection"></a><a href="https://developer.android.com/topic/performance/vitals/render.html#visual-inspection" target="_blank" rel="noopener">Visual inspection</a></h4><ul>
+<li>Run a <strong>==release==</strong> (or at least non-debuggable) version of your app. <strong>The ART runtime disables several important optimizations in order to support debugging features</strong>, so make sure you’re looking at something similar to what a user will see.</li>
+<li><a href="https://developer.android.com/studio/profile/dev-options-rendering.html#ProfileGPURendering" target="_blank" rel="noopener">Enable Profile GPU Rendering</a>. <strong>Profile GPU Rendering</strong> displays bars on the screen that give you a quick visual representation of how much time it takes to render the frames of a UI window relative to the 16-ms-per-frame benchmark. Each bar has colored components that map to a stage in the rendering pipeline, so you can see which portion is taking the longest. For example, if the frame spends a lot of time handling input, you should look at your app code that handles user input.</li>
+<li>There are certain components, such as <code>RecyclerView</code>, that are a <a href="https://developer.android.com/topic/performance/vitals/render.html#common-jank" target="_blank" rel="noopener">common source of jank</a>. If your app uses those components, it’s a good idea to run through those parts of the app.</li>
+<li>Sometimes, jank can be reproduced only when the app is launched from a <a href="https://developer.android.com/topic/performance/launch-time.html#cold" target="_blank" rel="noopener">cold start</a>.</li>
+<li>Try running your app on a slower device to exacerbate the problem.</li>
+</ul>
+<h4 id="Systrace"><a href="#Systrace" class="headerlink" title="Systrace"></a><a href="https://developer.android.com/topic/performance/vitals/render.html#systrace" target="_blank" rel="noopener">Systrace</a></h4><ul>
+<li>Systrace shows when each frame is drawn and color codes each frame to highlight slow render times. This helps you find individual janky frames more accurately than visual inspection. For more information, see <a href="https://developer.android.com/studio/profile/systrace.html#frames" target="_blank" rel="noopener">Inspecting Frames</a>.</li>
+<li>Systrace detects problems in your app and displays <strong>alerts</strong> both in individual frames and the <a href="https://developer.android.com/studio/profile/systrace.html#alerts" target="_blank" rel="noopener">alerts</a> panel. Following directions in the alert is your best option.</li>
+<li>Parts of the Android framework and libraries, such as <code>RecyclerView</code>, contain trace markers. So, the <strong>systrace timeline </strong>shows when those methods are executed on the UI thread and how long they take to execute.</li>
+</ul>
+<p>If systrace doesn’t show you details about why UI thread work is taking for a long time, then you’ll need to use <a href="https://developer.android.com/studio/profile/cpu-profiler.html#method_traces" target="_blank" rel="noopener">Android CPU Profiler</a> to record either a sampled or instrumented method trace. </p>
+<h4 id="Custom-performance-monitoring"><a href="#Custom-performance-monitoring" class="headerlink" title="Custom performance monitoring"></a><a href="https://developer.android.com/topic/performance/vitals/render.html#custom-monitoring" target="_blank" rel="noopener">Custom performance monitoring</a></h4><p>If you can’t reproduce jank on a local device, you can build custom performance monitoring into your app to help identify the source of jank on devices in the field.</p>
+<p>To do this, collect frame render times from specific parts of your app with <a href="https://developer.android.com/reference/android/support/v4/app/FrameMetricsAggregator.html" target="_blank" rel="noopener"><code>FrameMetricsAggregator</code></a> and record and analyze the data using <a href="https://firebase.google.com/docs/perf-mon/" target="_blank" rel="noopener">Firebase Performance Monitoring</a>.</p>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><ul>
+<li>To fix jank, inspect which frames aren’t completing in 16.7ms, and look for what is going wrong. Is <strong>Record View#draw</strong> taking abnormally long in some frames, or perhaps <strong>Layout</strong>? See the <a href="https://developer.android.com/topic/performance/vitals/render.html#common-jank" target="_blank" rel="noopener">Common sources of jank</a> below for these problems, and others.</li>
+<li>To avoid jank, long running tasks should be run asynchronously outside of the UI thread. Always be aware of what thread you’re code is running on and use caution when posting non-trivial tasks to the main thread.</li>
+<li>If you have a complex and important primary UI for your app (maybe the central scrolling list), consider <a href="https://developer.android.com/training/testing/performance.html#automate" target="_blank" rel="noopener">writing instrumentation tests</a> that can automatically detect slow render times and run the tests frequently to prevent regressions. For more information, see the <a href="https://codelabs.developers.google.com/codelabs/android-perf-testing/index.html" target="_blank" rel="noopener">Automated Performance Testing Codelab</a>.</li>
+</ul>
+<h3 id="Automated-Test-codelab"><a href="#Automated-Test-codelab" class="headerlink" title="Automated Test codelab"></a>Automated Test codelab</h3><h4 id="Topic"><a href="#Topic" class="headerlink" title="Topic"></a>Topic</h4><ul>
+<li>How to quickly navigate some Android Performance tools</li>
+<li>How the Espresso testing framework can be used to write unit and performance tests</li>
+<li>How to use MonkeyRunner and Gradle to automate the testing workflow</li>
+<li>How to review systrace output to understand your app’s performance issues</li>
+</ul>
+<h3 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h3><ul>
+<li><p><a href="https://developer.android.com/studio/profile/systrace-commandline.html" target="_blank" rel="noopener">Systrace</a>、对其说明<a href="http://blog.udinic.com/2015/09/15/speed-up-your-app" target="_blank" rel="noopener">Link</a></p>
+</li>
+<li><p>在traceView中，选中帧后，按M键，可高亮帧</p>
+<ul>
+<li><a href="https://developer.android.com/studio/profile/traceview.html" target="_blank" rel="noopener">Profiling with Traceview and dmtracedump</a></li>
+<li><a href="https://developer.android.com/studio/profile/traceview.html" target="_blank" rel="noopener">代码级traceview</a></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// start tracing to "/sdcard/calc.trace"</span></span><br><span class="line">Debug.startMethodTracing(<span class="string">"calc"</span>);</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// stop tracing</span></span><br><span class="line">Debug.stopMethodTracing();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>frame dump</p>
+<p><img src="../../pic_resource/frame_dump_example.jpg" alt=""></p>
+</li>
+<li><p><a href="https://developer.android.com/studio/profile/cpu-profiler.html#method_traces" target="_blank" rel="noopener">method trace</a></p>
+</li>
+</ul>
 
       
 
@@ -1147,89 +1193,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android】应用架构演进"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】应用架构演进/">应用架构演进</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】应用架构演进/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>预则立<br>应用演进过程中可能出现混乱局面，对架构的考量应该放在项目开始之前<br>参考：<br><a href="http://blog.spinytech.com/2016/12/28/android_modularization/" target="_blank" rel="noopener">Android架构思考(模块化、多进程)</a></p>
-</blockquote>
-<blockquote>
-<p>适用范围：中型项目，小项目就不需要杀鸡用牛刀了</p>
-</blockquote>
-<hr>
-<p>不进行设计时应用可能出现极度混乱的局面：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-75c426d6709ddced.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>跳过广受诟病的插件化思路，考虑应用<strong>路由框架</strong>设计<strong>组件化</strong>框架：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-782c8d1af71d2448.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-1.png"></p>
-<blockquote>
-<p>这样的路由框架，在模块解耦的同时，提高了模块的可测性和复用性。<br><img src="http://upload-images.jianshu.io/upload_images/1481332-07c676326694ac24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-3.png"><br>还可以在router与各路由之间加入 Common-Base层，作为公共library：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-f7692235ff980e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-Common Base.png"></p>
-</blockquote>
-<p>在调用API时，路由机制的调用时序图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-4250238e45f0a1f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Router时序图.png"></p>
-<p>这样的路由架构存在一个访问域问题，在多进程时需要进行格外处理</p>
-<blockquote>
-<p>多进程优势：</p>
-<ol>
-<li>独立各进程；</li>
-<li>提高内存控制权；</li>
-<li>模块解耦</li>
-<li>守护</li>
-</ol>
-</blockquote>
-<p>Router是单例模式，在多进程时直接使用会在每个JVM实例中生成，跨进程时需要将Router链接起来：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2b216709e992978b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多进程路由连接图.png"></p>
-<p>这时，调用时序图层级就略微有点深了：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9366cc7cb9bb15d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="广域事件传递时序图.png"></p>
-<blockquote>
-<p><strong>总结</strong>：<br>路由架构可以高度解耦，提升可测试性，也便于项目组进行任务划分、并行开发；<br>缺点是调用层级略微有点深，会有一定的性能损耗，但与其带来的优势相比可以忽略；此设计也没有考虑到MVP架构设计的融合问题，需要考虑应用场景的引用和适度</p>
-</blockquote>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/冻结帧/">冻结帧</a></li></ul>
 
     </footer>
   </div>
@@ -1325,7 +1289,7 @@ c. 更好的debug支持
 
 
   
-    <article id="post-技术/Android/【Android】VectorDrawable介绍"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/Android/【Android】应用架构演进"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -1333,7 +1297,7 @@ c. 更好的debug支持
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/">VectorDrawable介绍</a>
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】应用架构演进/">应用架构演进</a>
     </h1>
   
 
@@ -1341,7 +1305,7 @@ c. 更好的debug支持
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/" class="article-date">
+	<a href="/2018/03/09/技术/Android/【Android】应用架构演进/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -1353,35 +1317,37 @@ c. 更好的debug支持
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>引<br>今天视频处理中碰到一些简单图片的vector绘制方案<br>调研结果：</p>
+<p>预则立<br>应用演进过程中可能出现混乱局面，对架构的考量应该放在项目开始之前<br>参考：<br><a href="http://blog.spinytech.com/2016/12/28/android_modularization/" target="_blank" rel="noopener">Android架构思考(模块化、多进程)</a></p>
 </blockquote>
-<p>效果：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9a7da5968fccb57a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="vector paint eg.png"></p>
-<p><strong>优点</strong>：Vector与PNG文件相比，能极大地缩小文件占用空间；<br><strong>弱势</strong>：</p>
-<ol>
-<li>兼容性处理起来需要花费一些心思；</li>
-<li>复杂图片不适合运用vector绘制，一个是初始化效率，第二个是重复使用时bitmap在GPU中会有缓存，而vector没有；</li>
-<li>需要额外的一些辅助工具协作生成path；</li>
-</ol>
 <blockquote>
-<p>例注：</p>
+<p>适用范围：中型项目，小项目就不需要杀鸡用牛刀了</p>
+</blockquote>
+<hr>
+<p>不进行设计时应用可能出现极度混乱的局面：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-75c426d6709ddced.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>跳过广受诟病的插件化思路，考虑应用<strong>路由框架</strong>设计<strong>组件化</strong>框架：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-782c8d1af71d2448.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-1.png"></p>
+<blockquote>
+<p>这样的路由框架，在模块解耦的同时，提高了模块的可测性和复用性。<br><img src="http://upload-images.jianshu.io/upload_images/1481332-07c676326694ac24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-3.png"><br>还可以在router与各路由之间加入 Common-Base层，作为公共library：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-f7692235ff980e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-Common Base.png"></p>
+</blockquote>
+<p>在调用API时，路由机制的调用时序图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-4250238e45f0a1f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Router时序图.png"></p>
+<p>这样的路由架构存在一个访问域问题，在多进程时需要进行格外处理</p>
+<blockquote>
+<p>多进程优势：</p>
 <ol>
-<li>使用：<br>需要在Gradle 中添加：android.defaultConfig域<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vectorDrawables.useSupportLibrary = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>独立各进程；</li>
+<li>提高内存控制权；</li>
+<li>模块解耦</li>
+<li>守护</li>
 </ol>
 </blockquote>
-<ol>
-<li>XML attributes:  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">viewportHeight \ viewportWidth</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>划分的比例大小（图片中的例子：36dp大小的图像划分成24份，Path中的坐标建立在划分后的坐标系统之上）<br><code>意义--&gt;将大小与path分离</code></p>
-<hr>
-<p>Path指令：<br>M = moveto(M X,Y)<br>L = lineto(L X,Y)<br>H = horizontal lineto(H X)<br>V = vertical lineto(V Y)<br>C = curveto(C X1,Y1,X2,Y2,ENDX,ENDY)：三次贝赛曲线<br>S = smooth curveto(S X2,Y2,ENDX,ENDY)<br>Q = quadratic Belzier curve(Q X,Y,ENDX,ENDY)：二次贝赛曲线<br>T = smooth quadratic Belzier curveto(T ENDX,ENDY)：映射<br>A = elliptical Arc(A RX,RY,XROTATION,FLAG1,FLAG2,X,Y)：弧线<br>Z = closepath()</p>
-<hr>
-<p>工具：<br><a href="http://inloop.github.io/svg2android/" target="_blank" rel="noopener">to vector</a><br><a href="http://editor.method.ac/" target="_blank" rel="noopener">SVG editor</a></p>
-<hr>
+<p>Router是单例模式，在多进程时直接使用会在每个JVM实例中生成，跨进程时需要将Router链接起来：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2b216709e992978b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多进程路由连接图.png"></p>
+<p>这时，调用时序图层级就略微有点深了：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9366cc7cb9bb15d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="广域事件传递时序图.png"></p>
 <blockquote>
-<p>参考：(涵盖由头、Vector语法、转换工具、原理、兼容处理、性能考量等方面知识，良心之作)<br><a href="http://www.jianshu.com/p/e3614e7abc03" target="_blank" rel="noopener">Android Vector曲折的兼容之路</a></p>
+<p><strong>总结</strong>：<br>路由架构可以高度解耦，提升可测试性，也便于项目组进行任务划分、并行开发；<br>缺点是调用层级略微有点深，会有一定的性能损耗，但与其带来的优势相比可以忽略；此设计也没有考虑到MVP架构设计的融合问题，需要考虑应用场景的引用和适度</p>
 </blockquote>
 <hr>
 <p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
@@ -1394,7 +1360,150 @@ c. 更好的debug支持
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VectorDrawable/">VectorDrawable</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/【Android】declare-styleable-枚举format简介"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/">declare-styleable-枚举format简介</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>旨：介绍styleable enum format的使用方法</p>
+</blockquote>
+<blockquote>
+<p>技术含量：低<br>（项目中对字体的自定义类型较多，考虑将字体设置属性定义成styleable，方便直接在xml中设置）</p>
+</blockquote>
+<p>首先定义attr.xml中的styleable：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-11adc1f8df53f3dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_define.png"></p>
+<blockquote>
+<p>Code Glance （类型设置为enum）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"Font"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"font_type"</span> <span class="attr">format</span>=<span class="string">"enum"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"msyh"</span> <span class="attr">value</span>=<span class="string">"0"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"unidream_led"</span> <span class="attr">value</span>=<span class="string">"1"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"helvetica"</span> <span class="attr">value</span>=<span class="string">"2"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"bank"</span> <span class="attr">value</span>=<span class="string">"3"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"ping_fang"</span> <span class="attr">value</span>=<span class="string">"4"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">attr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>之后就可以在xml中直接利用font_type属性了：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-a2fae41d6f9e84cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_enum.png"></p>
+<p>在具体的类中解析：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-64bf23e9b4fd9a56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_parse.png"></p>
+<blockquote>
+<p>Code Glance<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (attrs != <span class="keyword">null</span>) &#123;</span><br><span class="line">    TypedArray ar = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Font, defStyleAttr, <span class="number">0</span>);</span><br><span class="line">    <span class="meta">@FontMaster</span>.Type</span><br><span class="line">    <span class="keyword">int</span> fontType = ar.getInteger(R.styleable.Font_type, FontMaster.Type.Default);</span><br><span class="line">    FontMaster.font(fontType).set(<span class="keyword">this</span>);</span><br><span class="line">    ar.recycle();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    FontMaster.font(FontMaster.Type.MSYH).set(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/【Android】Clean-Architecture--初析"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】Clean-Architecture--初析/">Clean-Architecture--初析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】Clean-Architecture--初析/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本篇承接 <a href="http://www.jianshu.com/p/43fcba217459" target="_blank" rel="noopener">_上文_</a><br>参考：</p>
+<ol>
+<li><a href="https://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/" target="_blank" rel="noopener">Architecting Android…The clean way?</a></li>
+<li><a href="https://github.com/android10/Android-CleanArchitecture">Clean Architeture Sample -By android10</a></li>
+</ol>
+</blockquote>
+<hr>
+<p>色彩简化后的结构图：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-fe3d6bffa3c4e274.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ease_clean_architecture.png"></p>
+<p>想表达的是依赖层级，从这幅图可以看出，模块之间的依赖关系在理想情况下是清晰的，也不存在多维度相互依赖的问题，最外层UI依赖Presenter层，Presenter层又依赖Use Cases层，以此类推…  （<strong>每层的依赖只能向内收缩</strong>）</p>
+<p><em>当然，这里的层级内涵只是举例示意，在实际业务中需要根据需要设定各层核心，层级数也可适量调整，整个架构强调的只是一种依赖收缩的思想</em></p>
+<hr>
+<blockquote>
+<p>一个例子：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-2b039b1c3b887476.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clean_architecture_android_schema.png"><br>架构分为三层：</p>
+<pre><code>1. Presentation
+2. Domain
+3. Data
+</code></pre><hr>
+<p><strong>Presentation</strong><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d9f5b06f606cdb68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clean_architecture_mvp.png"><br>要点即是大家熟知的MVP一类；<br>Android的代码应该全部都出现在这一层</p>
+</blockquote>
+<blockquote>
+<p><strong>Domain</strong><br><img src="http://upload-images.jianshu.io/upload_images/1481332-f216b0617d67dbdc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clean_architecture_domain.png"><br>业务逻辑层，代码应该是纯粹的JAVA API，与Android无关</p>
+</blockquote>
+<blockquote>
+<p>Data<br><img src="http://upload-images.jianshu.io/upload_images/1481332-e536090a22ea7452.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clean_architecture_data.png"><br>这一层主要是处理数据业务</p>
+</blockquote>
+<p>几张图其实能很清楚地说明Clean Architecture的立意、用法</p>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
 
     </footer>
   </div>
