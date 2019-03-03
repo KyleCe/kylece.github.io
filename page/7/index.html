@@ -255,67 +255,6 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-每周一书/【读书笔记】《Android开发艺术探索》"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《Android开发艺术探索》/">【读书笔记】《Android开发艺术探索》</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/每周一书/【读书笔记】《Android开发艺术探索》/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/阅读/">阅读</a><a class="article-category-link" href="/categories/阅读/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>这本书对初学者来说还是比较有深度的，知识覆盖面也比较广<br>虽然可能讲解的重点不一定都是你想看到的，但是对于安卓开发进阶来说是一本不错的总体概览书籍，能够get到一些实用的技能点</p>
-</blockquote>
-<p>前后用了一个星期的时间来看，总体来说比较有参考价值的，阅读起来也没有太大难度</p>
-<blockquote>
-</blockquote>
-<p>评价：<strong>三星半</strong></p>
-<hr>
-<p>#链接、图片、笔记文本<br>下面是印象笔记公开链接、XMind思维导图图片与文字</p>
-<p><a href="https://www.evernote.com/l/ARsAb8sBsXJAHYReK_yz0I2z-lNkfmqgi9I" target="_blank" rel="noopener">EverNote链接</a></p>
-<p>图片：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7a4017224b211621.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Android开发艺术.png"></p>
-<p>文字：</p>
-<p>Android 开发艺术探索<br>1 1 Activity生命周期和启动模式<br>  1.1 生命周期<br>    1.1.1 典型周期<br>        1.1.1.1 onStart<br>                1.1.1.1.1 Activity已经可见，但是没有出现在前台<br>        1.1.1.2 onResume<br>                1.1.1.2.1 Activity可见，出现在前台并且开始活动<br>        1.1.1.3 onPause<br>                1.1.1.3.1 可以做一些存储数据、停止动画等工作，但是不能太耗时<br>        1.1.1.4 onStop<br>                1.1.1.4.1 可以做一些重量级工作，但也不能太耗时<br>                1.1.1.4.2 如果新Activity采用了透明主题，那么当前Activity不会回调onStop<br>        1.1.1.5 从Activity A切换到Activity B<br>                1.1.1.5.1 A先执行onPause，B再执行onCreate-onStart-onResume，最后才是A执行onStop<br>    1.1.2 异常周期<br>        1.1.2.1 被系统回收<br>        1.1.2.2 当Activity并不是由我主动点击back键而丧失焦点时，onSaveInstanceState方法就一定会调用<br>                1.1.2.2.1 google工程师们对onSaveInstanceState如此设计就是让其完成对一些临时的、非永久数据存储并进行恢复<br>                1.1.2.2.2 Android的View本身自己就实现了onSaveInstanceState方法，这些控件自己就具有保存临时数据和恢复临时数据的能力<br>                1.1.2.2.2.1 值得一提的是，只有当你给这个wiget在xml中指定id时，它才具有保存数据并且恢复的能力，并且不同的wiget还不能共用这个id，否则会出现数据覆盖的情况。<br>                1.1.2.2.3 onRestoreInstanceState一旦被调用，其参数Bundle savedInstanceState一定是有值的<br>        1.1.2.3 资源不足导致低优先级的Activity被杀死<br>        1.1.2.4 Configuration改变导致的销毁重建<br>                1.1.2.4.1 通过configChanges配置<br>  1.2 启动模式<br>    1.2.1 Activity的LaunchMode<br>        1.2.1.1 standard<br>                1.2.1.1.1 这种模式的Activity默认会进入启动它的Activity所属的任务栈中，但诸如ApplicationContext等Context并没有所谓的任务栈，需要在启动时添加FLAG_ACTIVITY_NEW_TASK，这样启动时就会为它创建一个新的任务栈，此时其实是以singleTask模式启动的<br>        1.2.1.2 singleTop<br>        1.2.1.3 singleTask<br>                1.2.1.3.1 taskAffinity属性，配合singleTask使用，指定Activity运行的任务栈名，是一个字符串，Activity默认的栈名是Application的包名<br>                1.2.1.3.2 singleTask模式的Activity切换到栈顶会导致在它之上的栈内的Activity出栈<br>        1.2.1.4 singleInstance<br>    1.2.2 Activity的Flags<br>        1.2.2.1 FLAG_ACTIVITY_NEW_TASK<br>        1.2.2.2 FLAG_ACTIVITY_SINGLE_TOP<br>        1.2.2.3 FLAG_ACTIVITY_CLEAR_TOP<br>                1.2.2.3.1 带此标记位启动Activity，启动它时，在同一栈中所有位于它上面的Activity都要出栈<br>                1.2.2.3.2 一般会和singleTask启动模式一起出现，如果Activity已经创建，则调用onNewIntent<br>        1.2.2.4 FLAG_ACTIVITY_EXCLUDE_FROME_RECENTS<br>                1.2.2.4.1 相当于xml中声明 android:exludeFromRecents=”true”<br>                1.2.2.4.2 Activity不会出现在历史Activity列表中<br>    1.2.3 IntentFilter匹配规则<br>        1.2.3.1 为了匹配过滤列表，需要同时匹配过滤列表中的action、category、data信息，否则匹配失败。只有一个Intent同时匹配action、category、data才算完全匹配，只有完全匹配才能启动目标Activity。<br>        1.2.3.2 一个Activity中可以有多个intent-filter，一个Intent只要能匹配任何一组intent-filter即可成功启动对应的Activity<br>        1.2.3.3 具体细则<br>                1.2.3.3.1 action匹配规则<br>                1.2.3.3.1.1 字符必须完全相同，一个过滤规则中可以有多个action，只要Intent的action能够与其中任意一个相同即可匹配成功<br>                1.2.3.3.1.2 必须含有action项，可以有多个，只要其中一项能在intent-filter中找到匹配项就行<br>                1.2.3.3.2 category匹配规则<br>                1.2.3.3.2.1 可以没有，如果有，则必须全部被包含在intent-filter中<br>                1.2.3.3.2.2 startActivity时默认含有android.intent.category.DEFAULT这个category<br>                1.2.3.3.3 data匹配规则<br>                1.2.3.3.3.1 与action类似<br>                1.2.3.3.3.2 由两部分组成 mimeType和URI<br>                1.2.3.3.3.2.1 URI<br>                1.2.3.3.3.2.1.1 <scheme>://<host>:<port>/[<path></path>][<pathprefix>][<pathpattern>]<br>                1.2.3.3.3.3 如果为intent指定完整的data，必须调用setDataAndType，不能先setData再setType，因为这两个方法彼此会清楚对方的值<br>2 2. IPC机制<br>  2.1 简介<br>    2.1.1 缩写： Inter-Process Communication 进程间通信或者跨进程通信<br>    2.1.2 进程与线程<br>        2.1.2.1 线程是CPU调度的最小单元，线程是一种有限的系统资源<br>        2.1.2.2 进程一般指一个执行单元，在PC或移动设备上指一个程序或者一个应用。<br>        2.1.2.3 一个进程中可以只有一个线程，即主线程；在Android里的主线程也叫UI线程，由此引出ANR，线程<br>    2.1.3 不是Android独有，Linux上可以通过命名管道、共享内存、信号量等来进行进程间通信。<br>    2.1.4 Android中最有特色的进程间通信方式就是Binder，也支持socket<br>  2.2 Android中的多进程模式<br>    2.2.1 使用多进程的方法：在AndroidMenifest中指定android:process属性<br>        2.2.1.1 以“：”开头的进程属于当前进程的私有进程，否则为全局进程，其他应用通过ShareUID方式可以和它运行在同一进程中<br>    2.2.2 数据共享的问题<br>    2.2.3 引发的问题<br>        2.2.3.1 静态成员和单例模式完全失败<br>                2.2.3.1.1 运行在不同进程中的四大组件，想通过内存来共享数据都会失败<br>        2.2.3.2 线程同步机制完全失效<br>        2.2.3.3 SharedPreference可靠性下降<br>        2.2.3.4 Application会多次创建<br>  2.3 基础概念<br>    2.3.1 Serializable接口<br>        2.3.1.1 是Java的一个序列化接口，只需在类中声明serialVersionUID标识即可自动实现默认序列化过程<br>                2.3.1.1.1 标识用以辅助序列化与反序列化过程，反序列化时会检查和当前类是否一致（可能类被修改了，如添加了成员）<br>        2.3.1.2 Serializable使用简单，但是含有大量IO操作，开销大<br>    2.3.2 Parcelable<br>        2.3.2.1 只要实现这个接口，一个类的对象就可以实现序列化，并且可以通过Intent和Binder传递<br>        2.3.2.2 系统已经为我们提供了许多实现了Parcelable接口的类，如Intent、Bundle、Bitmap，同时List和Map也可以序列化<br>        2.3.2.3 Parcelable稍显麻烦，但是效率很高<br>    2.3.3 Binder<br>        2.3.3.1 Android特有，可以理解为虚拟的物理设备<br>        2.3.3.2 应用层来说，是客户端和服务端进行通信的媒介<br>        2.3.3.3 主要用在Service中，包括AIDL和Messenger<br>        2.3.3.4 手动实现Binder的步骤<br>                2.3.3.4.1 声明一个AIDL接口，只需继承IInterface（只有一个asBinder方法）<br>                2.3.3.4.2 实现Stub类和Stub类中的Proxy代理类<br>        2.3.3.5 linkToDeath与unlinkToDeath<br>  2.4 Android中的IPC<br>    2.4.1 方式<br>        2.4.1.1 Intent中添加extras<br>        2.4.1.2 Binder跨进程通信<br>        2.4.1.3 ContentProvider支持跨进程<br>        2.4.1.4 网络通信，如socket<br>        2.4.1.5 文件共享<br>                2.4.1.5.1 并发问题<br>                2.4.1.5.2 SharedPreference虽然本质也也是文件，但系统对它的读写有一定的缓存策略，所以不在进程间通信时使用<br>    2.4.2 使用Messenger<br>        2.4.2.1 一种轻量级的IPC方案，底层实现是AIDL<br>        2.4.2.2 使用方法简单，它对AIDL做了封装<br>        2.4.2.3 由于一次处理一个请求，因此在服务端我们不用考虑线程同步的问题（服务端不存在并发执行的情况）<br>        2.4.2.4 实现步骤<br>                2.4.2.4.1 服务端进程<br>                2.4.2.4.2 客户端进程<br>    2.4.3 AIDL<br>        2.4.3.1 服务端<br>                2.4.3.1.1 创建Service<br>                2.4.3.1.2 创建AIDL文件，将暴露给客户端的接口在这个AIDL文件中声明<br>                2.4.3.1.3 在Service中实现这个接口<br>        2.4.3.2 客户端<br>                2.4.3.2.1 绑定服务端Service<br>                2.4.3.2.2 将服务端返回的Binder对象转换成AIDL接口所属的类型<br>                2.4.3.2.3 调用AIDL中的方法<br>        2.4.3.3 AIDL接口的创建<br>                2.4.3.3.1 支持的数据类型<br>                2.4.3.3.1.1 基本数据类型<br>                2.4.3.3.1.2 String CharSequence<br>                2.4.3.3.1.3 ArrayList<br>                2.4.3.3.1.4 HashMap<br>                2.4.3.3.1.5 Parcelable<br>                2.4.3.3.1.6 AIDL<br>    2.4.4 ContentProvider<br>        2.4.4.1 继承ContentProvider，实现六个方法：onCreate、query、update、insert、delete和getType<br>                2.4.4.1.1 onCreate用来创建<br>                2.4.4.1.1.1 在主线程中，不能进行耗时操作<br>                2.4.4.1.2 getType用以返回MIME类型，如果返回null或者 <em>/</em>表示不关注<br>        2.4.4.2 底层看来来像一个SQLite数据库，但其实对底层数据储存没有任何要求，可以使用普通文件，可以采用内存中的一个对象来进行数据存储<br>        2.4.4.3 注册自定义的ContentProvider<br>                2.4.4.3.1 android：authorities是ContentProvider的唯一表示，通过这个属性外部应用就可以访问我们的ContentProvider了，所以必须保证authorities唯一（可以加上包名前缀）<br>    2.4.5 Sockete<br>    2.4.6 Binder连接池<br>        2.4.6.1 可以极大的提高AIDL的开发效率，并且可以避免大量的Service创建<br>3 3. View事件体系<br>  3.1 基础<br>    3.1.1 位置参数<br>        3.1.1.1 left、right、top、bottom<br>        3.1.1.2 3.0之后添加了x、y、translationX、translationY<br>    3.1.2 MotionEvent与TouchSlop<br>    3.1.3 VelocityTracker、GestureDetector、Scroller<br>        3.1.3.1 获取速度前必须先计算速度<br>        3.1.3.2 这里的速度是指一段时间内手指所滑过的像素<br>        3.1.3.3 不需要使用时，需要调用clear方法来重置并回收内存<br>  3.2 View的滑动<br>    3.2.1 scrollTo、scrollBy<br>        3.2.1.1 只能滑动View的内容，并不能滑动View本身<br>    3.2.2 使用动画<br>        3.2.2.1 将fillAfter属性设置为true可以保持动画结束后的view效果（但是view的四个顶点坐标并没有发生变化）<br>    3.2.3 改变布局参数<br>    3.2.4 比较： scrollTo/ScrollBy操作简单，适合对View内容的滑动 动画：操作简单，主要适用于没有交互的View和实现复杂的动画效果 改变布局参数：操作相对复杂，适用于有交互的View<br>    3.2.5 eg：<br>        3.2.5.1 具有跟手滑动效果的View：只需要重写onTouchEvent方法并处理ACTION_MOVE事件，根据两次滑动之间的距离就可以实现它的滑动。为了实现全屏滑动，需要采用动画的方式来实现（原书P134）<br>  3.3 弹性滑动<br>    3.3.1 使用Scroller<br>        3.3.1.1 配合View的computeScroll方法完成，对View没有丝毫的引用，内部也不含有计时器<br>    3.3.2 通过动画，一帧一帧地更新，设置动画的updateListener实现<br>    3.3.3 使用延时策略<br>        3.3.3.1 使用Handler或View的postDelay方法<br>  3.4 View的事件分发机制<br>    3.4.1 传递规则<br>        3.4.1.1 dispatchTouchEvent<br>                3.4.1.1.1 用来进行事件分发<br>        3.4.1.2 onInterceptTouchEvent<br>                3.4.1.2.1 用来判断是否拦截某个事件<br>        3.4.1.3 onTouchEvent<br>                3.4.1.3.1 dispatchTouchEvent中调用，处理点击事件，返回结果表示是否消耗当前事件<br>        3.4.1.4 关系伪代码<br>                3.4.1.4.1 public boolean dispatchTouchEvent(MotionEvent ev){ boolean consume = false; if(onInterceptTouchEvent(ev)){ consume = onTouchEvent(ev); }else{ consume = child.dispatchTouchEvent(ev); } return consume; }<br>        3.4.1.5 结论<br>                3.4.1.5.1 同一个事件序列内的事件不能分别由两个View同时处理（不包含特殊处理）<br>                3.4.1.5.2 某个View一旦决定拦截，那么这一事件序列都只能由它来处理，并且它的onInterceptTouchEvent不会再被调用<br>                3.4.1.5.3 如果View不消耗除ACTION_DOWN以外的其他事件，那么这个点击事件会小时，父元素的onTouchEvent并不会被调用，最终这些消耗的点击事件会传递给Activity处理<br>                3.4.1.5.4 ViewGroup默认不拦截任何事件<br>                3.4.1.5.5 View没有onInterceptTouchEvent方法<br>                3.4.1.5.6 View的onTouchEvent默认都会消耗事件（返回true），除非是不可点击的（clickable和longClickable同时为false）<br>                3.4.1.5.7 View的enable属性不影响onTouchEvent默认返回值。哪怕一个View是disable状态，只要它的clickable或者longclickable有一个为true，那么它的onTouchEvent就返回true<br>4 4. View工作原理<br>  4.1 ViewRoot、DecorView<br>    4.1.1 DecorView作为顶级View，一般会包含一个竖直方向的LinearLayout<br>        4.1.1.1 一个是titlebar，一个是content，这也是setContentView所设置的对象<br>    4.1.2 View层的事件都先经过DecorView，然后才传递给我们的View<br>  4.2 MeasureSpec<br>    4.2.1 一个32位的int值，高2位为SpecMode，低30位代表SpecSize<br>  4.3 View工作流程<br>    4.3.1 主要指measure、layout、draw<br>        4.3.1.1 如何在Activity中获取view的宽高？<br>                4.3.1.1.1 Activity#onWindowFocusChanged<br>                4.3.1.1.2 view.post(runnable)<br>                4.3.1.1.3 ViewTreeObserver<br>                4.3.1.1.4 view.measure(int windthMeasureSpec, int heightMeasureSpec)<br>        4.3.1.2 ViewGroup会逐个measure子view<br>    4.3.2 layout过程<br>        4.3.2.1 通过setFrame去设置子元素的四个顶点位置<br>    4.3.3 draw过程<br>        4.3.3.1 View绘制过程是通过dispatchDraw来实现的，dispatchDraw会遍历调用所有字元素的draw<br>  4.4 自定义View<br>    4.4.1 分类<br>        4.4.1.1 onDraw<br>        4.4.1.2 继承ViewGroup<br>        4.4.1.3 继承特定View<br>        4.4.1.4 继承特定ViewGroup<br>    4.4.2 须知<br>        4.4.2.1 让View支持wrap_content<br>        4.4.2.2 如有必要，让其支持padding<br>                4.4.2.2.1 在onDraw中取padding值，加入绘制参数计算<br>        4.4.2.3 尽量不用Handler<br>        4.4.2.4 View中如果有线程或动画，需要及时停止，View#onDetachFromWindow<br>        4.4.2.5 View带有滑动嵌套时，处理好滑动冲突<br>    4.4.3 xml属性扩展<br>        4.4.3.1 1. values目录下创建xml<br>                4.4.3.1.1 eg： <declare-styleable name="CircleView"> <attr name="circle_color" format="color"> &lt;.declare-syleable&gt;<br>        4.4.3.2 2. 在View的构造方法中解析自定义属性的值并处理<br>                4.4.3.2.1 eg: TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleView); mColor = a.getColor(R.styleable.CircleView_circle_color, Color.RED); a.recycle();<br>        4.4.3.3 3. 在布局文件中使用自定义属性<br>                4.4.3.3.1 s<br>5 5. RemoteViews<br>  5.1 应用<br>    5.1.1 通知栏<br>        5.1.1.1 通过RemoteViews提供的方法来更新视图<br>    5.1.2 桌面小部件<br>        5.1.2.1 定义小部件界面<br>        5.1.2.2 定义配置信息<br>        5.1.2.3 定义实现类<br>        5.1.2.4 在androidManifest中声明小部件<br>    5.1.3 PendingIntent<br>        5.1.3.1 内部的Intent相同，并且requestCode也相同即为相同；其中intent相同只需要ComponentName和intent-filter相同<br>  5.2 内部机制<br>    5.2.1 系统并没有通过binder去支持所有的view操作，仅支持了少量的view（TextView，ImageView等），这是出于效率考虑<br>    5.2.2 提供了一个Action概念，Action实现了Parcelable接口，代表一个View操作；将这些actions放到ArrayList中，统一通过Binder进行通信，提高IPC效率<br>6 6. Drawable<br>  6.1 分类<br>    6.1.1 BitmapDrawable<br>        6.1.1.1 android:antialias 抗锯齿<br>        6.1.1.2 android:dither 抖动效果，开启这个选项可以让高质量的图片在低质量的屏幕上还能保持较好的显示效果<br>        6.1.1.3 android:filter 是否开启过滤效果。当图片尺寸被拉伸或者压缩时，开启过滤效果可以保持较好的显示效果<br>        6.1.1.4 android:tileMode 平铺模式。有 disable|clamp|repeat|mirror几个选项，开启平铺模式之后gravity属性会被忽略<br>    6.1.2 ShapeDrawable<br>        6.1.2.1 可以通过纯色构造，也可以是具有渐变效果的图形<br>        6.1.2.2 android:shape —— rectangle/oval/line/ring<br>                6.1.2.2.1 line 和ring两个选项必须通过stroke标签来指定线的宽度和颜色等信息<br>        6.1.2.3 <corners>表示shape 的四个角度，只使用于矩形shape，这里的角度是指圆角程度，用px表示<br>        6.1.2.4 <gradient> 与solid标签是相互排斥的，其中solid表示纯色填充，而gradient则表示渐变效果<br>    6.1.3 LayerDrawable<br>        6.1.3.1 对应的标签是 <layer-list>,它表示一种层次化的Drawable集合，通过将不同的Drawable放置在不同的层上面从而达到一种叠加后的效果<br>    6.1.4 StateListDrawable<br>        6.1.4.1 对应的标签是<selector>，也是表示Drawable集合，每个Drawable都对应着View的一种状态<br>    6.1.5 LevelListDrawable<br>        6.1.5.1 <level-list>，集合中的每个Drawable都有一个等级的概念（level 0~10000）<br>        6.1.5.2 如果被用来作为ImageView的前景Drawable，那么还可以通过ImageView的setImageLevel方法来切换Drawable<br>    6.1.6 TransitionDrawable<br>        6.1.6.1 <transition>，用于实现两个Drawable之间的淡入淡出效果<br>        6.1.6.2 可以用作View的背景，也可以在ImageView中直接作为Drawable来使用<br>    6.1.7 InsertDrawable<br>        6.1.7.1 <insert>，可以将其他Drawable内嵌到自身当中，当一个View希望自己的背景比自己的实际区域小时可以采用<br>    6.1.8 ScaleDrawable<br>        6.1.8.1 <scale>，<br>    6.1.9 ClipDrawable<br>        6.1.9.1 <clip>，根据自己当前level来裁剪另一个Drawable<br>  6.2 自定义Drawable<br>    6.2.1 通常我们很少自定义Drawable，因为自定义的Drawable无法再xml中使用<br>7 7. 动画<br>  7.1 View动画<br>    7.1.1 四个子类：TranslateAnimation、ScaleAnimation、RotateAnimation、AlphaAnimation<br>        7.1.1.1 可以通过代码设置，也可用XML<br>        7.1.1.2 既可以是单个动画，也可以由一系列动画组成<br>    7.1.2 自定义View动画<br>        7.1.2.1 方式：继承Animation类，重写initialize和applyTransformation方法，在initialize中做一些初始化工作，在applyTransformation中进行相应的矩阵变换即可，很多时候需要采用Camera来简化矩阵变换过程<br>    7.1.3 帧动画<br>        7.1.3.1 AnimationDrawable 顺序播放一组预先定义好的图片，类似于电影播放<br>        7.1.3.2 帧动画使用比较简单，但是比较容易引起OOM，在使用时应尽量避免使用过多尺寸较大的图片<br>  7.2 View动画的特殊使用场景<br>    7.2.1 LayoutAnimation<br>        7.2.1.1 作用于ViewGroup，为ViewGroup指定一个动画，这样当它的子元素出场时都会具有这种动画效果<br>        7.2.1.2 步骤<br>                7.2.1.2.1 定义LayoutAnimation<br>                7.2.1.2.2 为子元素指定具体入场动画<br>                7.2.1.2.3 为ViewGroup指定android:layoutAnimation属性<br>                7.2.1.2.3.1 对ListView来说，这样Listview的item就具有出场动画了<br>                7.2.1.2.3.2 除了xml指定，还可以通过LayoutAnimationController来实现<br>    7.2.2 Activity切换效果<br>  7.3 属性动画<br>    7.3.1 简介： ValueAnimation、ObjectAnimation、AnimatorSet<br>    7.3.2 使用属性动画<br>        7.3.2.1 属性动画从API 11 才有，可以使用nineoldandroids来兼容老版<br>        7.3.2.2 可以利用代码、XML形式实现 一般会采用代码形式<br>    7.3.3 理解插值器和估值器<br>    7.3.4 属性动画的监听器<br>        7.3.4.1 主要接口：AnimatorUpdateListener和AnimatorListener<br>        7.3.4.2 AnimatorUpdateListener比较特殊，它会对整个动画过程进行监听，动画每播放一帧，onAnimationUpdate就会被调用一次<br>    7.3.5 对任意属性做动画<br>        7.3.5.1 我们对object的属性abc做动画，如果想让动画生效，要同时满足两个条件：<br>                7.3.5.1.1 object必须提供setAbc方法，如果动画的时候没有传递初始值，那么还要提供getAbc方法<br>                7.3.5.1.2 object的setAbc对属性abc所做的改变必须能够通过某种方法反映出来，比如带来UI的改变之类<br>        7.3.5.2 如果无法满足条件<br>                7.3.5.2.1 1. 给你的对象加上get和set方法，如果有权限的话<br>                7.3.5.2.2 2. 用一个类来包装原始对象，间接为其提供get和set方法<br>                7.3.5.2.3 3. 采用ValueAnimator，监听动画过程，自己实现属性的改变<br>    7.3.6 工作原理<br>  7.4 使用动画的注意事项<br>    7.4.1 OOM<br>    7.4.2 memory leak<br>        7.4.2.1 无限循环动画需要在Activity退出时及时停止，否则将导致Activity无法释放从而造成内存泄露<br>        7.4.2.2 兼容性问题<br>        7.4.2.3 View动画的问题<br>                7.4.2.3.1 View动画是对View的影像做动画，不不是真正改变View的状态，有时会出现动画完成后View无法隐藏的现象，即setVisiblity(View.GONE)失效了，这时只要调用View.clearAnimation()清除View动画即可解决此问题<br>        7.4.2.4 不要使用px<br>        7.4.2.5 动画元素交互<br>                7.4.2.5.1 新位置将无法触发单击事件<br>        7.4.2.6 硬件加速<br>8 8. Window和WindowManager<br>  8.1 简介<br>    8.1.1 Flags参数、Type参数<br>    8.1.2 windowManger提供三个常用方法：添加view、更新View、删除View<br>  8.2 Window的内部机制<br>    8.2.1 Window添加<br>        8.2.1.1 使用到了桥接模式，内部使用WindowManagerGlobal统一委托实现<br>        8.2.1.2 添加过程其实是一次IPC调用，binder模式<br>    8.2.2 Window删除<br>    8.2.3 Window 更新<br>  8.3 Window的创建过程<br>    8.3.1 Activity的Window创建<br>        8.3.1.1 Window对象的创建是通过PolicyManager的makeNewWindow实现的<br>                8.3.1.1.1 Window的具体实现类是PhoneWindow<br>        8.3.1.2 步骤<br>                8.3.1.2.1 如果没有DecorView，创建它<br>                8.3.1.2.2 将View添加到DecorView的mContentParent中<br>                8.3.1.2.3 回调Activity的onContentChanged方法通知Activity视图已经发生改变<br>    8.3.2 Dialog的Window创建<br>        8.3.2.1 创建Window<br>        8.3.2.2 初始化DecorView并将Dialog视图添加到DecorView中<br>        8.3.2.3 将DecorView添加到Window中并显示<br>                8.3.2.3.1 Dialog的context必须使用Activity的，不能使用Application的context；一定要使用的话可以设定Window类型，声明alert权限（见书本P310）<br>    8.3.3 Toast的Window创建<br>9 9. 四大组件工作过程<br>  9.1 运行状态<br>    9.1.1 除BroadcastReceiver外，其他三个都要在Manifest中注册<br>  9.2 Activity的工作过程<br>    9.2.1 performLauncherActivity最终完成Activity对象的创建和启动过程，并且ActivityThread通过handleResumeActivity方法来调用被启动的Activity<br>        9.2.1.1 1. 从ActivityClientRecord中获取待启动的Activity组件信息<br>        9.2.1.2 2. 通过instrumentation的newActivity方法使用类加载器创建Activity对象<br>        9.2.1.3 3. 通过LoadedApk的makeApplication方法来尝试创建Application对象<br>        9.2.1.4 4. 创建ContextImpl对象并通过Activity的attach方法来完成一些重要数据的初始化<br>        9.2.1.5 5. 调用Activity的onCreate方法<br>  9.3 Service工作过程<br>    9.3.1 分类<br>        9.3.1.1 启动状态，用于执行后台计算任务<br>        9.3.1.2 绑定状态，用户其它组件和Service交互<br>    9.3.2 启动过程<br>        9.3.2.1 利用ActivityManagerService<br>    9.3.3 绑定过程<br>        9.3.3.1 当多次绑定同一个Service时，onBind方法只会执行一次，除非Service被终止<br>  9.4 BroadcastReceiver工作过程<br>    9.4.1 注册<br>    9.4.2 发送接受<br>  9.5 ContentProvider<br>    9.5.1 onCreate要先于Application的onCreate执行，这在四大组件中是比较少见的现象<br>    9.5.2 步骤<br>        9.5.2.1 1. 创建ContextImpl和Instrumentation<br>        9.5.2.2 2. 创建Application<br>        9.5.2.3 3. 启动当前进程的ContentProvider并调用其onCreate方法<br>        9.5.2.4 4. 调用Application的onCreate方法<br>10 10. Android消息机制<br>  10.1 概述<br>    10.1.1 MessageQueue内部是单链表<br>    10.1.2 Handler创建时会采用当前线程的Looper来构建内部消息循环系统<br>  10.2 消息机制分析<br>    10.2.1 ThreadLocal<br>        10.2.1.1 是一个线程内部的数据存储类，通过它可以在指定的线程中存储数据，数据存储后只有在指定线程中可以获取到数据<br>        10.2.1.2 若数据以线程为作用域且不同线程具有不同的数据副本时，可以考虑采用ThreadLocal<br>        10.2.1.3 另一个使用场景是复杂逻辑下的对象传递<br>        10.2.1.4 实现原理<br>                10.2.1.4.1 set方法： public void set(T value){ Thread currentThread = Thread.currentThread(); Values values = values(currentThread); if(values == null) values = initializeValues(currentThread); values.put(this, value); }<br>    10.2.2 MessageQueue<br>        10.2.2.1 插入和读取，数据结构为单链表<br>        10.2.2.2 读取操作中的next实质上是无限循环<br>    10.2.3 Looper<br>        10.2.3.1 退出：quit、quitSately quit——直接退出Looper； quitSafely——把消息队列中的已有消息处理完毕后才安全退出<br>        10.2.3.2 在子线程中，如果手动为其创建了Looper，那么在所有事情完成后应该调用quit方法来终止Looper，否则这个子线程就会一直处于等待状态<br>    10.2.4 Handler工作原理<br>  10.3 主线程的消息循环<br>    10.3.1 Android的主线程就是ActivityThread<br>11 11. Android线程和线程池<br>  11.1 概述<br>    11.1.1 AsyncTask底部用到了线程池和Handler<br>    11.1.2 IntentService和HandlerThread则是直接使用了线程<br>    11.1.3 IntentService内部采用HandlerThread来执行任务，当任务执行完毕后IntentService会自动退出；IntentService作用很想一个后台线程，但是IntentService是一种服务，它不容易被系统杀死从而可以尽量保证任务的执行，直接使用后台线程的话，则很容易被系统杀死；<br>    11.1.4 HandlerThread是一种具有消息循环的线程<br>  11.2 主线程和子线程<br>    11.2.1 主：进程所拥有的线程<br>    11.2.2 子：执行耗时任务<br>  11.3 线程形态<br>    11.3.1 AsyncTask<br>        11.3.1.1 封装了Thread和Handler，但不适合特别耗时的任务<br>        11.3.1.2 泛型参数：Params、Progress、Result<br>        11.3.1.3 核心方法<br>                11.3.1.3.1 onPreExecute()<br>                11.3.1.3.2 doInBackground(Params… params)<br>                11.3.1.3.3 onProgressUpdate(Progress…values)<br>                11.3.1.3.4 onPostExecute(Result result)<br>        11.3.1.4 限制<br>                11.3.1.4.1 必须在主线程中加载<br>                11.3.1.4.2 对象必须在主线程中创建<br>                11.3.1.4.3 execute必行在UI线程调用<br>                11.3.1.4.4 不直接调用核心方法<br>                11.3.1.4.5 兵行、串行的来回改版<br>        11.3.1.5 工作原理<br>                11.3.1.5.1 串行线程池<br>                11.3.1.5.2 Handler切换线程，要求Handler来自主线程<br>    11.3.2 HandlerThread<br>        11.3.2.1 run中通过Looper.prepare()来创建消息队列，并通过Looper.loop()来开启消息循环<br>        11.3.2.2 由于其run方法是一个无限循环，因此当明确不需要再使用HandlerThread时可以通过quit或者quitSafely来终止线程执行<br>    11.3.3 IntentService<br>        11.3.3.1 抽象类，必须建立它的子类才能使用<br>        11.3.3.2 可以执行后台耗时任务，执行完成后自动停止<br>  11.4 线程池<br>    11.4.1 ThreadPoolExecutor<br>        11.4.1.1 参数<br>                11.4.1.1.1 corePoolSize<br>                11.4.1.1.2 maximumPoolSize<br>                11.4.1.1.3 keepAliveTime<br>                11.4.1.1.4 unit<br>                11.4.1.1.5 workQueue<br>                11.4.1.1.6 threadFactory<br>                11.4.1.1.7 RejectedExecutionHandler handler<br>    11.4.2 分类<br>        11.4.2.1 FixedThreadPool<br>        11.4.2.2 CachedThreadPool<br>        11.4.2.3 ScheduledThreadPool<br>        11.4.2.4 SingleThreadExecutor<br>12 12. Bitmap的加载和Cache<br>  12.1 高效加载<br>    12.1.1 使用BitmapFactory.Options来加载所需尺寸的图片<br>        12.1.1.1 使用inSampleSize设置采样率<br>        12.1.1.2 如何获取采样率<br>                12.1.1.2.1 1. 将inJustDecodeBounds 参数设为true并加载图片<br>                12.1.1.2.2 2. 取出图片原始宽高信息，对应于outWidth和outHeight<br>                12.1.1.2.3 3. 根据采样率规则并结合目标View所需大小计算出采样率inSampleSize<br>                12.1.1.2.4 4. 将inJustDecodeBounds参数设为false，然后重新加载图片<br>  12.2 缓存策略<br>    12.2.1 常用LRU算法：Least Recently Used<br>        12.2.1.1 LruCache实现内存缓存，DiskLruCache充当存储设备缓存<br>    12.2.2 LruCache<br>        12.2.2.1 使用support-v4包中的LruCache兼容性更好<br>        12.2.2.2 是线程安全的<br>        12.2.2.3 引用的几种类别<br>                12.2.2.3.1 强引用<br>                12.2.2.3.2 软引用<br>                12.2.2.3.2.1 内存不足时会被gc<br>                12.2.2.3.3 弱引用<br>    12.2.3 DiskLruCache<br>        12.2.3.1 创建<br>        12.2.3.2 添加<br>        12.2.3.3 查找<br>    12.2.4 ImageLoader的实现<br>13 13. 综合技术<br>  13.1 使用CrashHandler来获取应用信息<br>    13.1.1 UncaughtExceptionHandler处理crash——记录、上报、用户提醒<br>    13.1.2 使用方法<br>        13.1.2.1 在Application初始化时为线程设置CrashHandler<br>  13.2 multiDex解决方法数越界<br>    13.2.1 1. 在build.gradle中添加multidex配置<br>    13.2.2 2. 在代码中支持multidex功能<br>        13.2.2.1 一、 在manifest中指定Application 为MultiDexApplication<br>        13.2.2.2 二、 让应用继承自MultiDexApplication<br>        13.2.2.3 三、 重写 application中的attachBaseContext方法（因为这个方法在onCreate之前执行）<br>    13.2.3 3. 指定主dex文件所要包含的类——可以通过– main-dex-list指定<br>        13.2.3.1 在build.gradle文件中添加afterEvaluate区域（见书P460）<br>  13.3 动态加载技术<br>  13.4 反编译<br>14 14. JNI和NDK<br>15 15. Android性能优化<br>  15.1 性能优化方法<br>    15.1.1 布局优化<br>        15.1.1.1 include标签<br>        15.1.1.2 merge标签<br>        15.1.1.3 ViewStub<br>                15.1.1.3.1 使用时才加载<br>                15.1.1.3.2 暂时不支持merge<br>    15.1.2 绘制优化<br>        15.1.2.1 onDraw要避免执行大量操作<br>    15.1.3 内存泄露优化<br>        15.1.3.1 静态变量导致<br>        15.1.3.2 单例导致<br>        15.1.3.3 属性动画导致<br>    15.1.4 响应速度优化和ANR日志分析<br>        15.1.4.1 进程ANR会在/data/anr目录下创建traces.txt记录<br>    15.1.5 ListView和Bitmap优化<br>        15.1.5.1 避免getView中耗时<br>        15.1.5.2 根据滑动状态来控制任务执行频率<br>        15.1.5.3 BitmapFactory.Options进行采样<br>    15.1.6 线程优化<br>        15.1.6.1 线程池<br>    15.1.7 建议<br>        15.1.7.1 避免过多对象<br>        15.1.7.2 不要过多使用enum<br>        15.1.7.3 const使用static final修饰<br>        15.1.7.4 使用Android特有的数据结构，如SparseArray和Pair，它们都具有更好的性能<br>        15.1.7.5 适当使用软引用和弱引用<br>        15.1.7.6 采用内存缓存和磁盘缓存<br>        15.1.7.7 尽量采用静态内部类，可以避免潜在的由于内部类而导致的内存泄露</clip></scale></insert></transition></level-list></selector></layer-list></gradient></corners></attr></declare-styleable></pathpattern></pathprefix></port></host></scheme></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-每周一书/【读书笔记】《精要主义》摘录"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -437,66 +376,6 @@
 
 
   
-    <article id="post-每周一书/【读书笔记】《多余的话》——瞿秋白"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《多余的话》——瞿秋白/">【读书笔记】《多余的话》——瞿秋白</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/每周一书/【读书笔记】《多余的话》——瞿秋白/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>曾经的党领袖，在临终前的“谈天”，说自己当领袖是众多“历史的误会”，然而这误会一误就是五年<br>或许是造化弄人，不过以书中的内容来看，他确实难当此大任<br>书中说他自己最大的梦想是读书写字、舞文弄墨，然而在历史的转折点他并没有认清现实，急流勇退，这些字越发显得矫情</p>
-</blockquote>
-<hr>
-<p><a href="https://www.evernote.com/l/ARu9r-8vdxNER7qC8eSFNJvRAXfslBK26ns" target="_blank" rel="noopener">笔记链接</a></p>
-<hr>
-<p>思维导图图片：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7a3cce80aaba91e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多余的话 overview.png"></p>
-<hr>
-<p>文字：</p>
-<blockquote>
-<p>《多余的话》——瞿秋白<br>1 多余的话<br>  1.1 历史的误会<br>    1.1.1 误打误撞学俄文<br>    1.1.2 时势进入政局<br>    1.1.3 党内无人出特，意外变成领袖<br>    1.1.4 旧人无能人，新人未成熟——当领袖五年<br>  1.2 脆弱的二元人物<br>    1.2.1 本心想着：读书写字、舞文弄墨<br>  1.3 我和马克思主义<br>    1.3.1 不做国师，但闻共产主义终极理想<br>    1.3.2 对其学说不感兴趣，只事翻译<br>  1.4 盲动主义和立三路线<br>    1.4.1 过分估量革命形势的盲动主义错误<br>    1.4.2 对立三问题的不敏感<br>  1.5 “文人“<br>    1.5.1 一为文人便无足观<br>    1.5.2 若为戏子，或有所为<br>  1.6 告别<br>    1.6.1 无友寡亲<br>    1.6.2 要磨练自己，要有非常巨大的毅力，去克服一切种种“异己的”意识以至最微弱的“异己的”感情，然后才能从“异己的”阶级里完全跳出来，而在无产阶级里站稳脚跟<br>    1.6.3 我留恋什么？我最亲爱的人，这美丽世界欣欣向荣的儿童。“我的”女儿，以及一切幸福的孩子们<br>    1.6.4 永别了，美丽的世界<br>2 乱弹<br>  2.1 世纪末的悲哀<br>    2.1.1 病就在于世纪末，病就在于世纪末的悲哀，那是衷心不可救药的无穷无尽的悲哀<br>  2.2 画狗罢<br>    2.2.1 与其绘鬼，不如画狗<br>  2.3 哑巴文学<br>    2.3.1 朗诵运动，听得懂的新文学<br>  2.4 一种云<br>    2.4.1 从春天到夏天，从秋天到冬天，这样一年年过去，淫虐的雨，凄厉的风和肃杀的霜雪更番地来去，一点儿光明也没有。这都是云在作祟<br>    2.4.2 难怪总是漫漫长夜了！ 什么时候才黎明呢？<br>  2.5 非洲鬼话<br>  2.6 狗样的英雄<br>  2.7 猫样的诗人<br>  2.8 堂吉诃德时代<br>    2.8.1 中国的《水浒》是一部名贵的文学典籍。模仿的有一万部<br>    2.8.2 英雄所侍候的主人，充其量只是一个青天大老爷，英雄本身又会高明到什么地方去呢？<br>  2.9 苦力的翻译<br>    2.9.1 讽刺违心翻译<br>  2.10 水陆道场<br>    2.10.1 他们爱呢？又要害羞 思想，也要赶走。 出卖着自己的自由， 对着偶像磕头； 讨那一点儿钱， 还带一根锁链。<br>  2.11 财神还是反财神？<br>    2.11.1 财神的神通<br>    2.11.2 狗道主义<br>    2.11.3 红萝卜<br>    2.11.4 ‘‘忏悔“<br>    2.11.5 反财神<br>    2.11.6 小白龙<br>  2.12 《流铁》在巴黎<br>  2.13 谈谈《三人行》<br>3 散论<br>  3.1 《鲁迅杂感选集》序言<br>  3.2 猪八戒<br>  3.3 美国的真正悲剧<br>  3.4 萧伯纳并非西洋唐伯虎<br>  3.5 慈善家的妈妈<br>  3.6 鬼脸的辩护<br>  3.7 王道诗话<br>  3.8 关于女人<br>  3.9 真假堂吉诃德<br>  3.10 透底<br>  3.11 中国文与中国人<br>  3.12 关于高尔基的书<br>  3.13 ”非政治化“的高尔基<br>  3.14 “美“<br>  3.15 最艺术的国家<br>  3.16 人才易得<br>  3.17 择吉<br>  3.18 《子夜》和国货年<br>  3.19 ”打倒帝国主义“的古典</p>
-</blockquote>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-每周一书/【读书笔记】《一生的学习》--印度哲学家--克里希拉穆提"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -563,6 +442,127 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-每周一书/【读书笔记】《多余的话》——瞿秋白"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《多余的话》——瞿秋白/">【读书笔记】《多余的话》——瞿秋白</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/13/每周一书/【读书笔记】《多余的话》——瞿秋白/" class="article-date">
+	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>曾经的党领袖，在临终前的“谈天”，说自己当领袖是众多“历史的误会”，然而这误会一误就是五年<br>或许是造化弄人，不过以书中的内容来看，他确实难当此大任<br>书中说他自己最大的梦想是读书写字、舞文弄墨，然而在历史的转折点他并没有认清现实，急流勇退，这些字越发显得矫情</p>
+</blockquote>
+<hr>
+<p><a href="https://www.evernote.com/l/ARu9r-8vdxNER7qC8eSFNJvRAXfslBK26ns" target="_blank" rel="noopener">笔记链接</a></p>
+<hr>
+<p>思维导图图片：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7a3cce80aaba91e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多余的话 overview.png"></p>
+<hr>
+<p>文字：</p>
+<blockquote>
+<p>《多余的话》——瞿秋白<br>1 多余的话<br>  1.1 历史的误会<br>    1.1.1 误打误撞学俄文<br>    1.1.2 时势进入政局<br>    1.1.3 党内无人出特，意外变成领袖<br>    1.1.4 旧人无能人，新人未成熟——当领袖五年<br>  1.2 脆弱的二元人物<br>    1.2.1 本心想着：读书写字、舞文弄墨<br>  1.3 我和马克思主义<br>    1.3.1 不做国师，但闻共产主义终极理想<br>    1.3.2 对其学说不感兴趣，只事翻译<br>  1.4 盲动主义和立三路线<br>    1.4.1 过分估量革命形势的盲动主义错误<br>    1.4.2 对立三问题的不敏感<br>  1.5 “文人“<br>    1.5.1 一为文人便无足观<br>    1.5.2 若为戏子，或有所为<br>  1.6 告别<br>    1.6.1 无友寡亲<br>    1.6.2 要磨练自己，要有非常巨大的毅力，去克服一切种种“异己的”意识以至最微弱的“异己的”感情，然后才能从“异己的”阶级里完全跳出来，而在无产阶级里站稳脚跟<br>    1.6.3 我留恋什么？我最亲爱的人，这美丽世界欣欣向荣的儿童。“我的”女儿，以及一切幸福的孩子们<br>    1.6.4 永别了，美丽的世界<br>2 乱弹<br>  2.1 世纪末的悲哀<br>    2.1.1 病就在于世纪末，病就在于世纪末的悲哀，那是衷心不可救药的无穷无尽的悲哀<br>  2.2 画狗罢<br>    2.2.1 与其绘鬼，不如画狗<br>  2.3 哑巴文学<br>    2.3.1 朗诵运动，听得懂的新文学<br>  2.4 一种云<br>    2.4.1 从春天到夏天，从秋天到冬天，这样一年年过去，淫虐的雨，凄厉的风和肃杀的霜雪更番地来去，一点儿光明也没有。这都是云在作祟<br>    2.4.2 难怪总是漫漫长夜了！ 什么时候才黎明呢？<br>  2.5 非洲鬼话<br>  2.6 狗样的英雄<br>  2.7 猫样的诗人<br>  2.8 堂吉诃德时代<br>    2.8.1 中国的《水浒》是一部名贵的文学典籍。模仿的有一万部<br>    2.8.2 英雄所侍候的主人，充其量只是一个青天大老爷，英雄本身又会高明到什么地方去呢？<br>  2.9 苦力的翻译<br>    2.9.1 讽刺违心翻译<br>  2.10 水陆道场<br>    2.10.1 他们爱呢？又要害羞 思想，也要赶走。 出卖着自己的自由， 对着偶像磕头； 讨那一点儿钱， 还带一根锁链。<br>  2.11 财神还是反财神？<br>    2.11.1 财神的神通<br>    2.11.2 狗道主义<br>    2.11.3 红萝卜<br>    2.11.4 ‘‘忏悔“<br>    2.11.5 反财神<br>    2.11.6 小白龙<br>  2.12 《流铁》在巴黎<br>  2.13 谈谈《三人行》<br>3 散论<br>  3.1 《鲁迅杂感选集》序言<br>  3.2 猪八戒<br>  3.3 美国的真正悲剧<br>  3.4 萧伯纳并非西洋唐伯虎<br>  3.5 慈善家的妈妈<br>  3.6 鬼脸的辩护<br>  3.7 王道诗话<br>  3.8 关于女人<br>  3.9 真假堂吉诃德<br>  3.10 透底<br>  3.11 中国文与中国人<br>  3.12 关于高尔基的书<br>  3.13 ”非政治化“的高尔基<br>  3.14 “美“<br>  3.15 最艺术的国家<br>  3.16 人才易得<br>  3.17 择吉<br>  3.18 《子夜》和国货年<br>  3.19 ”打倒帝国主义“的古典</p>
+</blockquote>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-每周一书/【读书笔记】《Android开发艺术探索》"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《Android开发艺术探索》/">【读书笔记】《Android开发艺术探索》</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/13/每周一书/【读书笔记】《Android开发艺术探索》/" class="article-date">
+	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a><a class="article-category-link" href="/categories/阅读/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>这本书对初学者来说还是比较有深度的，知识覆盖面也比较广<br>虽然可能讲解的重点不一定都是你想看到的，但是对于安卓开发进阶来说是一本不错的总体概览书籍，能够get到一些实用的技能点</p>
+</blockquote>
+<p>前后用了一个星期的时间来看，总体来说比较有参考价值的，阅读起来也没有太大难度</p>
+<blockquote>
+</blockquote>
+<p>评价：<strong>三星半</strong></p>
+<hr>
+<p>#链接、图片、笔记文本<br>下面是印象笔记公开链接、XMind思维导图图片与文字</p>
+<p><a href="https://www.evernote.com/l/ARsAb8sBsXJAHYReK_yz0I2z-lNkfmqgi9I" target="_blank" rel="noopener">EverNote链接</a></p>
+<p>图片：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7a4017224b211621.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Android开发艺术.png"></p>
+<p>文字：</p>
+<p>Android 开发艺术探索<br>1 1 Activity生命周期和启动模式<br>  1.1 生命周期<br>    1.1.1 典型周期<br>        1.1.1.1 onStart<br>                1.1.1.1.1 Activity已经可见，但是没有出现在前台<br>        1.1.1.2 onResume<br>                1.1.1.2.1 Activity可见，出现在前台并且开始活动<br>        1.1.1.3 onPause<br>                1.1.1.3.1 可以做一些存储数据、停止动画等工作，但是不能太耗时<br>        1.1.1.4 onStop<br>                1.1.1.4.1 可以做一些重量级工作，但也不能太耗时<br>                1.1.1.4.2 如果新Activity采用了透明主题，那么当前Activity不会回调onStop<br>        1.1.1.5 从Activity A切换到Activity B<br>                1.1.1.5.1 A先执行onPause，B再执行onCreate-onStart-onResume，最后才是A执行onStop<br>    1.1.2 异常周期<br>        1.1.2.1 被系统回收<br>        1.1.2.2 当Activity并不是由我主动点击back键而丧失焦点时，onSaveInstanceState方法就一定会调用<br>                1.1.2.2.1 google工程师们对onSaveInstanceState如此设计就是让其完成对一些临时的、非永久数据存储并进行恢复<br>                1.1.2.2.2 Android的View本身自己就实现了onSaveInstanceState方法，这些控件自己就具有保存临时数据和恢复临时数据的能力<br>                1.1.2.2.2.1 值得一提的是，只有当你给这个wiget在xml中指定id时，它才具有保存数据并且恢复的能力，并且不同的wiget还不能共用这个id，否则会出现数据覆盖的情况。<br>                1.1.2.2.3 onRestoreInstanceState一旦被调用，其参数Bundle savedInstanceState一定是有值的<br>        1.1.2.3 资源不足导致低优先级的Activity被杀死<br>        1.1.2.4 Configuration改变导致的销毁重建<br>                1.1.2.4.1 通过configChanges配置<br>  1.2 启动模式<br>    1.2.1 Activity的LaunchMode<br>        1.2.1.1 standard<br>                1.2.1.1.1 这种模式的Activity默认会进入启动它的Activity所属的任务栈中，但诸如ApplicationContext等Context并没有所谓的任务栈，需要在启动时添加FLAG_ACTIVITY_NEW_TASK，这样启动时就会为它创建一个新的任务栈，此时其实是以singleTask模式启动的<br>        1.2.1.2 singleTop<br>        1.2.1.3 singleTask<br>                1.2.1.3.1 taskAffinity属性，配合singleTask使用，指定Activity运行的任务栈名，是一个字符串，Activity默认的栈名是Application的包名<br>                1.2.1.3.2 singleTask模式的Activity切换到栈顶会导致在它之上的栈内的Activity出栈<br>        1.2.1.4 singleInstance<br>    1.2.2 Activity的Flags<br>        1.2.2.1 FLAG_ACTIVITY_NEW_TASK<br>        1.2.2.2 FLAG_ACTIVITY_SINGLE_TOP<br>        1.2.2.3 FLAG_ACTIVITY_CLEAR_TOP<br>                1.2.2.3.1 带此标记位启动Activity，启动它时，在同一栈中所有位于它上面的Activity都要出栈<br>                1.2.2.3.2 一般会和singleTask启动模式一起出现，如果Activity已经创建，则调用onNewIntent<br>        1.2.2.4 FLAG_ACTIVITY_EXCLUDE_FROME_RECENTS<br>                1.2.2.4.1 相当于xml中声明 android:exludeFromRecents=”true”<br>                1.2.2.4.2 Activity不会出现在历史Activity列表中<br>    1.2.3 IntentFilter匹配规则<br>        1.2.3.1 为了匹配过滤列表，需要同时匹配过滤列表中的action、category、data信息，否则匹配失败。只有一个Intent同时匹配action、category、data才算完全匹配，只有完全匹配才能启动目标Activity。<br>        1.2.3.2 一个Activity中可以有多个intent-filter，一个Intent只要能匹配任何一组intent-filter即可成功启动对应的Activity<br>        1.2.3.3 具体细则<br>                1.2.3.3.1 action匹配规则<br>                1.2.3.3.1.1 字符必须完全相同，一个过滤规则中可以有多个action，只要Intent的action能够与其中任意一个相同即可匹配成功<br>                1.2.3.3.1.2 必须含有action项，可以有多个，只要其中一项能在intent-filter中找到匹配项就行<br>                1.2.3.3.2 category匹配规则<br>                1.2.3.3.2.1 可以没有，如果有，则必须全部被包含在intent-filter中<br>                1.2.3.3.2.2 startActivity时默认含有android.intent.category.DEFAULT这个category<br>                1.2.3.3.3 data匹配规则<br>                1.2.3.3.3.1 与action类似<br>                1.2.3.3.3.2 由两部分组成 mimeType和URI<br>                1.2.3.3.3.2.1 URI<br>                1.2.3.3.3.2.1.1 <scheme>://<host>:<port>/[<path></path>][<pathprefix>][<pathpattern>]<br>                1.2.3.3.3.3 如果为intent指定完整的data，必须调用setDataAndType，不能先setData再setType，因为这两个方法彼此会清楚对方的值<br>2 2. IPC机制<br>  2.1 简介<br>    2.1.1 缩写： Inter-Process Communication 进程间通信或者跨进程通信<br>    2.1.2 进程与线程<br>        2.1.2.1 线程是CPU调度的最小单元，线程是一种有限的系统资源<br>        2.1.2.2 进程一般指一个执行单元，在PC或移动设备上指一个程序或者一个应用。<br>        2.1.2.3 一个进程中可以只有一个线程，即主线程；在Android里的主线程也叫UI线程，由此引出ANR，线程<br>    2.1.3 不是Android独有，Linux上可以通过命名管道、共享内存、信号量等来进行进程间通信。<br>    2.1.4 Android中最有特色的进程间通信方式就是Binder，也支持socket<br>  2.2 Android中的多进程模式<br>    2.2.1 使用多进程的方法：在AndroidMenifest中指定android:process属性<br>        2.2.1.1 以“：”开头的进程属于当前进程的私有进程，否则为全局进程，其他应用通过ShareUID方式可以和它运行在同一进程中<br>    2.2.2 数据共享的问题<br>    2.2.3 引发的问题<br>        2.2.3.1 静态成员和单例模式完全失败<br>                2.2.3.1.1 运行在不同进程中的四大组件，想通过内存来共享数据都会失败<br>        2.2.3.2 线程同步机制完全失效<br>        2.2.3.3 SharedPreference可靠性下降<br>        2.2.3.4 Application会多次创建<br>  2.3 基础概念<br>    2.3.1 Serializable接口<br>        2.3.1.1 是Java的一个序列化接口，只需在类中声明serialVersionUID标识即可自动实现默认序列化过程<br>                2.3.1.1.1 标识用以辅助序列化与反序列化过程，反序列化时会检查和当前类是否一致（可能类被修改了，如添加了成员）<br>        2.3.1.2 Serializable使用简单，但是含有大量IO操作，开销大<br>    2.3.2 Parcelable<br>        2.3.2.1 只要实现这个接口，一个类的对象就可以实现序列化，并且可以通过Intent和Binder传递<br>        2.3.2.2 系统已经为我们提供了许多实现了Parcelable接口的类，如Intent、Bundle、Bitmap，同时List和Map也可以序列化<br>        2.3.2.3 Parcelable稍显麻烦，但是效率很高<br>    2.3.3 Binder<br>        2.3.3.1 Android特有，可以理解为虚拟的物理设备<br>        2.3.3.2 应用层来说，是客户端和服务端进行通信的媒介<br>        2.3.3.3 主要用在Service中，包括AIDL和Messenger<br>        2.3.3.4 手动实现Binder的步骤<br>                2.3.3.4.1 声明一个AIDL接口，只需继承IInterface（只有一个asBinder方法）<br>                2.3.3.4.2 实现Stub类和Stub类中的Proxy代理类<br>        2.3.3.5 linkToDeath与unlinkToDeath<br>  2.4 Android中的IPC<br>    2.4.1 方式<br>        2.4.1.1 Intent中添加extras<br>        2.4.1.2 Binder跨进程通信<br>        2.4.1.3 ContentProvider支持跨进程<br>        2.4.1.4 网络通信，如socket<br>        2.4.1.5 文件共享<br>                2.4.1.5.1 并发问题<br>                2.4.1.5.2 SharedPreference虽然本质也也是文件，但系统对它的读写有一定的缓存策略，所以不在进程间通信时使用<br>    2.4.2 使用Messenger<br>        2.4.2.1 一种轻量级的IPC方案，底层实现是AIDL<br>        2.4.2.2 使用方法简单，它对AIDL做了封装<br>        2.4.2.3 由于一次处理一个请求，因此在服务端我们不用考虑线程同步的问题（服务端不存在并发执行的情况）<br>        2.4.2.4 实现步骤<br>                2.4.2.4.1 服务端进程<br>                2.4.2.4.2 客户端进程<br>    2.4.3 AIDL<br>        2.4.3.1 服务端<br>                2.4.3.1.1 创建Service<br>                2.4.3.1.2 创建AIDL文件，将暴露给客户端的接口在这个AIDL文件中声明<br>                2.4.3.1.3 在Service中实现这个接口<br>        2.4.3.2 客户端<br>                2.4.3.2.1 绑定服务端Service<br>                2.4.3.2.2 将服务端返回的Binder对象转换成AIDL接口所属的类型<br>                2.4.3.2.3 调用AIDL中的方法<br>        2.4.3.3 AIDL接口的创建<br>                2.4.3.3.1 支持的数据类型<br>                2.4.3.3.1.1 基本数据类型<br>                2.4.3.3.1.2 String CharSequence<br>                2.4.3.3.1.3 ArrayList<br>                2.4.3.3.1.4 HashMap<br>                2.4.3.3.1.5 Parcelable<br>                2.4.3.3.1.6 AIDL<br>    2.4.4 ContentProvider<br>        2.4.4.1 继承ContentProvider，实现六个方法：onCreate、query、update、insert、delete和getType<br>                2.4.4.1.1 onCreate用来创建<br>                2.4.4.1.1.1 在主线程中，不能进行耗时操作<br>                2.4.4.1.2 getType用以返回MIME类型，如果返回null或者 <em>/</em>表示不关注<br>        2.4.4.2 底层看来来像一个SQLite数据库，但其实对底层数据储存没有任何要求，可以使用普通文件，可以采用内存中的一个对象来进行数据存储<br>        2.4.4.3 注册自定义的ContentProvider<br>                2.4.4.3.1 android：authorities是ContentProvider的唯一表示，通过这个属性外部应用就可以访问我们的ContentProvider了，所以必须保证authorities唯一（可以加上包名前缀）<br>    2.4.5 Sockete<br>    2.4.6 Binder连接池<br>        2.4.6.1 可以极大的提高AIDL的开发效率，并且可以避免大量的Service创建<br>3 3. View事件体系<br>  3.1 基础<br>    3.1.1 位置参数<br>        3.1.1.1 left、right、top、bottom<br>        3.1.1.2 3.0之后添加了x、y、translationX、translationY<br>    3.1.2 MotionEvent与TouchSlop<br>    3.1.3 VelocityTracker、GestureDetector、Scroller<br>        3.1.3.1 获取速度前必须先计算速度<br>        3.1.3.2 这里的速度是指一段时间内手指所滑过的像素<br>        3.1.3.3 不需要使用时，需要调用clear方法来重置并回收内存<br>  3.2 View的滑动<br>    3.2.1 scrollTo、scrollBy<br>        3.2.1.1 只能滑动View的内容，并不能滑动View本身<br>    3.2.2 使用动画<br>        3.2.2.1 将fillAfter属性设置为true可以保持动画结束后的view效果（但是view的四个顶点坐标并没有发生变化）<br>    3.2.3 改变布局参数<br>    3.2.4 比较： scrollTo/ScrollBy操作简单，适合对View内容的滑动 动画：操作简单，主要适用于没有交互的View和实现复杂的动画效果 改变布局参数：操作相对复杂，适用于有交互的View<br>    3.2.5 eg：<br>        3.2.5.1 具有跟手滑动效果的View：只需要重写onTouchEvent方法并处理ACTION_MOVE事件，根据两次滑动之间的距离就可以实现它的滑动。为了实现全屏滑动，需要采用动画的方式来实现（原书P134）<br>  3.3 弹性滑动<br>    3.3.1 使用Scroller<br>        3.3.1.1 配合View的computeScroll方法完成，对View没有丝毫的引用，内部也不含有计时器<br>    3.3.2 通过动画，一帧一帧地更新，设置动画的updateListener实现<br>    3.3.3 使用延时策略<br>        3.3.3.1 使用Handler或View的postDelay方法<br>  3.4 View的事件分发机制<br>    3.4.1 传递规则<br>        3.4.1.1 dispatchTouchEvent<br>                3.4.1.1.1 用来进行事件分发<br>        3.4.1.2 onInterceptTouchEvent<br>                3.4.1.2.1 用来判断是否拦截某个事件<br>        3.4.1.3 onTouchEvent<br>                3.4.1.3.1 dispatchTouchEvent中调用，处理点击事件，返回结果表示是否消耗当前事件<br>        3.4.1.4 关系伪代码<br>                3.4.1.4.1 public boolean dispatchTouchEvent(MotionEvent ev){ boolean consume = false; if(onInterceptTouchEvent(ev)){ consume = onTouchEvent(ev); }else{ consume = child.dispatchTouchEvent(ev); } return consume; }<br>        3.4.1.5 结论<br>                3.4.1.5.1 同一个事件序列内的事件不能分别由两个View同时处理（不包含特殊处理）<br>                3.4.1.5.2 某个View一旦决定拦截，那么这一事件序列都只能由它来处理，并且它的onInterceptTouchEvent不会再被调用<br>                3.4.1.5.3 如果View不消耗除ACTION_DOWN以外的其他事件，那么这个点击事件会小时，父元素的onTouchEvent并不会被调用，最终这些消耗的点击事件会传递给Activity处理<br>                3.4.1.5.4 ViewGroup默认不拦截任何事件<br>                3.4.1.5.5 View没有onInterceptTouchEvent方法<br>                3.4.1.5.6 View的onTouchEvent默认都会消耗事件（返回true），除非是不可点击的（clickable和longClickable同时为false）<br>                3.4.1.5.7 View的enable属性不影响onTouchEvent默认返回值。哪怕一个View是disable状态，只要它的clickable或者longclickable有一个为true，那么它的onTouchEvent就返回true<br>4 4. View工作原理<br>  4.1 ViewRoot、DecorView<br>    4.1.1 DecorView作为顶级View，一般会包含一个竖直方向的LinearLayout<br>        4.1.1.1 一个是titlebar，一个是content，这也是setContentView所设置的对象<br>    4.1.2 View层的事件都先经过DecorView，然后才传递给我们的View<br>  4.2 MeasureSpec<br>    4.2.1 一个32位的int值，高2位为SpecMode，低30位代表SpecSize<br>  4.3 View工作流程<br>    4.3.1 主要指measure、layout、draw<br>        4.3.1.1 如何在Activity中获取view的宽高？<br>                4.3.1.1.1 Activity#onWindowFocusChanged<br>                4.3.1.1.2 view.post(runnable)<br>                4.3.1.1.3 ViewTreeObserver<br>                4.3.1.1.4 view.measure(int windthMeasureSpec, int heightMeasureSpec)<br>        4.3.1.2 ViewGroup会逐个measure子view<br>    4.3.2 layout过程<br>        4.3.2.1 通过setFrame去设置子元素的四个顶点位置<br>    4.3.3 draw过程<br>        4.3.3.1 View绘制过程是通过dispatchDraw来实现的，dispatchDraw会遍历调用所有字元素的draw<br>  4.4 自定义View<br>    4.4.1 分类<br>        4.4.1.1 onDraw<br>        4.4.1.2 继承ViewGroup<br>        4.4.1.3 继承特定View<br>        4.4.1.4 继承特定ViewGroup<br>    4.4.2 须知<br>        4.4.2.1 让View支持wrap_content<br>        4.4.2.2 如有必要，让其支持padding<br>                4.4.2.2.1 在onDraw中取padding值，加入绘制参数计算<br>        4.4.2.3 尽量不用Handler<br>        4.4.2.4 View中如果有线程或动画，需要及时停止，View#onDetachFromWindow<br>        4.4.2.5 View带有滑动嵌套时，处理好滑动冲突<br>    4.4.3 xml属性扩展<br>        4.4.3.1 1. values目录下创建xml<br>                4.4.3.1.1 eg： <declare-styleable name="CircleView"> <attr name="circle_color" format="color"> &lt;.declare-syleable&gt;<br>        4.4.3.2 2. 在View的构造方法中解析自定义属性的值并处理<br>                4.4.3.2.1 eg: TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleView); mColor = a.getColor(R.styleable.CircleView_circle_color, Color.RED); a.recycle();<br>        4.4.3.3 3. 在布局文件中使用自定义属性<br>                4.4.3.3.1 s<br>5 5. RemoteViews<br>  5.1 应用<br>    5.1.1 通知栏<br>        5.1.1.1 通过RemoteViews提供的方法来更新视图<br>    5.1.2 桌面小部件<br>        5.1.2.1 定义小部件界面<br>        5.1.2.2 定义配置信息<br>        5.1.2.3 定义实现类<br>        5.1.2.4 在androidManifest中声明小部件<br>    5.1.3 PendingIntent<br>        5.1.3.1 内部的Intent相同，并且requestCode也相同即为相同；其中intent相同只需要ComponentName和intent-filter相同<br>  5.2 内部机制<br>    5.2.1 系统并没有通过binder去支持所有的view操作，仅支持了少量的view（TextView，ImageView等），这是出于效率考虑<br>    5.2.2 提供了一个Action概念，Action实现了Parcelable接口，代表一个View操作；将这些actions放到ArrayList中，统一通过Binder进行通信，提高IPC效率<br>6 6. Drawable<br>  6.1 分类<br>    6.1.1 BitmapDrawable<br>        6.1.1.1 android:antialias 抗锯齿<br>        6.1.1.2 android:dither 抖动效果，开启这个选项可以让高质量的图片在低质量的屏幕上还能保持较好的显示效果<br>        6.1.1.3 android:filter 是否开启过滤效果。当图片尺寸被拉伸或者压缩时，开启过滤效果可以保持较好的显示效果<br>        6.1.1.4 android:tileMode 平铺模式。有 disable|clamp|repeat|mirror几个选项，开启平铺模式之后gravity属性会被忽略<br>    6.1.2 ShapeDrawable<br>        6.1.2.1 可以通过纯色构造，也可以是具有渐变效果的图形<br>        6.1.2.2 android:shape —— rectangle/oval/line/ring<br>                6.1.2.2.1 line 和ring两个选项必须通过stroke标签来指定线的宽度和颜色等信息<br>        6.1.2.3 <corners>表示shape 的四个角度，只使用于矩形shape，这里的角度是指圆角程度，用px表示<br>        6.1.2.4 <gradient> 与solid标签是相互排斥的，其中solid表示纯色填充，而gradient则表示渐变效果<br>    6.1.3 LayerDrawable<br>        6.1.3.1 对应的标签是 <layer-list>,它表示一种层次化的Drawable集合，通过将不同的Drawable放置在不同的层上面从而达到一种叠加后的效果<br>    6.1.4 StateListDrawable<br>        6.1.4.1 对应的标签是<selector>，也是表示Drawable集合，每个Drawable都对应着View的一种状态<br>    6.1.5 LevelListDrawable<br>        6.1.5.1 <level-list>，集合中的每个Drawable都有一个等级的概念（level 0~10000）<br>        6.1.5.2 如果被用来作为ImageView的前景Drawable，那么还可以通过ImageView的setImageLevel方法来切换Drawable<br>    6.1.6 TransitionDrawable<br>        6.1.6.1 <transition>，用于实现两个Drawable之间的淡入淡出效果<br>        6.1.6.2 可以用作View的背景，也可以在ImageView中直接作为Drawable来使用<br>    6.1.7 InsertDrawable<br>        6.1.7.1 <insert>，可以将其他Drawable内嵌到自身当中，当一个View希望自己的背景比自己的实际区域小时可以采用<br>    6.1.8 ScaleDrawable<br>        6.1.8.1 <scale>，<br>    6.1.9 ClipDrawable<br>        6.1.9.1 <clip>，根据自己当前level来裁剪另一个Drawable<br>  6.2 自定义Drawable<br>    6.2.1 通常我们很少自定义Drawable，因为自定义的Drawable无法再xml中使用<br>7 7. 动画<br>  7.1 View动画<br>    7.1.1 四个子类：TranslateAnimation、ScaleAnimation、RotateAnimation、AlphaAnimation<br>        7.1.1.1 可以通过代码设置，也可用XML<br>        7.1.1.2 既可以是单个动画，也可以由一系列动画组成<br>    7.1.2 自定义View动画<br>        7.1.2.1 方式：继承Animation类，重写initialize和applyTransformation方法，在initialize中做一些初始化工作，在applyTransformation中进行相应的矩阵变换即可，很多时候需要采用Camera来简化矩阵变换过程<br>    7.1.3 帧动画<br>        7.1.3.1 AnimationDrawable 顺序播放一组预先定义好的图片，类似于电影播放<br>        7.1.3.2 帧动画使用比较简单，但是比较容易引起OOM，在使用时应尽量避免使用过多尺寸较大的图片<br>  7.2 View动画的特殊使用场景<br>    7.2.1 LayoutAnimation<br>        7.2.1.1 作用于ViewGroup，为ViewGroup指定一个动画，这样当它的子元素出场时都会具有这种动画效果<br>        7.2.1.2 步骤<br>                7.2.1.2.1 定义LayoutAnimation<br>                7.2.1.2.2 为子元素指定具体入场动画<br>                7.2.1.2.3 为ViewGroup指定android:layoutAnimation属性<br>                7.2.1.2.3.1 对ListView来说，这样Listview的item就具有出场动画了<br>                7.2.1.2.3.2 除了xml指定，还可以通过LayoutAnimationController来实现<br>    7.2.2 Activity切换效果<br>  7.3 属性动画<br>    7.3.1 简介： ValueAnimation、ObjectAnimation、AnimatorSet<br>    7.3.2 使用属性动画<br>        7.3.2.1 属性动画从API 11 才有，可以使用nineoldandroids来兼容老版<br>        7.3.2.2 可以利用代码、XML形式实现 一般会采用代码形式<br>    7.3.3 理解插值器和估值器<br>    7.3.4 属性动画的监听器<br>        7.3.4.1 主要接口：AnimatorUpdateListener和AnimatorListener<br>        7.3.4.2 AnimatorUpdateListener比较特殊，它会对整个动画过程进行监听，动画每播放一帧，onAnimationUpdate就会被调用一次<br>    7.3.5 对任意属性做动画<br>        7.3.5.1 我们对object的属性abc做动画，如果想让动画生效，要同时满足两个条件：<br>                7.3.5.1.1 object必须提供setAbc方法，如果动画的时候没有传递初始值，那么还要提供getAbc方法<br>                7.3.5.1.2 object的setAbc对属性abc所做的改变必须能够通过某种方法反映出来，比如带来UI的改变之类<br>        7.3.5.2 如果无法满足条件<br>                7.3.5.2.1 1. 给你的对象加上get和set方法，如果有权限的话<br>                7.3.5.2.2 2. 用一个类来包装原始对象，间接为其提供get和set方法<br>                7.3.5.2.3 3. 采用ValueAnimator，监听动画过程，自己实现属性的改变<br>    7.3.6 工作原理<br>  7.4 使用动画的注意事项<br>    7.4.1 OOM<br>    7.4.2 memory leak<br>        7.4.2.1 无限循环动画需要在Activity退出时及时停止，否则将导致Activity无法释放从而造成内存泄露<br>        7.4.2.2 兼容性问题<br>        7.4.2.3 View动画的问题<br>                7.4.2.3.1 View动画是对View的影像做动画，不不是真正改变View的状态，有时会出现动画完成后View无法隐藏的现象，即setVisiblity(View.GONE)失效了，这时只要调用View.clearAnimation()清除View动画即可解决此问题<br>        7.4.2.4 不要使用px<br>        7.4.2.5 动画元素交互<br>                7.4.2.5.1 新位置将无法触发单击事件<br>        7.4.2.6 硬件加速<br>8 8. Window和WindowManager<br>  8.1 简介<br>    8.1.1 Flags参数、Type参数<br>    8.1.2 windowManger提供三个常用方法：添加view、更新View、删除View<br>  8.2 Window的内部机制<br>    8.2.1 Window添加<br>        8.2.1.1 使用到了桥接模式，内部使用WindowManagerGlobal统一委托实现<br>        8.2.1.2 添加过程其实是一次IPC调用，binder模式<br>    8.2.2 Window删除<br>    8.2.3 Window 更新<br>  8.3 Window的创建过程<br>    8.3.1 Activity的Window创建<br>        8.3.1.1 Window对象的创建是通过PolicyManager的makeNewWindow实现的<br>                8.3.1.1.1 Window的具体实现类是PhoneWindow<br>        8.3.1.2 步骤<br>                8.3.1.2.1 如果没有DecorView，创建它<br>                8.3.1.2.2 将View添加到DecorView的mContentParent中<br>                8.3.1.2.3 回调Activity的onContentChanged方法通知Activity视图已经发生改变<br>    8.3.2 Dialog的Window创建<br>        8.3.2.1 创建Window<br>        8.3.2.2 初始化DecorView并将Dialog视图添加到DecorView中<br>        8.3.2.3 将DecorView添加到Window中并显示<br>                8.3.2.3.1 Dialog的context必须使用Activity的，不能使用Application的context；一定要使用的话可以设定Window类型，声明alert权限（见书本P310）<br>    8.3.3 Toast的Window创建<br>9 9. 四大组件工作过程<br>  9.1 运行状态<br>    9.1.1 除BroadcastReceiver外，其他三个都要在Manifest中注册<br>  9.2 Activity的工作过程<br>    9.2.1 performLauncherActivity最终完成Activity对象的创建和启动过程，并且ActivityThread通过handleResumeActivity方法来调用被启动的Activity<br>        9.2.1.1 1. 从ActivityClientRecord中获取待启动的Activity组件信息<br>        9.2.1.2 2. 通过instrumentation的newActivity方法使用类加载器创建Activity对象<br>        9.2.1.3 3. 通过LoadedApk的makeApplication方法来尝试创建Application对象<br>        9.2.1.4 4. 创建ContextImpl对象并通过Activity的attach方法来完成一些重要数据的初始化<br>        9.2.1.5 5. 调用Activity的onCreate方法<br>  9.3 Service工作过程<br>    9.3.1 分类<br>        9.3.1.1 启动状态，用于执行后台计算任务<br>        9.3.1.2 绑定状态，用户其它组件和Service交互<br>    9.3.2 启动过程<br>        9.3.2.1 利用ActivityManagerService<br>    9.3.3 绑定过程<br>        9.3.3.1 当多次绑定同一个Service时，onBind方法只会执行一次，除非Service被终止<br>  9.4 BroadcastReceiver工作过程<br>    9.4.1 注册<br>    9.4.2 发送接受<br>  9.5 ContentProvider<br>    9.5.1 onCreate要先于Application的onCreate执行，这在四大组件中是比较少见的现象<br>    9.5.2 步骤<br>        9.5.2.1 1. 创建ContextImpl和Instrumentation<br>        9.5.2.2 2. 创建Application<br>        9.5.2.3 3. 启动当前进程的ContentProvider并调用其onCreate方法<br>        9.5.2.4 4. 调用Application的onCreate方法<br>10 10. Android消息机制<br>  10.1 概述<br>    10.1.1 MessageQueue内部是单链表<br>    10.1.2 Handler创建时会采用当前线程的Looper来构建内部消息循环系统<br>  10.2 消息机制分析<br>    10.2.1 ThreadLocal<br>        10.2.1.1 是一个线程内部的数据存储类，通过它可以在指定的线程中存储数据，数据存储后只有在指定线程中可以获取到数据<br>        10.2.1.2 若数据以线程为作用域且不同线程具有不同的数据副本时，可以考虑采用ThreadLocal<br>        10.2.1.3 另一个使用场景是复杂逻辑下的对象传递<br>        10.2.1.4 实现原理<br>                10.2.1.4.1 set方法： public void set(T value){ Thread currentThread = Thread.currentThread(); Values values = values(currentThread); if(values == null) values = initializeValues(currentThread); values.put(this, value); }<br>    10.2.2 MessageQueue<br>        10.2.2.1 插入和读取，数据结构为单链表<br>        10.2.2.2 读取操作中的next实质上是无限循环<br>    10.2.3 Looper<br>        10.2.3.1 退出：quit、quitSately quit——直接退出Looper； quitSafely——把消息队列中的已有消息处理完毕后才安全退出<br>        10.2.3.2 在子线程中，如果手动为其创建了Looper，那么在所有事情完成后应该调用quit方法来终止Looper，否则这个子线程就会一直处于等待状态<br>    10.2.4 Handler工作原理<br>  10.3 主线程的消息循环<br>    10.3.1 Android的主线程就是ActivityThread<br>11 11. Android线程和线程池<br>  11.1 概述<br>    11.1.1 AsyncTask底部用到了线程池和Handler<br>    11.1.2 IntentService和HandlerThread则是直接使用了线程<br>    11.1.3 IntentService内部采用HandlerThread来执行任务，当任务执行完毕后IntentService会自动退出；IntentService作用很想一个后台线程，但是IntentService是一种服务，它不容易被系统杀死从而可以尽量保证任务的执行，直接使用后台线程的话，则很容易被系统杀死；<br>    11.1.4 HandlerThread是一种具有消息循环的线程<br>  11.2 主线程和子线程<br>    11.2.1 主：进程所拥有的线程<br>    11.2.2 子：执行耗时任务<br>  11.3 线程形态<br>    11.3.1 AsyncTask<br>        11.3.1.1 封装了Thread和Handler，但不适合特别耗时的任务<br>        11.3.1.2 泛型参数：Params、Progress、Result<br>        11.3.1.3 核心方法<br>                11.3.1.3.1 onPreExecute()<br>                11.3.1.3.2 doInBackground(Params… params)<br>                11.3.1.3.3 onProgressUpdate(Progress…values)<br>                11.3.1.3.4 onPostExecute(Result result)<br>        11.3.1.4 限制<br>                11.3.1.4.1 必须在主线程中加载<br>                11.3.1.4.2 对象必须在主线程中创建<br>                11.3.1.4.3 execute必行在UI线程调用<br>                11.3.1.4.4 不直接调用核心方法<br>                11.3.1.4.5 兵行、串行的来回改版<br>        11.3.1.5 工作原理<br>                11.3.1.5.1 串行线程池<br>                11.3.1.5.2 Handler切换线程，要求Handler来自主线程<br>    11.3.2 HandlerThread<br>        11.3.2.1 run中通过Looper.prepare()来创建消息队列，并通过Looper.loop()来开启消息循环<br>        11.3.2.2 由于其run方法是一个无限循环，因此当明确不需要再使用HandlerThread时可以通过quit或者quitSafely来终止线程执行<br>    11.3.3 IntentService<br>        11.3.3.1 抽象类，必须建立它的子类才能使用<br>        11.3.3.2 可以执行后台耗时任务，执行完成后自动停止<br>  11.4 线程池<br>    11.4.1 ThreadPoolExecutor<br>        11.4.1.1 参数<br>                11.4.1.1.1 corePoolSize<br>                11.4.1.1.2 maximumPoolSize<br>                11.4.1.1.3 keepAliveTime<br>                11.4.1.1.4 unit<br>                11.4.1.1.5 workQueue<br>                11.4.1.1.6 threadFactory<br>                11.4.1.1.7 RejectedExecutionHandler handler<br>    11.4.2 分类<br>        11.4.2.1 FixedThreadPool<br>        11.4.2.2 CachedThreadPool<br>        11.4.2.3 ScheduledThreadPool<br>        11.4.2.4 SingleThreadExecutor<br>12 12. Bitmap的加载和Cache<br>  12.1 高效加载<br>    12.1.1 使用BitmapFactory.Options来加载所需尺寸的图片<br>        12.1.1.1 使用inSampleSize设置采样率<br>        12.1.1.2 如何获取采样率<br>                12.1.1.2.1 1. 将inJustDecodeBounds 参数设为true并加载图片<br>                12.1.1.2.2 2. 取出图片原始宽高信息，对应于outWidth和outHeight<br>                12.1.1.2.3 3. 根据采样率规则并结合目标View所需大小计算出采样率inSampleSize<br>                12.1.1.2.4 4. 将inJustDecodeBounds参数设为false，然后重新加载图片<br>  12.2 缓存策略<br>    12.2.1 常用LRU算法：Least Recently Used<br>        12.2.1.1 LruCache实现内存缓存，DiskLruCache充当存储设备缓存<br>    12.2.2 LruCache<br>        12.2.2.1 使用support-v4包中的LruCache兼容性更好<br>        12.2.2.2 是线程安全的<br>        12.2.2.3 引用的几种类别<br>                12.2.2.3.1 强引用<br>                12.2.2.3.2 软引用<br>                12.2.2.3.2.1 内存不足时会被gc<br>                12.2.2.3.3 弱引用<br>    12.2.3 DiskLruCache<br>        12.2.3.1 创建<br>        12.2.3.2 添加<br>        12.2.3.3 查找<br>    12.2.4 ImageLoader的实现<br>13 13. 综合技术<br>  13.1 使用CrashHandler来获取应用信息<br>    13.1.1 UncaughtExceptionHandler处理crash——记录、上报、用户提醒<br>    13.1.2 使用方法<br>        13.1.2.1 在Application初始化时为线程设置CrashHandler<br>  13.2 multiDex解决方法数越界<br>    13.2.1 1. 在build.gradle中添加multidex配置<br>    13.2.2 2. 在代码中支持multidex功能<br>        13.2.2.1 一、 在manifest中指定Application 为MultiDexApplication<br>        13.2.2.2 二、 让应用继承自MultiDexApplication<br>        13.2.2.3 三、 重写 application中的attachBaseContext方法（因为这个方法在onCreate之前执行）<br>    13.2.3 3. 指定主dex文件所要包含的类——可以通过– main-dex-list指定<br>        13.2.3.1 在build.gradle文件中添加afterEvaluate区域（见书P460）<br>  13.3 动态加载技术<br>  13.4 反编译<br>14 14. JNI和NDK<br>15 15. Android性能优化<br>  15.1 性能优化方法<br>    15.1.1 布局优化<br>        15.1.1.1 include标签<br>        15.1.1.2 merge标签<br>        15.1.1.3 ViewStub<br>                15.1.1.3.1 使用时才加载<br>                15.1.1.3.2 暂时不支持merge<br>    15.1.2 绘制优化<br>        15.1.2.1 onDraw要避免执行大量操作<br>    15.1.3 内存泄露优化<br>        15.1.3.1 静态变量导致<br>        15.1.3.2 单例导致<br>        15.1.3.3 属性动画导致<br>    15.1.4 响应速度优化和ANR日志分析<br>        15.1.4.1 进程ANR会在/data/anr目录下创建traces.txt记录<br>    15.1.5 ListView和Bitmap优化<br>        15.1.5.1 避免getView中耗时<br>        15.1.5.2 根据滑动状态来控制任务执行频率<br>        15.1.5.3 BitmapFactory.Options进行采样<br>    15.1.6 线程优化<br>        15.1.6.1 线程池<br>    15.1.7 建议<br>        15.1.7.1 避免过多对象<br>        15.1.7.2 不要过多使用enum<br>        15.1.7.3 const使用static final修饰<br>        15.1.7.4 使用Android特有的数据结构，如SparseArray和Pair，它们都具有更好的性能<br>        15.1.7.5 适当使用软引用和弱引用<br>        15.1.7.6 采用内存缓存和磁盘缓存<br>        15.1.7.7 尽量采用静态内部类，可以避免潜在的由于内部类而导致的内存泄露</clip></scale></insert></transition></level-list></selector></layer-list></gradient></corners></attr></declare-styleable></pathpattern></pathprefix></port></host></scheme></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
 
     </footer>
   </div>
@@ -649,7 +649,7 @@
 
 
   
-    <article id="post-每周一书/【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-每周一书/【读书笔记】深入理解Android内核设计思想"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -657,7 +657,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock/">【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock</a>
+      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】深入理解Android内核设计思想/">【读书笔记】深入理解Android内核设计思想</a>
     </h1>
   
 
@@ -665,39 +665,31 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/每周一书/【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock/" class="article-date">
+	<a href="/2017/08/13/每周一书/【读书笔记】深入理解Android内核设计思想/" class="article-date">
 	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+    <a class="article-category-link" href="/categories/阅读/">阅读</a><a class="article-category-link" href="/categories/阅读/技术/">技术</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>“谷歌如何超越苹果、微软、亚马逊等公司，成为世界顶尖人才心目中的最佳雇主？<br>谷歌如何培养人才、留住人才，最大限度地发掘人的创造力？”</p>
+<p>这本书太深了，不适合略读，可以在碰到相关问题时仔细研读，知识覆盖面较广</p>
 </blockquote>
+<p>这么多大块的时间来一条条钻研这些内核实现细节其实不如学习算法来的有用，毕竟一个是形式，一个是内功</p>
 <blockquote>
-<p>本书主要谈论：谷歌的人力资源管理，谷歌的招聘</p>
 </blockquote>
-<blockquote>
-<p>虽说谷歌受到的过度关注让它成为光环效应的最好示例，但书中的很多故事都是值得一读的</p>
-</blockquote>
-<blockquote>
-<p>本书实质上是很多实验的总结，从中可以看出谷歌的规章制度都是一点一点尝试、学习、改进不断循环的过程<br>但也不能忘记“盛名之下其实难副”，书中的很多观点或许并不准确</p>
-</blockquote>
-<blockquote>
-<p>书中的很多想法都对管理者或者公司的资源丰富度要求很高，可以参考借鉴的地方还是有一些</p>
-</blockquote>
-<p><a href="https://www.amazon.cn/gp/product/B0151H9SZY/ref=oh_aui_search_detailpage?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接</a></p>
+<p>留待查阅</p>
 <hr>
-<p><a href="https://www.evernote.com/l/ARvFNXR8105IyYuow1VvarE9_1iS-6rI400" target="_blank" rel="noopener">印象笔记链接</a></p>
-<p>部分笔记图片：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-3d6811d6b5e1b02d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="重新定义团队 overview.png"></p>
-<p>笔记文本：</p>
-<p>《重新定义团队 谷歌如何工作》Laszlo Bock<br>1 十、 不公平薪酬<br>  1.1 以成就为荣，不以报酬为荣<br>    1.1.1 金钱带来的喜悦转瞬即逝，但是美好的记忆却永远保持<br>  1.2 创造易于传播爱的环境<br>  1.3 精心筹划却遭受失败的同样要奖励<br>  1.4 信念的飞跃<br>    1.4.1 如果你的目标足够有野心，足够疯狂，即使失败了也能有相当不错的成就<br>2 十一、 世界上最好的东西是免费的<br>  2.1 提高职业和个人生活的效率<br>  2.2 一个关联谷歌及周边的社区<br>  2.3 推动创新<br>  2.4 想办法说好<br>  2.5 员工最需要你的时候，请伸出援手<br>3 十二、 助推<br>  3.1 利用助推帮助员工变得更明智<br>  3.2 更富有<br>    3.2.1 激励储蓄<br>  3.3 更健康<br>  3.4 精心设计，用心设计<br>4 十三、 谷歌的教训<br>  4.1 透明的代价<br>  4.2 摒弃应得权利<br>  4.3 一次失败的绩效管理变革<br>  4.4 珍视怪人<br>  4.5 有的放矢<br>    4.5.1 创新因创造力和实验而蓬勃发展，但同时也需要细心地修剪<br>5 十四、 从明天起你可以做些什么<br>  5.1 赋予工作意义<br>  5.2 相信员工<br>  5.3 只聘用比你更优秀的人<br>  5.4 不要将职业发展与管理绩效混为一谈<br>  5.5 关注团队的两端<br>  5.6 既要节俭，又要慷慨<br>  5.7 不公平薪酬<br>  5.8 助推<br>  5.9 管理日益提升的期望<br>  5.10 享受</p>
+<p><a href="https://www.evernote.com/l/ARvkJbs0vmxOJZn5WVExzJGV7jJHClXEVtY" target="_blank" rel="noopener">印象笔记链接（附带XMind文件）</a></p>
+<p>图片：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-228b08c1632f933b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="深入理解Android 内核设计思想 overview.png"></p>
+<hr>
+<p>#笔记文字</p>
+<p>深入理解Android内核思想<br>1 4 操作系统基础<br>  1.1 4.3 进程间通信的经典实现<br>    1.1.1 共享内存<br>    1.1.2 管道pipe<br>        1.1.2.1 管道是单向的<br>        1.1.2.2 有容量限制<br>    1.1.3 Unix domain socket<br>        1.1.3.1 专门针对单机的进程间通信，并不依赖Network socket 的那些TCP/IP协议<br>        1.1.3.2 Android上使用最多的一种IPC机制是Binder，其次就是UDS<br>    1.1.4 RPC（Remote Procedure Calls）<br>  1.2 4.4 同步机制的经典实现<br>    1.2.1 定义<br>        1.2.1.1 如果多个进程间存在时序关系，需要协同工作以完成一项任务，则称为同步<br>        1.2.1.2 如果它们并不满足协同条件，而只是因为共享具有排他性资源时所产生的关系，称为互斥<br>    1.2.2 信号量（Semaphore）<br>        1.2.2.1 信号量与PV原语操作 是使用最广泛的互斥方法之一<br>        1.2.2.2 PV原语都属于原子操作（Atomic Operations）<br>    1.2.3 Mutex（Mutual Exclusion）<br>    1.2.4 管程（Monitor）<br>        1.2.4.1 对Semaphore机制的延伸和改善，是一种控制更为简单的同步手段<br>        1.2.4.2 管程中的方法都是受Mutex保护的，意味着同一时刻只允许有一个访问者使用它们<br>  1.3 4.5 Android中的同步机制<br>    1.3.1 Mutex<br>    1.3.2 Condition<br>    1.3.3 Barrier<br>        1.3.3.1 Barrier是填充了具体条件的Condition<br>        1.3.3.2 专门为SurfaceFlinger而设计<br>  1.4 4.6 操作系统内存管理基础<br>    1.4.1 核心点：虚拟内存、内存分配与回收、内存保护<br>    1.4.2 虚拟内存<br>        1.4.2.1 地址空间<br>                1.4.2.1.1 逻辑地址，也称相对地址，是程序编译后所产生的地址<br>                1.4.2.1.1.1 组成部分： Segment Selector + Offset<br>                1.4.2.1.2 线性地址<br>                1.4.2.1.3 物理地址<br>    1.4.3 内存保护<br>    1.4.4 内存分配与内存回收<br>    1.4.5 进程间通信mmap<br>  1.5 4-7 Android中的Low Memory Killer<br>    1.5.1 OOMKiller<br>    1.5.2 策略考虑因素<br>        1.5.2.1 进程消耗的内存<br>        1.5.2.2 进程占用的CPU时间<br>        1.5.2.3 oom_adj（OOM权重）<br>    1.5.3 自己改变oom_adj？<br>        1.5.3.1 1 写文件 ： /proc/<pid>/oom_adj<br>        1.5.3.2 2 android:persistent 添加到application标签中，设置应用为常驻内存<br>  1.6 4-8 Android 匿名共享内存<br>    1.6.1 Anonymous Shared Memory<br>    1.6.2 Ashmem 设备<br>        1.6.2.1 创建时机<br>        1.6.2.2 操作函数及实现原理<br>        1.6.2.3 Linux 共享机制的区别与联系<br>    1.6.3 Ashmem应用实例<br>  1.7 4-9 JNI<br>2 5 Android 进程/线程管理<br>  2.1 5.1 Android进程和线程<br>    2.1.1 Activity启动后，除了主线程 ActivityThread之外还需要两个Binder线程<br>    2.1.2 Service与Activity一样，也寄存于ActivityThread之中，并且启动流程和Activity基本一致<br>    2.1.3 启动Service时，同样也需要两个Binder线程支持<br>    2.1.4 对于同一个AndroidManifest.xml中定义的四大组件，除非有特别声明，否则它们都运行于同一个进程中<br>    2.1.5 Android提供了特殊的方式让不是同一个包里的组件也可以运行于相同的进程中，优势是可以方便地进行资源共享<br>        2.1.5.1 针对个别组件，可以在标签中加入android:process<br>        2.1.5.2 针对整个包，直接在<application>标签中加入android:process属性来指明<br>  2.2 5.2 Handler， MessageQueue Runnable， Looper<br>    2.2.1 Handler<br>        2.2.1.1 功能：处理Message、将Message压入MessageQueue<br>        2.2.1.2 函数<br>                2.2.1.2.1 post<br>                2.2.1.2.1.1 post<br>                2.2.1.2.1.2 postAtTime<br>                2.2.1.2.1.3 postDelay<br>                2.2.1.2.2 send<br>                2.2.1.2.2.1 sendEmptyMessage<br>                2.2.1.2.2.2 sendMessageAtFrontOfQueue<br>                2.2.1.2.2.3 sendMessageAtTime<br>                2.2.1.2.2.4 sendMessageDelay<br>    2.2.2 MessageQueue<br>    2.2.3 Looper<br>        2.2.3.1 分为两种：主线程、普通线程<br>        2.2.3.2 ThreadLocal 成员变量<br>  2.3 5.3 UI主线程——ActivityThread<br>    2.3.1 prepareMainLooper<br>        2.3.1.1 prepare<br>        2.3.1.2 不允许退出<br>    2.3.2 sMainThreadHandler<br>        2.3.2.1 创建处理消息环境<br>        2.3.2.2 循环处理消息<br>  2.4 5.4 Thread类<br>    2.4.1 内部原理<br>        2.4.1.1 implements Runnable<br>        2.4.1.2 state<br>                2.4.1.2.1 NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, TERMINATED<br>    2.4.2 休眠和唤醒<br>        2.4.2.1 相关方法：wait,notify,notifyAll, interrupt,join, sleep<br>        2.4.2.2 wait和notify/notifyAll<br>        2.4.2.3 interrupt<br>        2.4.2.4 join<br>                2.4.2.4.1 保证两个线程顺序执行<br>                2.4.2.4.2 带时间参数的join，保证在规定时间没有执行完前面的线程，也会继续执行后面的语句，防止无限等待<br>        2.4.2.5 sleep<br>                2.4.2.5.1 wait等待某个object<br>                2.4.2.5.2 sleep则是等待时间<br>3 6. 进程间通信——Binder<br>  3.1 组成<br>    3.1.1 Binder驱动<br>    3.1.2 Service Manager<br>        3.1.2.1 在Binder通信中的唯一标志永远都是0<br>    3.1.3 Binder Client<br>    3.1.4 Binder Server<br>  3.2 智能指针<br>    3.2.1 引用计数器，由object自身持有<br>    3.2.2 强指针SP<br>    3.2.3 弱指针WP，主要使命是解决循环引用的问题<br>        3.2.3.1 弱指针必须升级为强指针才能访问它所指向的对象<br>  3.3 进程间的数据传递载体——Parcel<br>  3.4 Binder 驱动协议<br>  3.5 ServiceManager[Binder Server]<br>    3.5.1 类似“DNS”服务器<br>  3.6 Binder Client<br>  3.7 Android接口描述语言AIDL<br>  3.8 匿名Binder Server<br>4 7. Android启动过程简析<br>  4.1 第一个系统进程 init<br>  4.2 系统关键服务的启动简析<br>5 8. 管理Activity和组件运行状态的系统进程 Activity Manager Service（AMS）<br>  5.1 AMS功能概述<br>    5.1.1 寄存于SystemServer中。会在系统启动时创建一个线程来循环处理客户请求<br>  5.2 ActivityStack<br>    5.2.1 ActivityState<br>    5.2.2 ArrayList<br>    5.2.3 记录特殊状态下的Activity<br>  5.3 startActivity流程<br>  5.4 ActivityTask<br>    5.4.1 android:taskAffinity<br>        5.4.1.1 当启动Activity的Intent中带有FLAG_ACTIVITY_NEW_TASK标志时<br>                5.4.1.1.1 表示它希望为activity新开一个task， 如果有task的affinity与新Activity的affinity一样，则会复用此task，否则，新建task<br>        5.4.1.2 当Activity中的allowTaskReParenting属性设置为true时<br>                5.4.1.2.1 Activity具有动态转移能力<br>    5.4.2 android:alwaysRetainTaskState<br>6 9. GUI系统之SurfaceFlinger<br>7 11. View体系<br>  7.1 应用程序中的View框架<br>    7.1.1 ViewRoot是View的管理者，ViewRoot的核心任务就是与WindowManagerService进行通信<br>    7.1.2 Activity内部有一个mWindow成员变量<br>    7.1.3 Window与WindowManagerImpl的关系<br>        7.1.3.1 一个应用可能有很多个Window，不会让它们单独地与WMS通信<br>    7.1.4 ViewRoot与WindowManagerImpl的关系<br>  7.2 Activity中ViewTree的创建过程<br>    7.2.1 有了Window以后生成具体的内容由setContentView发起，设置mDecor<br>  7.3 在WMS中注册窗口<br>  7.4 ViewRoot的基本工作方式<br>  7.5 ViewTree的遍历时机<br>  7.6 ViewTree的遍历流程<br>  7.7 View 和 ViewGroup属性<br>  7.8 Canvas<br>  7.9 draw和onDraw<br>  7.10 View中的消息传递<br>  7.11 View动画<br>8 12. InputManager Service与输入事件<br>  8.1 事件分类<br>    8.1.1 KeyEvent<br>    8.1.2 TouchEvent<br>    8.1.3 MouseEvent<br>    8.1.4 TrackBallEvent<br>  8.2 事件的投递流程<br>9 13. 音频系统<br>  9.1 基础<br>  9.2 框架<br>  9.3 核心<br>  9.4 策略制定者<br>  9.5 回放<br>  9.6 数据流<br>  9.7 音量控制<br>  9.8 上层建筑<br>  9.9 支持的格式<br>  9.10 ID3简介<br>  9.11 多媒体文件管理<br>10 14. Intent匹配规则<br>  10.1 Intent 属性<br>  10.2 匹配规则<br>  10.3 源码简析<br>11 15. APK应用程序的资源适配<br>  11.1 资源类型<br>  11.2 可选资源<br>  11.3 最佳匹配流程<br>  11.4 屏幕适配<br>12 16. Android字符编码格式<br>  12.1 ISO/IEC 8859<br>  12.2 ISO/IEC 10646<br>  12.3 Unicode<br>  12.4 String类型<br>13 17. Android和OpenGL ES<br>  13.1 3D 基础<br>  13.2 OpenGL SE<br>  13.3 API-EGL<br>  13.4 GLSurfaceView<br>14 18. SystemUI<br>  14.1 组成元素<br>  14.2 实现<br>  14.3 壁纸<br>15 19. Widget<br>  15.1 AppWidgetProvider<br>  15.2 AppWidgetHost<br>16 20. 编译和打包<br>  16.1 Ant<br>  16.2 命令行<br>  16.3 编译过程<br>  16.4 信息安全<br>  16.5 签名<br>  16.6 签名源码<br>17 21. 版本控制<br>  17.1 Git<br>18 22. 调试工具<br>  18.1 Emulator<br>  18.2 ADB</application></pid></p>
 
       
 
@@ -707,61 +699,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-每周一书/【Note】《波西米亚楼》读记"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/【Note】《波西米亚楼》读记/">【Note】《波西米亚楼》读记</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/每周一书/【Note】《波西米亚楼》读记/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>作者： 严歌苓（1958年11月16日－）美籍華人，美國當代著名中文、英文作家，好莱坞专业编剧。 （Link: <a href="https://zh.wikipedia.org/wiki/嚴歌苓" target="_blank" rel="noopener">wiki</a> 、 <a href="http://baike.baidu.com/item/严歌苓" target="_blank" rel="noopener">百科</a>）<br>代表作：《金陵十三钗》、《小姨多鹤》、《少女小渔》等</p>
-</blockquote>
-<p>散文集，收录关于美洲、非洲、中国以及创作的一些见闻与感悟。</p>
-<p>感觉文字本身张力不大，但笔下人物给人带来震撼力极大，能给人带来如此触动的真实人物并不多见。合卷之后，一些人物仍历历在目：独自支撑动物收容所的自身难保的美国老太太、在非洲时碰到的用假“中邪”来掩饰偷窃的女佣、半夜查访怀疑作者美国老公买淫的上海老警察、总在暗影聚餐吧冒充熟人赚饭吃的非洲女子等等。</p>
-<p>父母的爱情之艰辛，之戛然而止，引人警戒<br>一句“我爱你，再见了”，写尽911对当事人造成的困扰<br>尼日利亚园丁在搞砸“菜园”之后不辞而别，凸显这国家人民的小心谨慎<br>…</p>
-<p>作者是坦率的：故事讲完，不褒不贬，任君品评</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
 
     </footer>
   </div>
@@ -833,6 +771,60 @@
 <blockquote>
 <p>褚时健传<br>1 第一篇 早年故事<br>  1.1 第一章 起始<br>    1.1.1 褚姓人家<br>    1.1.2 矣则<br>  1.2 第二章 童年浪花<br>  1.3 第三章 少年故事<br>    1.3.1 年少逝父<br>  1.4 第四章 离家的日子<br>  1.5 第五章 所谓长大<br>  1.6 第六章 思变<br>2 第二篇 激情的青春十年<br>  2.1 第一章 当上了游击队员<br>  2.2 第二章 战火纷飞<br>  2.3 第三章 迎来解放<br>  2.4 第四章 革命意味着牺牲<br>  2.5 第五章 平静或不平静的生活<br>  2.6 第六章 波澜骤起<br>3 第三篇 生活的断层<br>  3.1 第一章 跌入生活底层<br>  3.2 第二章 一家人要在一起<br>  3.3 第三章 到了另一个农场<br>  3.4 第四章 新平、新平<br>  3.5 第五章 迅速进入角色<br>  3.6 第六章 戛洒缘分<br>  3.7 第七章 动乱岁月中的平静生活<br>  3.8 第八章 希望的光就要来了<br>4 第四篇 华彩人生篇章<br>  4.1 第一章 预备<br>  4.2 第二章 完事开头难<br>  4.3 第三章 启动改革<br>  4.4 第四章 出手改革<br>  4.5 第五章 设备之战<br>  4.6 第六章 烟叶的故事<br>  4.7 第七章 内部管理大小事<br>5 第五篇 行在人生巅峰时期<br>  5.1 第一章 名烟翻番<br>  5.2 第二章 关索坝工程<br>  5.3 第三章 快马加鞭<br>  5.4 第四章 谢幕<br>  5.5 第五章 人生间隙<br>6 第六篇 果夺锦标<br>  6.1 第一章 是结束，也是开始<br>  6.2 第二章 土地、水和树<br>  6.3 第三章 橙树在长大<br>  6.4 第四章 一年比一年丰收<br>  6.5 第五章 每一条路都指向未来<br>  6.6 第六章 江山无限<br>这不是一部普通的传记，它描写了一个人如何在17年时间里缔造了一个商业王国，然后如何陨落、自困荒山，然后又如何用17年时间走出心理和职业的巨大困局。 正如尼采所言，一个伟大的人格，可以在自己的身上克服这个时代</p>
 </blockquote>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-每周一书/【Note】《波西米亚楼》读记"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/13/每周一书/【Note】《波西米亚楼》读记/">【Note】《波西米亚楼》读记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/13/每周一书/【Note】《波西米亚楼》读记/" class="article-date">
+	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>作者： 严歌苓（1958年11月16日－）美籍華人，美國當代著名中文、英文作家，好莱坞专业编剧。 （Link: <a href="https://zh.wikipedia.org/wiki/嚴歌苓" target="_blank" rel="noopener">wiki</a> 、 <a href="http://baike.baidu.com/item/严歌苓" target="_blank" rel="noopener">百科</a>）<br>代表作：《金陵十三钗》、《小姨多鹤》、《少女小渔》等</p>
+</blockquote>
+<p>散文集，收录关于美洲、非洲、中国以及创作的一些见闻与感悟。</p>
+<p>感觉文字本身张力不大，但笔下人物给人带来震撼力极大，能给人带来如此触动的真实人物并不多见。合卷之后，一些人物仍历历在目：独自支撑动物收容所的自身难保的美国老太太、在非洲时碰到的用假“中邪”来掩饰偷窃的女佣、半夜查访怀疑作者美国老公买淫的上海老警察、总在暗影聚餐吧冒充熟人赚饭吃的非洲女子等等。</p>
+<p>父母的爱情之艰辛，之戛然而止，引人警戒<br>一句“我爱你，再见了”，写尽911对当事人造成的困扰<br>尼日利亚园丁在搞砸“菜园”之后不辞而别，凸显这国家人民的小心谨慎<br>…</p>
+<p>作者是坦率的：故事讲完，不褒不贬，任君品评</p>
 
       
 
