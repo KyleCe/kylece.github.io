@@ -255,6 +255,93 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/Android/WebView内存泄露如何规避"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/04/19/技术/Android/WebView内存泄露如何规避/">WebView内存泄露如何规避</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/04/19/技术/Android/WebView内存泄露如何规避/" class="article-date">
+	  <time datetime="2018-04-19T08:21:47.000Z" itemprop="datePublished">2018-04-19</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a><a class="article-category-link" href="/categories/技术/Android/">Android</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="方案："><a href="#方案：" class="headerlink" title="方案："></a>方案：</h2><ol>
+<li><p>代码中加开关控制</p>
+</li>
+<li><p>versionName/versionCode 加一些规则</p>
+</li>
+<li><p>ChannelID 控制</p>
+</li>
+</ol>
+<h2 id="比较："><a href="#比较：" class="headerlink" title="比较："></a>比较：</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">方案</th>
+<th style="text-align:center">优缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">代码开关</td>
+<td style="text-align:center">灵活</td>
+</tr>
+<tr>
+<td style="text-align:left">VersionName/VersionCode</td>
+<td style="text-align:center"><ul><li>优势：发包时能够直观看到beta/production；</li><li>弊端：beta用户能够感知到这个版本号</li></ul></td>
+</tr>
+<tr>
+<td style="text-align:left">ChannelID</td>
+<td style="text-align:center">缺点：影响数据统计/分析</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>关于VersionName/VersionCode区分beta的实现方法：</p>
+<ol>
+<li>可以直接在VersionName中写上alpha/beta 字段区分</li>
+<li>可以利用VersionCode处理（比如奇偶/是否被n整除）</li>
+</ol>
+</blockquote>
+<h2 id="结论："><a href="#结论：" class="headerlink" title="结论："></a>结论：</h2><ul>
+<li>推荐方案1或2</li>
+</ul>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebView/">WebView</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存泄露/">内存泄露</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/算法/算法--从1到n整数中1出现的次数"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -621,7 +708,7 @@
 
 
   
-    <article id="post-技术/算法/面经--逆转链表（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/算法/面经--计算一个字节有几比特（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -629,7 +716,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/13/技术/算法/面经--逆转链表（Java）/">面经--逆转链表</a>
+      <a class="article-title" href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/">面经--计算一个字节有几比特（Java）</a>
     </h1>
   
 
@@ -637,7 +724,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/13/技术/算法/面经--逆转链表（Java）/" class="article-date">
+	<a href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/" class="article-date">
 	  <time datetime="2018-03-13T15:27:30.000Z" itemprop="datePublished">2018-03-13</time>
 	</a>
 
@@ -675,7 +762,7 @@
 
 
   
-    <article id="post-技术/算法/面经--计算一个字节有几比特（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/算法/面经--逆转链表（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -683,7 +770,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/">面经--计算一个字节有几比特（Java）</a>
+      <a class="article-title" href="/2018/03/13/技术/算法/面经--逆转链表（Java）/">面经--逆转链表</a>
     </h1>
   
 
@@ -691,7 +778,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/" class="article-date">
+	<a href="/2018/03/13/技术/算法/面经--逆转链表（Java）/" class="article-date">
 	  <time datetime="2018-03-13T15:27:30.000Z" itemprop="datePublished">2018-03-13</time>
 	</a>
 
@@ -789,88 +876,6 @@
 
 
   
-    <article id="post-技术/管理/寻找优秀的Programmer"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/11/技术/管理/寻找优秀的Programmer/">寻找优秀的Programmer</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/11/技术/管理/寻找优秀的Programmer/" class="article-date">
-	  <time datetime="2018-03-11T07:09:31.000Z" itemprop="datePublished">2018-03-11</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/阅读、管理/">阅读、管理</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="寻找优秀的Programmer"><a href="#寻找优秀的Programmer" class="headerlink" title="寻找优秀的Programmer"></a>寻找优秀的Programmer</h2><p>最近读的Stack Overflow CEO 博客集锦 《软件随想录 卷2》</p>
-<p>结合其中的两篇：《寻找优秀的程序员》、《寻找优秀的程序员之实战指南》谈谈</p>
-<p>因为作者所处位置，他写作两篇blog的角度其实是一个公司管理人员的角度，作为基础的从业程序员，也有一点的借鉴价值</p>
-<h3 id="优秀的程序员都在哪"><a href="#优秀的程序员都在哪" class="headerlink" title="优秀的程序员都在哪"></a>优秀的程序员都在哪</h3><p>作者的观点</p>
-<ol>
-<li>他们不会出现在招聘市场上</li>
-<li>平均职业生涯求职只有4次</li>
-<li>基本上想上哪工作，就上哪工作，不需要投许多简历</li>
-<li>招聘部门想找到合适的人，就如同在一堆干草中找到一根针</li>
-</ol>
-<h3 id="我们能找到他们吗？"><a href="#我们能找到他们吗？" class="headerlink" title="我们能找到他们吗？"></a>我们能找到他们吗？</h3><ol>
-<li>走出去（不要在大型求职论坛发布没有针对性的招聘广告）</li>
-<li>实习生（一些真正优秀的人，往往10左右就已经开始做自己爱的事情）</li>
-<li>建立自己的社区</li>
-<li>员工推荐：小心陷阱（真实生活中，我一般认为员工推荐是最不可靠的招聘方法之一—— 实际上Google基本只招收员工推荐的人）</li>
-</ol>
-<h3 id="实战指南"><a href="#实战指南" class="headerlink" title="实战指南"></a>实战指南</h3><ol>
-<li>私人办公室（这一条成本太高了）——作者的坚持这一点的理由是 “这能极大地提高效率”</li>
-<li>工作环境</li>
-<li>社交生活<ol>
-<li>如何被对待</li>
-<li>谁是他们的同事</li>
-<li>独立和自主</li>
-<li>不搞政治</li>
-</ol>
-</li>
-<li>干的是什么活？<ol>
-<li>让一流的人挑选他们自己的项目</li>
-<li>使用非热门新技术</li>
-</ol>
-</li>
-<li>能够认同公司吗？</li>
-<li>不在乎的一件事：工资（只要公平合理）</li>
-</ol>
-<p>更多信息：Joel on software <a href="https://www.joelonsoftware.com" target="_blank" rel="noopener">https://www.joelonsoftware.com</a></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
 
 
   <nav id="page-nav">
@@ -890,7 +895,7 @@
   <div class="container">
       	<div class="row">
 	      <p> Powered by <a href="/about/" target="_blank">KyleCe</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2015 - 2018 KyleCe All Rights Reserved.</p>
+	      <p id="copyRightEn">Copyright &copy; 2015 - 2019 KyleCe All Rights Reserved.</p>
 
 	      
     		<p class="busuanzi_uv">
@@ -992,7 +997,7 @@
 
 
 
-	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 	</script>
 
 
@@ -1045,7 +1050,7 @@
             KyleCe
           </div>
           <div class="panel-body">
-            Copyright © 2018 KyleCe All Rights Reserved.
+            Copyright © 2019 KyleCe All Rights Reserved.
           </div>
         </div>
       </div>
