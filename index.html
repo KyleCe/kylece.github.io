@@ -255,6 +255,54 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/Android/CorountineJob"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/03/20/技术/Android/CorountineJob/">Corountine Job</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/03/20/技术/Android/CorountineJob/" class="article-date">
+	  <time datetime="2019-03-20T06:52:02.000Z" itemprop="datePublished">2019-03-20</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://kylece.github.io/img/corountine_job.jpg" alt="Job"></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Corountine/">Corountine</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kotlin/">Kotlin</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/GradleKeyword"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -736,60 +784,6 @@
 <li>返回我们所需要的最大长度和数字串</li>
 </ol>
 <h4 id="code"><a href="#code" class="headerlink" title="code"></a>code</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">find_max_number</span><span class="params">(<span class="keyword">char</span> <span class="built_in">string</span>[],<span class="keyword">int</span> length,<span class="keyword">int</span> &amp;count, <span class="keyword">char</span> *result )</span></span>&#123;</span><br><span class="line">   <span class="comment">/* max_length represents the max length of number string. */</span></span><br><span class="line">   <span class="keyword">int</span> max_length = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">/* start means first character's position of number string */</span></span><br><span class="line">   <span class="keyword">int</span> start = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">/* i represents iterator of string array */</span></span><br><span class="line">   <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">// here we scan the character array.</span></span><br><span class="line">   <span class="keyword">for</span>( ; i &lt; length; i++ )&#123;</span><br><span class="line">      <span class="comment">// if character belongs to 0~9 we add counter.</span></span><br><span class="line">      <span class="comment">// otherwise we set counter as 0.</span></span><br><span class="line">      <span class="keyword">if</span>( <span class="built_in">string</span>[i] &gt;= <span class="string">'0'</span> &amp;&amp; <span class="built_in">string</span>[i] &lt;= <span class="string">'9'</span> )&#123;</span><br><span class="line">         count ++;</span><br><span class="line">      &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">         <span class="keyword">if</span>( count &gt; max_length )&#123;</span><br><span class="line">            max_length = count;</span><br><span class="line">            start = i - count + <span class="number">1</span>;</span><br><span class="line">         &#125;</span><br><span class="line">         count  = <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// finally we should set max_length and the position again.</span></span><br><span class="line">   <span class="keyword">if</span>( count &gt; max_length )&#123;</span><br><span class="line">      max_length = count;</span><br><span class="line">      start = i - count;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// the last, we return counter and the string we need.</span></span><br><span class="line">   count = max_length;</span><br><span class="line">   <span class="built_in">memcpy</span>( result, &amp;<span class="built_in">string</span>[start], count*<span class="keyword">sizeof</span>(<span class="keyword">char</span>) );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">( <span class="keyword">int</span> argc, <span class="keyword">char</span> ** argv )</span></span>&#123;</span><br><span class="line">   <span class="keyword">char</span> <span class="built_in">string</span>[] = <span class="string">"iabcd12345ed125ss123456789"</span>;</span><br><span class="line">   <span class="keyword">char</span> result[<span class="number">20</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">   <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">   find_max_number( <span class="built_in">string</span>, <span class="built_in">strlen</span>(<span class="built_in">string</span>), count, result );</span><br><span class="line">   <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; count &lt;&lt; <span class="string">" "</span> &lt;&lt; result &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面经/">面经</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/算法/面经--计算一个字节有几比特（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/">面经--计算一个字节有几比特（Java）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/" class="article-date">
-	  <time datetime="2018-03-13T15:27:30.000Z" itemprop="datePublished">2018-03-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>如何逆转链表呢？本篇介绍两种常见方法：</p>
-<ol>
-<li>遍历</li>
-<li>递归</li>
-</ol>
-<h5 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseHead</span><span class="params">(@Nonnull Node head)</span> </span>&#123;</span><br><span class="line">    Node pre = head;</span><br><span class="line">    Node cur = head.nextNode;</span><br><span class="line">    Node next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</span><br><span class="line">        next = cur.nextNode;</span><br><span class="line">        cur.nextNode = pre;</span><br><span class="line"></span><br><span class="line">        pre = cur;</span><br><span class="line">        cur = next;</span><br><span class="line">    &#125;</span><br><span class="line">    head.nextNode = <span class="keyword">null</span>;</span><br><span class="line">    head = pre;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseByRecur</span><span class="params">(Node current)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (current == <span class="keyword">null</span> || current.nextNode == <span class="keyword">null</span>) <span class="keyword">return</span> current;  </span><br><span class="line">    Node nextNode = current.nextNode;  </span><br><span class="line">    current.nextNode = <span class="keyword">null</span>;  </span><br><span class="line">    Node reverseRest = reverseByRecur(nextNode);  </span><br><span class="line">    nextNode.nextNode = current;  </span><br><span class="line">    <span class="keyword">return</span> reverseRest;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
