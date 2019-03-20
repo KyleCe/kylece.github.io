@@ -255,6 +255,65 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/Android/【Android】JNI-Tips-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/">JNI-Tips-提要</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>引：<br>项目需要用到JNI，实际上还需要在native跟Java之间写一些代码，来连接二位，需要做进一步了解。本文主要对官方的JNI Tips做一些简单的关键提取<br>参考：<br><a href="">JNI Tips</a></p>
+</blockquote>
+<hr>
+<p><a href="https://www.evernote.com/l/ARunDTJCHX9AQ5Zm7URUjILWW2iFBUVWGRc" target="_blank" rel="noopener">Evernote连接</a></p>
+<p><a href="https://www.evernote.com/shard/s283/sh/a70d3242-1d7f-4043-9666-ed44548c82d6/5b68850545561917/res/ba76fe6f-7df9-41f8-a0cd-1f0dcbe4349c/JNI%20Tips.xmind" target="_blank" rel="noopener">XMind 文档下载</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ce0301d2d61fe60b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JNI Tips.png"></p>
+<p>文本：</p>
+<p>JNI Tips</p>
+<p>definition<br>  Java Native Interface<br>  how it works<br>    <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html</a><br>JavaVM and JNIEnv<br>  JavaVM<br>    one process can only create one JavaVM in Android<br>  JNIEnv<br>    provides most of JNI functions. Your native functions all receive a JNIEnv as first argument<br>    used for thread-local, so you cannot share a JNIEnv between threads (GetEnv can be used to discover the thread’s JNIEnv when no other way)<br>Threads<br>  a thread will have no JNIEnv unless it’s attached, before this it cannot make JNI calls (all threads are Linux threads, scheduled by the kernel)<br>  Threads attached through JNI must call DetachCurrentThread before they exit<br>jclass, jmethodID, and jfieldID<br>  steps to access an object’s field from native code<br>    FindClass:—&gt; get the class object reference for the class<br>    GetFieldID:—&gt;Get the field ID for the field with GetFieldID<br>    GetIntField:—&gt;Get the contents of the field with something appropriate<br>  call a method—&gt; get a class object reference and then a method ID<br>  it’s useful to look the values up once and cache the results in your native code. Because there is a limit of one JAVAVM per process<br>  if want to cache IDs when a class is loaded, add a piece of code that allow the native code to cache field offsets<br>Local and Global Reference<br>  almost every object returned by a JNI function is a “local reference”—&gt;it’s valid for the duration of the current native method in the current thread. Even if the object itself continues to live on after the native method returns, the reference is not valid<br>  the only way to get non-local references is via the functions NewGlobalRef and NewWeakGlobalRef (the global reference is guaranteed to be valid until you call DeleteGlobalRef)<br>  to see if two reference refer to the same object, you must use the IsSameObject function, never use == in native code<br>  jfieldIDs, jmethod are opaque types, not object references, should not be passed to NewGlobalRef<br>  if you attach a native thread with AttachCurrentThread, the code you are running will never automatically free local references until the thread detaches. Any local references you create will have to be deleted manually.<br>UTF-8 and UTF-16 Strings<br>  java use UTF-16, JNI provides methods that work with Modified UTF-8 as well.<br>  you cannot pass arbitrary UTF-8 data to JNI and expect it to work correctly<br>  Android currently does not require a copy in GetStringChars,however GetStringUTFChars requires an allocation and a conversion to UTF-8. UTF-16 strings are not zero-terminated, \u0000 is allowed, so you need to hang on to the string length like jchar pointer<br>  Don’t forget to Release the strings you Get. the string functions return jchar<em> or jbyte</em><br>  Data passed to NewStringUTF must be in Modified UTF-8 format<br>Primitive Arrays<br>  You must Release every array you Get<br>  release mode arguments alternative values<br>    0<br>        buffer freed<br>    JNI_COMMIT<br>        do nothing/ buffer not freed<br>    JNI_ABORT<br>        buffer freed, Earlier wirtes are not aborted<br>Region calls<br>  advantages<br>    reducing overhead by reducing JNI call requirements<br>    do not require pinning or extra data copies<br>    reduces the risk of programmer error–&gt; no risk of forgetting to call Release<br>Exception<br>  your must not call JNI functions while an exception is pending, except several special kinds of API: delete/ exception process/stack process/ release process …<br>Extended Checking<br>  JNI does very little error checking ~~!<br>  Android offers a mode called CheckJNI<br>    array, bad pointers, Class names, Critical call,Direct ByteBuffers, Exceptions, JNIEnv<em>s, jmethodIDs, References,Release modes, Type safety, UTF-8<br>Native Libraries<br>  steps<br>    call System.loadLibrary<br>    provide a native function : jint JNI_OnLoad(JavaVM</em> vm void* reserved)<br>    in JNI_OnLoad, register all your native methods<br>64-bit Considerations<br>  you need to stash your native pointers in a long field rather than an int<br>Unsupported Features/ Backwards Compatibility<br>  Define class<br>  dynamic lookup of native functions<br>  detaching threads<br>  weak global references<br>  Local references<br>  determining reference type with GetObjectRefType</p>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/【Android】Clean-Architecture--初析"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -321,86 +380,6 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android】VectorDrawable介绍"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/">VectorDrawable介绍</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>引<br>今天视频处理中碰到一些简单图片的vector绘制方案<br>调研结果：</p>
-</blockquote>
-<p>效果：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9a7da5968fccb57a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="vector paint eg.png"></p>
-<p><strong>优点</strong>：Vector与PNG文件相比，能极大地缩小文件占用空间；<br><strong>弱势</strong>：</p>
-<ol>
-<li>兼容性处理起来需要花费一些心思；</li>
-<li>复杂图片不适合运用vector绘制，一个是初始化效率，第二个是重复使用时bitmap在GPU中会有缓存，而vector没有；</li>
-<li>需要额外的一些辅助工具协作生成path；</li>
-</ol>
-<blockquote>
-<p>例注：</p>
-<ol>
-<li>使用：<br>需要在Gradle 中添加：android.defaultConfig域<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vectorDrawables.useSupportLibrary = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</blockquote>
-<ol>
-<li>XML attributes:  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">viewportHeight \ viewportWidth</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>划分的比例大小（图片中的例子：36dp大小的图像划分成24份，Path中的坐标建立在划分后的坐标系统之上）<br><code>意义--&gt;将大小与path分离</code></p>
-<hr>
-<p>Path指令：<br>M = moveto(M X,Y)<br>L = lineto(L X,Y)<br>H = horizontal lineto(H X)<br>V = vertical lineto(V Y)<br>C = curveto(C X1,Y1,X2,Y2,ENDX,ENDY)：三次贝赛曲线<br>S = smooth curveto(S X2,Y2,ENDX,ENDY)<br>Q = quadratic Belzier curve(Q X,Y,ENDX,ENDY)：二次贝赛曲线<br>T = smooth quadratic Belzier curveto(T ENDX,ENDY)：映射<br>A = elliptical Arc(A RX,RY,XROTATION,FLAG1,FLAG2,X,Y)：弧线<br>Z = closepath()</p>
-<hr>
-<p>工具：<br><a href="http://inloop.github.io/svg2android/" target="_blank" rel="noopener">to vector</a><br><a href="http://editor.method.ac/" target="_blank" rel="noopener">SVG editor</a></p>
-<hr>
-<blockquote>
-<p>参考：(涵盖由头、Vector语法、转换工具、原理、兼容处理、性能考量等方面知识，良心之作)<br><a href="http://www.jianshu.com/p/e3614e7abc03" target="_blank" rel="noopener">Android Vector曲折的兼容之路</a></p>
-</blockquote>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VectorDrawable/">VectorDrawable</a></li></ul>
 
     </footer>
   </div>
@@ -589,6 +568,153 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QRCode/">QRCode</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
+</blockquote>
+<blockquote>
+<p>这样的话，注意定期检查各lib版本就好</p>
+</blockquote>
+<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
+<p>总结一下步骤：</p>
+<ol>
+<li>获取二维码（QRCode）</li>
+<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
+<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
+</li>
+<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
+</li>
+</ol>
+<p>时序图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/">【Android Tool】内存快照分析，自动抓取dump文件并转换脚本</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最新得到的Google内部消息，未来谷歌应用商店的排名算法将会把App的性能纳入考量范围（使用的机器学习算法），我们开发者也应该将性能这一指标纳入自己的检查范围</p>
+</blockquote>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>解决抓取内存文件，拉取到电脑，新建文件夹，转换为Eclipse Memory Analyzer 文件操作繁琐的问题</p>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
+<li>clone项目之后，上述流程只需要👇的指令即可完成</li>
+<li>自动将转换的文件存档到新建的同名目录下，避免MAT分析产生的临时文件污染文档目录</li>
+<li>更改目录或进程时，无需修改配置文件，输入即可自动记录上次操作习惯</li>
+<li>重复输入名称时，会自动append 时间到原来名称，避免覆盖历史文件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python GrabDump.py</span><br></pre></td></tr></table></figure>
+<p>读完本文，你将收获到一个自动化上述流程的简单project</p>
+<blockquote>
+<p>需要了解 Apk包的内存占用各部分组成</p>
+</blockquote>
+<h3 id="GitHub-地址"><a href="#GitHub-地址" class="headerlink" title="GitHub 地址"></a>GitHub 地址</h3><p><a href="https://github.com/KyleCe/PhonePerformanceMeasure">https://github.com/KyleCe/PhonePerformanceMeasure</a></p>
+<h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><p>最终的使用时样式：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/grabDump.png" alt=""></p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>首先你需要安装Python ^_^</li>
+</ul>
+<ul>
+<li>可以输入的参数包括：  dump文件名、存放目录、需要抓取的进程名</li>
+<li>下次输入时，如果没有完全输入，会自动使用上一次的参数</li>
+</ul>
+<blockquote>
+<p>第一次输入的时候还是需要完全的配置</p>
+</blockquote>
+<h3 id="已知问题"><a href="#已知问题" class="headerlink" title="已知问题"></a>已知问题</h3><p>抓取dump次数过多时会出现adb缓存读写错误的问题，需要重启adb（kill-server | start-server），后续找到解决方案会及时更新到Github repository</p>
+<hr>
+<p>扫描二维码，关注“夕识”，一起学习Android知识、CS知识，努力成为一位  different thinker</p>
+<p><img src="http://kylece.github.io/img/pic_resource/qrcode_for_wechat.jpg" alt=""></p>
+<p>点击“链接”，跳转至repo地址</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dump/">Dump</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
 
     </footer>
   </div>
@@ -789,7 +915,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 
 
   
-    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -797,7 +923,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
+      <a class="article-title" href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/">【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介</a>
     </h1>
   
 
@@ -805,7 +931,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
+	<a href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -817,25 +943,18 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
+<p>工欲善其事必先利其器<br>今天介绍几个plugin工具（奇淫巧技）</p>
 </blockquote>
 <blockquote>
-<p>这样的话，注意定期检查各lib版本就好</p>
+<p><em>（适用平台：IntelliJ IDEA内核的各类IDE）</em></p>
 </blockquote>
-<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
-<p>总结一下步骤：</p>
-<ol>
-<li>获取二维码（QRCode）</li>
-<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
-<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
-</li>
-<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
-</li>
-</ol>
-<p>时序图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
 <hr>
-<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><strong>效果图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5b8d8a86fda8eca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ide_tools.png"></p>
+<p>按图中标示顺序介绍：</p>
+<p>####1.Translation<br>_ 顾名思义是中英翻译，令人意外的是自带英美两种发音（默认快捷键：ALT + 1/3，OSX 不详）_</p>
+<p>####2.Background Image Plus<br><em>可以对IDE背景进行自定义，可以设置图片质量/明暗等，对内存有一定消耗，小霸王请绕道</em></p>
+<p>####3.CodeGlance<br><em>提供一个代码文件的全局概览缩略图，主要可用于快速定位</em></p>
 
       
 
@@ -845,7 +964,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tool/">Tool</a></li></ul>
 
     </footer>
   </div>
@@ -856,7 +975,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 
 
   
-    <article id="post-技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/【Note-PM】《项目管理修炼之道》提要"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -864,7 +983,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/">【Android Tool】内存快照分析，自动抓取dump文件并转换脚本</a>
+      <a class="article-title" href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/">【Note-PM】《项目管理修炼之道》提要</a>
     </h1>
   
 
@@ -872,50 +991,26 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/" class="article-date">
+	<a href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/技术/">技术</a>
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>最新得到的Google内部消息，未来谷歌应用商店的排名算法将会把App的性能纳入考量范围（使用的机器学习算法），我们开发者也应该将性能这一指标纳入自己的检查范围</p>
+<p>第18届Jolt生产效率大奖图书<br>作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富</p>
 </blockquote>
-<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>解决抓取内存文件，拉取到电脑，新建文件夹，转换为Eclipse Memory Analyzer 文件操作繁琐的问题</p>
-<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
-<li>clone项目之后，上述流程只需要👇的指令即可完成</li>
-<li>自动将转换的文件存档到新建的同名目录下，避免MAT分析产生的临时文件污染文档目录</li>
-<li>更改目录或进程时，无需修改配置文件，输入即可自动记录上次操作习惯</li>
-<li>重复输入名称时，会自动append 时间到原来名称，避免覆盖历史文件</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python GrabDump.py</span><br></pre></td></tr></table></figure>
-<p>读完本文，你将收获到一个自动化上述流程的简单project</p>
-<blockquote>
-<p>需要了解 Apk包的内存占用各部分组成</p>
-</blockquote>
-<h3 id="GitHub-地址"><a href="#GitHub-地址" class="headerlink" title="GitHub 地址"></a>GitHub 地址</h3><p><a href="https://github.com/KyleCe/PhonePerformanceMeasure">https://github.com/KyleCe/PhonePerformanceMeasure</a></p>
-<h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><p>最终的使用时样式：</p>
-<p><img src="http://kylece.github.io/img/pic_resource/grabDump.png" alt=""></p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
-<li>首先你需要安装Python ^_^</li>
-</ul>
-<ul>
-<li>可以输入的参数包括：  dump文件名、存放目录、需要抓取的进程名</li>
-<li>下次输入时，如果没有完全输入，会自动使用上一次的参数</li>
-</ul>
-<blockquote>
-<p>第一次输入的时候还是需要完全的配置</p>
-</blockquote>
-<h3 id="已知问题"><a href="#已知问题" class="headerlink" title="已知问题"></a>已知问题</h3><p>抓取dump次数过多时会出现adb缓存读写错误的问题，需要重启adb（kill-server | start-server），后续找到解决方案会及时更新到Github repository</p>
-<hr>
-<p>扫描二维码，关注“夕识”，一起学习Android知识、CS知识，努力成为一位  different thinker</p>
-<p><img src="http://kylece.github.io/img/pic_resource/qrcode_for_wechat.jpg" alt=""></p>
-<p>点击“链接”，跳转至repo地址</p>
+<p><a href="https://pan.baidu.com/s/1cAaOxw" target="_blank" rel="noopener">XMind文档链接</a></p>
+<p><a href="https://pan.baidu.com/s/1mhZO5Fa" target="_blank" rel="noopener">导图PDF版链接</a></p>
+<p><strong>导图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-d20195caa4e17ed9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第一部分：规划与日程"></p>
+<p><strong>文本</strong></p>
+<p> 项目管理修炼之道<br>    Johanna Rothman<br>    规划与日程<br>        启动项目<br>            0.KEY——定义项目、项目约束、决定项目关键驱动因素、章程决策<br>            章程决策<br>                远景、需求、目标、成功标准、ROI<br>        规划项目<br>            0.KEY——足以启动的规划、规划模板、制定发布条件<br>            规划模板<br>                意图<br>                记录<br>                发布条件<br>                目标<br>                项目组织<br>                日程总览<br>                人员配备<br>                建议日程<br>                制订项目风险列表<br>        使用生命周期组织项目<br>            0.KEY——理解生命周期、概览、反馈、大规模项目需要组合多种生命周期、管理架构风险、从瀑布中解脱<br>        安排项目日程<br>            0.KEY——注重实效的日程安排、可选择安排技术、用低技术含量工具安排日程<br>        估算工作<br>            0.KEY——实用估算方式、里程碑切分项目、能不做什么？、多项目时的估算、主动安排人们进行多任务、实用波浪式规划、决定迭代的持续时间、“小石子”<br>            估算<br>                对比历史数据<br>                通过Delphi和宽带Delphi估算<br>                何时不应相信团队的话<br>                    减掉每个任务的缓冲时间、要得到的是更准确的估算结果<br>                用日期范围进行估计<br>                用自信心估计<br>                用三个日期估计：最佳、可能、墨菲<br>            小石子<br>                任务不清时使用<br>                如何得到“小石子”<br>                为什么使用<br>        识别和避免日程安排游戏<br>            0.KEY——“希望”是我们最重要的策略、拒绝女王、把灰扫到地毯下面、幸福日期、分散注意力、日程等于承诺<br>    团队与节奏<br>        创建出色的项目团队<br>            0.KEY——招募需要的人、形成团队凝聚力、让组织配合你的工作、对必必需的团队规模了如指掌、知道何时应该加入、成为出色的项目经理、知道何时全身而退<br>            凝聚力<br>                好工具让团队有更好的发挥<br>                软件配置管理系统应满足的最低要求<br>                缺陷跟踪系统应满足的最低要求<br>                发展5阶段<br>            让组织配合<br>                以项目经理的方式管理单一职能团队<br>                管理矩阵式项目团队<br>                管理跨职能团队<br>            项目经理<br>                人际交往能力<br>                提升功能性技能<br>                专业领域技能<br>                工具和技术的专业技能<br>            退<br>                不适合的组织、团队、产品<br>        掌控项目<br>            0.KEY——节奏、中途回顾、为需求排序、是时间盒限定需求相关的工作、将迭代限制在4周以下、使用波浪式规划和日程安排、创建跨职能团队、根据项目风险选择生命周期模型、保持合理的工作时间、使用“小石子”、管理干扰、管理缺陷<br>            “小石子“<br>                将计划的粒度细化，能提高规划时项目的估算准确率<br>        保持项目节奏<br>            0.KEY——使用持续集成、自动化冒烟测试、按功能实现而不是按架构、盯着产品、准备重构、通过用例、用户故事、角色和场景定义需求、分离需求与GUI设计、尽可能用低保真度原型<br>            按功能而不是按框架<br>                首先实现具有最高价值的功能<br>                按功能调试、测试<br>            低保真原型<br>                “使用低保真度原型，人们可以更全面地评估要解决的问题。高保真度原型会限制反馈。”<br>        管理会议<br>            0.KEY——取消部分会议、举行必要会议、项目启动会议、发布版本规划会议、进度报告会议、向管理层报告进度、项目团队会议、迭代审查会议、会议疑难问题解答、远程电话会议<br>            取消<br>                不需要你解决问题<br>                多人参加的顺序式进度报告会议<br>        创建并使用项目仪表板<br>            0.KEY——测量有风险、根据项目完成度来衡量进度、为出资人创建项目仪表盘、使用项目气象报告<br>            衡量进度<br>                速度图表跟踪日程安排进度<br>                用迭代内容图跟踪总体进度<br>                用图表展示团队统一采用的实践<br>    非简单项目<br>        管理多地点项目<br>            0.KEY——提问成本、识别项目文化差异、团队间培养信任、团队间使用互补实践、寻找潜在问题、外包时的注意事项<br>        在项目中集成测试<br>            0.KEY——“减少技术债”、小规模测试以降低风险、TDD是集成的最简单方法、使用多种测试、确定成员在测试工作中的角色、开发人员测试人员比率、让测试与开发同步进行、为项目制定测试策略、系统测试策略模板、QA与测试的区别<br>        管理项目群<br>            0.KEY——管理项目群、将多个相关项目组织到一个发布版本中、随时间推移组织多个相关项目、管理项目经理、创建项目仪表盘<br>        结束项目<br>            0.KEY——管理发布早期版本的请求、管理beta版本、项目经理何时知道无法按时发布项目、知道项目走向完成、取消项目<br>            何时知道无法按时发布<br>                避免小偏差<br>                承诺新日期<br>                估算系统测试时间<br>        管理项目组合<br>            0.KEY——构建所有项目的组合、评估项目、决定现在为那个项目提供资金、对组合中的项目进行排序、尽快启动项目、使用产品待办事项列表管理新功能需求<br>            答疑<br>                说服管理层：“切换上下文”是个坏主意<br>                如何对多任务说不</p>
 
       
 
@@ -925,193 +1020,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dump/">Dump</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/【Java-基础系列】Synchronized关键字"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/">【Java-基础系列】Synchronized关键字</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="初识"><a href="#初识" class="headerlink" title="初识"></a>初识</h2><p><code>synchronize</code></p>
-<blockquote>
-<p> 翻译——同步（cause to occur or operate at the same time or rate.）</p>
-</blockquote>
-<p>一般用于多线程操作，保证操作的同步性</p>
-<p>消除线程切换时导致的共享内存的内容不可预测性</p>
-<h2 id="典型应用"><a href="#典型应用" class="headerlink" title="典型应用"></a>典型应用</h2><p>单例模式的<code>double-check</code></p>
-<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.45.47 AM.png" alt="MacGesture MacGesture, Today at 12.45.47 AM"></p>
-<blockquote>
-<p>题外话：单例模式很容易引发内存泄露，在项目中要少用；</p>
-<p>另外单例模式的实现形式中，使用<code>enum</code>枚举是比较简洁的形式</p>
-</blockquote>
-<h2 id="常见使用形式"><a href="#常见使用形式" class="headerlink" title="常见使用形式"></a>常见使用形式</h2><ul>
-<li><p>锁方法</p>
-<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p>
-</li>
-<li><p>锁代码段</p>
-<ul>
-<li>用this关键字 <code>sychronized(this)</code></li>
-</ul>
-<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.21.38 AM.png" alt="MacGesture MacGesture, Today at 12.21.38 AM"></p>
-<ul>
-<li>用锁对象 <code>sychronized(lockObjct)</code></li>
-</ul>
-<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.17.56 AM.png" alt="MacGesture MacGesture, Today at 12.17.56 AM"></p>
-</li>
-</ul>
-<h2 id="官方教程"><a href="#官方教程" class="headerlink" title="官方教程"></a>官方教程</h2><p>在Oracle的Java 文档里头有对Synchronization的详细解释，分为如下五部分展开：</p>
-<ol>
-<li><p>线程接口（Thread Interference）</p>
-<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM.png" alt="【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM"></p>
-<blockquote>
-<p>不同线程对同一份数据的操作如果是穿插进行的，会导致不可预料的结果，这主要是因为CPU会让多个线程分片执行，各个线程对此数据的操作也是互不可知的，这样就很容易引发内存不按照预期改变的情况</p>
-</blockquote>
-</li>
-<li><p>内存连续性错误（Memory Consistency Errors）<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.17 AM.png" alt=""></p>
-<blockquote>
-<p>例子如上图，若三步操作不仅由一个线程执行，就很有可能导致打印出的并不是1而是0</p>
-</blockquote>
-</li>
-<li><p>同步方法（Synchronized Methods)<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.41 AM.png" alt=""></p>
-<blockquote>
-<ul>
-<li>Java中在方法体上添加<code>synchronized</code>关键字，能够保证同一时间仅有一个线程在调用某个对象的该方法；</li>
-</ul>
-<ul>
-<li>同时Java还会为该方法在与对象之间建立一个happens-before关系，保证对象的该状态对所有线程都是可见的</li>
-</ul>
-</blockquote>
-</li>
-</ol>
-<ol>
-<li><p>固有锁与同步（Intrinsic Locks and Synchronization)</p>
-<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p>
-<blockquote>
-<p>当一个线程调用<code>synchronized</code>方法时，它会自动获取该方法对象的固有锁，并在方法返回时释放它。即使返回是由未捕获的异常引起的，也会释放锁。</p>
-</blockquote>
-<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.56 AM.png" alt="MacGesture MacGesture, Today at 12.16.56 AM"></p>
-<blockquote>
-<p>直接使用this当做锁的关键字时，改对象的所有使用this当关键字的操作都必须保证同时只有一个线程访问，这样做虽然简便，但时间上有效率浪费，因为该对象的所有操作并不一定要保持完全同步，👇的代码段就解决了这一问题：</p>
-<p>通过细粒度的锁来提高并发性：</p>
-</blockquote>
-<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.22.45 AM.png" alt="MacGesture MacGesture, Today at 12.22.45 AM"></p>
-<blockquote>
-<p>类<code>MsLunch</code>有两个实例字段，<code>c1</code>并且<code>c2</code>从不一起使用。这些字段的所有更新必须同步，但是没有理由阻止c1的更新与c2的更新进行交错 - 这样做会通过创建不必要的阻止来降低并发性。而不是使用同步方法或以其他方式使用与之关联的锁<code>this</code></p>
-</blockquote>
-</li>
-<li><p>原子操作（<code>Atomic</code> Access ）</p>
-<blockquote>
-<p>原子操作保证了操作的完整性：要么不执行，执行的话就一定要完全执行（即使虚拟机GC也不能打断）</p>
-</blockquote>
-<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.35.40 AM.png" alt="MacGesture MacGesture, Today at 12.35.40 AM"></p>
-<p> 第一条指的是我们可以使用<code>Java</code>内附的<code>AtomicInteger</code>、<code>AtomicBoolean</code>等变量来直接利用这一特性</p>
-<p> 第二条引出了另一个关键字<code>volatile</code>，这实际上需要另起一篇进行介绍了</p>
-</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>synchronize在解决多线程编程问题时有奇效，但有一定的效率牺牲</p>
-<p>使用时应尽量减小锁定的范围</p>
-<p>对并发性有要求的地方需要注意看是否有细化锁粒度的必要</p>
-<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3>
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Synchronized/">Synchronized</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/【Alibaba-Java开发手册】-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/【Alibaba-Java开发手册】-提要/">【Alibaba-Java开发手册】-提要</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/【Alibaba-Java开发手册】-提要/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>旨在对手册进行提要<br>关注点： 编程规约</p>
-</blockquote>
-<blockquote>
-<p><a href="http://pan.baidu.com/s/1boHjvxt" target="_blank" rel="noopener">手册源文件点击下载</a></p>
-</blockquote>
-<p><a href="https://www.evernote.com/shard/s283/sh/a8ae54da-157b-4669-97f3-60709e798489/0ab7d45c077516e2fa9845f3acf03b64" target="_blank" rel="noopener">EverNote笔记链接（内含XMind思维导图源文件）</a></p>
-<hr>
-<p>#导图<br><img src="http://upload-images.jianshu.io/upload_images/1481332-f2f67a5b35ab182b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Alibaba Java overview.png"></p>
-<hr>
-<p>文本</p>
-<p>Alibaba Java 开发手册</p>
-<p>1 编程规约<br>  1.1 命名规约<br>    1.1.1 8. POJO类中的布尔型变量不要加is，否则会引起序列化错误<br>  1.2 常量定义<br>    1.2.1 1. 不允许代码中出现任何魔法数<br>        1.2.1.1 （即硬编码变量）<br>    1.2.2 3. 不要再一个常量类中维护所以常量，应按功能归类维护<br>    1.2.3 4. 常量复用有五个层次<br>        1.2.3.1 跨应用、应用内、子工程、包内、类内<br>  1.3 格式规约<br>    1.3.1 一系列Google Java编码规则，不赘述<br>  1.4 OOP规约<br>    1.4.1 1. 避免通过对象引用static域<br>    1.4.2 2. 不可使用 Deprecated方法；自己做弃用注解时也应该 注明替代的新API<br>    1.4.3 10. 序列化新增属性时不要修改serialVersionUID字段；仅在完全不兼容升级避免反序列化混乱时修改<br>    1.4.4 15. 方法排序： public/ protected &gt; private &gt; getter/setter ——为维护者关心的方法展示于前<br>    1.4.5 16. setter/getter 确定为仅有的set get方法，勿要放入业务逻辑<br>    1.4.6 17. 循环体内，字符串联接方式，使用StringBuilder的append方法扩展——String 操作编译后会生成count 个StringBuilder对象，影响程序性能<br>    1.4.7 18. final可提高程序响应效率<br>    1.4.8 20. 访问控制从严（private、protected、public）<br>  1.5 集合处理<br>    1.5.1 1. hashCode equals<br>        1.5.1.1 重写equals时必须重写hashCode<br>        1.5.1.2 Set存储的对象必须重写<br>        1.5.1.3 用作Map的键时必须重写<br>    1.5.2 9. 集合初始化时尽量指定大小<br>        1.5.2.1 注：出于优化内存占用、响应速度考虑；集合默认size为10<br>    1.5.3 10. Map 类集合 K/V 存储null可行性问题<br>        1.5.3.1 HashMap KV均可为null<br>        1.5.3.2 TreeMap仅V可为null<br>        1.5.3.3 其它Map KV一律不可为null<br>    1.5.4 11. 合理利用好集合的有序性和稳定性，避免负面影响<br>  1.6 并发处理<br>    1.6.1 2. 创建线程、线程池时指定有意义的名称，便于出错时回溯<br>    1.6.2 4. 线程池不允许使用Executors创建，而要使用ThreadPoolExecutor<br>        1.6.2.1 Executor创建的几个类型都有大量请求或线程堆积导致OOM的可能<br>    1.6.3 5. SimpleDateFormat 是线程不安全类，一般不要定义为static变量，如果定义为static，必须加锁，或者使用DateUtils工具类<br>    1.6.4 6. 高并发时的同步调用注意锁的性能损耗<br>    1.6.5 10. CountDownLatch异步转同步操作时，每个线程退出前必须调用countDown，避免await超时<br>    1.6.6 11. 避免Random实例被多线程使用，竞争同一seed会导致性能下降；（实例包括Random、Math.random()）<br>    1.6.7 14. HashMap在容量不够进行resize时由于高并发可能出现死链，导致CPU飙升，开发中注意规避<br>  1.7 控制语句<br>    1.7.1 3. if-else 勿超过3层，超过时使用状态设计模式<br>    1.7.2 5. 循环体中考虑性能问题，避免不必要的语句、避免不必要的try-catch<br>    1.7.3 7-8. 注意参数检验的必要性，尽可能提升性能<br>2 日志<br>3 MySQL<br>4 工程规约<br>5 安全规约</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
 
     </footer>
   </div>

@@ -255,7 +255,7 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/程序/【Note-程序】变量类型"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/程序/Java进阶-- volatile关键字"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -263,7 +263,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/【Note-程序】变量类型/">【Note-程序】变量类型</a>
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/">Java进阶-- volatile关键字</a>
     </h1>
   
 
@@ -271,7 +271,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/程序/【Note-程序】变量类型/" class="article-date">
+	<a href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -282,194 +282,36 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>最近考了部分面试者关于变量访问的一些问题，总结一下</p>
-</blockquote>
-<hr>
-<p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325" target="_blank" rel="noopener"><em>EverNote链接</em></a></p>
-<p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325/res/b21eeb36-a66c-488e-a682-5af7f7b7a990/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B.xmind" target="_blank" rel="noopener"><em>XMind文档</em></a></p>
-<p><strong>导图</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2e270ca767cdba41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="parameter type overview.png"></p>
-<p><strong>文本</strong></p>
-<p>变量类型</p>
-<p>1 static<br>  1.1 随着类的加载而加载<br>  1.2 附注：Java 类操作流程<br>2 volitale<br>  2.1 从内存中读取（并不能保证原子性）<br>  2.2 使用原则<br>    2.2.1 写入变量不依赖此变量的值(或者只有一个线程修改此变量)<br>    2.2.2 变量的状态不需要与其它变量共同参与不变约束<br>    2.2.3 访问变量不需要加锁<br>3 Atomic<br>  3.1 原子性变量<br>  3.2 缺点<br>    3.2.1 必须用特定API对变量进行操作<br>    3.2.2 只有有限的几种类型<br>4 synchronized<br>  4.1 缺点<br>    4.1.1 性能考量<br>  4.2 注意点<br>    4.2.1 尽量减小锁的范围与程度<br>    4.2.2 多锁时保证操作顺序以防死锁<br>5 concurrent工具包<br>  5.1 CountDownLatch<br>  5.2 ConcurrentHashMap<br>  5.3 CopyOnWriteArrayList/CopyOnWriteArraySet<br>  5.4 ReadWriteLock/ReentrantReadWriteLock<br>  5.5 LinkedBlockingQueue<br>  5.6 CyclicBarrier<br>  5.7 …</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--/">【Note-程序】HashMap-Integer,-V--SparseArray--</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>众所周知，基础数组的处理效率要比集合的处理效率高出指数倍（内存寻址优势，指哪打哪，直截了当）</p>
-</blockquote>
+        <p>volatile含有部分synchronized的特性，效率更高，但使用时需要注意细节，不然容易出错</p>
+<h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>Java中被volatile修饰的变量，每次读写都会直接使用“内存”介质，而不是使用CPU缓存</p>
 <blockquote>
-<p>在HashMap&lt;K, V&gt; 中K为Integer类型时，简单考虑，使用K作为数组下标可以使用基础数组替代HashMap，但这样处理的话会有一个问题，那就是K值较大时，直接使用数组会导致极大的内存空间浪费（很多数组内容都由null填充）——由此想到“稀疏数组”</p>
+<p>音 — UK <strong> /ˈvɒl.ə.taɪl/  US </strong> /ˈvɑː.lə.t̬əl/</p>
+<p>英 — <strong>likely to change suddenly and unexpectedly or suddenly become violent or angry</strong></p>
+<p>中 — 易变的</p>
 </blockquote>
-<p><strong>SparseArray</strong>就是针对这一场景设计的<br><em>数组中仅仅保存有内容的空间</em> 这样一来，就既可以利用数组高效的优势，又避免了内存空间的浪费。</p>
-<p><strong>取android.util.SparseArray源码中的put API如下：</strong></p>
-<pre><code>/**
- * Adds a mapping from the specified key to the specified value,
- * replacing the previous mapping from the specified key if there
- * was one.
- */
-public void put(int key, E value) {
-    int i = ContainerHelpers.binarySearch(mKeys, mSize, key);
-
-    if (i &gt;= 0) {
-        mValues[i] = value;
-    } else {
-        i = ~i;
-
-        if (i &lt; mSize &amp;&amp; mValues[i] == DELETED) {
-            mKeys[i] = key;
-            mValues[i] = value;
-            return;
-        }
-
-        if (mGarbage &amp;&amp; mSize &gt;= mKeys.length) {
-            gc();
-
-            // Search again because indices may have changed.
-            i = ~ContainerHelpers.binarySearch(mKeys, mSize, key);
-        }
-
-        mKeys = GrowingArrayUtils.insert(mKeys, mSize, i, key);
-        mValues = GrowingArrayUtils.insert(mValues, mSize, i, value);
-        mSize++;
-    }
-}
-</code></pre><blockquote>
-<p><em>可以看到，在查找是否包含时使用了BinarySearch（二分搜索），在插入时又做了一次容量、size检查，有无用内存时手动gc，此gc为private函数，只是对内存进行了整理，无效内容置为null</em></p>
-</blockquote>
-<blockquote>
-<p>查看DELETED定义：<br>private static final Object DELETED = new Object();<br>在删除时，只是将有效索引的内容至为DELETED，将mGarbage至为true，在下次有增/改操作时进行统一的容量整理；个人感觉这一api逻辑是经验设计，为的是避免连续删除时的频繁容量整理；</p>
-</blockquote>
-<p><strong>结论：</strong></p>
-<blockquote>
-<p>使用HashMap&lt;Integer, V&gt;时，用SparseArray替代，可以极大地提高性能</p>
-</blockquote>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashMap-Integer/">HashMap-Integer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SparseArray/">SparseArray</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/【Java】神奇的内存占用大户FinalizerReference"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/">【Java】神奇的内存占用大户FinalizerReference</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="问题起因"><a href="#问题起因" class="headerlink" title="问题起因"></a>问题起因</h2><p>在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西</p>
-<p>下图是项目中内存快照在AndroidStudio2.4中打开看到的样子</p>
-<p><img src="http://kylece.github.io/img/pic_resource/finalizerReference.png" alt=""></p>
-<p>可以看到，占用排名第一的类FinalizerReference占用了59M之巨（内存快照前有使用AS强制GC多次）</p>
-<p>这就很让人好奇了</p>
-<h2 id="FinalizerReference是什么？"><a href="#FinalizerReference是什么？" class="headerlink" title="FinalizerReference是什么？"></a>FinalizerReference是什么？</h2><p>我们来看源码：</p>
-<p><img src="http://kylece.github.io/img/pic_resource/FinalizerReferenceCode.png" alt=""></p>
-<p><a href="https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java" target="_blank" rel="noopener">https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java</a></p>
-<p>在讲Java  虚拟机 JVM垃圾回收机制时会涉及到一个概念，即finalize方法，这是Sun公司在Java设计之初，为照顾c++程序员有写析构函数的习惯而做的一种妥协</p>
-<p>在《深入理解Java虚拟机》一书中，讲到GC在最终回收对象之前，会去检查对象是否override了finalize方法，如果有覆盖此方法，对象就会被添加到finalize执行队列中，该书中没有指明是什么队列，实际上finalize执行队列就是我们这里讨论的FinalizerReference（书中还有提到finalize方法只会执行一次，并且有超时保护，因与本文主题无关，不做展开讨论）</p>
-<p>也就是说，有重写Java根基类Object的finalize方法的所有对象，在被最终被GC回收之前，都会被添加到这个队列中，等待被执行</p>
-<h2 id="为什么不能被GC"><a href="#为什么不能被GC" class="headerlink" title="为什么不能被GC"></a>为什么不能被GC</h2><p>这里要谈到JVM设计的一个基本标准</p>
-<p>GC的finalize执行队列会在一个单独的守护线程中运行，这一线程的优先级极低；</p>
-<p>一旦用户创建的对象速度过快，含finalize的对象速度快于finalize队列移除各元素的速度，FinalizerReference就会越来越大，而它获取CPU时间又少的可怜</p>
-<p>测试中发现，1~2h过去后，FinalizerReference的大小并没有按照预计的回落到较低水准</p>
-<p>这就迫使我们一定要解决这一问题，否则，随着应用开辟的内存越来越大，很容易引发喜闻乐见的OutOfMemoryError</p>
-<h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><ol>
-<li>不要重写finalize()方法，实在要释放资源，请到其它destroy一类函数中处理</li>
-</ol>
-<blockquote>
-<p>实际上Java库中不少方法都有重写finalize方法（如Input/outputStream、Canvas、Paint）</p>
-<p>这就引出了第二条指导原则：</p>
-</blockquote>
-<ol>
-<li><p>重复利用资源（避免反复创建）</p>
-</li>
-<li><p>杀器FinalizerHelper</p>
-<ul>
-<li>此工具来源于公司同事的技术分享</li>
-<li>指导思想：在场景退出的安全节点，利用反射强制调用FinalizerReference的remove方法，将对象从队列中移除掉</li>
-<li>对具体实施细节的同学联系我</li>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
+<li>保证变量可见性</li>
+<li>禁止指令进行重排序</li>
 </ul>
-</li>
+<blockquote>
+<p>基础概念：可见性、有序性、原子性</p>
+<ol>
+<li>可见性：对所有线程来说，任一线程对变量的改动都立即可见</li>
+<li>有序性：代码可能会被编译器混编，有序性即指代码按顺序执行</li>
+<li>原子性：所有操作不会被打断，谁也不行（除非断电）</li>
 </ol>
+</blockquote>
+<p>实际上我们对变量的修改，虽然可能Java就一行代码（如 y=x），但被解释成汇编语言会变成多行（y=x就需要进行两步操作：读x值，写入y所在内存，学过汇编的同学应该比较清楚）</p>
+<h3 id="与synchronized的区别"><a href="#与synchronized的区别" class="headerlink" title="与synchronized的区别"></a>与synchronized的区别</h3><p>按字面理解，volatile关键字只是标记变量为易变的，并不能保证对变量的所有操作都是同步的，即不能保证具有synchronized一样的效果</p>
+<p>实际上，对volatile修饰的变量的读/写操作是可以保证其原子性的，但还要注意一个问题，即同时写变量的线程可能不止一个，如此一来，其中部分的写操作就有可能丢失</p>
+<p>听起来好像volatile使用起来很危险，但它也是有它的用途的</p>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
+<li>对于写不依赖历史状态的变量，可以考虑使用volatile修饰字代替synchronized来提高程序效率</li>
+<li>保证代码的有序性：volatile变量的读写操作之前的代码，编译器是不会进行重排序的</li>
+</ul>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在volatile满足不了要求的场景可以考虑使用synchronized、lock、Atomic变量来保证特性</p>
+<p>对变量的写不依赖历史状态的变量使用volatile修饰可以提高效率</p>
+<p>对于需要保证部分程序语句有序性的场景可以考虑使用volatile代替锁定整个代码块，提高效率</p>
 
       
 
@@ -479,7 +321,7 @@ public void put(int key, E value) {
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FinalizerReference/">FinalizerReference</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/volatile/">volatile</a></li></ul>
 
     </footer>
   </div>
@@ -490,7 +332,7 @@ public void put(int key, E value) {
 
 
   
-    <article id="post-技术/算法/【算法】BinarySearch--二分搜索-折半查找法"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/程序/GC"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -498,7 +340,7 @@ public void put(int key, E value) {
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/">【算法】BinarySearch--二分搜索-折半查找法</a>
+      <a class="article-title" href="/2018/03/09/技术/程序/GC/">由 _Java GC_ 看 _Android_ 内存泄露</a>
     </h1>
   
 
@@ -506,7 +348,174 @@ public void put(int key, E value) {
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/" class="article-date">
+	<a href="/2018/03/09/技术/程序/GC/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="由-Java-GC-看-Android-内存泄露"><a href="#由-Java-GC-看-Android-内存泄露" class="headerlink" title="由 Java GC 看 Android 内存泄露"></a>由 <em>Java GC</em> 看 <em>Android</em> 内存泄露</h1><p>内存泄露，一个老生常谈的话题，本文将从Java GC的角度出发，一探Android内存泄露的究竟，希望能给读者带来些许启发。</p>
+<p><em>本篇涵盖：</em></p>
+<ul>
+<li><em><strong>准备</strong>——基础知识要求及名字解释</em></li>
+<li><em><strong>背景</strong>——Android内存泄露的本质与危害</em></li>
+<li><em><strong>原因</strong>——为什么会产生泄露</em></li>
+<li><em><strong>基础</strong>——Java内存分配与回收</em></li>
+<li><em><strong>引申</strong>——JVM与Android虚拟机</em></li>
+<li><em><strong>实战</strong>——内存泄露攻防</em></li>
+</ul>
+<h2 id="零、准备"><a href="#零、准备" class="headerlink" title="零、准备"></a>零、准备</h2><h3 id="0-0-要求："><a href="#0-0-要求：" class="headerlink" title="0.0 要求："></a>0.0 要求：</h3><p>  阅读本文，需要读者具有一定的JAVA基础与Android基础</p>
+<h3 id="0-1-名词解释："><a href="#0-1-名词解释：" class="headerlink" title="0.1 名词解释："></a>0.1 名词解释：</h3><ul>
+<li>GC——Garbage Collector垃圾收集器</li>
+<li>MAT——Eclipse  Memory Analyzer Tool 内存分析工具</li>
+<li>LeakCanary——第三方内存泄露监测工具</li>
+<li>StrictMode——Android严格模式，调优时可以参考<h3 id="0-2-演示环境："><a href="#0-2-演示环境：" class="headerlink" title="0.2 演示环境："></a>0.2 演示环境：</h3></li>
+<li>Android Studio——3.0 Canary 8</li>
+<li>Eclipse MAT——V1.7.0</li>
+<li>LeakCanary——V1.5.1</li>
+</ul>
+<h2 id="一、本质与危害"><a href="#一、本质与危害" class="headerlink" title="一、本质与危害"></a>一、本质与危害</h2><h3 id="1-1-何谓内存泄露"><a href="#1-1-何谓内存泄露" class="headerlink" title="1.1 何谓内存泄露"></a>1.1 何谓内存泄露</h3><p>在计算机科学中，内存泄漏指由于疏忽或错误造成程序未能释放已经不再使用的内存。内存泄漏并非指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误，导致在释放该段内存之前就失去了对该段内存的控制，从而造成了内存的浪费。</p>
+<p>在安卓中，内存泄露主要是指应用程序进程在运行过程中有不能释放而不再使用的内存，占用了比实际需要多的空间。</p>
+<p>图1.1.1是使用MAT分析手机内存快照得到的OverView结果：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ca4c6177eb55ae69.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800#center" alt="图1.1.1 ORG某款应用的Debug版内存泄露OverView"></p>
+<h3 id="1-2-恶劣影响"><a href="#1-2-恶劣影响" class="headerlink" title="1.2 恶劣影响"></a>1.2 恶劣影响</h3><p>内存泄漏会因为减少可用内存的数量从而降低计算机的性能。最终，在最糟糕的情况下，过多的可用内存被分配掉导致全部或部分设备停止正常工作，或者应用程序崩溃。在以下情況，内存泄漏导致较嚴重的后果2：</p>
+<ul>
+<li>程序运行后置之不理，消耗越来越多的内存（比如服务器上的后台任务，尤其是嵌入式系统中的后台任务，这些任务可能被运行后很多年内都置之不理）；</li>
+<li>频繁分配新内存；</li>
+<li>程序能够请求未被释放的内存（比如共享内存）；</li>
+<li>内存非常有限，比如在嵌入式系统或便携设备中；</li>
+<li>…</li>
+</ul>
+<p>针对安卓，内存泄露轻则导致应用占用内存虚高、增加CPU占用、耗电，重则导致应用程序无法开辟所需大小的内存，引发OOM，触发崩溃，这在内存小的机器上尤为明显（我们平时在测试应用内存占用表现时，可以多使用低端机）。<br>结合上一节所举例子，由图1.1可见该应用的泄露足有35M之多，这一内存结果还是应用刚启动时的情况，随着用户使用时间加长，泄露只会越来越多，直到用户杀死应用或者应用主动崩溃（如图1.2.1）。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-b460f38cafbd927b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图1.2.1 AndroidStudio 某OutOfMemory 堆栈"></p>
+<p>下面我们来看内存泄露是如何产生的。</p>
+<h2 id="二、产生缘由"><a href="#二、产生缘由" class="headerlink" title="二、产生缘由"></a>二、产生缘由</h2><p>内存泄露诱因有很多，安卓中比较常见的有：</p>
+<ul>
+<li>静态变量持有引用(集合类、单例造成的内存泄漏)</li>
+<li>匿名内部类/非静态内部类和异步线程</li>
+<li>Handler 、UI线程的post、AnimatorListener等使用不当</li>
+<li>资源未关闭(或在finalize中关闭)</li>
+<li>监听器的使用，在释放对象的同时没有相应删除监听器</li>
+<li>…</li>
+</ul>
+<p>下面针对部分诱因进行说明，具体解决办法此处按下不表。</p>
+<h3 id="2-1-静态变量导致的泄露"><a href="#2-1-静态变量导致的泄露" class="headerlink" title="2.1 静态变量导致的泄露"></a>2.1 静态变量导致的泄露</h3><p>静态集合导致的泄露可以分析为：长生命周期的对象，持有了短生命周期对象的引用，在后者生命周期结束时未释放长周期对象对它的引用，导致对象无法被GC回收。图2.1.1为一示例，即使在循环内有设置集合对象为null，但集合中的对象还是存在，GC并不能回收它（这种在集合中不断创建新对象的写法也是极其臭名昭著的）。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-03be10fdf312be61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.1.1  静态集合的泄露示例"></p>
+<p>图2.1.2为某APP静态集合泄露的对象汇总，可以看到总大小有11.7M之大。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5a2e015b3d5de3b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.1.2 某静态泄露的汇总结果"></p>
+<h3 id="2-2-匿名内部类引发的内存泄露"><a href="#2-2-匿名内部类引发的内存泄露" class="headerlink" title="2.2 匿名内部类引发的内存泄露"></a>2.2 匿名内部类引发的内存泄露</h3><p>匿名内部类极易引发内存泄露，纵使这样的写法在代码层面会简洁很多，但在涉及到匿名内部类生命周期不依附于外部类时，需要我们谨慎处理，不然就很有可能引发泄露，图2.2.1 为AppsFlayer SDK 4.7.1 Forground.java中某段代码的近似版本（该泄露在SDK v4.7.4中已修复）：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-d8c4f55edc053536.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.2.1 匿名内部类引发的内存泄露示例"><br>图2.2.1 匿名内部类引发的内存泄露示例</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-32baef0d6d1e22c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.2.2 匿名内部类引发的内存泄露示例2"><br>图2.2.2展示了常见的Handler写法可能引发的内存泄露（Android Studio）</p>
+<p>图2.2.2 匿名内部类引发的内存泄露示例2</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-0270c0fdc04b6d26.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.2.3 匿名内部类引发的内存泄露示例3"><br>图2.2.3 匿名内部类引发的内存泄露示例3</p>
+<p>一般在一个质量欠佳的工程中，匿名内部类或异步线程操作导致的内存泄露随处可见。</p>
+<h3 id="2-3-Handler任务管理不当"><a href="#2-3-Handler任务管理不当" class="headerlink" title="2.3 Handler任务管理不当"></a>2.3 Handler任务管理不当</h3><p>Handler、AnimationListener、AnimatorUpdateListener使用不当也极易导致泄露，图2.3.1即为有泄露隐患的示例</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-518f810be8d5eea2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.3.1 Handler操作潜在泄露示例"><br>图2.3.1 Handler操作潜在泄露示例</p>
+<h3 id="2-4-资源未及时关闭"><a href="#2-4-资源未及时关闭" class="headerlink" title="2.4 资源未及时关闭"></a>2.4 资源未及时关闭</h3><p>Android资源不及时关闭会出现内存泄露的地方有很多，诸如在使用I/O流、Cursor（图2.4.1展示了在APP开启StrictMode时会收到的FileIO未close的异常Throwable）</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-cbf5aa5529865f5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.4.1 closable close未调用"><br>图2.4.1 closable close未调用</p>
+<h3 id="2-5-绑定-解绑、注册-反注册未成对调用"><a href="#2-5-绑定-解绑、注册-反注册未成对调用" class="headerlink" title="2.5 绑定/解绑、注册/反注册未成对调用"></a>2.5 绑定/解绑、注册/反注册未成对调用</h3><p>绑定/解绑、注册/反注册同时出现这一点毋庸置疑，但实际工程中发现有开发者对于成对调用的理解不够透彻，会有前后条件不一致的情况，导致内存泄露（如注册时无条件注册，反注册时加入不能100%保证成立的判定条件）</p>
+<h2 id="三、Java内存分配与垃圾回收策略"><a href="#三、Java内存分配与垃圾回收策略" class="headerlink" title="三、Java内存分配与垃圾回收策略"></a>三、Java内存分配与垃圾回收策略</h2><h3 id="内存分配"><a href="#内存分配" class="headerlink" title="内存分配"></a>内存分配</h3><h3 id="内存空间划分"><a href="#内存空间划分" class="headerlink" title="内存空间划分"></a>内存空间划分</h3><ul>
+<li>方法区</li>
+<li>堆区</li>
+<li>虚拟机栈</li>
+<li>程序计数器 </li>
+<li>本地方法栈</li>
+</ul>
+<h3 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h3><h2 id="四、JVM与Android虚拟机的异同"><a href="#四、JVM与Android虚拟机的异同" class="headerlink" title="四、JVM与Android虚拟机的异同"></a>四、JVM与Android虚拟机的异同</h2><h3 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h3><h3 id="安卓虚拟机"><a href="#安卓虚拟机" class="headerlink" title="安卓虚拟机"></a>安卓虚拟机</h3><h3 id="两者异同"><a href="#两者异同" class="headerlink" title="两者异同"></a>两者异同</h3><h2 id="五、如何“防治”"><a href="#五、如何“防治”" class="headerlink" title="五、如何“防治”"></a>五、如何“防治”</h2><h3 id="攻"><a href="#攻" class="headerlink" title="攻"></a>攻</h3><h3 id="防"><a href="#防" class="headerlink" title="防"></a>防</h3><blockquote>
+<p>参考文献：</p>
+<pre><code>1. https://zh.wikipedia.org/wiki/内存泄漏
+2. https://zh.wikipedia.org/wiki/内存泄漏
+</code></pre></blockquote>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GC/">GC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/Android--Monkey测试"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/Android--Monkey测试/">Android Monkey 测试时防止通知栏下拉</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/Android--Monkey测试/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><p>Android monkey test — <a href="http://einverne.github.io/post/2016/09/android-monkey-test.html#防止通知栏下拉" target="_blank" rel="noopener">http://einverne.github.io/post/2016/09/android-monkey-test.html#防止通知栏下拉</a></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monkey/">Monkey</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SystemBar/">SystemBar</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/Bitmap recycle做了什么"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/Bitmap recycle做了什么/">看看Bitmap源码中recycle 做了什么</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/Bitmap recycle做了什么/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -518,21 +527,45 @@ public void put(int key, E value) {
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下</p>
+<p>看看Bitmap源码中recycle 做了什么</p>
+<p>PS：源码查看工具网站：AndroidXref、grepCode</p>
 </blockquote>
-<p>wiki 图示：(<a href="https://zh.wikipedia.org/wiki/二分搜索算法" target="_blank" rel="noopener">Link</a>)</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c0e03f78ac559fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search wiki pic.png"></p>
-<p>Android中util.ContainerHelpers中的实现api：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-53135a5bb2e3e281.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search.png"></p>
-<p><em>排序前提：array本身已为有序数组</em></p>
-<p>查找过程：<br>0.向右无符号移位1位，得到middle位值；<br>1.以mid为准比对midIndex位置值与参数value大小，大则hi位移至现mid位前一位，小则lo位移至现mid位后一位，相等则返回mid；<br>2.重复以上过程直至不满足循环条件或是又查找结果</p>
-<p>从low、high可以看出，结果返回的是value在数组中对应的index，如果为负则代表不存在（最后一行，返回~lo会得到一个负数，因为lo计算结果一定为正，个人感觉直接返回一个负数可以连按位取反都省略掉，是不是性能更优？）</p>
-<hr>
+<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p> 在Bitmap调用recycle之后再去使用，会有invalid Bitmap的异常导致应用崩溃，实际项目中其实是碰到了tgkill的Native代码崩溃的堆栈信息：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/stacktrace_of_tgkill.png" alt=""></p>
+<p>分析Bitmap getGenerationId在源码中的调用情况：（git clone Framework 源码之后用sublimeText搜索得如下结果，txt文件已过滤）</p>
+<p><img src="http://kylece.github.io/img/pic_resource/FindResults.png" alt=""></p>
+<p>绿色框中的代码因为是surface的API，或者是JavaDoc的注释，可以忽略不计，可以看到有效调用就是关于Notification的调用；</p>
+<p>结合GP后台的崩溃占用情况（&gt;7.0占比较高，6.0亦有发生），查阅AndroidDeveloper的v6.0 changeLog，发现有这么一条：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/Android6.0_Changes_Notification.png" alt=""></p>
+<p>看到其中关键信息 ==reuse Notification.Builder instance==，但鉴于其它App没有出现这种级别的问题，所以另谋其它出路；</p>
+<p>剩下的就只剩Bitmap了</p>
+<h2 id="Bitmap-recycle做了什么"><a href="#Bitmap-recycle做了什么" class="headerlink" title="Bitmap recycle做了什么"></a>Bitmap recycle做了什么</h2><h3 id="Bitmap-cpp"><a href="#Bitmap-cpp" class="headerlink" title="Bitmap.cpp"></a>Bitmap.cpp</h3><p>source code on xRef: <a href="http://androidxref.com/6.0.1_r10/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp" target="_blank" rel="noopener">http://androidxref.com/6.0.1_r10/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp</a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">782</span><span class="function"><span class="keyword">static</span> jboolean <span class="title">Bitmap_recycle</span><span class="params">(JNIEnv* env, jobject, jlong bitmapHandle)</span> </span>&#123;</span><br><span class="line"><span class="number">783</span>    <span class="function">LocalScopedBitmap <span class="title">bitmap</span><span class="params">(bitmapHandle)</span></span>;</span><br><span class="line"><span class="number">784</span>    bitmap-&gt;freePixels();</span><br><span class="line"><span class="number">785</span>    <span class="keyword">return</span> JNI_TRUE;</span><br><span class="line"><span class="number">786</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">168</span><span class="keyword">void</span> Bitmap::freePixels() &#123;</span><br><span class="line"><span class="number">169</span>    AutoMutex _lock(mLock);</span><br><span class="line"><span class="number">170</span>    <span class="keyword">if</span> (mPinnedRefCount == <span class="number">0</span>) &#123;</span><br><span class="line"><span class="number">171</span>        doFreePixels();</span><br><span class="line"><span class="number">172</span>        mPixelStorageType = PixelStorageType::Invalid;</span><br><span class="line"><span class="number">173</span>    &#125;</span><br><span class="line"><span class="number">174</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">176</span><span class="keyword">void</span> Bitmap::doFreePixels() &#123;</span><br><span class="line"><span class="number">177</span>    <span class="keyword">switch</span> (mPixelStorageType) &#123;</span><br><span class="line"><span class="number">178</span>    <span class="keyword">case</span> PixelStorageType::Invalid:</span><br><span class="line"><span class="number">179</span>        <span class="comment">// already free'd, nothing to do</span></span><br><span class="line"><span class="number">180</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">181</span>    <span class="keyword">case</span> PixelStorageType::External:</span><br><span class="line"><span class="number">182</span>        mPixelStorage.external.freeFunc(mPixelStorage.external.address,</span><br><span class="line"><span class="number">183</span>                mPixelStorage.external.context);</span><br><span class="line"><span class="number">184</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">185</span>    <span class="keyword">case</span> PixelStorageType::Ashmem:</span><br><span class="line"><span class="number">186</span>        munmap(mPixelStorage.ashmem.address, mPixelStorage.ashmem.size);</span><br><span class="line"><span class="number">187</span>        close(mPixelStorage.ashmem.fd);</span><br><span class="line"><span class="number">188</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">189</span>    <span class="keyword">case</span> PixelStorageType::Java:</span><br><span class="line"><span class="number">190</span>        JNIEnv* env = jniEnv();</span><br><span class="line"><span class="number">191</span>        LOG_ALWAYS_FATAL_IF(mPixelStorage.java.jstrongRef,</span><br><span class="line"><span class="number">192</span>                <span class="string">"Deleting a bitmap wrapper while there are outstanding strong "</span></span><br><span class="line"><span class="number">193</span>                <span class="string">"references! mPinnedRefCount = %d"</span>, mPinnedRefCount);</span><br><span class="line"><span class="number">194</span>        env-&gt;DeleteWeakGlobalRef(mPixelStorage.java.jweakRef);</span><br><span class="line"><span class="number">195</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">196</span>    &#125;</span><br><span class="line"><span class="number">197</span></span><br><span class="line"><span class="number">198</span>    <span class="keyword">if</span> (android::uirenderer::Caches::hasInstance()) &#123;</span><br><span class="line"><span class="number">199</span>        android::uirenderer::Caches::getInstance().textureCache.releaseTexture(</span><br><span class="line"><span class="number">200</span>                mPixelRef-&gt;getStableID());</span><br><span class="line"><span class="number">201</span>    &#125;</span><br><span class="line"><span class="number">202</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>注意析构函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">164</span> Bitmap::~Bitmap() &#123;</span><br><span class="line"><span class="number">165</span>    doFreePixels();</span><br><span class="line"><span class="number">166</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>还需注意到代码：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/bitmap_cpp_assert_valid.png" alt=""></p>
+<p>结合Bitmap.cpp的其它代码，只有在Bitmap recycle之后又拿来使用才会出现这个assertValid断言错误，遂将矛头指向Bitmap recycle</p>
+<h3 id="不调用recycle-会怎样？"><a href="#不调用recycle-会怎样？" class="headerlink" title="不调用recycle()会怎样？"></a>不调用recycle()会怎样？</h3><p>Android2.3（API 11）之前，Bitmap开辟的内存位于native Stack，需要手动调用recycle进行释放，而2.3之后属于VM的heap，系统GC会自动处理。</p>
+<p>而我们在2.3之后的系统中调用Bitmap的recycle，唯一的作用，就是把Bitmap释放的动作提前了，私以为，仅有的效用是会降低OOM发生的概率</p>
+<p>这一点也可以从Bitmap AndroidAPI解释网页上看出一点端倪</p>
+<p><img src="http://kylece.github.io/img/pic_resource/Java_Bitmap_recycle.png" alt=""></p>
 <blockquote>
-<p>Java 位操作符：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-a2c49bbb981fa6c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Java bit calculate.png"></p>
+<p>this is an advanced call, and normally need not be called…</p>
 </blockquote>
+<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><p>在所有会调用Bitmap.recycle()的地方，对相应的recycle状态检查，如果发现有recycle之后仍然在使用的地方，则直接抛出异常，暴露问题，就像这样：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/BitmapWatcher.png" alt=""></p>
+<p>这样，在Monkey测试覆盖面够广时，就可以预期暴露出问题所在了；</p>
+<p>关于Bitmap的检查，还有一种思路是使用hook方式进行，这样还可以对第三方依赖lib进行检查，后期如果应用这种方式，我再补充一篇</p>
 <hr>
-<p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="夕识.jpeg"></p>
+<p>Ref:</p>
+<ol>
+<li>bitmap recycle不当调用引发的问题 <a href="http://www.jianshu.com/p/b5c8e98ff5b0" target="_blank" rel="noopener">http://www.jianshu.com/p/b5c8e98ff5b0</a></li>
+<li>Bitmap source Code：<a href="https://android.googlesource.com/platform/frameworks/base/+/47fb191/core/jni/android/graphics/Bitmap.cpp；（GrepCode网站上5.0r1的Bitmap" target="_blank" rel="noopener">https://android.googlesource.com/platform/frameworks/base/+/47fb191/core/jni/android/graphics/Bitmap.cpp；（GrepCode网站上5.0r1的Bitmap</a> sourcecode）<a href="http://grepcode.com/file/repo1.maven.org/maven2/org.robolectric/android-all/5.0.0_r2-robolectric-0/android/graphics/Bitmap.java；（AndroidXref网站上的Bitmap" target="_blank" rel="noopener">http://grepcode.com/file/repo1.maven.org/maven2/org.robolectric/android-all/5.0.0_r2-robolectric-0/android/graphics/Bitmap.java；（AndroidXref网站上的Bitmap</a> 7.1.1 sourcecode）<a href="http://androidxref.com/7.1.1_r6/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp#896" target="_blank" rel="noopener">http://androidxref.com/7.1.1_r6/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp#896</a></li>
+<li>Bitmap API 解释on AndroidDeveloper：<a href="https://stuff.mit.edu/afs/sipb/project/android/docs/reference/android/graphics/Bitmap.html#recycle()" target="_blank" rel="noopener">https://stuff.mit.edu/afs/sipb/project/android/docs/reference/android/graphics/Bitmap.html#recycle()</a></li>
+</ol>
 
       
 
@@ -542,7 +575,7 @@ public void put(int key, E value) {
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bitmap/">Bitmap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recycle/">recycle</a></li></ul>
 
     </footer>
   </div>
@@ -1428,7 +1461,7 @@ c. 更好的debug支持
 
 
   
-    <article id="post-技术/Android/【Android】JNI-Tips-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/Android/【Android】VectorDrawable介绍"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -1436,7 +1469,7 @@ c. 更好的debug支持
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/">JNI-Tips-提要</a>
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/">VectorDrawable介绍</a>
     </h1>
   
 
@@ -1444,7 +1477,7 @@ c. 更好的debug支持
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/" class="article-date">
+	<a href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -1456,17 +1489,38 @@ c. 更好的debug支持
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>引：<br>项目需要用到JNI，实际上还需要在native跟Java之间写一些代码，来连接二位，需要做进一步了解。本文主要对官方的JNI Tips做一些简单的关键提取<br>参考：<br><a href="">JNI Tips</a></p>
+<p>引<br>今天视频处理中碰到一些简单图片的vector绘制方案<br>调研结果：</p>
+</blockquote>
+<p>效果：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9a7da5968fccb57a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="vector paint eg.png"></p>
+<p><strong>优点</strong>：Vector与PNG文件相比，能极大地缩小文件占用空间；<br><strong>弱势</strong>：</p>
+<ol>
+<li>兼容性处理起来需要花费一些心思；</li>
+<li>复杂图片不适合运用vector绘制，一个是初始化效率，第二个是重复使用时bitmap在GPU中会有缓存，而vector没有；</li>
+<li>需要额外的一些辅助工具协作生成path；</li>
+</ol>
+<blockquote>
+<p>例注：</p>
+<ol>
+<li>使用：<br>需要在Gradle 中添加：android.defaultConfig域<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vectorDrawables.useSupportLibrary = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<ol>
+<li>XML attributes:  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">viewportHeight \ viewportWidth</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>划分的比例大小（图片中的例子：36dp大小的图像划分成24份，Path中的坐标建立在划分后的坐标系统之上）<br><code>意义--&gt;将大小与path分离</code></p>
+<hr>
+<p>Path指令：<br>M = moveto(M X,Y)<br>L = lineto(L X,Y)<br>H = horizontal lineto(H X)<br>V = vertical lineto(V Y)<br>C = curveto(C X1,Y1,X2,Y2,ENDX,ENDY)：三次贝赛曲线<br>S = smooth curveto(S X2,Y2,ENDX,ENDY)<br>Q = quadratic Belzier curve(Q X,Y,ENDX,ENDY)：二次贝赛曲线<br>T = smooth quadratic Belzier curveto(T ENDX,ENDY)：映射<br>A = elliptical Arc(A RX,RY,XROTATION,FLAG1,FLAG2,X,Y)：弧线<br>Z = closepath()</p>
+<hr>
+<p>工具：<br><a href="http://inloop.github.io/svg2android/" target="_blank" rel="noopener">to vector</a><br><a href="http://editor.method.ac/" target="_blank" rel="noopener">SVG editor</a></p>
+<hr>
+<blockquote>
+<p>参考：(涵盖由头、Vector语法、转换工具、原理、兼容处理、性能考量等方面知识，良心之作)<br><a href="http://www.jianshu.com/p/e3614e7abc03" target="_blank" rel="noopener">Android Vector曲折的兼容之路</a></p>
 </blockquote>
 <hr>
-<p><a href="https://www.evernote.com/l/ARunDTJCHX9AQ5Zm7URUjILWW2iFBUVWGRc" target="_blank" rel="noopener">Evernote连接</a></p>
-<p><a href="https://www.evernote.com/shard/s283/sh/a70d3242-1d7f-4043-9666-ed44548c82d6/5b68850545561917/res/ba76fe6f-7df9-41f8-a0cd-1f0dcbe4349c/JNI%20Tips.xmind" target="_blank" rel="noopener">XMind 文档下载</a></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ce0301d2d61fe60b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JNI Tips.png"></p>
-<p>文本：</p>
-<p>JNI Tips</p>
-<p>definition<br>  Java Native Interface<br>  how it works<br>    <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html</a><br>JavaVM and JNIEnv<br>  JavaVM<br>    one process can only create one JavaVM in Android<br>  JNIEnv<br>    provides most of JNI functions. Your native functions all receive a JNIEnv as first argument<br>    used for thread-local, so you cannot share a JNIEnv between threads (GetEnv can be used to discover the thread’s JNIEnv when no other way)<br>Threads<br>  a thread will have no JNIEnv unless it’s attached, before this it cannot make JNI calls (all threads are Linux threads, scheduled by the kernel)<br>  Threads attached through JNI must call DetachCurrentThread before they exit<br>jclass, jmethodID, and jfieldID<br>  steps to access an object’s field from native code<br>    FindClass:—&gt; get the class object reference for the class<br>    GetFieldID:—&gt;Get the field ID for the field with GetFieldID<br>    GetIntField:—&gt;Get the contents of the field with something appropriate<br>  call a method—&gt; get a class object reference and then a method ID<br>  it’s useful to look the values up once and cache the results in your native code. Because there is a limit of one JAVAVM per process<br>  if want to cache IDs when a class is loaded, add a piece of code that allow the native code to cache field offsets<br>Local and Global Reference<br>  almost every object returned by a JNI function is a “local reference”—&gt;it’s valid for the duration of the current native method in the current thread. Even if the object itself continues to live on after the native method returns, the reference is not valid<br>  the only way to get non-local references is via the functions NewGlobalRef and NewWeakGlobalRef (the global reference is guaranteed to be valid until you call DeleteGlobalRef)<br>  to see if two reference refer to the same object, you must use the IsSameObject function, never use == in native code<br>  jfieldIDs, jmethod are opaque types, not object references, should not be passed to NewGlobalRef<br>  if you attach a native thread with AttachCurrentThread, the code you are running will never automatically free local references until the thread detaches. Any local references you create will have to be deleted manually.<br>UTF-8 and UTF-16 Strings<br>  java use UTF-16, JNI provides methods that work with Modified UTF-8 as well.<br>  you cannot pass arbitrary UTF-8 data to JNI and expect it to work correctly<br>  Android currently does not require a copy in GetStringChars,however GetStringUTFChars requires an allocation and a conversion to UTF-8. UTF-16 strings are not zero-terminated, \u0000 is allowed, so you need to hang on to the string length like jchar pointer<br>  Don’t forget to Release the strings you Get. the string functions return jchar<em> or jbyte</em><br>  Data passed to NewStringUTF must be in Modified UTF-8 format<br>Primitive Arrays<br>  You must Release every array you Get<br>  release mode arguments alternative values<br>    0<br>        buffer freed<br>    JNI_COMMIT<br>        do nothing/ buffer not freed<br>    JNI_ABORT<br>        buffer freed, Earlier wirtes are not aborted<br>Region calls<br>  advantages<br>    reducing overhead by reducing JNI call requirements<br>    do not require pinning or extra data copies<br>    reduces the risk of programmer error–&gt; no risk of forgetting to call Release<br>Exception<br>  your must not call JNI functions while an exception is pending, except several special kinds of API: delete/ exception process/stack process/ release process …<br>Extended Checking<br>  JNI does very little error checking ~~!<br>  Android offers a mode called CheckJNI<br>    array, bad pointers, Class names, Critical call,Direct ByteBuffers, Exceptions, JNIEnv<em>s, jmethodIDs, References,Release modes, Type safety, UTF-8<br>Native Libraries<br>  steps<br>    call System.loadLibrary<br>    provide a native function : jint JNI_OnLoad(JavaVM</em> vm void* reserved)<br>    in JNI_OnLoad, register all your native methods<br>64-bit Considerations<br>  you need to stash your native pointers in a long field rather than an int<br>Unsupported Features/ Backwards Compatibility<br>  Define class<br>  dynamic lookup of native functions<br>  detaching threads<br>  weak global references<br>  Local references<br>  determining reference type with GetObjectRefType</p>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
 
@@ -1476,7 +1530,7 @@ c. 更好的debug支持
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VectorDrawable/">VectorDrawable</a></li></ul>
 
     </footer>
   </div>
