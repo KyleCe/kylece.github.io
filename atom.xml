@@ -365,32 +365,30 @@
   </entry>
   
   <entry>
-    <title>降低内存占用Route</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E9%99%8D%E4%BD%8E%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8Route/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/降低内存占用Route/</id>
+    <title>【Note】《构建之法》提要</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E3%80%90Note%E3%80%91%E3%80%8A%E6%9E%84%E5%BB%BA%E4%B9%8B%E6%B3%95%E3%80%8B%E6%8F%90%E8%A6%81/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/【Note】《构建之法》提要/</id>
     <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.089Z</updated>
+    <updated>2018-03-09T15:32:43.046Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="已执行"><a href="#已执行" class="headerlink" title="已执行"></a>已执行</h3><ul><li>修复LeakCanary报出的问题（内网、外网）<ul><li>直接检测泄露</li><li>外网beta用户上报</li></ul></li><li>分析dumpheap文件，查内存占用（直接分析、对比分析）<ul><li>占用大户<ul><li>Bitmap</li><li>FinalizerReference</li></ul></li><li>场景分析，进出场景、发现可疑场景，查内存dumpheap文件<ul><li>已有发现：WebView、主题切换泄露</li></ul></li></ul></li></ul>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>《软件工程  构建之法》作者邹欣系Windows中国工程师团队首席研发总监 （Link：<a href="https://www.amazon.cn/图书/dp/B011LPUAYI/ref=sr_1_1?ie=UTF8&amp;qid=1487685207&amp;sr=8-1&amp;keywords=构建之法" target="_blank" rel="noopener">亚马逊</a>）</p></blockquote><blockquote><p>整本书，极其认真，结构组织的有点像学术论文了。涵盖面比较全，涉及到了现代软件工程的整个流程，从需求的挖掘产生，到中间各个环节地循序渐进，直至最后的交付与维护支持。必然也就导致每个点深入程度相对较有限。</p></blockquote><blockquote><p>除了项目本身，本书另一个关注重点是项目中的人：项目经理、用户、测试、开发，讲到各种角色各自的职责，相互之间的协作关系、合作方法，最后一章中还有提到职业道德~（感觉有点偏向股东与雇主）</p></blockquote><blockquote><p>全书更多的是探讨方法论，关于开发、关于敏捷迭代、关于项目管理、关于结对编程、关于测试流程与种类、关于用户体验的获得与改进、关于需求分析与评审、关于软件工程师的成长。当然作者只是提供了一些自己的见解，很多观点并不一定准确，其中也有一些落伍的工具、模型。</p></blockquote><blockquote><p>更大的意义许是全面地概述一些需要注意的点，真正贯彻落实这些方法需要耗费极大成本。很多观点引人深思。</p></blockquote><hr><p><a href="https://www.evernote.com/l/ARsVoFkwFjJCdY6Llj0jxODvRc2NPL8xgTI" target="_blank" rel="noopener">EverNote链接</a></p><p><a href="https://www.evernote.com/shard/s283/sh/15a05930-1632-4275-8e8b-963d23c4e0ef/45cd8d3cbf318132/res/7853730d-412e-4220-9b6a-4fda39ca66a8/构建之法.xmind" target="_blank" rel="noopener">XMind文档</a></p><p><strong>导图</strong></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-7bcaba0014f30279.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="构建之法 overview.png"></p><p><strong>文本</strong><br>构建之法</p><p>1 个人<br>  1.1 2 个人和技术流程<br>    1.1.1 单元测试<br>        1.1.1.1 着眼于基本点；当事人编写；不改变机器状态；快；可重现；覆盖所有代码路径；与产品代码一同维护<br>    1.1.2 效能分析工具<br>        1.1.2.1 抽样、代码注入<br>    1.1.3 个人开发流程<br>        1.1.3.1 计划、开发、记录用时、测试报告、计算工作量、事后总结、提出过程改进计划<br>  1.2 3 软件工程师的成长<br>    1.2.1 大江东去，浪淘尽，千古风流人物<br>2 团队<br>  2.1 4 两人合作<br>    2.1.1 代码规范、设计规范、复审（驳回，选择性同意，放行）、结对编程、不同阶段的技巧<br>  2.2 5 团队和流程<br>    2.2.1 团队模式、开发流程<br>  2.3 6 敏捷流程<br>    2.3.1 敏捷问题与解法、敏捷团队（自主）、敏捷总结<br>  2.4 7 MSF<br>    2.4.1 MSF基本原则（共享、沟通、为共同目标努力、充分授权和信任、各司其职、敏捷）；MSF团队模型<br>3 产品<br>  3.1 8 需求分析<br>    3.1.1 软件需求（获取引导、分析定义、验证、管理）；利益相关者；用户调研（焦点小组、人类学、快速原型、AB测试）；竞争性需求分析框架（Need、Approach、Benefit、Competitors、Delivery）；功能定位与优先级（必要与辅助、核心与外围）；计划与估计；分而治之<br>  3.2 9 项目经理<br>    3.2.1 来历；职责（开发与测试之外的所有）；PM与风险管理；能力要求与任务（观察理解快速学习、分析管理、专业、自省）<br>  3.3 10 典型用户和场景<br>  3.4 12 用户体验<br>    3.4.1 要素（第一印象、换位思考、记住用户选择…）；设计的步骤与目标；评价标准（快反馈、贴近现实、暴露控制权、一致性与标准化、适合各种用户、帮助修复；提示语帮助）<br>4 质量<br>  4.1 11 软件设计与实现<br>    4.1.1 分析与设计方法；团队建模和分析方法；日常管理；<br>  4.2 13 软件测试<br>    4.2.1 分类方法（黑白、功能非功能、时机作用分类）；测试方法（UnitTest、BuildTest、AcceptanceTest、探索测试、回归测试、场景/集成/系统测试、伙伴测试、效能测试、压力测试、内外部测试、易用性测试）<br>  4.3 14 质量保障<br>    4.3.1 软件质量（程序、工程、如何衡量、成本）；质量保障工作（测试角色）<br>  4.4 15 稳定和发布阶段<br>    4.4.1 从完成到发布；渐进发布；发布之后——事后诸葛亮会议（赏罚、总结经验教训）<br>5 IT<br>  5.1 16 IT行业的创新<br>    5.1.1 争议点（创新与跟随、鼻祖与布道、专家？、技术创新为核心？、成功者更能创新？）；时机；招数<br>  5.2 17 人、绩效和职业道德<br>    5.2.1 猪鸡鹦鹉（成员投入程度不一）；人；绩效管理；职业道德（与公众利益一致、客户与雇主利益最大化、产出物满足高标准、专业判断、管理软件与开发维护、职业的诚信与声誉、对同事的支持与帮助、自身不断提高）</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h3 id=&quot;已执行&quot;&gt;&lt;a href=&quot;#已执行&quot; class=&quot;headerlink&quot; title=&quot;已执行&quot;&gt;&lt;/a&gt;已执行&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;修复LeakCanary报出的问题（内网、外网）&lt;ul&gt;
-&lt;li&gt;直接检测泄露&lt;/li&gt;
-&lt;li&gt;外网beta用户上报&lt;
+        &lt;blockquote&gt;
+&lt;p&gt;《软件工程  构建之法》作者邹欣系Windows中国工程师团队首席研发总监 （Link：&lt;a href=&quot;https://www.amazon.cn/图书/dp/B011LPUAYI/ref=sr_1_1?ie=UTF8&amp;amp;qid=14876
       
     
     </summary>
     
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+      <category term="阅读" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E9%98%85%E8%AF%BB/"/>
     
     
-      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
+      <category term="项目管理" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
     
-      <category term="内存" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E5%86%85%E5%AD%98/"/>
+      <category term="读书" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E8%AF%BB%E4%B9%A6/"/>
     
   </entry>
   
@@ -419,6 +417,36 @@
     
     
       <category term="算法" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>降低内存占用Route</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E9%99%8D%E4%BD%8E%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8Route/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/降低内存占用Route/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:32:43.089Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="已执行"><a href="#已执行" class="headerlink" title="已执行"></a>已执行</h3><ul><li>修复LeakCanary报出的问题（内网、外网）<ul><li>直接检测泄露</li><li>外网beta用户上报</li></ul></li><li>分析dumpheap文件，查内存占用（直接分析、对比分析）<ul><li>占用大户<ul><li>Bitmap</li><li>FinalizerReference</li></ul></li><li>场景分析，进出场景、发现可疑场景，查内存dumpheap文件<ul><li>已有发现：WebView、主题切换泄露</li></ul></li></ul></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;已执行&quot;&gt;&lt;a href=&quot;#已执行&quot; class=&quot;headerlink&quot; title=&quot;已执行&quot;&gt;&lt;/a&gt;已执行&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;修复LeakCanary报出的问题（内网、外网）&lt;ul&gt;
+&lt;li&gt;直接检测泄露&lt;/li&gt;
+&lt;li&gt;外网beta用户上报&lt;
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
+    
+      <category term="内存" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E5%86%85%E5%AD%98/"/>
     
   </entry>
   
@@ -570,34 +598,6 @@
       <category term="HashMap-Integer" scheme="https://github.com/KyleCe/kylece.github.io/tags/HashMap-Integer/"/>
     
       <category term="SparseArray" scheme="https://github.com/KyleCe/kylece.github.io/tags/SparseArray/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Java】神奇的内存占用大户FinalizerReference</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Java%E3%80%91%E7%A5%9E%E5%A5%87%E7%9A%84%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%A4%A7%E6%88%B7FinalizerReference/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:52:09.914Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="问题起因"><a href="#问题起因" class="headerlink" title="问题起因"></a>问题起因</h2><p>在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西</p><p>下图是项目中内存快照在AndroidStudio2.4中打开看到的样子</p><p><img src="../../pic_resource/finalizerReference.png" alt=""></p><p>可以看到，占用排名第一的类FinalizerReference占用了59M之巨（内存快照前有使用AS强制GC多次）</p><p>这就很让人好奇了</p><h2 id="FinalizerReference是什么？"><a href="#FinalizerReference是什么？" class="headerlink" title="FinalizerReference是什么？"></a>FinalizerReference是什么？</h2><p>我们来看源码：</p><p><img src="../../pic_resource/FinalizerReferenceCode.png" alt=""></p><p><a href="https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java" target="_blank" rel="noopener">https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java</a></p><p>在讲Java  虚拟机 JVM垃圾回收机制时会涉及到一个概念，即finalize方法，这是Sun公司在Java设计之初，为照顾c++程序员有写析构函数的习惯而做的一种妥协</p><p>在《深入理解Java虚拟机》一书中，讲到GC在最终回收对象之前，会去检查对象是否override了finalize方法，如果有覆盖此方法，对象就会被添加到finalize执行队列中，该书中没有指明是什么队列，实际上finalize执行队列就是我们这里讨论的FinalizerReference（书中还有提到finalize方法只会执行一次，并且有超时保护，因与本文主题无关，不做展开讨论）</p><p>也就是说，有重写Java根基类Object的finalize方法的所有对象，在被最终被GC回收之前，都会被添加到这个队列中，等待被执行</p><h2 id="为什么不能被GC"><a href="#为什么不能被GC" class="headerlink" title="为什么不能被GC"></a>为什么不能被GC</h2><p>这里要谈到JVM设计的一个基本标准</p><p>GC的finalize执行队列会在一个单独的守护线程中运行，这一线程的优先级极低；</p><p>一旦用户创建的对象速度过快，含finalize的对象速度快于finalize队列移除各元素的速度，FinalizerReference就会越来越大，而它获取CPU时间又少的可怜</p><p>测试中发现，1~2h过去后，FinalizerReference的大小并没有按照预计的回落到较低水准</p><p>这就迫使我们一定要解决这一问题，否则，随着应用开辟的内存越来越大，很容易引发喜闻乐见的OutOfMemoryError</p><h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><ol><li>不要重写finalize()方法，实在要释放资源，请到其它destroy一类函数中处理</li></ol><blockquote><p>实际上Java库中不少方法都有重写finalize方法（如Input/outputStream、Canvas、Paint）</p><p>这就引出了第二条指导原则：</p></blockquote><ol><li><p>重复利用资源（避免反复创建）</p></li><li><p>杀器FinalizerHelper</p><ul><li>此工具来源于公司同事的技术分享</li><li>指导思想：在场景退出的安全节点，利用反射强制调用FinalizerReference的remove方法，将对象从队列中移除掉</li><li>对具体实施细节的同学联系我</li></ul></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;问题起因&quot;&gt;&lt;a href=&quot;#问题起因&quot; class=&quot;headerlink&quot; title=&quot;问题起因&quot;&gt;&lt;/a&gt;问题起因&lt;/h2&gt;&lt;p&gt;在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西&lt;/p&gt;
-&lt;p&gt;
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
-    
-      <category term="FinalizerReference" scheme="https://github.com/KyleCe/kylece.github.io/tags/FinalizerReference/"/>
     
   </entry>
   
