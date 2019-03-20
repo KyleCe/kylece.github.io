@@ -255,7 +255,7 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/算法/面经--计算一个字节有几比特（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/算法/面经--逆转链表（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -263,7 +263,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/">面经--计算一个字节有几比特（Java）</a>
+      <a class="article-title" href="/2018/03/13/技术/算法/面经--逆转链表（Java）/">面经--逆转链表</a>
     </h1>
   
 
@@ -271,7 +271,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/" class="article-date">
+	<a href="/2018/03/13/技术/算法/面经--逆转链表（Java）/" class="article-date">
 	  <time datetime="2018-03-13T15:27:30.000Z" itemprop="datePublished">2018-03-13</time>
 	</a>
 
@@ -451,6 +451,72 @@
 
 
   
+    <article id="post-技术/程序/降低内存占用Route"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/降低内存占用Route/">降低内存占用Route</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/降低内存占用Route/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="已执行"><a href="#已执行" class="headerlink" title="已执行"></a>已执行</h3><ul>
+<li>修复LeakCanary报出的问题（内网、外网）<ul>
+<li>直接检测泄露</li>
+<li>外网beta用户上报</li>
+</ul>
+</li>
+<li>分析dumpheap文件，查内存占用（直接分析、对比分析）<ul>
+<li>占用大户<ul>
+<li>Bitmap</li>
+<li>FinalizerReference</li>
+</ul>
+</li>
+<li>场景分析，进出场景、发现可疑场景，查内存dumpheap文件<ul>
+<li>已有发现：WebView、主题切换泄露</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存/">内存</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/程序/枚举enum必知必会"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -546,72 +612,6 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Enum/">Enum</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/降低内存占用Route"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/降低内存占用Route/">降低内存占用Route</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/降低内存占用Route/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="已执行"><a href="#已执行" class="headerlink" title="已执行"></a>已执行</h3><ul>
-<li>修复LeakCanary报出的问题（内网、外网）<ul>
-<li>直接检测泄露</li>
-<li>外网beta用户上报</li>
-</ul>
-</li>
-<li>分析dumpheap文件，查内存占用（直接分析、对比分析）<ul>
-<li>占用大户<ul>
-<li>Bitmap</li>
-<li>FinalizerReference</li>
-</ul>
-</li>
-<li>场景分析，进出场景、发现可疑场景，查内存dumpheap文件<ul>
-<li>已有发现：WebView、主题切换泄露</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存/">内存</a></li></ul>
 
     </footer>
   </div>
