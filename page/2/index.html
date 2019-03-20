@@ -717,66 +717,6 @@
 
 
   
-    <article id="post-技术/程序/【Alibaba-Java开发手册】-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/【Alibaba-Java开发手册】-提要/">【Alibaba-Java开发手册】-提要</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/【Alibaba-Java开发手册】-提要/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>旨在对手册进行提要<br>关注点： 编程规约</p>
-</blockquote>
-<blockquote>
-<p><a href="http://pan.baidu.com/s/1boHjvxt" target="_blank" rel="noopener">手册源文件点击下载</a></p>
-</blockquote>
-<p><a href="https://www.evernote.com/shard/s283/sh/a8ae54da-157b-4669-97f3-60709e798489/0ab7d45c077516e2fa9845f3acf03b64" target="_blank" rel="noopener">EverNote笔记链接（内含XMind思维导图源文件）</a></p>
-<hr>
-<p>#导图<br><img src="http://upload-images.jianshu.io/upload_images/1481332-f2f67a5b35ab182b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Alibaba Java overview.png"></p>
-<hr>
-<p>文本</p>
-<p>Alibaba Java 开发手册</p>
-<p>1 编程规约<br>  1.1 命名规约<br>    1.1.1 8. POJO类中的布尔型变量不要加is，否则会引起序列化错误<br>  1.2 常量定义<br>    1.2.1 1. 不允许代码中出现任何魔法数<br>        1.2.1.1 （即硬编码变量）<br>    1.2.2 3. 不要再一个常量类中维护所以常量，应按功能归类维护<br>    1.2.3 4. 常量复用有五个层次<br>        1.2.3.1 跨应用、应用内、子工程、包内、类内<br>  1.3 格式规约<br>    1.3.1 一系列Google Java编码规则，不赘述<br>  1.4 OOP规约<br>    1.4.1 1. 避免通过对象引用static域<br>    1.4.2 2. 不可使用 Deprecated方法；自己做弃用注解时也应该 注明替代的新API<br>    1.4.3 10. 序列化新增属性时不要修改serialVersionUID字段；仅在完全不兼容升级避免反序列化混乱时修改<br>    1.4.4 15. 方法排序： public/ protected &gt; private &gt; getter/setter ——为维护者关心的方法展示于前<br>    1.4.5 16. setter/getter 确定为仅有的set get方法，勿要放入业务逻辑<br>    1.4.6 17. 循环体内，字符串联接方式，使用StringBuilder的append方法扩展——String 操作编译后会生成count 个StringBuilder对象，影响程序性能<br>    1.4.7 18. final可提高程序响应效率<br>    1.4.8 20. 访问控制从严（private、protected、public）<br>  1.5 集合处理<br>    1.5.1 1. hashCode equals<br>        1.5.1.1 重写equals时必须重写hashCode<br>        1.5.1.2 Set存储的对象必须重写<br>        1.5.1.3 用作Map的键时必须重写<br>    1.5.2 9. 集合初始化时尽量指定大小<br>        1.5.2.1 注：出于优化内存占用、响应速度考虑；集合默认size为10<br>    1.5.3 10. Map 类集合 K/V 存储null可行性问题<br>        1.5.3.1 HashMap KV均可为null<br>        1.5.3.2 TreeMap仅V可为null<br>        1.5.3.3 其它Map KV一律不可为null<br>    1.5.4 11. 合理利用好集合的有序性和稳定性，避免负面影响<br>  1.6 并发处理<br>    1.6.1 2. 创建线程、线程池时指定有意义的名称，便于出错时回溯<br>    1.6.2 4. 线程池不允许使用Executors创建，而要使用ThreadPoolExecutor<br>        1.6.2.1 Executor创建的几个类型都有大量请求或线程堆积导致OOM的可能<br>    1.6.3 5. SimpleDateFormat 是线程不安全类，一般不要定义为static变量，如果定义为static，必须加锁，或者使用DateUtils工具类<br>    1.6.4 6. 高并发时的同步调用注意锁的性能损耗<br>    1.6.5 10. CountDownLatch异步转同步操作时，每个线程退出前必须调用countDown，避免await超时<br>    1.6.6 11. 避免Random实例被多线程使用，竞争同一seed会导致性能下降；（实例包括Random、Math.random()）<br>    1.6.7 14. HashMap在容量不够进行resize时由于高并发可能出现死链，导致CPU飙升，开发中注意规避<br>  1.7 控制语句<br>    1.7.1 3. if-else 勿超过3层，超过时使用状态设计模式<br>    1.7.2 5. 循环体中考虑性能问题，避免不必要的语句、避免不必要的try-catch<br>    1.7.3 7-8. 注意参数检验的必要性，尽可能提升性能<br>2 日志<br>3 MySQL<br>4 工程规约<br>5 安全规约</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-技术/程序/【Program】性能考量"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -821,64 +761,6 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程珠玑/">编程珠玑</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/【Note-程序】变量类型"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/【Note-程序】变量类型/">【Note-程序】变量类型</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/【Note-程序】变量类型/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>最近考了部分面试者关于变量访问的一些问题，总结一下</p>
-</blockquote>
-<hr>
-<p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325" target="_blank" rel="noopener"><em>EverNote链接</em></a></p>
-<p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325/res/b21eeb36-a66c-488e-a682-5af7f7b7a990/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B.xmind" target="_blank" rel="noopener"><em>XMind文档</em></a></p>
-<p><strong>导图</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2e270ca767cdba41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="parameter type overview.png"></p>
-<p><strong>文本</strong></p>
-<p>变量类型</p>
-<p>1 static<br>  1.1 随着类的加载而加载<br>  1.2 附注：Java 类操作流程<br>2 volitale<br>  2.1 从内存中读取（并不能保证原子性）<br>  2.2 使用原则<br>    2.2.1 写入变量不依赖此变量的值(或者只有一个线程修改此变量)<br>    2.2.2 变量的状态不需要与其它变量共同参与不变约束<br>    2.2.3 访问变量不需要加锁<br>3 Atomic<br>  3.1 原子性变量<br>  3.2 缺点<br>    3.2.1 必须用特定API对变量进行操作<br>    3.2.2 只有有限的几种类型<br>4 synchronized<br>  4.1 缺点<br>    4.1.1 性能考量<br>  4.2 注意点<br>    4.2.1 尽量减小锁的范围与程度<br>    4.2.2 多锁时保证操作顺序以防死锁<br>5 concurrent工具包<br>  5.1 CountDownLatch<br>  5.2 ConcurrentHashMap<br>  5.3 CopyOnWriteArrayList/CopyOnWriteArraySet<br>  5.4 ReadWriteLock/ReentrantReadWriteLock<br>  5.5 LinkedBlockingQueue<br>  5.6 CyclicBarrier<br>  5.7 …</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
     </footer>
   </div>
@@ -975,6 +857,145 @@ public void put(int key, E value) {
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashMap-Integer/">HashMap-Integer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SparseArray/">SparseArray</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/【Note-程序】变量类型"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/【Note-程序】变量类型/">【Note-程序】变量类型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【Note-程序】变量类型/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近考了部分面试者关于变量访问的一些问题，总结一下</p>
+</blockquote>
+<hr>
+<p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325" target="_blank" rel="noopener"><em>EverNote链接</em></a></p>
+<p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325/res/b21eeb36-a66c-488e-a682-5af7f7b7a990/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B.xmind" target="_blank" rel="noopener"><em>XMind文档</em></a></p>
+<p><strong>导图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2e270ca767cdba41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="parameter type overview.png"></p>
+<p><strong>文本</strong></p>
+<p>变量类型</p>
+<p>1 static<br>  1.1 随着类的加载而加载<br>  1.2 附注：Java 类操作流程<br>2 volitale<br>  2.1 从内存中读取（并不能保证原子性）<br>  2.2 使用原则<br>    2.2.1 写入变量不依赖此变量的值(或者只有一个线程修改此变量)<br>    2.2.2 变量的状态不需要与其它变量共同参与不变约束<br>    2.2.3 访问变量不需要加锁<br>3 Atomic<br>  3.1 原子性变量<br>  3.2 缺点<br>    3.2.1 必须用特定API对变量进行操作<br>    3.2.2 只有有限的几种类型<br>4 synchronized<br>  4.1 缺点<br>    4.1.1 性能考量<br>  4.2 注意点<br>    4.2.1 尽量减小锁的范围与程度<br>    4.2.2 多锁时保证操作顺序以防死锁<br>5 concurrent工具包<br>  5.1 CountDownLatch<br>  5.2 ConcurrentHashMap<br>  5.3 CopyOnWriteArrayList/CopyOnWriteArraySet<br>  5.4 ReadWriteLock/ReentrantReadWriteLock<br>  5.5 LinkedBlockingQueue<br>  5.6 CyclicBarrier<br>  5.7 …</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/【Java】神奇的内存占用大户FinalizerReference"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/">【Java】神奇的内存占用大户FinalizerReference</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题起因"><a href="#问题起因" class="headerlink" title="问题起因"></a>问题起因</h2><p>在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西</p>
+<p>下图是项目中内存快照在AndroidStudio2.4中打开看到的样子</p>
+<p><img src="http://kylece.github.io/img/pic_resource/finalizerReference.png" alt=""></p>
+<p>可以看到，占用排名第一的类FinalizerReference占用了59M之巨（内存快照前有使用AS强制GC多次）</p>
+<p>这就很让人好奇了</p>
+<h2 id="FinalizerReference是什么？"><a href="#FinalizerReference是什么？" class="headerlink" title="FinalizerReference是什么？"></a>FinalizerReference是什么？</h2><p>我们来看源码：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/FinalizerReferenceCode.png" alt=""></p>
+<p><a href="https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java" target="_blank" rel="noopener">https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java</a></p>
+<p>在讲Java  虚拟机 JVM垃圾回收机制时会涉及到一个概念，即finalize方法，这是Sun公司在Java设计之初，为照顾c++程序员有写析构函数的习惯而做的一种妥协</p>
+<p>在《深入理解Java虚拟机》一书中，讲到GC在最终回收对象之前，会去检查对象是否override了finalize方法，如果有覆盖此方法，对象就会被添加到finalize执行队列中，该书中没有指明是什么队列，实际上finalize执行队列就是我们这里讨论的FinalizerReference（书中还有提到finalize方法只会执行一次，并且有超时保护，因与本文主题无关，不做展开讨论）</p>
+<p>也就是说，有重写Java根基类Object的finalize方法的所有对象，在被最终被GC回收之前，都会被添加到这个队列中，等待被执行</p>
+<h2 id="为什么不能被GC"><a href="#为什么不能被GC" class="headerlink" title="为什么不能被GC"></a>为什么不能被GC</h2><p>这里要谈到JVM设计的一个基本标准</p>
+<p>GC的finalize执行队列会在一个单独的守护线程中运行，这一线程的优先级极低；</p>
+<p>一旦用户创建的对象速度过快，含finalize的对象速度快于finalize队列移除各元素的速度，FinalizerReference就会越来越大，而它获取CPU时间又少的可怜</p>
+<p>测试中发现，1~2h过去后，FinalizerReference的大小并没有按照预计的回落到较低水准</p>
+<p>这就迫使我们一定要解决这一问题，否则，随着应用开辟的内存越来越大，很容易引发喜闻乐见的OutOfMemoryError</p>
+<h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><ol>
+<li>不要重写finalize()方法，实在要释放资源，请到其它destroy一类函数中处理</li>
+</ol>
+<blockquote>
+<p>实际上Java库中不少方法都有重写finalize方法（如Input/outputStream、Canvas、Paint）</p>
+<p>这就引出了第二条指导原则：</p>
+</blockquote>
+<ol>
+<li><p>重复利用资源（避免反复创建）</p>
+</li>
+<li><p>杀器FinalizerHelper</p>
+<ul>
+<li>此工具来源于公司同事的技术分享</li>
+<li>指导思想：在场景退出的安全节点，利用反射强制调用FinalizerReference的remove方法，将对象从队列中移除掉</li>
+<li>对具体实施细节的同学联系我</li>
+</ul>
+</li>
+</ol>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FinalizerReference/">FinalizerReference</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
     </footer>
   </div>

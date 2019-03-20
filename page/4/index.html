@@ -255,7 +255,7 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/程序/Java进阶-- 以函数对象代表策略"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/程序/Java进阶-- volatile关键字"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -263,7 +263,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/">Java进阶-- 以函数对象代表策略</a>
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/">Java进阶-- volatile关键字</a>
     </h1>
   
 
@@ -271,7 +271,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/" class="article-date">
+	<a href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -282,13 +282,36 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>介绍设计模式中的策略模式（strategy）</p>
-<p>C++、C语言中的函数指针在Java中的替代形式</p>
-<p>面向接口编程</p>
-<p>keywords：</p>
-<p><strong>策略、函数对象、面向接口</strong></p>
-<h3 id="出发点"><a href="#出发点" class="headerlink" title="出发点"></a>出发点</h3><p>函数指针，或是实现代理模式、lambda表达式</p>
-<p>### </p>
+        <p>volatile含有部分synchronized的特性，效率更高，但使用时需要注意细节，不然容易出错</p>
+<h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>Java中被volatile修饰的变量，每次读写都会直接使用“内存”介质，而不是使用CPU缓存</p>
+<blockquote>
+<p>音 — UK <strong> /ˈvɒl.ə.taɪl/  US </strong> /ˈvɑː.lə.t̬əl/</p>
+<p>英 — <strong>likely to change suddenly and unexpectedly or suddenly become violent or angry</strong></p>
+<p>中 — 易变的</p>
+</blockquote>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
+<li>保证变量可见性</li>
+<li>禁止指令进行重排序</li>
+</ul>
+<blockquote>
+<p>基础概念：可见性、有序性、原子性</p>
+<ol>
+<li>可见性：对所有线程来说，任一线程对变量的改动都立即可见</li>
+<li>有序性：代码可能会被编译器混编，有序性即指代码按顺序执行</li>
+<li>原子性：所有操作不会被打断，谁也不行（除非断电）</li>
+</ol>
+</blockquote>
+<p>实际上我们对变量的修改，虽然可能Java就一行代码（如 y=x），但被解释成汇编语言会变成多行（y=x就需要进行两步操作：读x值，写入y所在内存，学过汇编的同学应该比较清楚）</p>
+<h3 id="与synchronized的区别"><a href="#与synchronized的区别" class="headerlink" title="与synchronized的区别"></a>与synchronized的区别</h3><p>按字面理解，volatile关键字只是标记变量为易变的，并不能保证对变量的所有操作都是同步的，即不能保证具有synchronized一样的效果</p>
+<p>实际上，对volatile修饰的变量的读/写操作是可以保证其原子性的，但还要注意一个问题，即同时写变量的线程可能不止一个，如此一来，其中部分的写操作就有可能丢失</p>
+<p>听起来好像volatile使用起来很危险，但它也是有它的用途的</p>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
+<li>对于写不依赖历史状态的变量，可以考虑使用volatile修饰字代替synchronized来提高程序效率</li>
+<li>保证代码的有序性：volatile变量的读写操作之前的代码，编译器是不会进行重排序的</li>
+</ul>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在volatile满足不了要求的场景可以考虑使用synchronized、lock、Atomic变量来保证特性</p>
+<p>对变量的写不依赖历史状态的变量使用volatile修饰可以提高效率</p>
+<p>对于需要保证部分程序语句有序性的场景可以考虑使用volatile代替锁定整个代码块，提高效率</p>
 
       
 
@@ -298,55 +321,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/Android--Monkey测试"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Android--Monkey测试/">Android Monkey 测试时防止通知栏下拉</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Android--Monkey测试/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><p>Android monkey test — <a href="http://einverne.github.io/post/2016/09/android-monkey-test.html#防止通知栏下拉" target="_blank" rel="noopener">http://einverne.github.io/post/2016/09/android-monkey-test.html#防止通知栏下拉</a></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monkey/">Monkey</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SystemBar/">SystemBar</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/volatile/">volatile</a></li></ul>
 
     </footer>
   </div>
@@ -466,6 +441,93 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GC/">GC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/Bitmap recycle做了什么"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/Bitmap recycle做了什么/">看看Bitmap源码中recycle 做了什么</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/Bitmap recycle做了什么/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>看看Bitmap源码中recycle 做了什么</p>
+<p>PS：源码查看工具网站：AndroidXref、grepCode</p>
+</blockquote>
+<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p> 在Bitmap调用recycle之后再去使用，会有invalid Bitmap的异常导致应用崩溃，实际项目中其实是碰到了tgkill的Native代码崩溃的堆栈信息：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/stacktrace_of_tgkill.png" alt=""></p>
+<p>分析Bitmap getGenerationId在源码中的调用情况：（git clone Framework 源码之后用sublimeText搜索得如下结果，txt文件已过滤）</p>
+<p><img src="http://kylece.github.io/img/pic_resource/FindResults.png" alt=""></p>
+<p>绿色框中的代码因为是surface的API，或者是JavaDoc的注释，可以忽略不计，可以看到有效调用就是关于Notification的调用；</p>
+<p>结合GP后台的崩溃占用情况（&gt;7.0占比较高，6.0亦有发生），查阅AndroidDeveloper的v6.0 changeLog，发现有这么一条：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/Android6.0_Changes_Notification.png" alt=""></p>
+<p>看到其中关键信息 ==reuse Notification.Builder instance==，但鉴于其它App没有出现这种级别的问题，所以另谋其它出路；</p>
+<p>剩下的就只剩Bitmap了</p>
+<h2 id="Bitmap-recycle做了什么"><a href="#Bitmap-recycle做了什么" class="headerlink" title="Bitmap recycle做了什么"></a>Bitmap recycle做了什么</h2><h3 id="Bitmap-cpp"><a href="#Bitmap-cpp" class="headerlink" title="Bitmap.cpp"></a>Bitmap.cpp</h3><p>source code on xRef: <a href="http://androidxref.com/6.0.1_r10/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp" target="_blank" rel="noopener">http://androidxref.com/6.0.1_r10/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp</a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">782</span><span class="function"><span class="keyword">static</span> jboolean <span class="title">Bitmap_recycle</span><span class="params">(JNIEnv* env, jobject, jlong bitmapHandle)</span> </span>&#123;</span><br><span class="line"><span class="number">783</span>    <span class="function">LocalScopedBitmap <span class="title">bitmap</span><span class="params">(bitmapHandle)</span></span>;</span><br><span class="line"><span class="number">784</span>    bitmap-&gt;freePixels();</span><br><span class="line"><span class="number">785</span>    <span class="keyword">return</span> JNI_TRUE;</span><br><span class="line"><span class="number">786</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">168</span><span class="keyword">void</span> Bitmap::freePixels() &#123;</span><br><span class="line"><span class="number">169</span>    AutoMutex _lock(mLock);</span><br><span class="line"><span class="number">170</span>    <span class="keyword">if</span> (mPinnedRefCount == <span class="number">0</span>) &#123;</span><br><span class="line"><span class="number">171</span>        doFreePixels();</span><br><span class="line"><span class="number">172</span>        mPixelStorageType = PixelStorageType::Invalid;</span><br><span class="line"><span class="number">173</span>    &#125;</span><br><span class="line"><span class="number">174</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">176</span><span class="keyword">void</span> Bitmap::doFreePixels() &#123;</span><br><span class="line"><span class="number">177</span>    <span class="keyword">switch</span> (mPixelStorageType) &#123;</span><br><span class="line"><span class="number">178</span>    <span class="keyword">case</span> PixelStorageType::Invalid:</span><br><span class="line"><span class="number">179</span>        <span class="comment">// already free'd, nothing to do</span></span><br><span class="line"><span class="number">180</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">181</span>    <span class="keyword">case</span> PixelStorageType::External:</span><br><span class="line"><span class="number">182</span>        mPixelStorage.external.freeFunc(mPixelStorage.external.address,</span><br><span class="line"><span class="number">183</span>                mPixelStorage.external.context);</span><br><span class="line"><span class="number">184</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">185</span>    <span class="keyword">case</span> PixelStorageType::Ashmem:</span><br><span class="line"><span class="number">186</span>        munmap(mPixelStorage.ashmem.address, mPixelStorage.ashmem.size);</span><br><span class="line"><span class="number">187</span>        close(mPixelStorage.ashmem.fd);</span><br><span class="line"><span class="number">188</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">189</span>    <span class="keyword">case</span> PixelStorageType::Java:</span><br><span class="line"><span class="number">190</span>        JNIEnv* env = jniEnv();</span><br><span class="line"><span class="number">191</span>        LOG_ALWAYS_FATAL_IF(mPixelStorage.java.jstrongRef,</span><br><span class="line"><span class="number">192</span>                <span class="string">"Deleting a bitmap wrapper while there are outstanding strong "</span></span><br><span class="line"><span class="number">193</span>                <span class="string">"references! mPinnedRefCount = %d"</span>, mPinnedRefCount);</span><br><span class="line"><span class="number">194</span>        env-&gt;DeleteWeakGlobalRef(mPixelStorage.java.jweakRef);</span><br><span class="line"><span class="number">195</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">196</span>    &#125;</span><br><span class="line"><span class="number">197</span></span><br><span class="line"><span class="number">198</span>    <span class="keyword">if</span> (android::uirenderer::Caches::hasInstance()) &#123;</span><br><span class="line"><span class="number">199</span>        android::uirenderer::Caches::getInstance().textureCache.releaseTexture(</span><br><span class="line"><span class="number">200</span>                mPixelRef-&gt;getStableID());</span><br><span class="line"><span class="number">201</span>    &#125;</span><br><span class="line"><span class="number">202</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>注意析构函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">164</span> Bitmap::~Bitmap() &#123;</span><br><span class="line"><span class="number">165</span>    doFreePixels();</span><br><span class="line"><span class="number">166</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>还需注意到代码：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/bitmap_cpp_assert_valid.png" alt=""></p>
+<p>结合Bitmap.cpp的其它代码，只有在Bitmap recycle之后又拿来使用才会出现这个assertValid断言错误，遂将矛头指向Bitmap recycle</p>
+<h3 id="不调用recycle-会怎样？"><a href="#不调用recycle-会怎样？" class="headerlink" title="不调用recycle()会怎样？"></a>不调用recycle()会怎样？</h3><p>Android2.3（API 11）之前，Bitmap开辟的内存位于native Stack，需要手动调用recycle进行释放，而2.3之后属于VM的heap，系统GC会自动处理。</p>
+<p>而我们在2.3之后的系统中调用Bitmap的recycle，唯一的作用，就是把Bitmap释放的动作提前了，私以为，仅有的效用是会降低OOM发生的概率</p>
+<p>这一点也可以从Bitmap AndroidAPI解释网页上看出一点端倪</p>
+<p><img src="http://kylece.github.io/img/pic_resource/Java_Bitmap_recycle.png" alt=""></p>
+<blockquote>
+<p>this is an advanced call, and normally need not be called…</p>
+</blockquote>
+<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><p>在所有会调用Bitmap.recycle()的地方，对相应的recycle状态检查，如果发现有recycle之后仍然在使用的地方，则直接抛出异常，暴露问题，就像这样：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/BitmapWatcher.png" alt=""></p>
+<p>这样，在Monkey测试覆盖面够广时，就可以预期暴露出问题所在了；</p>
+<p>关于Bitmap的检查，还有一种思路是使用hook方式进行，这样还可以对第三方依赖lib进行检查，后期如果应用这种方式，我再补充一篇</p>
+<hr>
+<p>Ref:</p>
+<ol>
+<li>bitmap recycle不当调用引发的问题 <a href="http://www.jianshu.com/p/b5c8e98ff5b0" target="_blank" rel="noopener">http://www.jianshu.com/p/b5c8e98ff5b0</a></li>
+<li>Bitmap source Code：<a href="https://android.googlesource.com/platform/frameworks/base/+/47fb191/core/jni/android/graphics/Bitmap.cpp；（GrepCode网站上5.0r1的Bitmap" target="_blank" rel="noopener">https://android.googlesource.com/platform/frameworks/base/+/47fb191/core/jni/android/graphics/Bitmap.cpp；（GrepCode网站上5.0r1的Bitmap</a> sourcecode）<a href="http://grepcode.com/file/repo1.maven.org/maven2/org.robolectric/android-all/5.0.0_r2-robolectric-0/android/graphics/Bitmap.java；（AndroidXref网站上的Bitmap" target="_blank" rel="noopener">http://grepcode.com/file/repo1.maven.org/maven2/org.robolectric/android-all/5.0.0_r2-robolectric-0/android/graphics/Bitmap.java；（AndroidXref网站上的Bitmap</a> 7.1.1 sourcecode）<a href="http://androidxref.com/7.1.1_r6/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp#896" target="_blank" rel="noopener">http://androidxref.com/7.1.1_r6/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp#896</a></li>
+<li>Bitmap API 解释on AndroidDeveloper：<a href="https://stuff.mit.edu/afs/sipb/project/android/docs/reference/android/graphics/Bitmap.html#recycle()" target="_blank" rel="noopener">https://stuff.mit.edu/afs/sipb/project/android/docs/reference/android/graphics/Bitmap.html#recycle()</a></li>
+</ol>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bitmap/">Bitmap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recycle/">recycle</a></li></ul>
 
     </footer>
   </div>
@@ -938,327 +1000,6 @@
 
 
   
-    <article id="post-技术/程序/Bitmap recycle做了什么"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Bitmap recycle做了什么/">看看Bitmap源码中recycle 做了什么</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Bitmap recycle做了什么/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>看看Bitmap源码中recycle 做了什么</p>
-<p>PS：源码查看工具网站：AndroidXref、grepCode</p>
-</blockquote>
-<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p> 在Bitmap调用recycle之后再去使用，会有invalid Bitmap的异常导致应用崩溃，实际项目中其实是碰到了tgkill的Native代码崩溃的堆栈信息：</p>
-<p><img src="http://kylece.github.io/img/pic_resource/stacktrace_of_tgkill.png" alt=""></p>
-<p>分析Bitmap getGenerationId在源码中的调用情况：（git clone Framework 源码之后用sublimeText搜索得如下结果，txt文件已过滤）</p>
-<p><img src="http://kylece.github.io/img/pic_resource/FindResults.png" alt=""></p>
-<p>绿色框中的代码因为是surface的API，或者是JavaDoc的注释，可以忽略不计，可以看到有效调用就是关于Notification的调用；</p>
-<p>结合GP后台的崩溃占用情况（&gt;7.0占比较高，6.0亦有发生），查阅AndroidDeveloper的v6.0 changeLog，发现有这么一条：</p>
-<p><img src="http://kylece.github.io/img/pic_resource/Android6.0_Changes_Notification.png" alt=""></p>
-<p>看到其中关键信息 ==reuse Notification.Builder instance==，但鉴于其它App没有出现这种级别的问题，所以另谋其它出路；</p>
-<p>剩下的就只剩Bitmap了</p>
-<h2 id="Bitmap-recycle做了什么"><a href="#Bitmap-recycle做了什么" class="headerlink" title="Bitmap recycle做了什么"></a>Bitmap recycle做了什么</h2><h3 id="Bitmap-cpp"><a href="#Bitmap-cpp" class="headerlink" title="Bitmap.cpp"></a>Bitmap.cpp</h3><p>source code on xRef: <a href="http://androidxref.com/6.0.1_r10/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp" target="_blank" rel="noopener">http://androidxref.com/6.0.1_r10/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp</a></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">782</span><span class="function"><span class="keyword">static</span> jboolean <span class="title">Bitmap_recycle</span><span class="params">(JNIEnv* env, jobject, jlong bitmapHandle)</span> </span>&#123;</span><br><span class="line"><span class="number">783</span>    <span class="function">LocalScopedBitmap <span class="title">bitmap</span><span class="params">(bitmapHandle)</span></span>;</span><br><span class="line"><span class="number">784</span>    bitmap-&gt;freePixels();</span><br><span class="line"><span class="number">785</span>    <span class="keyword">return</span> JNI_TRUE;</span><br><span class="line"><span class="number">786</span>&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">168</span><span class="keyword">void</span> Bitmap::freePixels() &#123;</span><br><span class="line"><span class="number">169</span>    AutoMutex _lock(mLock);</span><br><span class="line"><span class="number">170</span>    <span class="keyword">if</span> (mPinnedRefCount == <span class="number">0</span>) &#123;</span><br><span class="line"><span class="number">171</span>        doFreePixels();</span><br><span class="line"><span class="number">172</span>        mPixelStorageType = PixelStorageType::Invalid;</span><br><span class="line"><span class="number">173</span>    &#125;</span><br><span class="line"><span class="number">174</span>&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">176</span><span class="keyword">void</span> Bitmap::doFreePixels() &#123;</span><br><span class="line"><span class="number">177</span>    <span class="keyword">switch</span> (mPixelStorageType) &#123;</span><br><span class="line"><span class="number">178</span>    <span class="keyword">case</span> PixelStorageType::Invalid:</span><br><span class="line"><span class="number">179</span>        <span class="comment">// already free'd, nothing to do</span></span><br><span class="line"><span class="number">180</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">181</span>    <span class="keyword">case</span> PixelStorageType::External:</span><br><span class="line"><span class="number">182</span>        mPixelStorage.external.freeFunc(mPixelStorage.external.address,</span><br><span class="line"><span class="number">183</span>                mPixelStorage.external.context);</span><br><span class="line"><span class="number">184</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">185</span>    <span class="keyword">case</span> PixelStorageType::Ashmem:</span><br><span class="line"><span class="number">186</span>        munmap(mPixelStorage.ashmem.address, mPixelStorage.ashmem.size);</span><br><span class="line"><span class="number">187</span>        close(mPixelStorage.ashmem.fd);</span><br><span class="line"><span class="number">188</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">189</span>    <span class="keyword">case</span> PixelStorageType::Java:</span><br><span class="line"><span class="number">190</span>        JNIEnv* env = jniEnv();</span><br><span class="line"><span class="number">191</span>        LOG_ALWAYS_FATAL_IF(mPixelStorage.java.jstrongRef,</span><br><span class="line"><span class="number">192</span>                <span class="string">"Deleting a bitmap wrapper while there are outstanding strong "</span></span><br><span class="line"><span class="number">193</span>                <span class="string">"references! mPinnedRefCount = %d"</span>, mPinnedRefCount);</span><br><span class="line"><span class="number">194</span>        env-&gt;DeleteWeakGlobalRef(mPixelStorage.java.jweakRef);</span><br><span class="line"><span class="number">195</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">196</span>    &#125;</span><br><span class="line"><span class="number">197</span></span><br><span class="line"><span class="number">198</span>    <span class="keyword">if</span> (android::uirenderer::Caches::hasInstance()) &#123;</span><br><span class="line"><span class="number">199</span>        android::uirenderer::Caches::getInstance().textureCache.releaseTexture(</span><br><span class="line"><span class="number">200</span>                mPixelRef-&gt;getStableID());</span><br><span class="line"><span class="number">201</span>    &#125;</span><br><span class="line"><span class="number">202</span>&#125;</span><br></pre></td></tr></table></figure>
-<p>注意析构函数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">164</span> Bitmap::~Bitmap() &#123;</span><br><span class="line"><span class="number">165</span>    doFreePixels();</span><br><span class="line"><span class="number">166</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>还需注意到代码：</p>
-<p><img src="http://kylece.github.io/img/pic_resource/bitmap_cpp_assert_valid.png" alt=""></p>
-<p>结合Bitmap.cpp的其它代码，只有在Bitmap recycle之后又拿来使用才会出现这个assertValid断言错误，遂将矛头指向Bitmap recycle</p>
-<h3 id="不调用recycle-会怎样？"><a href="#不调用recycle-会怎样？" class="headerlink" title="不调用recycle()会怎样？"></a>不调用recycle()会怎样？</h3><p>Android2.3（API 11）之前，Bitmap开辟的内存位于native Stack，需要手动调用recycle进行释放，而2.3之后属于VM的heap，系统GC会自动处理。</p>
-<p>而我们在2.3之后的系统中调用Bitmap的recycle，唯一的作用，就是把Bitmap释放的动作提前了，私以为，仅有的效用是会降低OOM发生的概率</p>
-<p>这一点也可以从Bitmap AndroidAPI解释网页上看出一点端倪</p>
-<p><img src="http://kylece.github.io/img/pic_resource/Java_Bitmap_recycle.png" alt=""></p>
-<blockquote>
-<p>this is an advanced call, and normally need not be called…</p>
-</blockquote>
-<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><p>在所有会调用Bitmap.recycle()的地方，对相应的recycle状态检查，如果发现有recycle之后仍然在使用的地方，则直接抛出异常，暴露问题，就像这样：</p>
-<p><img src="http://kylece.github.io/img/pic_resource/BitmapWatcher.png" alt=""></p>
-<p>这样，在Monkey测试覆盖面够广时，就可以预期暴露出问题所在了；</p>
-<p>关于Bitmap的检查，还有一种思路是使用hook方式进行，这样还可以对第三方依赖lib进行检查，后期如果应用这种方式，我再补充一篇</p>
-<hr>
-<p>Ref:</p>
-<ol>
-<li>bitmap recycle不当调用引发的问题 <a href="http://www.jianshu.com/p/b5c8e98ff5b0" target="_blank" rel="noopener">http://www.jianshu.com/p/b5c8e98ff5b0</a></li>
-<li>Bitmap source Code：<a href="https://android.googlesource.com/platform/frameworks/base/+/47fb191/core/jni/android/graphics/Bitmap.cpp；（GrepCode网站上5.0r1的Bitmap" target="_blank" rel="noopener">https://android.googlesource.com/platform/frameworks/base/+/47fb191/core/jni/android/graphics/Bitmap.cpp；（GrepCode网站上5.0r1的Bitmap</a> sourcecode）<a href="http://grepcode.com/file/repo1.maven.org/maven2/org.robolectric/android-all/5.0.0_r2-robolectric-0/android/graphics/Bitmap.java；（AndroidXref网站上的Bitmap" target="_blank" rel="noopener">http://grepcode.com/file/repo1.maven.org/maven2/org.robolectric/android-all/5.0.0_r2-robolectric-0/android/graphics/Bitmap.java；（AndroidXref网站上的Bitmap</a> 7.1.1 sourcecode）<a href="http://androidxref.com/7.1.1_r6/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp#896" target="_blank" rel="noopener">http://androidxref.com/7.1.1_r6/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp#896</a></li>
-<li>Bitmap API 解释on AndroidDeveloper：<a href="https://stuff.mit.edu/afs/sipb/project/android/docs/reference/android/graphics/Bitmap.html#recycle()" target="_blank" rel="noopener">https://stuff.mit.edu/afs/sipb/project/android/docs/reference/android/graphics/Bitmap.html#recycle()</a></li>
-</ol>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bitmap/">Bitmap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recycle/">recycle</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android架构】Android架构初探"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android架构】Android架构初探/">Android架构初探</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android架构】Android架构初探/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>Android 从软件层面来看可以分为以下几个层级：</p>
-<ul>
-<li>Linux Kernel</li>
-<li>HAL</li>
-<li>Native C/C++ Libraries <strong>+</strong> AR</li>
-<li>Java API Framework</li>
-<li>System App</li>
-</ul>
-</blockquote>
-<p><em>图示如下：</em><br><img src="http://upload-images.jianshu.io/upload_images/1481332-af50032816470c0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="android-stack_2x.png"><br><a href="https://developer.android.google.cn/guide/platform/index.html" target="_blank" rel="noopener">official site</a></p>
-<hr>
-<ol>
-<li>Linux Kernel 内核层，系统运行基石，还包含一些基本的硬件驱动<pre><code>a. 安全性(Security)
-b. 内存管理(Memory Management)
-c. 进程管理(Process Management)
-d. 网络堆栈(Network Stack)
-e. 驱动程序模型(Driver Model)
-</code></pre></li>
-<li>硬件抽象层<pre><code>提供高级界面，为Java API Framework层显示硬件功能
-</code></pre></li>
-<li><p>AR (Android Runtime)  :<br> 在API&gt;=21的机器上，每个app都是一个AR 实例，这些实例通过DEX文件执行；AR的功能主要包括：</p>
-<pre><code>a. AOT预编译  JIT 实时编译
-b. 提升GC性能
-c. 更好的debug支持
-
-针对AR优化过的程序可以在低版本Android Dalvik虚拟机上获得性能优化，反之不成立
-</code></pre></li>
-<li>Native C/C++ Libraries<br> 出于性能考量，Android很多原生组件和服务都用到了native c/cpp的代码<pre><code>open GL 的2D 3D绘图基本都是用native api编写
-如若需要，应用也可以通过Android NDK编写代码，调用native API
-</code></pre></li>
-<li>Java API FrameWork<pre><code>Android OS的整个功能集， JAVA编写
-包含各组件、管理工具
-</code></pre></li>
-<li>应用层</li>
-</ol>
-<hr>
-<p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android】应用架构演进"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】应用架构演进/">应用架构演进</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】应用架构演进/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>预则立<br>应用演进过程中可能出现混乱局面，对架构的考量应该放在项目开始之前<br>参考：<br><a href="http://blog.spinytech.com/2016/12/28/android_modularization/" target="_blank" rel="noopener">Android架构思考(模块化、多进程)</a></p>
-</blockquote>
-<blockquote>
-<p>适用范围：中型项目，小项目就不需要杀鸡用牛刀了</p>
-</blockquote>
-<hr>
-<p>不进行设计时应用可能出现极度混乱的局面：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-75c426d6709ddced.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>跳过广受诟病的插件化思路，考虑应用<strong>路由框架</strong>设计<strong>组件化</strong>框架：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-782c8d1af71d2448.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-1.png"></p>
-<blockquote>
-<p>这样的路由框架，在模块解耦的同时，提高了模块的可测性和复用性。<br><img src="http://upload-images.jianshu.io/upload_images/1481332-07c676326694ac24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-3.png"><br>还可以在router与各路由之间加入 Common-Base层，作为公共library：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-f7692235ff980e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-Common Base.png"></p>
-</blockquote>
-<p>在调用API时，路由机制的调用时序图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-4250238e45f0a1f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Router时序图.png"></p>
-<p>这样的路由架构存在一个访问域问题，在多进程时需要进行格外处理</p>
-<blockquote>
-<p>多进程优势：</p>
-<ol>
-<li>独立各进程；</li>
-<li>提高内存控制权；</li>
-<li>模块解耦</li>
-<li>守护</li>
-</ol>
-</blockquote>
-<p>Router是单例模式，在多进程时直接使用会在每个JVM实例中生成，跨进程时需要将Router链接起来：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2b216709e992978b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多进程路由连接图.png"></p>
-<p>这时，调用时序图层级就略微有点深了：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9366cc7cb9bb15d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="广域事件传递时序图.png"></p>
-<blockquote>
-<p><strong>总结</strong>：<br>路由架构可以高度解耦，提升可测试性，也便于项目组进行任务划分、并行开发；<br>缺点是调用层级略微有点深，会有一定的性能损耗，但与其带来的优势相比可以忽略；此设计也没有考虑到MVP架构设计的融合问题，需要考虑应用场景的引用和适度</p>
-</blockquote>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android】declare-styleable-枚举format简介"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/">declare-styleable-枚举format简介</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>旨：介绍styleable enum format的使用方法</p>
-</blockquote>
-<blockquote>
-<p>技术含量：低<br>（项目中对字体的自定义类型较多，考虑将字体设置属性定义成styleable，方便直接在xml中设置）</p>
-</blockquote>
-<p>首先定义attr.xml中的styleable：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-11adc1f8df53f3dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_define.png"></p>
-<blockquote>
-<p>Code Glance （类型设置为enum）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"Font"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"font_type"</span> <span class="attr">format</span>=<span class="string">"enum"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"msyh"</span> <span class="attr">value</span>=<span class="string">"0"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"unidream_led"</span> <span class="attr">value</span>=<span class="string">"1"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"helvetica"</span> <span class="attr">value</span>=<span class="string">"2"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"bank"</span> <span class="attr">value</span>=<span class="string">"3"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"ping_fang"</span> <span class="attr">value</span>=<span class="string">"4"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">attr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p>之后就可以在xml中直接利用font_type属性了：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-a2fae41d6f9e84cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_enum.png"></p>
-<p>在具体的类中解析：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-64bf23e9b4fd9a56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_parse.png"></p>
-<blockquote>
-<p>Code Glance<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (attrs != <span class="keyword">null</span>) &#123;</span><br><span class="line">    TypedArray ar = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Font, defStyleAttr, <span class="number">0</span>);</span><br><span class="line">    <span class="meta">@FontMaster</span>.Type</span><br><span class="line">    <span class="keyword">int</span> fontType = ar.getInteger(R.styleable.Font_type, FontMaster.Type.Default);</span><br><span class="line">    FontMaster.font(fontType).set(<span class="keyword">this</span>);</span><br><span class="line">    ar.recycle();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    FontMaster.font(FontMaster.Type.MSYH).set(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-技术/Android/冻结帧"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -1438,7 +1179,7 @@ c. 更好的debug支持
 
 
   
-    <article id="post-技术/Android/【Android】VectorDrawable介绍"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/程序/Android--Monkey测试"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -1446,7 +1187,7 @@ c. 更好的debug支持
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/">VectorDrawable介绍</a>
+      <a class="article-title" href="/2018/03/09/技术/程序/Android--Monkey测试/">Android Monkey 测试时防止通知栏下拉</a>
     </h1>
   
 
@@ -1454,7 +1195,55 @@ c. 更好的debug支持
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/" class="article-date">
+	<a href="/2018/03/09/技术/程序/Android--Monkey测试/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><p>Android monkey test — <a href="http://einverne.github.io/post/2016/09/android-monkey-test.html#防止通知栏下拉" target="_blank" rel="noopener">http://einverne.github.io/post/2016/09/android-monkey-test.html#防止通知栏下拉</a></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monkey/">Monkey</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SystemBar/">SystemBar</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/【Android架构】Android架构初探"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android架构】Android架构初探/">Android架构初探</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android架构】Android架构初探/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -1466,35 +1255,122 @@ c. 更好的debug支持
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>引<br>今天视频处理中碰到一些简单图片的vector绘制方案<br>调研结果：</p>
+<p>Android 从软件层面来看可以分为以下几个层级：</p>
+<ul>
+<li>Linux Kernel</li>
+<li>HAL</li>
+<li>Native C/C++ Libraries <strong>+</strong> AR</li>
+<li>Java API Framework</li>
+<li>System App</li>
+</ul>
 </blockquote>
-<p>效果：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9a7da5968fccb57a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="vector paint eg.png"></p>
-<p><strong>优点</strong>：Vector与PNG文件相比，能极大地缩小文件占用空间；<br><strong>弱势</strong>：</p>
+<p><em>图示如下：</em><br><img src="http://upload-images.jianshu.io/upload_images/1481332-af50032816470c0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="android-stack_2x.png"><br><a href="https://developer.android.google.cn/guide/platform/index.html" target="_blank" rel="noopener">official site</a></p>
+<hr>
 <ol>
-<li>兼容性处理起来需要花费一些心思；</li>
-<li>复杂图片不适合运用vector绘制，一个是初始化效率，第二个是重复使用时bitmap在GPU中会有缓存，而vector没有；</li>
-<li>需要额外的一些辅助工具协作生成path；</li>
+<li>Linux Kernel 内核层，系统运行基石，还包含一些基本的硬件驱动<pre><code>a. 安全性(Security)
+b. 内存管理(Memory Management)
+c. 进程管理(Process Management)
+d. 网络堆栈(Network Stack)
+e. 驱动程序模型(Driver Model)
+</code></pre></li>
+<li>硬件抽象层<pre><code>提供高级界面，为Java API Framework层显示硬件功能
+</code></pre></li>
+<li><p>AR (Android Runtime)  :<br> 在API&gt;=21的机器上，每个app都是一个AR 实例，这些实例通过DEX文件执行；AR的功能主要包括：</p>
+<pre><code>a. AOT预编译  JIT 实时编译
+b. 提升GC性能
+c. 更好的debug支持
+
+针对AR优化过的程序可以在低版本Android Dalvik虚拟机上获得性能优化，反之不成立
+</code></pre></li>
+<li>Native C/C++ Libraries<br> 出于性能考量，Android很多原生组件和服务都用到了native c/cpp的代码<pre><code>open GL 的2D 3D绘图基本都是用native api编写
+如若需要，应用也可以通过Android NDK编写代码，调用native API
+</code></pre></li>
+<li>Java API FrameWork<pre><code>Android OS的整个功能集， JAVA编写
+包含各组件、管理工具
+</code></pre></li>
+<li>应用层</li>
 </ol>
+<hr>
+<p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/【Android】应用架构演进"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】应用架构演进/">应用架构演进</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】应用架构演进/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>预则立<br>应用演进过程中可能出现混乱局面，对架构的考量应该放在项目开始之前<br>参考：<br><a href="http://blog.spinytech.com/2016/12/28/android_modularization/" target="_blank" rel="noopener">Android架构思考(模块化、多进程)</a></p>
+</blockquote>
 <blockquote>
-<p>例注：</p>
+<p>适用范围：中型项目，小项目就不需要杀鸡用牛刀了</p>
+</blockquote>
+<hr>
+<p>不进行设计时应用可能出现极度混乱的局面：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-75c426d6709ddced.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>跳过广受诟病的插件化思路，考虑应用<strong>路由框架</strong>设计<strong>组件化</strong>框架：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-782c8d1af71d2448.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-1.png"></p>
+<blockquote>
+<p>这样的路由框架，在模块解耦的同时，提高了模块的可测性和复用性。<br><img src="http://upload-images.jianshu.io/upload_images/1481332-07c676326694ac24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-3.png"><br>还可以在router与各路由之间加入 Common-Base层，作为公共library：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-f7692235ff980e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-Common Base.png"></p>
+</blockquote>
+<p>在调用API时，路由机制的调用时序图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-4250238e45f0a1f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Router时序图.png"></p>
+<p>这样的路由架构存在一个访问域问题，在多进程时需要进行格外处理</p>
+<blockquote>
+<p>多进程优势：</p>
 <ol>
-<li>使用：<br>需要在Gradle 中添加：android.defaultConfig域<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vectorDrawables.useSupportLibrary = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>独立各进程；</li>
+<li>提高内存控制权；</li>
+<li>模块解耦</li>
+<li>守护</li>
 </ol>
 </blockquote>
-<ol>
-<li>XML attributes:  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">viewportHeight \ viewportWidth</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>划分的比例大小（图片中的例子：36dp大小的图像划分成24份，Path中的坐标建立在划分后的坐标系统之上）<br><code>意义--&gt;将大小与path分离</code></p>
-<hr>
-<p>Path指令：<br>M = moveto(M X,Y)<br>L = lineto(L X,Y)<br>H = horizontal lineto(H X)<br>V = vertical lineto(V Y)<br>C = curveto(C X1,Y1,X2,Y2,ENDX,ENDY)：三次贝赛曲线<br>S = smooth curveto(S X2,Y2,ENDX,ENDY)<br>Q = quadratic Belzier curve(Q X,Y,ENDX,ENDY)：二次贝赛曲线<br>T = smooth quadratic Belzier curveto(T ENDX,ENDY)：映射<br>A = elliptical Arc(A RX,RY,XROTATION,FLAG1,FLAG2,X,Y)：弧线<br>Z = closepath()</p>
-<hr>
-<p>工具：<br><a href="http://inloop.github.io/svg2android/" target="_blank" rel="noopener">to vector</a><br><a href="http://editor.method.ac/" target="_blank" rel="noopener">SVG editor</a></p>
-<hr>
+<p>Router是单例模式，在多进程时直接使用会在每个JVM实例中生成，跨进程时需要将Router链接起来：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2b216709e992978b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多进程路由连接图.png"></p>
+<p>这时，调用时序图层级就略微有点深了：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9366cc7cb9bb15d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="广域事件传递时序图.png"></p>
 <blockquote>
-<p>参考：(涵盖由头、Vector语法、转换工具、原理、兼容处理、性能考量等方面知识，良心之作)<br><a href="http://www.jianshu.com/p/e3614e7abc03" target="_blank" rel="noopener">Android Vector曲折的兼容之路</a></p>
+<p><strong>总结</strong>：<br>路由架构可以高度解耦，提升可测试性，也便于项目组进行任务划分、并行开发；<br>缺点是调用层级略微有点深，会有一定的性能损耗，但与其带来的优势相比可以忽略；此设计也没有考虑到MVP架构设计的融合问题，需要考虑应用场景的引用和适度</p>
 </blockquote>
 <hr>
 <p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
@@ -1507,7 +1383,133 @@ c. 更好的debug支持
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VectorDrawable/">VectorDrawable</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/【Android】JNI-Tips-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/">JNI-Tips-提要</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>引：<br>项目需要用到JNI，实际上还需要在native跟Java之间写一些代码，来连接二位，需要做进一步了解。本文主要对官方的JNI Tips做一些简单的关键提取<br>参考：<br><a href="">JNI Tips</a></p>
+</blockquote>
+<hr>
+<p><a href="https://www.evernote.com/l/ARunDTJCHX9AQ5Zm7URUjILWW2iFBUVWGRc" target="_blank" rel="noopener">Evernote连接</a></p>
+<p><a href="https://www.evernote.com/shard/s283/sh/a70d3242-1d7f-4043-9666-ed44548c82d6/5b68850545561917/res/ba76fe6f-7df9-41f8-a0cd-1f0dcbe4349c/JNI%20Tips.xmind" target="_blank" rel="noopener">XMind 文档下载</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ce0301d2d61fe60b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JNI Tips.png"></p>
+<p>文本：</p>
+<p>JNI Tips</p>
+<p>definition<br>  Java Native Interface<br>  how it works<br>    <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html</a><br>JavaVM and JNIEnv<br>  JavaVM<br>    one process can only create one JavaVM in Android<br>  JNIEnv<br>    provides most of JNI functions. Your native functions all receive a JNIEnv as first argument<br>    used for thread-local, so you cannot share a JNIEnv between threads (GetEnv can be used to discover the thread’s JNIEnv when no other way)<br>Threads<br>  a thread will have no JNIEnv unless it’s attached, before this it cannot make JNI calls (all threads are Linux threads, scheduled by the kernel)<br>  Threads attached through JNI must call DetachCurrentThread before they exit<br>jclass, jmethodID, and jfieldID<br>  steps to access an object’s field from native code<br>    FindClass:—&gt; get the class object reference for the class<br>    GetFieldID:—&gt;Get the field ID for the field with GetFieldID<br>    GetIntField:—&gt;Get the contents of the field with something appropriate<br>  call a method—&gt; get a class object reference and then a method ID<br>  it’s useful to look the values up once and cache the results in your native code. Because there is a limit of one JAVAVM per process<br>  if want to cache IDs when a class is loaded, add a piece of code that allow the native code to cache field offsets<br>Local and Global Reference<br>  almost every object returned by a JNI function is a “local reference”—&gt;it’s valid for the duration of the current native method in the current thread. Even if the object itself continues to live on after the native method returns, the reference is not valid<br>  the only way to get non-local references is via the functions NewGlobalRef and NewWeakGlobalRef (the global reference is guaranteed to be valid until you call DeleteGlobalRef)<br>  to see if two reference refer to the same object, you must use the IsSameObject function, never use == in native code<br>  jfieldIDs, jmethod are opaque types, not object references, should not be passed to NewGlobalRef<br>  if you attach a native thread with AttachCurrentThread, the code you are running will never automatically free local references until the thread detaches. Any local references you create will have to be deleted manually.<br>UTF-8 and UTF-16 Strings<br>  java use UTF-16, JNI provides methods that work with Modified UTF-8 as well.<br>  you cannot pass arbitrary UTF-8 data to JNI and expect it to work correctly<br>  Android currently does not require a copy in GetStringChars,however GetStringUTFChars requires an allocation and a conversion to UTF-8. UTF-16 strings are not zero-terminated, \u0000 is allowed, so you need to hang on to the string length like jchar pointer<br>  Don’t forget to Release the strings you Get. the string functions return jchar<em> or jbyte</em><br>  Data passed to NewStringUTF must be in Modified UTF-8 format<br>Primitive Arrays<br>  You must Release every array you Get<br>  release mode arguments alternative values<br>    0<br>        buffer freed<br>    JNI_COMMIT<br>        do nothing/ buffer not freed<br>    JNI_ABORT<br>        buffer freed, Earlier wirtes are not aborted<br>Region calls<br>  advantages<br>    reducing overhead by reducing JNI call requirements<br>    do not require pinning or extra data copies<br>    reduces the risk of programmer error–&gt; no risk of forgetting to call Release<br>Exception<br>  your must not call JNI functions while an exception is pending, except several special kinds of API: delete/ exception process/stack process/ release process …<br>Extended Checking<br>  JNI does very little error checking ~~!<br>  Android offers a mode called CheckJNI<br>    array, bad pointers, Class names, Critical call,Direct ByteBuffers, Exceptions, JNIEnv<em>s, jmethodIDs, References,Release modes, Type safety, UTF-8<br>Native Libraries<br>  steps<br>    call System.loadLibrary<br>    provide a native function : jint JNI_OnLoad(JavaVM</em> vm void* reserved)<br>    in JNI_OnLoad, register all your native methods<br>64-bit Considerations<br>  you need to stash your native pointers in a long field rather than an int<br>Unsupported Features/ Backwards Compatibility<br>  Define class<br>  dynamic lookup of native functions<br>  detaching threads<br>  weak global references<br>  Local references<br>  determining reference type with GetObjectRefType</p>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/【Android】declare-styleable-枚举format简介"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/">declare-styleable-枚举format简介</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>旨：介绍styleable enum format的使用方法</p>
+</blockquote>
+<blockquote>
+<p>技术含量：低<br>（项目中对字体的自定义类型较多，考虑将字体设置属性定义成styleable，方便直接在xml中设置）</p>
+</blockquote>
+<p>首先定义attr.xml中的styleable：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-11adc1f8df53f3dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_define.png"></p>
+<blockquote>
+<p>Code Glance （类型设置为enum）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"Font"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"font_type"</span> <span class="attr">format</span>=<span class="string">"enum"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"msyh"</span> <span class="attr">value</span>=<span class="string">"0"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"unidream_led"</span> <span class="attr">value</span>=<span class="string">"1"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"helvetica"</span> <span class="attr">value</span>=<span class="string">"2"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"bank"</span> <span class="attr">value</span>=<span class="string">"3"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"ping_fang"</span> <span class="attr">value</span>=<span class="string">"4"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">attr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>之后就可以在xml中直接利用font_type属性了：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-a2fae41d6f9e84cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_enum.png"></p>
+<p>在具体的类中解析：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-64bf23e9b4fd9a56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_parse.png"></p>
+<blockquote>
+<p>Code Glance<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (attrs != <span class="keyword">null</span>) &#123;</span><br><span class="line">    TypedArray ar = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Font, defStyleAttr, <span class="number">0</span>);</span><br><span class="line">    <span class="meta">@FontMaster</span>.Type</span><br><span class="line">    <span class="keyword">int</span> fontType = ar.getInteger(R.styleable.Font_type, FontMaster.Type.Default);</span><br><span class="line">    FontMaster.font(fontType).set(<span class="keyword">this</span>);</span><br><span class="line">    ar.recycle();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    FontMaster.font(FontMaster.Type.MSYH).set(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
 
     </footer>
   </div>

@@ -255,7 +255,7 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/Android/【Android】JNI-Tips-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/Android/【Android】VectorDrawable介绍"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -263,7 +263,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/">JNI-Tips-提要</a>
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/">VectorDrawable介绍</a>
     </h1>
   
 
@@ -271,7 +271,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/" class="article-date">
+	<a href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -283,17 +283,38 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>引：<br>项目需要用到JNI，实际上还需要在native跟Java之间写一些代码，来连接二位，需要做进一步了解。本文主要对官方的JNI Tips做一些简单的关键提取<br>参考：<br><a href="">JNI Tips</a></p>
+<p>引<br>今天视频处理中碰到一些简单图片的vector绘制方案<br>调研结果：</p>
+</blockquote>
+<p>效果：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9a7da5968fccb57a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="vector paint eg.png"></p>
+<p><strong>优点</strong>：Vector与PNG文件相比，能极大地缩小文件占用空间；<br><strong>弱势</strong>：</p>
+<ol>
+<li>兼容性处理起来需要花费一些心思；</li>
+<li>复杂图片不适合运用vector绘制，一个是初始化效率，第二个是重复使用时bitmap在GPU中会有缓存，而vector没有；</li>
+<li>需要额外的一些辅助工具协作生成path；</li>
+</ol>
+<blockquote>
+<p>例注：</p>
+<ol>
+<li>使用：<br>需要在Gradle 中添加：android.defaultConfig域<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vectorDrawables.useSupportLibrary = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<ol>
+<li>XML attributes:  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">viewportHeight \ viewportWidth</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>划分的比例大小（图片中的例子：36dp大小的图像划分成24份，Path中的坐标建立在划分后的坐标系统之上）<br><code>意义--&gt;将大小与path分离</code></p>
+<hr>
+<p>Path指令：<br>M = moveto(M X,Y)<br>L = lineto(L X,Y)<br>H = horizontal lineto(H X)<br>V = vertical lineto(V Y)<br>C = curveto(C X1,Y1,X2,Y2,ENDX,ENDY)：三次贝赛曲线<br>S = smooth curveto(S X2,Y2,ENDX,ENDY)<br>Q = quadratic Belzier curve(Q X,Y,ENDX,ENDY)：二次贝赛曲线<br>T = smooth quadratic Belzier curveto(T ENDX,ENDY)：映射<br>A = elliptical Arc(A RX,RY,XROTATION,FLAG1,FLAG2,X,Y)：弧线<br>Z = closepath()</p>
+<hr>
+<p>工具：<br><a href="http://inloop.github.io/svg2android/" target="_blank" rel="noopener">to vector</a><br><a href="http://editor.method.ac/" target="_blank" rel="noopener">SVG editor</a></p>
+<hr>
+<blockquote>
+<p>参考：(涵盖由头、Vector语法、转换工具、原理、兼容处理、性能考量等方面知识，良心之作)<br><a href="http://www.jianshu.com/p/e3614e7abc03" target="_blank" rel="noopener">Android Vector曲折的兼容之路</a></p>
 </blockquote>
 <hr>
-<p><a href="https://www.evernote.com/l/ARunDTJCHX9AQ5Zm7URUjILWW2iFBUVWGRc" target="_blank" rel="noopener">Evernote连接</a></p>
-<p><a href="https://www.evernote.com/shard/s283/sh/a70d3242-1d7f-4043-9666-ed44548c82d6/5b68850545561917/res/ba76fe6f-7df9-41f8-a0cd-1f0dcbe4349c/JNI%20Tips.xmind" target="_blank" rel="noopener">XMind 文档下载</a></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ce0301d2d61fe60b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JNI Tips.png"></p>
-<p>文本：</p>
-<p>JNI Tips</p>
-<p>definition<br>  Java Native Interface<br>  how it works<br>    <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html</a><br>JavaVM and JNIEnv<br>  JavaVM<br>    one process can only create one JavaVM in Android<br>  JNIEnv<br>    provides most of JNI functions. Your native functions all receive a JNIEnv as first argument<br>    used for thread-local, so you cannot share a JNIEnv between threads (GetEnv can be used to discover the thread’s JNIEnv when no other way)<br>Threads<br>  a thread will have no JNIEnv unless it’s attached, before this it cannot make JNI calls (all threads are Linux threads, scheduled by the kernel)<br>  Threads attached through JNI must call DetachCurrentThread before they exit<br>jclass, jmethodID, and jfieldID<br>  steps to access an object’s field from native code<br>    FindClass:—&gt; get the class object reference for the class<br>    GetFieldID:—&gt;Get the field ID for the field with GetFieldID<br>    GetIntField:—&gt;Get the contents of the field with something appropriate<br>  call a method—&gt; get a class object reference and then a method ID<br>  it’s useful to look the values up once and cache the results in your native code. Because there is a limit of one JAVAVM per process<br>  if want to cache IDs when a class is loaded, add a piece of code that allow the native code to cache field offsets<br>Local and Global Reference<br>  almost every object returned by a JNI function is a “local reference”—&gt;it’s valid for the duration of the current native method in the current thread. Even if the object itself continues to live on after the native method returns, the reference is not valid<br>  the only way to get non-local references is via the functions NewGlobalRef and NewWeakGlobalRef (the global reference is guaranteed to be valid until you call DeleteGlobalRef)<br>  to see if two reference refer to the same object, you must use the IsSameObject function, never use == in native code<br>  jfieldIDs, jmethod are opaque types, not object references, should not be passed to NewGlobalRef<br>  if you attach a native thread with AttachCurrentThread, the code you are running will never automatically free local references until the thread detaches. Any local references you create will have to be deleted manually.<br>UTF-8 and UTF-16 Strings<br>  java use UTF-16, JNI provides methods that work with Modified UTF-8 as well.<br>  you cannot pass arbitrary UTF-8 data to JNI and expect it to work correctly<br>  Android currently does not require a copy in GetStringChars,however GetStringUTFChars requires an allocation and a conversion to UTF-8. UTF-16 strings are not zero-terminated, \u0000 is allowed, so you need to hang on to the string length like jchar pointer<br>  Don’t forget to Release the strings you Get. the string functions return jchar<em> or jbyte</em><br>  Data passed to NewStringUTF must be in Modified UTF-8 format<br>Primitive Arrays<br>  You must Release every array you Get<br>  release mode arguments alternative values<br>    0<br>        buffer freed<br>    JNI_COMMIT<br>        do nothing/ buffer not freed<br>    JNI_ABORT<br>        buffer freed, Earlier wirtes are not aborted<br>Region calls<br>  advantages<br>    reducing overhead by reducing JNI call requirements<br>    do not require pinning or extra data copies<br>    reduces the risk of programmer error–&gt; no risk of forgetting to call Release<br>Exception<br>  your must not call JNI functions while an exception is pending, except several special kinds of API: delete/ exception process/stack process/ release process …<br>Extended Checking<br>  JNI does very little error checking ~~!<br>  Android offers a mode called CheckJNI<br>    array, bad pointers, Class names, Critical call,Direct ByteBuffers, Exceptions, JNIEnv<em>s, jmethodIDs, References,Release modes, Type safety, UTF-8<br>Native Libraries<br>  steps<br>    call System.loadLibrary<br>    provide a native function : jint JNI_OnLoad(JavaVM</em> vm void* reserved)<br>    in JNI_OnLoad, register all your native methods<br>64-bit Considerations<br>  you need to stash your native pointers in a long field rather than an int<br>Unsupported Features/ Backwards Compatibility<br>  Define class<br>  dynamic lookup of native functions<br>  detaching threads<br>  weak global references<br>  Local references<br>  determining reference type with GetObjectRefType</p>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
 
@@ -303,7 +324,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VectorDrawable/">VectorDrawable</a></li></ul>
 
     </footer>
   </div>
@@ -390,122 +411,6 @@
 
 
   
-    <article id="post-技术/Android/【Android】AS添加JNI支持"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS添加JNI支持/">AS添加JNI支持</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】AS添加JNI支持/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p><em>JNI入坑</em></p>
-</blockquote>
-<blockquote>
-<p>索引：</p>
-<ol>
-<li>旧  NDK  使用姿势(AS 2.2 以下 <a href="https://codelabs.developers.google.com/codelabs/android-studio-jni/index.html?index=..%2F..%2Findex#2" target="_blank" rel="noopener">参考链接：Create hello-JNI with android studio</a>)</li>
-<li>新  NDK  使用方法(AS 2.2及以上 <a href="https://developer.android.google.cn/studio/projects/add-native-code.html" target="_blank" rel="noopener">参考链接：Add C and C++ Code to Your Project</a>)</li>
-</ol>
-</blockquote>
-<blockquote>
-<p>参考：<br><a href="https://developer.android.google.cn/training/articles/perf-jni.html?hl=zh-cn" target="_blank" rel="noopener">JNI Tips</a><br>(链接均需VPN)</p>
-</blockquote>
-<hr>
-<h4 id="旧-NDK-build："><a href="#旧-NDK-build：" class="headerlink" title="旧  NDK-build："></a>旧  NDK-build：</h4><p>简单来说分这么几步：</p>
-<ol>
-<li>添加ndk库支持</li>
-<li><p>在 gradle.properties中添加：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android.useDeprecatedNdk=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在 app级build.gradle中添加：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  defaultConfig &#123;</span><br><span class="line">        ndk &#123;</span><br><span class="line">            moduleName <span class="string">"test-jni"</span> <span class="comment">// name the jni lib you want to add</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建load 静态块，添加待实现native api</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JniTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.loadLibrary(<span class="string">"test-jni"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">native</span> String <span class="title">getMsgFromJni</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>在 目标api所在行停留一会，会出现红色灯泡提示按钮，点击图标，会有<code>Create Function Java_%full class name%_getMsgFromJni</code>选项出现；点击之后会自动创建一个与java目录并列的cpp目录，并在目录下生成<code>test-jni.c</code>文件<br>具体代码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;jni.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">JNIEXPORT jstringJNICALL</span><br><span class="line">Java_com_zealens_face_jnitest_JniTest_getMsgFromJni(JNIEnv</span><br><span class="line">*env, jobject instance)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">// TODO</span></span><br><span class="line"><span class="keyword">return</span> (*env)-&gt;NewStringUTF(env, returnValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>说明：</p>
-<ol>
-<li>对于第3行代码：<br>AS生成的代码有错误，需将JNICALL与前面的jstring隔开；</li>
-<li>将returnValue修改为常量值（eg：”hello”）</li>
-</ol>
-</blockquote>
-<p>至此，build之后调用API就能得到刚才填入的hello值。</p>
-<hr>
-<p>####新CMake</p>
-<blockquote>
-<p>AS现在默认的C++工具已经修改为CMake（需要在SDK-Tools中安装CMake、LLDB、NDK），旧的ndk-build库也可以手动导入</p>
-</blockquote>
-<blockquote>
-<p>准备工作：</p>
-<ol>
-<li>如果有则移除：<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Remove this line</span></span><br><span class="line">android.useDeprecatedNdk = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</blockquote>
-<ol>
-<li>install build tools</li>
-</ol>
-<p>（略：创建新的C++support Application）</p>
-<ol>
-<li>向现有项目添加C/C++ 代码：<br> a. 新建cpp目录；<br> b. 添加cpp文件，代码如下：</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span></span><br><span class="line">JNIEXPORT jstring JNICALL</span><br><span class="line">Java_%your test <span class="class"><span class="keyword">class</span> <span class="title">full</span> <span class="title">name</span>%_<span class="title">stringFromJNI</span>(</span></span><br><span class="line"><span class="class">        <span class="title">JNIEnv</span>* <span class="title">env</span>,</span></span><br><span class="line"><span class="class">        <span class="title">jobject</span> /* <span class="title">this</span> */) &#123;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> hello = <span class="string">"Hello from C++"</span>;</span><br><span class="line">    <span class="keyword">return</span> env-&gt;NewStringUTF(hello.c_str());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在欲链接cpp的根目录中（与build.gradle同级）创建文件：<code>CMakeLists.txt</code>，键入如下代码：（各API含义见<a href="https://developer.android.google.cn/studio/projects/add-native-code.html" target="_blank" rel="noopener">参考链接末尾部分</a>，或 <a href="https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html" target="_blank" rel="noopener">CMake command</a>）</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"># For more information about <span class="keyword">using</span> CMake with Android Studio, read the</span><br><span class="line"><span class="meta"># documentation: https:<span class="comment">//d.android.com/studio/projects/add-native-code.html</span></span></span><br><span class="line"></span><br><span class="line"># Sets the minimum version of CMake required to build the native library.</span><br><span class="line"></span><br><span class="line">cmake_minimum_required(VERSION <span class="number">3.4</span><span class="number">.1</span>)</span><br><span class="line"></span><br><span class="line"># Creates <span class="keyword">and</span> names a library, sets it as either STATIC</span><br><span class="line"><span class="meta"># or SHARED, and provides the relative paths to its source code.</span></span><br><span class="line"># You can define multiple libraries, <span class="keyword">and</span> CMake builds them <span class="keyword">for</span> you.</span><br><span class="line"># Gradle automatically packages shared libraries with your APK.</span><br><span class="line"></span><br><span class="line">add_library( # Sets the name of the library.</span><br><span class="line">             native-lib</span><br><span class="line"></span><br><span class="line">             # Sets the library as a shared library.</span><br><span class="line">             SHARED</span><br><span class="line"></span><br><span class="line">             # Provides a relative path to your source file(s).</span><br><span class="line">             src/main/cpp/native-lib.cpp )</span><br><span class="line"></span><br><span class="line"># Searches <span class="keyword">for</span> a specified prebuilt library <span class="keyword">and</span> stores the path as a</span><br><span class="line"><span class="meta"># variable. Because CMake includes system libraries in the search path by</span></span><br><span class="line"><span class="meta"># default, you only need to specify the name of the public NDK library</span></span><br><span class="line"><span class="meta"># you want to add. CMake verifies that the library exists before</span></span><br><span class="line"><span class="meta"># completing its build.</span></span><br><span class="line"></span><br><span class="line">find_library( # Sets the name of the path variable.</span><br><span class="line">              <span class="built_in">log</span>-lib</span><br><span class="line"></span><br><span class="line">              # Specifies the name of the NDK library that</span><br><span class="line">              # you want CMake to locate.</span><br><span class="line">              <span class="built_in">log</span> )</span><br><span class="line"></span><br><span class="line"># Specifies libraries CMake should link to your target library. You</span><br><span class="line"><span class="meta"># can link multiple libraries, such as libraries you <span class="meta-keyword">define</span> in this</span></span><br><span class="line"><span class="meta"># build script, prebuilt third-party libraries, or system libraries.</span></span><br><span class="line"></span><br><span class="line">target_link_libraries( # Specifies the target library.</span><br><span class="line">                       native-lib</span><br><span class="line"></span><br><span class="line">                       # Links the target library to the <span class="built_in">log</span> library</span><br><span class="line">                       # included in the NDK.</span><br><span class="line">                       $&#123;<span class="built_in">log</span>-lib&#125; )</span><br></pre></td></tr></table></figure>
-<p>之后，在同一模块目录上单击右键，选择<code>link c++...</code>，选中欲链接的cpp文件，build.gradle就会生成如下代码：（android模块中）<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">externalNativeBuild &#123;</span><br><span class="line">    cmake &#123;</span><br><span class="line">        path <span class="string">"CMakeLists.txt"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>此时再调用相应API就可以看到效果了：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CppTest</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * A native method that is implemented by the 'native-lib' native library,</span></span><br><span class="line"><span class="comment">     * which is packaged with this application.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">native</span> String <span class="title">stringFromJNI</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Used to load the 'native-lib' library on application startup.</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.loadLibrary(<span class="string">"native-lib"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>pay attention to the lib name</p>
-</blockquote>
-<blockquote>
-<p>高阶设置请参考手册，这里也只是介绍一个最小的CMake环境</p>
-</blockquote>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QRCode/">QRCode</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-技术/Android/【Android】Android-Clean-Architecture推介"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -568,73 +473,6 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
-</blockquote>
-<blockquote>
-<p>这样的话，注意定期检查各lib版本就好</p>
-</blockquote>
-<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
-<p>总结一下步骤：</p>
-<ol>
-<li>获取二维码（QRCode）</li>
-<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
-<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
-</li>
-<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
-</li>
-</ol>
-<p>时序图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
 
     </footer>
   </div>
@@ -825,6 +663,189 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/retrofit/">retrofit</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/【Android】AS添加JNI支持"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS添加JNI支持/">AS添加JNI支持</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】AS添加JNI支持/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><em>JNI入坑</em></p>
+</blockquote>
+<blockquote>
+<p>索引：</p>
+<ol>
+<li>旧  NDK  使用姿势(AS 2.2 以下 <a href="https://codelabs.developers.google.com/codelabs/android-studio-jni/index.html?index=..%2F..%2Findex#2" target="_blank" rel="noopener">参考链接：Create hello-JNI with android studio</a>)</li>
+<li>新  NDK  使用方法(AS 2.2及以上 <a href="https://developer.android.google.cn/studio/projects/add-native-code.html" target="_blank" rel="noopener">参考链接：Add C and C++ Code to Your Project</a>)</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>参考：<br><a href="https://developer.android.google.cn/training/articles/perf-jni.html?hl=zh-cn" target="_blank" rel="noopener">JNI Tips</a><br>(链接均需VPN)</p>
+</blockquote>
+<hr>
+<h4 id="旧-NDK-build："><a href="#旧-NDK-build：" class="headerlink" title="旧  NDK-build："></a>旧  NDK-build：</h4><p>简单来说分这么几步：</p>
+<ol>
+<li>添加ndk库支持</li>
+<li><p>在 gradle.properties中添加：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android.useDeprecatedNdk=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 app级build.gradle中添加：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  defaultConfig &#123;</span><br><span class="line">        ndk &#123;</span><br><span class="line">            moduleName <span class="string">"test-jni"</span> <span class="comment">// name the jni lib you want to add</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建load 静态块，添加待实现native api</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JniTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.loadLibrary(<span class="string">"test-jni"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">native</span> String <span class="title">getMsgFromJni</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在 目标api所在行停留一会，会出现红色灯泡提示按钮，点击图标，会有<code>Create Function Java_%full class name%_getMsgFromJni</code>选项出现；点击之后会自动创建一个与java目录并列的cpp目录，并在目录下生成<code>test-jni.c</code>文件<br>具体代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;jni.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">JNIEXPORT jstringJNICALL</span><br><span class="line">Java_com_zealens_face_jnitest_JniTest_getMsgFromJni(JNIEnv</span><br><span class="line">*env, jobject instance)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">// TODO</span></span><br><span class="line"><span class="keyword">return</span> (*env)-&gt;NewStringUTF(env, returnValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>说明：</p>
+<ol>
+<li>对于第3行代码：<br>AS生成的代码有错误，需将JNICALL与前面的jstring隔开；</li>
+<li>将returnValue修改为常量值（eg：”hello”）</li>
+</ol>
+</blockquote>
+<p>至此，build之后调用API就能得到刚才填入的hello值。</p>
+<hr>
+<p>####新CMake</p>
+<blockquote>
+<p>AS现在默认的C++工具已经修改为CMake（需要在SDK-Tools中安装CMake、LLDB、NDK），旧的ndk-build库也可以手动导入</p>
+</blockquote>
+<blockquote>
+<p>准备工作：</p>
+<ol>
+<li>如果有则移除：<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Remove this line</span></span><br><span class="line">android.useDeprecatedNdk = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<ol>
+<li>install build tools</li>
+</ol>
+<p>（略：创建新的C++support Application）</p>
+<ol>
+<li>向现有项目添加C/C++ 代码：<br> a. 新建cpp目录；<br> b. 添加cpp文件，代码如下：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span></span><br><span class="line">JNIEXPORT jstring JNICALL</span><br><span class="line">Java_%your test <span class="class"><span class="keyword">class</span> <span class="title">full</span> <span class="title">name</span>%_<span class="title">stringFromJNI</span>(</span></span><br><span class="line"><span class="class">        <span class="title">JNIEnv</span>* <span class="title">env</span>,</span></span><br><span class="line"><span class="class">        <span class="title">jobject</span> /* <span class="title">this</span> */) &#123;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> hello = <span class="string">"Hello from C++"</span>;</span><br><span class="line">    <span class="keyword">return</span> env-&gt;NewStringUTF(hello.c_str());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在欲链接cpp的根目录中（与build.gradle同级）创建文件：<code>CMakeLists.txt</code>，键入如下代码：（各API含义见<a href="https://developer.android.google.cn/studio/projects/add-native-code.html" target="_blank" rel="noopener">参考链接末尾部分</a>，或 <a href="https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html" target="_blank" rel="noopener">CMake command</a>）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"># For more information about <span class="keyword">using</span> CMake with Android Studio, read the</span><br><span class="line"><span class="meta"># documentation: https:<span class="comment">//d.android.com/studio/projects/add-native-code.html</span></span></span><br><span class="line"></span><br><span class="line"># Sets the minimum version of CMake required to build the native library.</span><br><span class="line"></span><br><span class="line">cmake_minimum_required(VERSION <span class="number">3.4</span><span class="number">.1</span>)</span><br><span class="line"></span><br><span class="line"># Creates <span class="keyword">and</span> names a library, sets it as either STATIC</span><br><span class="line"><span class="meta"># or SHARED, and provides the relative paths to its source code.</span></span><br><span class="line"># You can define multiple libraries, <span class="keyword">and</span> CMake builds them <span class="keyword">for</span> you.</span><br><span class="line"># Gradle automatically packages shared libraries with your APK.</span><br><span class="line"></span><br><span class="line">add_library( # Sets the name of the library.</span><br><span class="line">             native-lib</span><br><span class="line"></span><br><span class="line">             # Sets the library as a shared library.</span><br><span class="line">             SHARED</span><br><span class="line"></span><br><span class="line">             # Provides a relative path to your source file(s).</span><br><span class="line">             src/main/cpp/native-lib.cpp )</span><br><span class="line"></span><br><span class="line"># Searches <span class="keyword">for</span> a specified prebuilt library <span class="keyword">and</span> stores the path as a</span><br><span class="line"><span class="meta"># variable. Because CMake includes system libraries in the search path by</span></span><br><span class="line"><span class="meta"># default, you only need to specify the name of the public NDK library</span></span><br><span class="line"><span class="meta"># you want to add. CMake verifies that the library exists before</span></span><br><span class="line"><span class="meta"># completing its build.</span></span><br><span class="line"></span><br><span class="line">find_library( # Sets the name of the path variable.</span><br><span class="line">              <span class="built_in">log</span>-lib</span><br><span class="line"></span><br><span class="line">              # Specifies the name of the NDK library that</span><br><span class="line">              # you want CMake to locate.</span><br><span class="line">              <span class="built_in">log</span> )</span><br><span class="line"></span><br><span class="line"># Specifies libraries CMake should link to your target library. You</span><br><span class="line"><span class="meta"># can link multiple libraries, such as libraries you <span class="meta-keyword">define</span> in this</span></span><br><span class="line"><span class="meta"># build script, prebuilt third-party libraries, or system libraries.</span></span><br><span class="line"></span><br><span class="line">target_link_libraries( # Specifies the target library.</span><br><span class="line">                       native-lib</span><br><span class="line"></span><br><span class="line">                       # Links the target library to the <span class="built_in">log</span> library</span><br><span class="line">                       # included in the NDK.</span><br><span class="line">                       $&#123;<span class="built_in">log</span>-lib&#125; )</span><br></pre></td></tr></table></figure>
+<p>之后，在同一模块目录上单击右键，选择<code>link c++...</code>，选中欲链接的cpp文件，build.gradle就会生成如下代码：（android模块中）<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">externalNativeBuild &#123;</span><br><span class="line">    cmake &#123;</span><br><span class="line">        path <span class="string">"CMakeLists.txt"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>此时再调用相应API就可以看到效果了：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CppTest</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * A native method that is implemented by the 'native-lib' native library,</span></span><br><span class="line"><span class="comment">     * which is packaged with this application.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">native</span> String <span class="title">stringFromJNI</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Used to load the 'native-lib' library on application startup.</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.loadLibrary(<span class="string">"native-lib"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>pay attention to the lib name</p>
+</blockquote>
+<blockquote>
+<p>高阶设置请参考手册，这里也只是介绍一个最小的CMake环境</p>
+</blockquote>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QRCode/">QRCode</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
+</blockquote>
+<blockquote>
+<p>这样的话，注意定期检查各lib版本就好</p>
+</blockquote>
+<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
+<p>总结一下步骤：</p>
+<ol>
+<li>获取二维码（QRCode）</li>
+<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
+<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
+</li>
+<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
+</li>
+</ol>
+<p>时序图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
 
     </footer>
   </div>
@@ -1079,7 +1100,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 
 
   
-    <article id="post-技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/【Note】《构建之法》提要"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -1087,7 +1108,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/">【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介</a>
+      <a class="article-title" href="/2018/03/09/技术/【Note】《构建之法》提要/">【Note】《构建之法》提要</a>
     </h1>
   
 
@@ -1095,30 +1116,39 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/" class="article-date">
+	<a href="/2018/03/09/技术/【Note】《构建之法》提要/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/技术/">技术</a>
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>工欲善其事必先利其器<br>今天介绍几个plugin工具（奇淫巧技）</p>
+<p>《软件工程  构建之法》作者邹欣系Windows中国工程师团队首席研发总监 （Link：<a href="https://www.amazon.cn/图书/dp/B011LPUAYI/ref=sr_1_1?ie=UTF8&amp;qid=1487685207&amp;sr=8-1&amp;keywords=构建之法" target="_blank" rel="noopener">亚马逊</a>）</p>
 </blockquote>
 <blockquote>
-<p><em>（适用平台：IntelliJ IDEA内核的各类IDE）</em></p>
+<p>整本书，极其认真，结构组织的有点像学术论文了。涵盖面比较全，涉及到了现代软件工程的整个流程，从需求的挖掘产生，到中间各个环节地循序渐进，直至最后的交付与维护支持。必然也就导致每个点深入程度相对较有限。</p>
+</blockquote>
+<blockquote>
+<p>除了项目本身，本书另一个关注重点是项目中的人：项目经理、用户、测试、开发，讲到各种角色各自的职责，相互之间的协作关系、合作方法，最后一章中还有提到职业道德~（感觉有点偏向股东与雇主）</p>
+</blockquote>
+<blockquote>
+<p>全书更多的是探讨方法论，关于开发、关于敏捷迭代、关于项目管理、关于结对编程、关于测试流程与种类、关于用户体验的获得与改进、关于需求分析与评审、关于软件工程师的成长。当然作者只是提供了一些自己的见解，很多观点并不一定准确，其中也有一些落伍的工具、模型。</p>
+</blockquote>
+<blockquote>
+<p>更大的意义许是全面地概述一些需要注意的点，真正贯彻落实这些方法需要耗费极大成本。很多观点引人深思。</p>
 </blockquote>
 <hr>
-<p><strong>效果图</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5b8d8a86fda8eca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ide_tools.png"></p>
-<p>按图中标示顺序介绍：</p>
-<p>####1.Translation<br>_ 顾名思义是中英翻译，令人意外的是自带英美两种发音（默认快捷键：ALT + 1/3，OSX 不详）_</p>
-<p>####2.Background Image Plus<br><em>可以对IDE背景进行自定义，可以设置图片质量/明暗等，对内存有一定消耗，小霸王请绕道</em></p>
-<p>####3.CodeGlance<br><em>提供一个代码文件的全局概览缩略图，主要可用于快速定位</em></p>
+<p><a href="https://www.evernote.com/l/ARsVoFkwFjJCdY6Llj0jxODvRc2NPL8xgTI" target="_blank" rel="noopener">EverNote链接</a></p>
+<p><a href="https://www.evernote.com/shard/s283/sh/15a05930-1632-4275-8e8b-963d23c4e0ef/45cd8d3cbf318132/res/7853730d-412e-4220-9b6a-4fda39ca66a8/构建之法.xmind" target="_blank" rel="noopener">XMind文档</a></p>
+<p><strong>导图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7bcaba0014f30279.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="构建之法 overview.png"></p>
+<p><strong>文本</strong><br>构建之法</p>
+<p>1 个人<br>  1.1 2 个人和技术流程<br>    1.1.1 单元测试<br>        1.1.1.1 着眼于基本点；当事人编写；不改变机器状态；快；可重现；覆盖所有代码路径；与产品代码一同维护<br>    1.1.2 效能分析工具<br>        1.1.2.1 抽样、代码注入<br>    1.1.3 个人开发流程<br>        1.1.3.1 计划、开发、记录用时、测试报告、计算工作量、事后总结、提出过程改进计划<br>  1.2 3 软件工程师的成长<br>    1.2.1 大江东去，浪淘尽，千古风流人物<br>2 团队<br>  2.1 4 两人合作<br>    2.1.1 代码规范、设计规范、复审（驳回，选择性同意，放行）、结对编程、不同阶段的技巧<br>  2.2 5 团队和流程<br>    2.2.1 团队模式、开发流程<br>  2.3 6 敏捷流程<br>    2.3.1 敏捷问题与解法、敏捷团队（自主）、敏捷总结<br>  2.4 7 MSF<br>    2.4.1 MSF基本原则（共享、沟通、为共同目标努力、充分授权和信任、各司其职、敏捷）；MSF团队模型<br>3 产品<br>  3.1 8 需求分析<br>    3.1.1 软件需求（获取引导、分析定义、验证、管理）；利益相关者；用户调研（焦点小组、人类学、快速原型、AB测试）；竞争性需求分析框架（Need、Approach、Benefit、Competitors、Delivery）；功能定位与优先级（必要与辅助、核心与外围）；计划与估计；分而治之<br>  3.2 9 项目经理<br>    3.2.1 来历；职责（开发与测试之外的所有）；PM与风险管理；能力要求与任务（观察理解快速学习、分析管理、专业、自省）<br>  3.3 10 典型用户和场景<br>  3.4 12 用户体验<br>    3.4.1 要素（第一印象、换位思考、记住用户选择…）；设计的步骤与目标；评价标准（快反馈、贴近现实、暴露控制权、一致性与标准化、适合各种用户、帮助修复；提示语帮助）<br>4 质量<br>  4.1 11 软件设计与实现<br>    4.1.1 分析与设计方法；团队建模和分析方法；日常管理；<br>  4.2 13 软件测试<br>    4.2.1 分类方法（黑白、功能非功能、时机作用分类）；测试方法（UnitTest、BuildTest、AcceptanceTest、探索测试、回归测试、场景/集成/系统测试、伙伴测试、效能测试、压力测试、内外部测试、易用性测试）<br>  4.3 14 质量保障<br>    4.3.1 软件质量（程序、工程、如何衡量、成本）；质量保障工作（测试角色）<br>  4.4 15 稳定和发布阶段<br>    4.4.1 从完成到发布；渐进发布；发布之后——事后诸葛亮会议（赏罚、总结经验教训）<br>5 IT<br>  5.1 16 IT行业的创新<br>    5.1.1 争议点（创新与跟随、鼻祖与布道、专家？、技术创新为核心？、成功者更能创新？）；时机；招数<br>  5.2 17 人、绩效和职业道德<br>    5.2.1 猪鸡鹦鹉（成员投入程度不一）；人；绩效管理；职业道德（与公众利益一致、客户与雇主利益最大化、产出物满足高标准、专业判断、管理软件与开发维护、职业的诚信与声誉、对同事的支持与帮助、自身不断提高）</p>
 
       
 
@@ -1128,7 +1158,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tool/">Tool</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
 
     </footer>
   </div>
