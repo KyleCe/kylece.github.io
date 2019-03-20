@@ -255,6 +255,65 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/Android/【Android】JNI-Tips-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/">JNI-Tips-提要</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>引：<br>项目需要用到JNI，实际上还需要在native跟Java之间写一些代码，来连接二位，需要做进一步了解。本文主要对官方的JNI Tips做一些简单的关键提取<br>参考：<br><a href="">JNI Tips</a></p>
+</blockquote>
+<hr>
+<p><a href="https://www.evernote.com/l/ARunDTJCHX9AQ5Zm7URUjILWW2iFBUVWGRc" target="_blank" rel="noopener">Evernote连接</a></p>
+<p><a href="https://www.evernote.com/shard/s283/sh/a70d3242-1d7f-4043-9666-ed44548c82d6/5b68850545561917/res/ba76fe6f-7df9-41f8-a0cd-1f0dcbe4349c/JNI%20Tips.xmind" target="_blank" rel="noopener">XMind 文档下载</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ce0301d2d61fe60b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JNI Tips.png"></p>
+<p>文本：</p>
+<p>JNI Tips</p>
+<p>definition<br>  Java Native Interface<br>  how it works<br>    <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html</a><br>JavaVM and JNIEnv<br>  JavaVM<br>    one process can only create one JavaVM in Android<br>  JNIEnv<br>    provides most of JNI functions. Your native functions all receive a JNIEnv as first argument<br>    used for thread-local, so you cannot share a JNIEnv between threads (GetEnv can be used to discover the thread’s JNIEnv when no other way)<br>Threads<br>  a thread will have no JNIEnv unless it’s attached, before this it cannot make JNI calls (all threads are Linux threads, scheduled by the kernel)<br>  Threads attached through JNI must call DetachCurrentThread before they exit<br>jclass, jmethodID, and jfieldID<br>  steps to access an object’s field from native code<br>    FindClass:—&gt; get the class object reference for the class<br>    GetFieldID:—&gt;Get the field ID for the field with GetFieldID<br>    GetIntField:—&gt;Get the contents of the field with something appropriate<br>  call a method—&gt; get a class object reference and then a method ID<br>  it’s useful to look the values up once and cache the results in your native code. Because there is a limit of one JAVAVM per process<br>  if want to cache IDs when a class is loaded, add a piece of code that allow the native code to cache field offsets<br>Local and Global Reference<br>  almost every object returned by a JNI function is a “local reference”—&gt;it’s valid for the duration of the current native method in the current thread. Even if the object itself continues to live on after the native method returns, the reference is not valid<br>  the only way to get non-local references is via the functions NewGlobalRef and NewWeakGlobalRef (the global reference is guaranteed to be valid until you call DeleteGlobalRef)<br>  to see if two reference refer to the same object, you must use the IsSameObject function, never use == in native code<br>  jfieldIDs, jmethod are opaque types, not object references, should not be passed to NewGlobalRef<br>  if you attach a native thread with AttachCurrentThread, the code you are running will never automatically free local references until the thread detaches. Any local references you create will have to be deleted manually.<br>UTF-8 and UTF-16 Strings<br>  java use UTF-16, JNI provides methods that work with Modified UTF-8 as well.<br>  you cannot pass arbitrary UTF-8 data to JNI and expect it to work correctly<br>  Android currently does not require a copy in GetStringChars,however GetStringUTFChars requires an allocation and a conversion to UTF-8. UTF-16 strings are not zero-terminated, \u0000 is allowed, so you need to hang on to the string length like jchar pointer<br>  Don’t forget to Release the strings you Get. the string functions return jchar<em> or jbyte</em><br>  Data passed to NewStringUTF must be in Modified UTF-8 format<br>Primitive Arrays<br>  You must Release every array you Get<br>  release mode arguments alternative values<br>    0<br>        buffer freed<br>    JNI_COMMIT<br>        do nothing/ buffer not freed<br>    JNI_ABORT<br>        buffer freed, Earlier wirtes are not aborted<br>Region calls<br>  advantages<br>    reducing overhead by reducing JNI call requirements<br>    do not require pinning or extra data copies<br>    reduces the risk of programmer error–&gt; no risk of forgetting to call Release<br>Exception<br>  your must not call JNI functions while an exception is pending, except several special kinds of API: delete/ exception process/stack process/ release process …<br>Extended Checking<br>  JNI does very little error checking ~~!<br>  Android offers a mode called CheckJNI<br>    array, bad pointers, Class names, Critical call,Direct ByteBuffers, Exceptions, JNIEnv<em>s, jmethodIDs, References,Release modes, Type safety, UTF-8<br>Native Libraries<br>  steps<br>    call System.loadLibrary<br>    provide a native function : jint JNI_OnLoad(JavaVM</em> vm void* reserved)<br>    in JNI_OnLoad, register all your native methods<br>64-bit Considerations<br>  you need to stash your native pointers in a long field rather than an int<br>Unsupported Features/ Backwards Compatibility<br>  Define class<br>  dynamic lookup of native functions<br>  detaching threads<br>  weak global references<br>  Local references<br>  determining reference type with GetObjectRefType</p>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/【Android】Clean-Architecture--初析"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -321,86 +380,6 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android】VectorDrawable介绍"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/">VectorDrawable介绍</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>引<br>今天视频处理中碰到一些简单图片的vector绘制方案<br>调研结果：</p>
-</blockquote>
-<p>效果：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9a7da5968fccb57a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="vector paint eg.png"></p>
-<p><strong>优点</strong>：Vector与PNG文件相比，能极大地缩小文件占用空间；<br><strong>弱势</strong>：</p>
-<ol>
-<li>兼容性处理起来需要花费一些心思；</li>
-<li>复杂图片不适合运用vector绘制，一个是初始化效率，第二个是重复使用时bitmap在GPU中会有缓存，而vector没有；</li>
-<li>需要额外的一些辅助工具协作生成path；</li>
-</ol>
-<blockquote>
-<p>例注：</p>
-<ol>
-<li>使用：<br>需要在Gradle 中添加：android.defaultConfig域<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vectorDrawables.useSupportLibrary = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</blockquote>
-<ol>
-<li>XML attributes:  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">viewportHeight \ viewportWidth</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>划分的比例大小（图片中的例子：36dp大小的图像划分成24份，Path中的坐标建立在划分后的坐标系统之上）<br><code>意义--&gt;将大小与path分离</code></p>
-<hr>
-<p>Path指令：<br>M = moveto(M X,Y)<br>L = lineto(L X,Y)<br>H = horizontal lineto(H X)<br>V = vertical lineto(V Y)<br>C = curveto(C X1,Y1,X2,Y2,ENDX,ENDY)：三次贝赛曲线<br>S = smooth curveto(S X2,Y2,ENDX,ENDY)<br>Q = quadratic Belzier curve(Q X,Y,ENDX,ENDY)：二次贝赛曲线<br>T = smooth quadratic Belzier curveto(T ENDX,ENDY)：映射<br>A = elliptical Arc(A RX,RY,XROTATION,FLAG1,FLAG2,X,Y)：弧线<br>Z = closepath()</p>
-<hr>
-<p>工具：<br><a href="http://inloop.github.io/svg2android/" target="_blank" rel="noopener">to vector</a><br><a href="http://editor.method.ac/" target="_blank" rel="noopener">SVG editor</a></p>
-<hr>
-<blockquote>
-<p>参考：(涵盖由头、Vector语法、转换工具、原理、兼容处理、性能考量等方面知识，良心之作)<br><a href="http://www.jianshu.com/p/e3614e7abc03" target="_blank" rel="noopener">Android Vector曲折的兼容之路</a></p>
-</blockquote>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VectorDrawable/">VectorDrawable</a></li></ul>
 
     </footer>
   </div>
@@ -483,7 +462,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 
 
   
-    <article id="post-技术/Android/【Android】declare-styleable-枚举format简介"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/Android/【Android】AS添加JNI支持"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -491,7 +470,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/">declare-styleable-枚举format简介</a>
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS添加JNI支持/">AS添加JNI支持</a>
     </h1>
   
 
@@ -499,7 +478,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/" class="article-date">
+	<a href="/2018/03/09/技术/Android/【Android】AS添加JNI支持/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -511,163 +490,71 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>旨：介绍styleable enum format的使用方法</p>
+<p><em>JNI入坑</em></p>
 </blockquote>
 <blockquote>
-<p>技术含量：低<br>（项目中对字体的自定义类型较多，考虑将字体设置属性定义成styleable，方便直接在xml中设置）</p>
-</blockquote>
-<p>首先定义attr.xml中的styleable：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-11adc1f8df53f3dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_define.png"></p>
-<blockquote>
-<p>Code Glance （类型设置为enum）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"Font"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"font_type"</span> <span class="attr">format</span>=<span class="string">"enum"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"msyh"</span> <span class="attr">value</span>=<span class="string">"0"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"unidream_led"</span> <span class="attr">value</span>=<span class="string">"1"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"helvetica"</span> <span class="attr">value</span>=<span class="string">"2"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"bank"</span> <span class="attr">value</span>=<span class="string">"3"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"ping_fang"</span> <span class="attr">value</span>=<span class="string">"4"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">attr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p>之后就可以在xml中直接利用font_type属性了：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-a2fae41d6f9e84cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_enum.png"></p>
-<p>在具体的类中解析：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-64bf23e9b4fd9a56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_parse.png"></p>
-<blockquote>
-<p>Code Glance<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (attrs != <span class="keyword">null</span>) &#123;</span><br><span class="line">    TypedArray ar = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Font, defStyleAttr, <span class="number">0</span>);</span><br><span class="line">    <span class="meta">@FontMaster</span>.Type</span><br><span class="line">    <span class="keyword">int</span> fontType = ar.getInteger(R.styleable.Font_type, FontMaster.Type.Default);</span><br><span class="line">    FontMaster.font(fontType).set(<span class="keyword">this</span>);</span><br><span class="line">    ar.recycle();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    FontMaster.font(FontMaster.Type.MSYH).set(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android】JNI-Tips-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/">JNI-Tips-提要</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】JNI-Tips-提要/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>引：<br>项目需要用到JNI，实际上还需要在native跟Java之间写一些代码，来连接二位，需要做进一步了解。本文主要对官方的JNI Tips做一些简单的关键提取<br>参考：<br><a href="">JNI Tips</a></p>
-</blockquote>
-<hr>
-<p><a href="https://www.evernote.com/l/ARunDTJCHX9AQ5Zm7URUjILWW2iFBUVWGRc" target="_blank" rel="noopener">Evernote连接</a></p>
-<p><a href="https://www.evernote.com/shard/s283/sh/a70d3242-1d7f-4043-9666-ed44548c82d6/5b68850545561917/res/ba76fe6f-7df9-41f8-a0cd-1f0dcbe4349c/JNI%20Tips.xmind" target="_blank" rel="noopener">XMind 文档下载</a></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ce0301d2d61fe60b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JNI Tips.png"></p>
-<p>文本：</p>
-<p>JNI Tips</p>
-<p>definition<br>  Java Native Interface<br>  how it works<br>    <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html</a><br>JavaVM and JNIEnv<br>  JavaVM<br>    one process can only create one JavaVM in Android<br>  JNIEnv<br>    provides most of JNI functions. Your native functions all receive a JNIEnv as first argument<br>    used for thread-local, so you cannot share a JNIEnv between threads (GetEnv can be used to discover the thread’s JNIEnv when no other way)<br>Threads<br>  a thread will have no JNIEnv unless it’s attached, before this it cannot make JNI calls (all threads are Linux threads, scheduled by the kernel)<br>  Threads attached through JNI must call DetachCurrentThread before they exit<br>jclass, jmethodID, and jfieldID<br>  steps to access an object’s field from native code<br>    FindClass:—&gt; get the class object reference for the class<br>    GetFieldID:—&gt;Get the field ID for the field with GetFieldID<br>    GetIntField:—&gt;Get the contents of the field with something appropriate<br>  call a method—&gt; get a class object reference and then a method ID<br>  it’s useful to look the values up once and cache the results in your native code. Because there is a limit of one JAVAVM per process<br>  if want to cache IDs when a class is loaded, add a piece of code that allow the native code to cache field offsets<br>Local and Global Reference<br>  almost every object returned by a JNI function is a “local reference”—&gt;it’s valid for the duration of the current native method in the current thread. Even if the object itself continues to live on after the native method returns, the reference is not valid<br>  the only way to get non-local references is via the functions NewGlobalRef and NewWeakGlobalRef (the global reference is guaranteed to be valid until you call DeleteGlobalRef)<br>  to see if two reference refer to the same object, you must use the IsSameObject function, never use == in native code<br>  jfieldIDs, jmethod are opaque types, not object references, should not be passed to NewGlobalRef<br>  if you attach a native thread with AttachCurrentThread, the code you are running will never automatically free local references until the thread detaches. Any local references you create will have to be deleted manually.<br>UTF-8 and UTF-16 Strings<br>  java use UTF-16, JNI provides methods that work with Modified UTF-8 as well.<br>  you cannot pass arbitrary UTF-8 data to JNI and expect it to work correctly<br>  Android currently does not require a copy in GetStringChars,however GetStringUTFChars requires an allocation and a conversion to UTF-8. UTF-16 strings are not zero-terminated, \u0000 is allowed, so you need to hang on to the string length like jchar pointer<br>  Don’t forget to Release the strings you Get. the string functions return jchar<em> or jbyte</em><br>  Data passed to NewStringUTF must be in Modified UTF-8 format<br>Primitive Arrays<br>  You must Release every array you Get<br>  release mode arguments alternative values<br>    0<br>        buffer freed<br>    JNI_COMMIT<br>        do nothing/ buffer not freed<br>    JNI_ABORT<br>        buffer freed, Earlier wirtes are not aborted<br>Region calls<br>  advantages<br>    reducing overhead by reducing JNI call requirements<br>    do not require pinning or extra data copies<br>    reduces the risk of programmer error–&gt; no risk of forgetting to call Release<br>Exception<br>  your must not call JNI functions while an exception is pending, except several special kinds of API: delete/ exception process/stack process/ release process …<br>Extended Checking<br>  JNI does very little error checking ~~!<br>  Android offers a mode called CheckJNI<br>    array, bad pointers, Class names, Critical call,Direct ByteBuffers, Exceptions, JNIEnv<em>s, jmethodIDs, References,Release modes, Type safety, UTF-8<br>Native Libraries<br>  steps<br>    call System.loadLibrary<br>    provide a native function : jint JNI_OnLoad(JavaVM</em> vm void* reserved)<br>    in JNI_OnLoad, register all your native methods<br>64-bit Considerations<br>  you need to stash your native pointers in a long field rather than an int<br>Unsupported Features/ Backwards Compatibility<br>  Define class<br>  dynamic lookup of native functions<br>  detaching threads<br>  weak global references<br>  Local references<br>  determining reference type with GetObjectRefType</p>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android】应用架构演进"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】应用架构演进/">应用架构演进</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】应用架构演进/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>预则立<br>应用演进过程中可能出现混乱局面，对架构的考量应该放在项目开始之前<br>参考：<br><a href="http://blog.spinytech.com/2016/12/28/android_modularization/" target="_blank" rel="noopener">Android架构思考(模块化、多进程)</a></p>
-</blockquote>
-<blockquote>
-<p>适用范围：中型项目，小项目就不需要杀鸡用牛刀了</p>
-</blockquote>
-<hr>
-<p>不进行设计时应用可能出现极度混乱的局面：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-75c426d6709ddced.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>跳过广受诟病的插件化思路，考虑应用<strong>路由框架</strong>设计<strong>组件化</strong>框架：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-782c8d1af71d2448.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-1.png"></p>
-<blockquote>
-<p>这样的路由框架，在模块解耦的同时，提高了模块的可测性和复用性。<br><img src="http://upload-images.jianshu.io/upload_images/1481332-07c676326694ac24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-3.png"><br>还可以在router与各路由之间加入 Common-Base层，作为公共library：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-f7692235ff980e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-Common Base.png"></p>
-</blockquote>
-<p>在调用API时，路由机制的调用时序图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-4250238e45f0a1f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Router时序图.png"></p>
-<p>这样的路由架构存在一个访问域问题，在多进程时需要进行格外处理</p>
-<blockquote>
-<p>多进程优势：</p>
+<p>索引：</p>
 <ol>
-<li>独立各进程；</li>
-<li>提高内存控制权；</li>
-<li>模块解耦</li>
-<li>守护</li>
+<li>旧  NDK  使用姿势(AS 2.2 以下 <a href="https://codelabs.developers.google.com/codelabs/android-studio-jni/index.html?index=..%2F..%2Findex#2" target="_blank" rel="noopener">参考链接：Create hello-JNI with android studio</a>)</li>
+<li>新  NDK  使用方法(AS 2.2及以上 <a href="https://developer.android.google.cn/studio/projects/add-native-code.html" target="_blank" rel="noopener">参考链接：Add C and C++ Code to Your Project</a>)</li>
 </ol>
 </blockquote>
-<p>Router是单例模式，在多进程时直接使用会在每个JVM实例中生成，跨进程时需要将Router链接起来：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2b216709e992978b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多进程路由连接图.png"></p>
-<p>这时，调用时序图层级就略微有点深了：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9366cc7cb9bb15d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="广域事件传递时序图.png"></p>
 <blockquote>
-<p><strong>总结</strong>：<br>路由架构可以高度解耦，提升可测试性，也便于项目组进行任务划分、并行开发；<br>缺点是调用层级略微有点深，会有一定的性能损耗，但与其带来的优势相比可以忽略；此设计也没有考虑到MVP架构设计的融合问题，需要考虑应用场景的引用和适度</p>
+<p>参考：<br><a href="https://developer.android.google.cn/training/articles/perf-jni.html?hl=zh-cn" target="_blank" rel="noopener">JNI Tips</a><br>(链接均需VPN)</p>
+</blockquote>
+<hr>
+<h4 id="旧-NDK-build："><a href="#旧-NDK-build：" class="headerlink" title="旧  NDK-build："></a>旧  NDK-build：</h4><p>简单来说分这么几步：</p>
+<ol>
+<li>添加ndk库支持</li>
+<li><p>在 gradle.properties中添加：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android.useDeprecatedNdk=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 app级build.gradle中添加：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  defaultConfig &#123;</span><br><span class="line">        ndk &#123;</span><br><span class="line">            moduleName <span class="string">"test-jni"</span> <span class="comment">// name the jni lib you want to add</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建load 静态块，添加待实现native api</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JniTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.loadLibrary(<span class="string">"test-jni"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">native</span> String <span class="title">getMsgFromJni</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在 目标api所在行停留一会，会出现红色灯泡提示按钮，点击图标，会有<code>Create Function Java_%full class name%_getMsgFromJni</code>选项出现；点击之后会自动创建一个与java目录并列的cpp目录，并在目录下生成<code>test-jni.c</code>文件<br>具体代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;jni.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">JNIEXPORT jstringJNICALL</span><br><span class="line">Java_com_zealens_face_jnitest_JniTest_getMsgFromJni(JNIEnv</span><br><span class="line">*env, jobject instance)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">// TODO</span></span><br><span class="line"><span class="keyword">return</span> (*env)-&gt;NewStringUTF(env, returnValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>说明：</p>
+<ol>
+<li>对于第3行代码：<br>AS生成的代码有错误，需将JNICALL与前面的jstring隔开；</li>
+<li>将returnValue修改为常量值（eg：”hello”）</li>
+</ol>
+</blockquote>
+<p>至此，build之后调用API就能得到刚才填入的hello值。</p>
+<hr>
+<p>####新CMake</p>
+<blockquote>
+<p>AS现在默认的C++工具已经修改为CMake（需要在SDK-Tools中安装CMake、LLDB、NDK），旧的ndk-build库也可以手动导入</p>
+</blockquote>
+<blockquote>
+<p>准备工作：</p>
+<ol>
+<li>如果有则移除：<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Remove this line</span></span><br><span class="line">android.useDeprecatedNdk = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<ol>
+<li>install build tools</li>
+</ol>
+<p>（略：创建新的C++support Application）</p>
+<ol>
+<li>向现有项目添加C/C++ 代码：<br> a. 新建cpp目录；<br> b. 添加cpp文件，代码如下：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span></span><br><span class="line">JNIEXPORT jstring JNICALL</span><br><span class="line">Java_%your test <span class="class"><span class="keyword">class</span> <span class="title">full</span> <span class="title">name</span>%_<span class="title">stringFromJNI</span>(</span></span><br><span class="line"><span class="class">        <span class="title">JNIEnv</span>* <span class="title">env</span>,</span></span><br><span class="line"><span class="class">        <span class="title">jobject</span> /* <span class="title">this</span> */) &#123;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> hello = <span class="string">"Hello from C++"</span>;</span><br><span class="line">    <span class="keyword">return</span> env-&gt;NewStringUTF(hello.c_str());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在欲链接cpp的根目录中（与build.gradle同级）创建文件：<code>CMakeLists.txt</code>，键入如下代码：（各API含义见<a href="https://developer.android.google.cn/studio/projects/add-native-code.html" target="_blank" rel="noopener">参考链接末尾部分</a>，或 <a href="https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html" target="_blank" rel="noopener">CMake command</a>）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"># For more information about <span class="keyword">using</span> CMake with Android Studio, read the</span><br><span class="line"><span class="meta"># documentation: https:<span class="comment">//d.android.com/studio/projects/add-native-code.html</span></span></span><br><span class="line"></span><br><span class="line"># Sets the minimum version of CMake required to build the native library.</span><br><span class="line"></span><br><span class="line">cmake_minimum_required(VERSION <span class="number">3.4</span><span class="number">.1</span>)</span><br><span class="line"></span><br><span class="line"># Creates <span class="keyword">and</span> names a library, sets it as either STATIC</span><br><span class="line"><span class="meta"># or SHARED, and provides the relative paths to its source code.</span></span><br><span class="line"># You can define multiple libraries, <span class="keyword">and</span> CMake builds them <span class="keyword">for</span> you.</span><br><span class="line"># Gradle automatically packages shared libraries with your APK.</span><br><span class="line"></span><br><span class="line">add_library( # Sets the name of the library.</span><br><span class="line">             native-lib</span><br><span class="line"></span><br><span class="line">             # Sets the library as a shared library.</span><br><span class="line">             SHARED</span><br><span class="line"></span><br><span class="line">             # Provides a relative path to your source file(s).</span><br><span class="line">             src/main/cpp/native-lib.cpp )</span><br><span class="line"></span><br><span class="line"># Searches <span class="keyword">for</span> a specified prebuilt library <span class="keyword">and</span> stores the path as a</span><br><span class="line"><span class="meta"># variable. Because CMake includes system libraries in the search path by</span></span><br><span class="line"><span class="meta"># default, you only need to specify the name of the public NDK library</span></span><br><span class="line"><span class="meta"># you want to add. CMake verifies that the library exists before</span></span><br><span class="line"><span class="meta"># completing its build.</span></span><br><span class="line"></span><br><span class="line">find_library( # Sets the name of the path variable.</span><br><span class="line">              <span class="built_in">log</span>-lib</span><br><span class="line"></span><br><span class="line">              # Specifies the name of the NDK library that</span><br><span class="line">              # you want CMake to locate.</span><br><span class="line">              <span class="built_in">log</span> )</span><br><span class="line"></span><br><span class="line"># Specifies libraries CMake should link to your target library. You</span><br><span class="line"><span class="meta"># can link multiple libraries, such as libraries you <span class="meta-keyword">define</span> in this</span></span><br><span class="line"><span class="meta"># build script, prebuilt third-party libraries, or system libraries.</span></span><br><span class="line"></span><br><span class="line">target_link_libraries( # Specifies the target library.</span><br><span class="line">                       native-lib</span><br><span class="line"></span><br><span class="line">                       # Links the target library to the <span class="built_in">log</span> library</span><br><span class="line">                       # included in the NDK.</span><br><span class="line">                       $&#123;<span class="built_in">log</span>-lib&#125; )</span><br></pre></td></tr></table></figure>
+<p>之后，在同一模块目录上单击右键，选择<code>link c++...</code>，选中欲链接的cpp文件，build.gradle就会生成如下代码：（android模块中）<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">externalNativeBuild &#123;</span><br><span class="line">    cmake &#123;</span><br><span class="line">        path <span class="string">"CMakeLists.txt"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>此时再调用相应API就可以看到效果了：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CppTest</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * A native method that is implemented by the 'native-lib' native library,</span></span><br><span class="line"><span class="comment">     * which is packaged with this application.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">native</span> String <span class="title">stringFromJNI</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Used to load the 'native-lib' library on application startup.</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.loadLibrary(<span class="string">"native-lib"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>pay attention to the lib name</p>
+</blockquote>
+<blockquote>
+<p>高阶设置请参考手册，这里也只是介绍一个最小的CMake环境</p>
 </blockquote>
 <hr>
 <p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
@@ -680,7 +567,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QRCode/">QRCode</a></li></ul>
 
     </footer>
   </div>
@@ -691,7 +578,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 
 
   
-    <article id="post-技术/Android/【Android架构】Android架构初探"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -699,7 +586,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android架构】Android架构初探/">Android架构初探</a>
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
     </h1>
   
 
@@ -707,7 +594,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/【Android架构】Android架构初探/" class="article-date">
+	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -719,43 +606,25 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>Android 从软件层面来看可以分为以下几个层级：</p>
-<ul>
-<li>Linux Kernel</li>
-<li>HAL</li>
-<li>Native C/C++ Libraries <strong>+</strong> AR</li>
-<li>Java API Framework</li>
-<li>System App</li>
-</ul>
+<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
 </blockquote>
-<p><em>图示如下：</em><br><img src="http://upload-images.jianshu.io/upload_images/1481332-af50032816470c0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="android-stack_2x.png"><br><a href="https://developer.android.google.cn/guide/platform/index.html" target="_blank" rel="noopener">official site</a></p>
-<hr>
+<blockquote>
+<p>这样的话，注意定期检查各lib版本就好</p>
+</blockquote>
+<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
+<p>总结一下步骤：</p>
 <ol>
-<li>Linux Kernel 内核层，系统运行基石，还包含一些基本的硬件驱动<pre><code>a. 安全性(Security)
-b. 内存管理(Memory Management)
-c. 进程管理(Process Management)
-d. 网络堆栈(Network Stack)
-e. 驱动程序模型(Driver Model)
-</code></pre></li>
-<li>硬件抽象层<pre><code>提供高级界面，为Java API Framework层显示硬件功能
-</code></pre></li>
-<li><p>AR (Android Runtime)  :<br> 在API&gt;=21的机器上，每个app都是一个AR 实例，这些实例通过DEX文件执行；AR的功能主要包括：</p>
-<pre><code>a. AOT预编译  JIT 实时编译
-b. 提升GC性能
-c. 更好的debug支持
-
-针对AR优化过的程序可以在低版本Android Dalvik虚拟机上获得性能优化，反之不成立
-</code></pre></li>
-<li>Native C/C++ Libraries<br> 出于性能考量，Android很多原生组件和服务都用到了native c/cpp的代码<pre><code>open GL 的2D 3D绘图基本都是用native api编写
-如若需要，应用也可以通过Android NDK编写代码，调用native API
-</code></pre></li>
-<li>Java API FrameWork<pre><code>Android OS的整个功能集， JAVA编写
-包含各组件、管理工具
-</code></pre></li>
-<li>应用层</li>
+<li>获取二维码（QRCode）</li>
+<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
+<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
+</li>
+<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
+</li>
 </ol>
+<p>时序图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
 <hr>
-<p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
 
@@ -765,7 +634,7 @@ c. 更好的debug支持
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
 
     </footer>
   </div>
@@ -776,7 +645,7 @@ c. 更好的debug支持
 
 
   
-    <article id="post-技术/Android/由 Java GC 看 Android 内存泄露"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -784,7 +653,7 @@ c. 更好的debug支持
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/由 Java GC 看 Android 内存泄露/">由 Java GC 看 Android 内存泄露</a>
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/">【Android Tool】内存快照分析，自动抓取dump文件并转换脚本</a>
     </h1>
   
 
@@ -792,7 +661,7 @@ c. 更好的debug支持
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/由 Java GC 看 Android 内存泄露/" class="article-date">
+	<a href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -803,421 +672,39 @@ c. 更好的debug支持
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="由-Java-GC-看-Android-内存泄露"><a href="#由-Java-GC-看-Android-内存泄露" class="headerlink" title="由 Java GC 看 Android 内存泄露"></a>由 <em>Java GC</em> 看 <em>Android</em> 内存泄露</h1><blockquote>
-<p><strong>标题</strong>：<em>《由 Java GC 看 Android 内存泄露》</em><br><strong>作者</strong>：<em>KyleCe</em><br><strong>关键词</strong>：<em>JavaGC、Android、内存泄露</em></p>
-<p>@Email: <a href="mailto:chengong90@gmail.com" target="_blank" rel="noopener">chengong90@gmail.com</a><br>@date: 2017年07月31日</p>
+        <blockquote>
+<p>最新得到的Google内部消息，未来谷歌应用商店的排名算法将会把App的性能纳入考量范围（使用的机器学习算法），我们开发者也应该将性能这一指标纳入自己的检查范围</p>
 </blockquote>
-<p>内存泄露，一个老生常谈的话题，本文将从Java GC的角度出发，着眼JavaGC收集器，一探Android内存泄露的究竟，最后总结实战经验，希望能给读者带来些许启发。</p>
-<p><em>本篇涵盖：</em></p>
-<ul>
-<li><em><strong>准备</strong>——基础知识要求及名字解释</em></li>
-<li><em><strong>背景</strong>——Android内存泄露的本质与危害</em></li>
-<li><em><strong>原因</strong>——为什么会产生泄露</em></li>
-<li><em><strong>基础</strong>——Java内存分配与回收</em></li>
-<li><em><strong>引申</strong>——JVM与Android虚拟机</em></li>
-<li><em><strong>实战</strong>——内存泄露攻防</em></li>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>解决抓取内存文件，拉取到电脑，新建文件夹，转换为Eclipse Memory Analyzer 文件操作繁琐的问题</p>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
+<li>clone项目之后，上述流程只需要👇的指令即可完成</li>
+<li>自动将转换的文件存档到新建的同名目录下，避免MAT分析产生的临时文件污染文档目录</li>
+<li>更改目录或进程时，无需修改配置文件，输入即可自动记录上次操作习惯</li>
+<li>重复输入名称时，会自动append 时间到原来名称，避免覆盖历史文件</li>
 </ul>
-<h2 id="零、准备"><a href="#零、准备" class="headerlink" title="零、准备"></a>零、准备</h2><h3 id="0-0-要求："><a href="#0-0-要求：" class="headerlink" title="0.0 要求："></a>0.0 要求：</h3><p>  阅读本文，需要读者具有一定的JAVA基础与Android基础</p>
-<h3 id="0-1-名词解释："><a href="#0-1-名词解释：" class="headerlink" title="0.1 名词解释："></a>0.1 名词解释：</h3><ul>
-<li>GC——Garbage Collector垃圾收集器</li>
-<li>MAT——Eclipse  Memory Analyzer Tool 内存分析工具</li>
-<li>LeakCanary——第三方内存泄露监测工具</li>
-<li>StrictMode——Android严格模式，调优时可以参考</li>
-<li>HotSpot——Sun公司开发的Java虚拟机类别，现属Oracle</li>
-<li>堆、栈——Heap、Stack，一般指内存堆，方法栈</li>
-<li>finalize——Object在被GC回收时可能会被调用的方法</li>
-<li>GC Roots——GC引用路径，通常有好几种类别，是一个集合</li>
-<li>StrongReference/SoftReference/WeakReference/PhantomReference——强/弱/软/虚引用</li>
-<li>STW——StopTheWorld GC时需要暂停所有用户线程</li>
-<li>SafePoint &amp; SafeRegion——安全点/安全区，分别为内存/线程在GC 欲Stop The World时可以停留的点</li>
-<li>OopMap——Ordinary Object Pointer Map，HotSpot实现准备式GC的基础</li>
-<li>年轻代、老年代、永久代、MetaSpace</li>
-<li>Eden/Survivor——年轻代的区域划分</li>
-<li>MinorGC &amp; FullGC/MajorGC——轻量GC/Full GC</li>
-<li>Age——对象年龄，每活过一次GC，Age+1</li>
-<li>JVM/DVM/ART——Java虚拟机/Android Dalvik/ Android Runtime</li>
-</ul>
-<h3 id="0-2-演示环境："><a href="#0-2-演示环境：" class="headerlink" title="0.2 演示环境："></a>0.2 演示环境：</h3><ul>
-<li>Android Studio——3.0 Canary 8</li>
-<li>Eclipse MAT——V1.7.0</li>
-<li>LeakCanary——V1.5.1</li>
-<li>HotSpot——Java Hotspot JVM(SE6/7)</li>
-</ul>
-<h2 id="一、本质与危害"><a href="#一、本质与危害" class="headerlink" title="一、本质与危害"></a>一、本质与危害</h2><h3 id="1-1-何谓内存泄露"><a href="#1-1-何谓内存泄露" class="headerlink" title="1.1 何谓内存泄露"></a>1.1 何谓内存泄露</h3><p>在计算机科学中，内存泄漏指由于疏忽或错误造成程序未能释放已经不再使用的内存。内存泄漏并非指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误，导致在释放该段内存之前就失去了对该段内存的控制，从而造成了内存的浪费。</p>
-<p>在安卓中，内存泄露主要是指应用程序进程在运行过程中有不能释放而不再使用的内存，占用了比实际需要多的空间。</p>
-<p>图1.1.1是使用MAT分析手机内存快照得到的OverView结果：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ca4c6177eb55ae69.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图1.1.1 ORG某款应用的Debug版内存泄露OverView"></p>
-<p>图1.1.1 ORG某款应用的Debug版内存泄露OverView</p>
-<h3 id="1-2-恶劣影响"><a href="#1-2-恶劣影响" class="headerlink" title="1.2 恶劣影响"></a>1.2 恶劣影响</h3><p>内存泄漏会因为减少可用内存的数量从而降低计算机的性能。最终，在最糟糕的情况下，过多的可用内存被分配掉导致全部或部分设备停止正常工作，或者应用程序崩溃。在以下情況，内存泄漏导致较嚴重的后果：</p>
-<ul>
-<li>程序运行后置之不理，消耗越来越多的内存（比如服务器上的后台任务，尤其是嵌入式系统中的后台任务，这些任务可能被运行后很多年内都置之不理）；</li>
-<li>频繁分配新内存；</li>
-<li>程序能够请求未被释放的内存（比如共享内存）；</li>
-<li>内存非常有限，比如在嵌入式系统或便携设备中；</li>
-<li>…</li>
-</ul>
-<p>针对安卓，内存泄露轻则导致应用占用内存虚高、增加CPU占用、耗电，重则导致应用程序无法开辟所需大小的内存，引发OOM，触发崩溃，这在内存小的机器上尤为明显（我们平时在测试应用内存占用表现时，可以多使用低端机）。<br>结合上一节所举例子，由图1.1.1可见该应用的泄露足有35M之多，这一内存结果还是应用刚启动时的情况，随着用户使用时间加长，泄露只会越来越多，直到用户杀死应用或者应用主动崩溃（如图1.2.1）。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-b460f38cafbd927b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图1.2.1 AndroidStudio 某OutOfMemory 堆栈"></p>
-<p>图1.2.1 AndroidStudio 某OutOfMemory 堆栈</p>
-<h2 id="二、产生缘由"><a href="#二、产生缘由" class="headerlink" title="二、产生缘由"></a>二、产生缘由</h2><p>内存泄露诱因有很多，安卓中比较常见的有：</p>
-<ul>
-<li>静态变量持有引用(集合类、单例造成的内存泄漏)</li>
-<li>匿名内部类/非静态内部类和异步线程</li>
-<li>Handler 、UI线程的post、AnimatorListener等使用不当</li>
-<li>资源未关闭(或在finalize中关闭)</li>
-<li>监听器的使用，在释放对象的同时没有相应删除监听器</li>
-<li>…</li>
-</ul>
-<p>下面针对部分诱因进行说明，具体解决办法此处按下不表。</p>
-<h3 id="2-1-静态变量导致的泄露"><a href="#2-1-静态变量导致的泄露" class="headerlink" title="2.1 静态变量导致的泄露"></a>2.1 静态变量导致的泄露</h3><p>静态集合导致的泄露可以分析为：长生命周期的对象，持有了短生命周期对象的引用，在后者生命周期结束时未释放长周期对象对它的引用，导致对象无法被GC回收。</p>
-<p>以如下代码为示例：即使在循环内有设置集合对象为null，但集合中的对象还是存在，GC并不能回收它（这种在集合中不断创建新对象的写法也是极其臭名昭著的）。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExampleUnitTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Vector sVector = <span class="keyword">new</span> Vector();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            Object o = <span class="keyword">new</span> Object();</span><br><span class="line">            sVector.add(o);</span><br><span class="line">            o = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>图2.1为某APP静态集合泄露的对象汇总，可以看到总大小有11.7M之大。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5a2e015b3d5de3b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600/h/600" alt="图2.1 某静态泄露的汇总结果"></p>
-<p>图2.1 某静态泄露的汇总结果</p>
-<h3 id="2-2-匿名内部类引发的内存泄露"><a href="#2-2-匿名内部类引发的内存泄露" class="headerlink" title="2.2 匿名内部类引发的内存泄露"></a>2.2 匿名内部类引发的内存泄露</h3><p>匿名内部类极易引发内存泄露，纵使这样的写法在代码层面会简洁很多，但在涉及到匿名内部类生命周期不依附于外部类时，需要我们谨慎处理，不然就很有可能引发泄露。</p>
-<p>如下代码为AppsFlayer SDK 4.7.1 Foreground.java中某段代码的近似版本（该泄露在SDK v4.7.4中已修复，图2.2.1 为两版本代码的对比图，中间截图为监测工具上报的泄露路径）：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">async</span><span class="params">(<span class="keyword">final</span> Activity activity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">new</span> AsyncTask&lt;Void, Void, Void&gt;() &#123;</span><br><span class="line">        <span class="function"><span class="keyword">protected</span> Void <span class="title">doInBackground</span><span class="params">(Void... params)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500L</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException var4) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                WeakReference&lt;Activity&gt; weakActivity = <span class="keyword">new</span> WeakReference(activity);</span><br><span class="line">                weakActivity.get().setContentView(<span class="keyword">null</span>);</span><br><span class="line">                weakActivity.clear();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception var3) &#123;</span><br><span class="line">                <span class="keyword">this</span>.cancel(<span class="keyword">true</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;.execute();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-783169a523910316.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图2.2.1 AppsFlyer leak and resolution"></p>
-<p>图2.2.1 AppsFlyer leak and resolution</p>
-<p>如下代码展示了常见的Handler写法可能引发的内存泄露：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> Handler mHandler = <span class="keyword">new</span> Handler() &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (!onMessage(msg)) &#123;</span><br><span class="line">			<span class="keyword">super</span>.handleMessage(msg);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>如下代码展示了内部类持有外部类的成员变量，存在泄露隐患<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ImageContext</span> <span class="keyword">implements</span> <span class="title">ThemeDataManager</span>.<span class="title">Context</span>&lt;<span class="title">Pair</span>&lt;<span class="title">String</span>, <span class="title">Bitmap</span>&gt;&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSucc</span><span class="params">(<span class="keyword">final</span> JSONObject extendData, Pair&lt;String, Bitmap&gt; p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(p == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mCoverView.setImageBitmap(p.second);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFail</span><span class="params">(<span class="keyword">final</span> JSONObject extendData, <span class="keyword">int</span> result</span></span></span><br><span class="line"><span class="function"><span class="params">                                    , Pair&lt;String, Bitmap&gt; cache)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>一般在一个质量欠佳的工程中，匿名内部类或异步线程操作导致的内存泄露随处可见。</p>
-<h3 id="2-3-Handler任务管理不当"><a href="#2-3-Handler任务管理不当" class="headerlink" title="2.3 Handler任务管理不当"></a>2.3 Handler任务管理不当</h3><p>Handler、AnimationListener、AnimatorUpdateListener使用不当也极易导致泄露:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mHandler.postDelayed(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(TAG + TAG + <span class="string">"  running"</span> + parent);</span><br><span class="line">        mHandler.postDelayed(<span class="keyword">this</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, <span class="number">200</span>);</span><br></pre></td></tr></table></figure></p>
-<h3 id="2-4-资源未及时关闭"><a href="#2-4-资源未及时关闭" class="headerlink" title="2.4 资源未及时关闭"></a>2.4 资源未及时关闭</h3><p>Android资源不及时关闭会出现内存泄露的地方有很多，诸如在使用I/O流、Cursor（图2.4.1展示了在APP开启StrictMode时会收到的FileIO未close的异常Throwable）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-cbf5aa5529865f5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图2.4.1 closable close未调用"></p>
-<p>图2.4.1 closable close未调用</p>
-<h3 id="2-5-绑定-解绑、注册-反注册未成对调用"><a href="#2-5-绑定-解绑、注册-反注册未成对调用" class="headerlink" title="2.5 绑定/解绑、注册/反注册未成对调用"></a>2.5 绑定/解绑、注册/反注册未成对调用</h3><p>绑定/解绑、注册/反注册同时出现这一点毋庸置疑，但实际工程中发现有开发者对于成对调用的理解不够透彻，会有前后条件不一致的情况，导致内存泄露（如注册时无条件注册，反注册时加入不能100%保证成立的判定条件）</p>
-<h2 id="三、Java内存分配与垃圾回收策略"><a href="#三、Java内存分配与垃圾回收策略" class="headerlink" title="三、Java内存分配与垃圾回收策略"></a>三、Java内存分配与垃圾回收策略</h2><h3 id="3-0-虚拟机架构（HotSpot）"><a href="#3-0-虚拟机架构（HotSpot）" class="headerlink" title="3.0 虚拟机架构（HotSpot）"></a>3.0 虚拟机架构（HotSpot）</h3><p>图3.0.1为HotSpot虚拟机架构，具体的划分将在下文中描述，这里只需要了解大致概念。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-1bf9a615abb8e4d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.0.1 HotSpot Structure"></p>
-<p>图3.0.1 HotSpot Structure</p>
-<p>本文所谈论的GC，处理的内存区块针对的主要是虚拟机的Heap，亦即堆。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7061db0196475abb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.0.2 HotSpot JVM components"></p>
-<p>图3.0.2 HotSpot JVM components</p>
-<h3 id="3-1-内存分配"><a href="#3-1-内存分配" class="headerlink" title="3.1 内存分配"></a>3.1 内存分配</h3><h4 id="3-1-1-对象生命周期"><a href="#3-1-1-对象生命周期" class="headerlink" title="3.1.1 对象生命周期"></a>3.1.1 对象生命周期</h4><ul>
-<li>至少两次标记——一次标记、筛选是否finalize</li>
-<li>finalize()——不承诺完成、一次机会、不承诺调 用顺序——避免无良操作引发JVM崩溃</li>
-</ul>
-<h4 id="3-1-2-引用计数收集器"><a href="#3-1-2-引用计数收集器" class="headerlink" title="3.1.2 引用计数收集器"></a>3.1.2 引用计数收集器</h4><ul>
-<li>为对象添加引用计数器</li>
-<li>弊端:无法解决对象相互循环引用的问题</li>
-</ul>
-<h4 id="3-1-3-可达性分析（Reachability-Analysis）"><a href="#3-1-3-可达性分析（Reachability-Analysis）" class="headerlink" title="3.1.3 可达性分析（Reachability Analysis）"></a>3.1.3 可达性分析（Reachability Analysis）</h4><ul>
-<li>GC-Roots是否可达</li>
-<li>枚举 GC Roots</li>
-</ul>
-<p>可达性分析，可以解决对象循环引用的问题</p>
-<p>如图3.1.1所示的对象中，ObjD、ObjE、ObjF均为GC不可达，可以被GC回收掉</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-473f69299d0029a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.1.1 GC Roots reachable analyze"></p>
-<p>图3.1.1 GC Roots reachable analyze</p>
-<h4 id="3-1-4-引用方式"><a href="#3-1-4-引用方式" class="headerlink" title="3.1.4 引用方式"></a>3.1.4 引用方式</h4><p>引用方式的回收时机强调的是该引用方式为对象仅存的形式。</p>
-<ul>
-<li>（<strong>强</strong>）<strong>StrongReference</strong>—protects the referred object from collection by GC</li>
-<li>（<strong>软</strong>）<strong>SoftReference</strong>—won’t be collected until its memory is needed</li>
-<li>（<strong>弱</strong>）<strong>WeakReference</strong>—garbage collects when no Strong or Soft refs</li>
-<li>（<strong>虚</strong>）<strong>PhantomReference</strong>—after finalized, before reclaimed</li>
-</ul>
-<p>强引用即为一般引用，软引用会在内存不足时回收，弱引用则是在GC时立即回收，虚引用一般用于标记GC对对象内存的操作。</p>
-<h4 id="3-1-5-内存回收方式"><a href="#3-1-5-内存回收方式" class="headerlink" title="3.1.5 内存回收方式"></a>3.1.5 内存回收方式</h4><ul>
-<li>GC、收集算法、收集器种类 枚举根节点</li>
-<li>SafePoint &amp; SafeRegion（只有到达SafePoint，非运行状态的用户线程处于SafeRegion时才可以STW）</li>
-<li>分代回收?</li>
-</ul>
-<p>GC运行时，需要Stop The World，HotSpot中，利用OopMap存储对象引用</p>
-<p>图3.1.5.1展示了HotSpot的堆结构，可以看到整个堆内存分为三代（年轻代、老年代、永久代”JAVA 8已放弃永久代”）</p>
-<p>其中年轻代又分为三个区域（一个Eden，两个Survivor，如此划分是为GC收集算法所做的准备，后面的篇幅有具体介绍）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-0cc80185075e1e36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.1.5.1 HotSpot Heap Structure"></p>
-<p>图3.1.5.1 HotSpot Heap Structure</p>
-<p>图3.1.5.2 为本文2.1中示例代码的样式堆占用情况（具体数据依机器而变，参考价值有限）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5def65145209ff4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.1.5.2 Heap Usage ratio"></p>
-<p>图3.1.5.2 Heap Usage ratio</p>
-<h4 id="3-1-6-Java-的-GC-Roots"><a href="#3-1-6-Java-的-GC-Roots" class="headerlink" title="3.1.6 Java 的 GC Roots"></a>3.1.6 Java 的 GC Roots</h4><p>可以作为GC Roots的有：</p>
-<ul>
-<li>JVM Stack(Stack Frame 的本地变量表)中引用的对象</li>
-<li>Native Method Stack 中</li>
-<li>JNI(Native 方法)引用 的对象</li>
-<li>Method Area 中类静态属性引用的对象</li>
-<li>Method Area 中常量引用的对象</li>
-</ul>
-<h4 id="3-1-7-SafePoint-amp-SafeRegion"><a href="#3-1-7-SafePoint-amp-SafeRegion" class="headerlink" title="3.1.7 SafePoint &amp; SafeRegion"></a>3.1.7 SafePoint &amp; SafeRegion</h4><ul>
-<li>只有SafePoint才能STW(方法调用、循环跳 转、异常跳转)(抢先中断、主动中断)</li>
-<li>SafeRegion 无CPU时间程序——扩展的 SafePoint、离开时检查是否在进行GC</li>
-<li>-XX:SurvivorRatio</li>
-<li>可以把SafeRegion看成是扩大了的SafePoint</li>
-</ul>
-<h3 id="3-2-内存空间划分"><a href="#3-2-内存空间划分" class="headerlink" title="3.2 内存空间划分"></a>3.2 内存空间划分</h3><p>在上一节中，我们可以了解到，虚拟机可以分为如下五个部分：</p>
-<ul>
-<li>方法区</li>
-<li>堆</li>
-<li>虚拟机栈</li>
-<li>程序计数器 </li>
-<li>本地方法栈</li>
-</ul>
-<p>其中，方法区与堆是进程之间共享的，剩余的三个区块，都是线程级别做出的划分。方法区的回收管理相比于GC原理更为复杂，我们不作介绍。</p>
-<p>针对每个线程，后三个区块的协作机理是：<br>程序计数器记录当前栈帧，在线程运行本地方法时计数器不做记录。</p>
-<h3 id="3-3-垃圾回收"><a href="#3-3-垃圾回收" class="headerlink" title="3.3 垃圾回收"></a>3.3 垃圾回收</h3><h4 id="3-3-1-分代回收"><a href="#3-3-1-分代回收" class="headerlink" title="3.3.1 分代回收"></a>3.3.1 分代回收</h4><p>配置参数：</p>
-<ul>
-<li>-XX:NewRatio(Client/ Server差异化配置)</li>
-<li>-XX:PermSize</li>
-<li>…</li>
-</ul>
-<p>分代回收主要是为了提升效率，减少不不要的GC（对于需要长时间保留在内存中的对象进行频次更低的GC扫描）</p>
-<h4 id="3-3-2-部分JVM配置参数"><a href="#3-3-2-部分JVM配置参数" class="headerlink" title="3.3.2 部分JVM配置参数"></a>3.3.2 部分JVM配置参数</h4><p>图3.3.2.1为部分JVM常规参数一览表，JVM的可配置参数极其丰富，有兴趣读者可查阅其它资料</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c09be6dd982fbba3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.2.1 部分JVM常规参数一览表"></p>
-<p>图3.3.2.1 部分JVM常规参数一览表</p>
-<h4 id="3-3-3-内存分配与回收策略"><a href="#3-3-3-内存分配与回收策略" class="headerlink" title="3.3.3 内存分配与回收策略"></a>3.3.3 内存分配与回收策略</h4><ul>
-<li>Eden为主，TLAB为辅</li>
-<li>直接进入Old-generation的情况、OOM</li>
-<li>MinorGC &amp; FullGC/MajorGC（图3.3.3.3 MinorGC &amp; MajorGC）</li>
-</ul>
-<p>在年轻代内存够用的情况下，内存会被直接分配到年轻代中的Eden区域。（图3.3.3.1 写入年轻代Eden区）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-242a868f2c4d6c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.3.1 写入年轻代Eden区"></p>
-<p>图3.3.3.1 写入年轻代Eden区</p>
-<p>在多次GC后，仍然存活的内存会在满足虚拟机配置参数的条件下被晋升到老年区。（图3.3.3.1 展示了年代之间的晋升）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2540999a7248fa74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.3.2 晋升概览图"></p>
-<p>图3.3.3.2 晋升概览图</p>
-<p>针对不同年代，虚拟机会采用不同的收集器分时机进行收集，总结来看，年轻代的GC会比老年代的GC <strong>更频繁，效率也更高</strong>。（图3.3.3.3 展示了MinorGC 与 MajorGC的回收成效示例）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-facf61f82cf12b67.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.3.3 MinorGC &amp; MajorGC"></p>
-<p>图3.3.3.3 MinorGC &amp; MajorGC</p>
-<h4 id="3-3-4-内存分配"><a href="#3-3-4-内存分配" class="headerlink" title="3.3.4 内存分配"></a>3.3.4 内存分配</h4><ul>
-<li>优先分配Eden（图3.3.4.1 展示直接分配至Eden区的情况）</li>
-<li>大对象直接进入old-generation</li>
-<li>长期存活对象进入old-generation(年龄判定)</li>
-<li>空间分配担保（风险、担保失败、OOM）</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-09da3e69c1e7de12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.4.1 对象空间分配"></p>
-<p>图3.3.4.1 对象空间分配</p>
-<p>图3.3.4.2-图3.3.4.4展示了对象年龄的计算方法</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-099ba10858c1daac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.4.2 对象年龄"></p>
-<p>图3.3.4.2 对象年龄</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-f1b583b94f371c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.4.3 对象年龄的增长示例"></p>
-<p>图3.3.4.3 对象年龄的增长示例</p>
-<p>除了满足晋升年龄限制条件的对象外，当年轻代的Survivor中对象平均年龄超过一定限度时，有可能会被整体直接晋升到老年区，而不用等到累加到限定的年龄。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-65c85ce0940865cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.4.4 从年轻代晋升到老年代"></p>
-<p>图3.3.4.4 从年轻代晋升到老年代</p>
-<p>在Minor GC进行之前，如果年轻代的内存之和超过了老年代可用内存大小，会涉及到一个担保的概念，如果不允许老年代担保，会直接抛出OOM异常。<br>图3.3.4.5 描述了整个内存分配的概览</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-a9b46c9c1ef158eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.4.5 直接分配至Eden区"></p>
-<p>图3.3.4.5 直接分配至Eden区</p>
-<h4 id="3-3-5-垃圾收集算法"><a href="#3-3-5-垃圾收集算法" class="headerlink" title="3.3.5 垃圾收集算法"></a>3.3.5 垃圾收集算法</h4><ul>
-<li>标记-清除</li>
-<li>复制</li>
-<li>标记-整理</li>
-</ul>
-<p>标记清除是最简单的办法，但是它有一个弊端：会产生内存碎片（当可用内存不够时，会提前触发FullGC）。</p>
-<p>复制算法能够解决这一问题，但是会造成空间的浪费，之所以HotSpot年轻代GC能够采用复制算法，是因为临时变量都比较”短命”（MinorGC回收效率基本都能达到80%以上），这样一来就可以考虑使用复制算法，”浪费”掉的内存处于可接受范围内。（Eden:Survivor1:Survivor2 常见比例会维持在 8:1:1左右）</p>
-<h5 id="3-3-5-1-标记整理"><a href="#3-3-5-1-标记整理" class="headerlink" title="3.3.5.1 标记整理"></a>3.3.5.1 标记整理</h5><p>需要先标记，而后对标记可清楚的内存进行清理：</p>
-<p>图3.3.5.1.1 为标记过程，图3.3.5.1.2 为直接清除后的内存情况，可以看到未被回收的内存之间会有大小不等的间隔，这就是”内存碎片”。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-dffef12d27e0440c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.5.1.1 Marking"></p>
-<p>图3.3.5.1.1 Marking</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-7d913bf3a474dcd0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.5.1.2 Normal Deletion"></p>
-<p>图3.3.5.1.2 Normal Deletion</p>
-<h5 id="3-3-5-2-复制算法"><a href="#3-3-5-2-复制算法" class="headerlink" title="3.3.5.2 复制算法"></a>3.3.5.2 复制算法</h5><p>年轻代一般会采用的算法，简单高效。</p>
-<p>图3.3.5.2 为HotSpot年轻代复制算法示意图，GC时，会把无法回收的内存对象”复制”至Survivor中的一块区域——Survivor 0/1会在两次相邻MinorGC之间来回切换 Copy的 From/To角色</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-50f18bb588311844.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.5.2 Coping Referenced Object"></p>
-<p>图3.3.5.2 Coping Referenced Object</p>
-<h5 id="3-3-5-3-标记整理算法"><a href="#3-3-5-3-标记整理算法" class="headerlink" title="3.3.5.3 标记整理算法"></a>3.3.5.3 标记整理算法</h5><p>标记整理与标记清理的不同点在于，多了一步整理的操作，而不是直接的清除可清除内存（图3.3.5.3 展示了操作过程，可以看到内存碎片不存在了）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-e57595176a60153f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.5.3 删除整理"></p>
-<p>图3.3.5.3 删除整理</p>
-<h4 id="3-3-6-垃圾收集器种类"><a href="#3-3-6-垃圾收集器种类" class="headerlink" title="3.3.6 垃圾收集器种类"></a>3.3.6 垃圾收集器种类</h4><p>垃圾收集器从运行方式上来分，主要分串行、并行两类。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-d44647bb58bf7c2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.0.1 串行-并行收集器"></p>
-<p>图3.3.6.0.1 串行-并行收集器</p>
-<p>由图3.3.6.1可见两种方式的主要区别是在STW时运行GC的线程数量不一样，然而并不能简单得理解”pause 时间越短”越好，在低性能的Client上需要考虑多线程切换的消耗。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python GrabDump.py</span><br></pre></td></tr></table></figure>
+<p>读完本文，你将收获到一个自动化上述流程的简单project</p>
 <blockquote>
-<p>Stop the world 会暂停所有用户线程</p>
+<p>需要了解 Apk包的内存占用各部分组成</p>
 </blockquote>
-<p>具体细化，HotSpot中的收集器有如下几种（JDK1.7U14）：</p>
+<h3 id="GitHub-地址"><a href="#GitHub-地址" class="headerlink" title="GitHub 地址"></a>GitHub 地址</h3><p><a href="https://github.com/KyleCe/PhonePerformanceMeasure">https://github.com/KyleCe/PhonePerformanceMeasure</a></p>
+<h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><p>最终的使用时样式：</p>
+<p><img src="../../pic_resource/grabDump.png" alt=""></p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>首先你需要安装Python ^_^</li>
+</ul>
 <ul>
-<li>Serial(串行)</li>
-<li>ParNew</li>
-<li>Parallel Scavenge</li>
-<li>Serial Old(串行)</li>
-<li>Parallel Old</li>
-<li>CMS</li>
-<li>G1—Garbage First(JDK 7U14)</li>
-</ul>
-<p>可以依照各收集器的试用内存年代做划分：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-a5848042f2a13510.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.0.2 GC收集器"></p>
-<p>图3.3.6.0.2 GC收集器</p>
-<p><strong>下面就各收集器特点做要点说明：</strong></p>
-<h5 id="3-3-6-1-Serial"><a href="#3-3-6-1-Serial" class="headerlink" title="3.3.6.1 Serial"></a>3.3.6.1 Serial</h5><ul>
-<li>简单高效——没有线程交互的开销</li>
-<li>常用于Client</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-26a178b15d61c0d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.1 Serial运行示意图"></p>
-<p>图3.3.6.1 Ser<br>ial运行示意图</p>
-<h5 id="3-3-6-2-ParNew"><a href="#3-3-6-2-ParNew" class="headerlink" title="3.3.6.2 ParNew"></a>3.3.6.2 ParNew</h5><ul>
-<li>常用于Server模式</li>
-<li>只能与CMS配合工作</li>
-<li>单CPU效果不如Serial</li>
-<li>-XX:ParallelGCThreads限制线程数量</li>
-<li>关注吞吐量</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-0ba80f3d07039584.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.2 ParNew运行示意图"></p>
-<p>图3.3.6.2 P<br>arNew运行示意图</p>
-<h5 id="3-3-6-3-Parallel-Scavenge"><a href="#3-3-6-3-Parallel-Scavenge" class="headerlink" title="3.3.6.3 Parallel Scavenge"></a>3.3.6.3 Parallel Scavenge</h5><ul>
-<li>-XX:MaxGCPauseMillis——停顿时间以牺牲吞吐量和新生代空间为代价</li>
-<li>-XX:GCTimeRatio</li>
-<li>自适应调节策略——无需手动设置-Xmn、SurvivorRatio、晋升 OldGeneration大小等参数</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-8c509f9d210e2339.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.3 Parallel Scavenge运行示意图"></p>
-<p>图3.3.6.3 Parallel Scavenge运行示意图</p>
-<h5 id="3-3-6-4-Serial-Old"><a href="#3-3-6-4-Serial-Old" class="headerlink" title="3.3.6.4 Serial Old"></a>3.3.6.4 Serial Old</h5><ul>
-<li>主要用于Client</li>
-<li>可作为CMS的后备选项</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-8927a9cb7340b35b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.4 Serial Old运行示意图"></p>
-<p>图3.3.6.4 Serial O<br>ld运行示意图</p>
-<h5 id="3-3-6-5-Parallel-Old"><a href="#3-3-6-5-Parallel-Old" class="headerlink" title="3.3.6.5 Parallel Old"></a>3.3.6.5 Parallel Old</h5><ul>
-<li>Parallel Scavenge的Old generation版本</li>
-<li>多线程 标记-整理</li>
-<li>配合ps使用在注重吞吐量及CPU敏感场合</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-3d1db4efd09b12db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.5 Parallel Old运行示意图"></p>
-<p>图3.3.6.5 Parallel Old运行示意图</p>
-<h5 id="3-3-6-6-CMS"><a href="#3-3-6-6-CMS" class="headerlink" title="3.3.6.6 CMS"></a>3.3.6.6 CMS</h5><ul>
-<li>目标:获取最短回收停顿时间(标记-清除算法)</li>
-<li>步骤:初始标记-并发标记-重新标记-并发清除</li>
-<li>缺点:CPU资源敏感、无法处理浮动垃圾(OG68%启用 CMS，失败时启用Serial Old)、产生大量碎片</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-962ab459822c3a93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt=""></p>
-<p>图3.3.6.6.1 CMS运行示意图</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-0d5f648b819bd823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.6.2 Serial收集器与CMS收集器操作线程比较"></p>
-<p>图3.3.6.6.2 Serial收集器与CMS收集器操作线程比较</p>
-<h5 id="3-3-6-7-G1"><a href="#3-3-6-7-G1" class="headerlink" title="3.3.6.7 G1"></a>3.3.6.7 G1</h5><p>G1 相比于前面所述的收集器格外不一样，因为G1在内存的划分上，将内存平分为大小相等的几个区域，年轻代与老年代之间不在是物理隔离，总结起来，G1特点有：</p>
-<ul>
-<li>并行与并发</li>
-<li>分代收集</li>
-<li>空间整合</li>
-<li>可预测停顿</li>
-<li>将堆划分为多个大小相等的Region</li>
-<li>Y/O不再物理隔离</li>
-<li>有计划避免全盘GC</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-d3f472e8f57f4507.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="图3.3.6.7.1 G1 运行示意图"></p>
-<p>图3.3.6.7.1 G1 运行示意图</p>
-<p>G1会维护一个Region回收优先级列表（根据Region回收价值排序），RememberedSet可保证不全堆扫描也不会遗漏，线程要保证暂停在安全点，就需要维护一个RememberSetLog，这些列表需要在最终标记时与RememberedSet合并，确保不会出错。</p>
-<h4 id="3-3-7-性能指标"><a href="#3-3-7-性能指标" class="headerlink" title="3.3.7 性能指标"></a>3.3.7 性能指标</h4><ul>
-<li>吞吐量(Throughput):在一段长时间内，没有花费在垃圾收集上的时间所 占的比例。</li>
-<li>垃圾收集代价(Garbage Collection Overhead):垃圾收集时间所占的比例。</li>
-<li>暂停时间(Pause Time): 当执行垃圾收集时，程序被迫暂停的时间长度。</li>
-<li>垃圾收集频率(Frequency Of Collection):相对于程序的执行，垃圾收集执 行的频率。</li>
-<li>覆盖区(Footprint): 大小度量，如堆的大小。</li>
-<li>敏捷度(Promptness): 从一个对象成为垃圾时到内存被回收时之间的时间 长度。</li>
-</ul>
-<h4 id="3-3-8-收集器策略"><a href="#3-3-8-收集器策略" class="headerlink" title="3.3.8 收集器策略"></a>3.3.8 收集器策略</h4><ul>
-<li>Server:<ul>
-<li>低停顿：ParNew + CMS(Serial Old)</li>
-<li>高吞吐/低CPU：Parallel Scavenge + Parallel Old</li>
-</ul>
-</li>
-<li>Client:<ul>
-<li>Serial + Serial Old</li>
-</ul>
-</li>
-</ul>
-<h2 id="四、JVM与Android虚拟机的异同"><a href="#四、JVM与Android虚拟机的异同" class="headerlink" title="四、JVM与Android虚拟机的异同"></a>四、JVM与Android虚拟机的异同</h2><h3 id="4-1-JVM"><a href="#4-1-JVM" class="headerlink" title="4.1 JVM"></a>4.1 JVM</h3><p>JAVA虚拟机运行的是JAVA字节码,JVM基于栈</p>
-<ul>
-<li>JAVA程序经过编译，生成JAVA字节码保存在class文件中，JVM通过解码class文件中的内容来运行程序。</li>
-</ul>
-<p>关于栈式虚拟机：</p>
-<ul>
-<li>代码必须使用这些指令来移动变量(即push和pop)</li>
-<li>代码尺寸小和解码效率会更高些</li>
-<li>堆栈虚拟机指令有隐含的操作数。</li>
-</ul>
-<h3 id="4-2-安卓虚拟机"><a href="#4-2-安卓虚拟机" class="headerlink" title="4.2 安卓虚拟机"></a>4.2 安卓虚拟机</h3><h4 id="4-2-1-DVM与JVM："><a href="#4-2-1-DVM与JVM：" class="headerlink" title="4.2.1 DVM与JVM："></a>4.2.1 DVM与JVM：</h4><ul>
-<li>JVM基于栈，Dalvik基于寄存器。Dalvik运行dex文件，而JVM运行java字节码自Android 2.2开始，Dalvik支持JIT（just-in-time，即时编译技术）</li>
-<li>与一般标准Java虚拟机不同在于：<ul>
-<li>占用更少空间</li>
-<li>为简化翻译，常量池只使用32位索引</li>
-<li>标准Java字节码实行8位堆栈指令,Dalvik使用16位指令集直接作用于局部变量。局部变量通常来自4位的“虚拟寄存器”区。这样减少了Dalvik的指令计数，提高了翻译速度。</li>
-</ul>
-</li>
-<li>Dalvik虚拟机运行的是Dalvik字节码<ul>
-<li>DVM运行的是Dalvik字节码，所有的Dalvik字节码由JAVA字节码转换而来，并被打包到一个DEX（Dalvik Executable）可执行文件中，DVM通过解释DEX文件来执行这些字节码。</li>
-</ul>
-</li>
-<li>Dalvik可执行文件体积更小</li>
-</ul>
-<h4 id="4-2-2-DVM与ART"><a href="#4-2-2-DVM与ART" class="headerlink" title="4.2.2 DVM与ART"></a>4.2.2 DVM与ART</h4><ul>
-<li>区别：Dalvik虚拟机执行的是dex字节码，ART虚拟机执行的是本地机器码</li>
-<li>ART相比于DVM（空间换时间）：<ul>
-<li>(优点)系统性能显著提升</li>
-<li>(优点)应用启动更快、运行更快、体验更流畅、触感反馈更及时</li>
-<li>(优点)续航能力提升</li>
-<li>(优点)支持更低的硬件</li>
-<li>(缺点)更大的存储空间占用，可能增加10%-20%</li>
-<li>(缺点)更长的应用安装时间</li>
-</ul>
-</li>
-</ul>
-<h2 id="五、如何“防治”"><a href="#五、如何“防治”" class="headerlink" title="五、如何“防治”"></a>五、如何“防治”</h2><h3 id="5-1-攻"><a href="#5-1-攻" class="headerlink" title="5.1 攻"></a>5.1 攻</h3><p>Android内存泄露判定-解决方法</p>
-<ul>
-<li>工具<ul>
-<li>IDE自带工具（图5.1.1为AS分析出的引用路径）</li>
-<li>MAT/Android Studio Profiler/第三方(图5.1.2为MAT分析出的某例泄露)</li>
-<li>LeakCanary 等监测工具(图5.1.3为LeakCanary监测出的未反注册及未取消动画更新监听的泄露GC-Root引用路径)</li>
-</ul>
-</li>
-</ul>
-<p><em>各大工具的使用方法因篇幅所限，就不具体介绍，相关资料亦是汗牛充犊。</em></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ca53c4d2e0fd72d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="5.1.1"></p>
-<p>图5.1.1 AS分析出的泄露现场</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c29f25476bbacbe2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="5.1.2"></p>
-<p>图5.1.2 Leak by MAT</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-97d976558b387970.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="5.1.3"></p>
-<p>图5.1.3 by LeakCanary</p>
-<ul>
-<li>查找内存泄露步骤:<ul>
-<li>了解OutOfMemoryError 情况</li>
-<li>重现<ul>
-<li>Heap Dump</li>
-<li>计算这个对象到 GC roots 的最短强引用路径。</li>
-<li>剔除无用引用<h3 id="5-2-防"><a href="#5-2-防" class="headerlink" title="5.2 防"></a>5.2 防</h3><h4 id="5-2-1-Java"><a href="#5-2-1-Java" class="headerlink" title="5.2.1 Java:"></a>5.2.1 Java:</h4></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>减少临时对象的使用</li>
-<li>尽量使用StringBuffer,而不用String来累加字符串</li>
-<li>尽量避免使用 static 成员变量</li>
-<li>分散对象创建或删除的时间</li>
-<li>勿override finalize()</li>
-</ul>
-<h4 id="5-2-2-Android"><a href="#5-2-2-Android" class="headerlink" title="5.2.2 Android:"></a>5.2.2 Android:</h4><ul>
-<li>生命周期最小化(如用ApplicationContext替代Activity)</li>
-<li>不要在静态变量或者静态内部类中使用非静态外部成员变量，实在要用——<ul>
-<li>将内部类改为静态内部类</li>
-<li>静态内部类中使用弱引用来引用外部类的成员变量</li>
-</ul>
-</li>
-<li>Handler 尽量不持有对象、依赖场景结束时cancelMessageAndCallback</li>
-<li>关闭资源(集合清除、Bitmap.recycle、Closable.close、Register.unregister、 Observer.remove、WebView处理)<br>  及时终止或取消异步任务</li>
-<li>时刻记得不要加载过大的Bitmap对象；(BitmapFactory.Options)</li>
-<li>优化界面交互过程中频繁的内存使用；</li>
-<li>有些地方避免使用强引用，替换为弱引用等操作。</li>
-<li>对批量加载等操作进行缓存设计，譬如列表图片显示，Adapter的convertView缓存等。</li>
-<li>尽可能的复用资源；譬如系统本身有很多字符串、颜色、图片、动画、样式，尽量复用style以节约内存。</li>
-<li>对于有缓存等存在的应用尽量实现onLowMemory()和onTrimMemory()方法。</li>
-<li>尽量使用线程池替代多线程操作，这样可以节约内存及CPU占用率。</li>
-<li>尽量管理好自己的Service、Thread等后台的生命周期，不要浪费内存占用。</li>
-<li>尽量的优化自己的代码，减少冗余，进行编译打包等优化对齐处理，避免类加载时浪费内存。</li>
+<li>可以输入的参数包括：  dump文件名、存放目录、需要抓取的进程名</li>
+<li>下次输入时，如果没有完全输入，会自动使用上一次的参数</li>
 </ul>
 <blockquote>
-<p>参考：</p>
-<ul>
-<li><a href="https://zh.wikipedia.org/wiki/内存泄漏" target="_blank" rel="noopener">内存泄漏Wiki词条</a></li>
-<li><a href="https://www.amazon.cn/gp/product/B00D2ID4PK/ref=od_aui_detailpages00?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">《深入理解Java虚拟机:JVM高级特性与最佳实践(第2版)》周志明著</a></li>
-<li><a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html" target="_blank" rel="noopener">Java Garbage Collection Basics</a></li>
-<li><a href="http://bugs.java.com/view_bug.do?bug_id=6668279" target="_blank" rel="noopener">System.gc() should indicate that we don’t recommend use and don’t<br> guarantee behaviour</a></li>
-<li><a href="https://stackoverflow.com/questions/2414105/why-is-it-bad-practice-to-call-system-gc" target="_blank" rel="noopener">Why is it bad practice to call System.gc()?</a></li>
-<li><a href="http://www.jianshu.com/p/8edac8e09b3e" target="_blank" rel="noopener">JAVA虚拟机与Android虚拟机的区别</a></li>
-<li><a href="http://blog.csdn.net/u010299178/article/details/52059998" target="_blank" rel="noopener">Android优化改动——java代码</a></li>
-<li><a href="http://www.jb51.net/article/88708.htm" target="_blank" rel="noopener">Android DVM/ART 区分</a></li>
-</ul>
+<p>第一次输入的时候还是需要完全的配置</p>
 </blockquote>
-<blockquote>
-<p>拍砖：<br><a href="mailto:chengong90@gmail.com" target="_blank" rel="noopener">chengong90@gmail.com</a></p>
-</blockquote>
+<h3 id="已知问题"><a href="#已知问题" class="headerlink" title="已知问题"></a>已知问题</h3><p>抓取dump次数过多时会出现adb缓存读写错误的问题，需要重启adb（kill-server | start-server），后续找到解决方案会及时更新到Github repository</p>
+<hr>
+<p>扫描二维码，关注“夕识”，一起学习Android知识、CS知识，努力成为一位  different thinker</p>
+<p><img src="../../pic_resource/qrcode_for_wechat.jpg" alt=""></p>
+<p>点击“链接”，跳转至repo地址</p>
 
       
 
@@ -1227,7 +714,7 @@ c. 更好的debug支持
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GC/">GC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存泄露/">内存泄露</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dump/">Dump</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
 
     </footer>
   </div>
@@ -1238,7 +725,7 @@ c. 更好的debug支持
 
 
   
-    <article id="post-技术/Android/冻结帧"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/Android/retrofit2"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -1246,7 +733,7 @@ c. 更好的debug支持
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/冻结帧/">冻结帧</a>
+      <a class="article-title" href="/2018/03/09/技术/Android/retrofit2/">retrofit2</a>
     </h1>
   
 
@@ -1254,7 +741,7 @@ c. 更好的debug支持
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/冻结帧/" class="article-date">
+	<a href="/2018/03/09/技术/Android/retrofit2/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -1265,138 +752,149 @@ c. 更好的debug支持
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><h4 id="基本知识准备"><a href="#基本知识准备" class="headerlink" title="基本知识准备"></a>基本知识准备</h4><ul>
-<li>认识冻结帧FrozenFrame（FF）</li>
-<li>Google Play Console（GPC）针对FF的各项指标含义</li>
-<li>FF所属大类——SlowRendering</li>
-<li>testing UI performance</li>
-</ul>
-<h4 id="GPC-FF告警解决办法"><a href="#GPC-FF告警解决办法" class="headerlink" title="GPC FF告警解决办法"></a>GPC FF告警解决办法</h4><p>手动测试、自动测试、解决关键问题——后续输出指南/标准</p>
-<ul>
-<li>手动测试重要场景，找到问题场景，解决痛点</li>
-<li>自动化测试——搭建自动化测试、完善UI测试标准、足够好用的情况下考虑加入到后续新入UI的考量手段中</li>
-<li>主动防御——对UI的实现标准化操作进行总结、输出至业务开发人员，提高UI质量</li>
-</ul>
-<h3 id="基本知识"><a href="#基本知识" class="headerlink" title="基本知识"></a>基本知识</h3><h4 id="认识冻结帧FrozenFrame（FF）"><a href="#认识冻结帧FrozenFrame（FF）" class="headerlink" title="认识冻结帧FrozenFrame（FF）"></a>认识冻结帧FrozenFrame（FF）</h4><ul>
-<li>定义</li>
-<li>why 60 fps</li>
-<li>16.67ms</li>
-</ul>
-<h4 id="Google-Play-Console（GPC）针对FF的各项指标含义"><a href="#Google-Play-Console（GPC）针对FF的各项指标含义" class="headerlink" title="Google Play Console（GPC）针对FF的各项指标含义"></a>Google Play Console（GPC）针对FF的各项指标含义</h4><blockquote>
-<h4 id="Data-collection-details"><a href="#Data-collection-details" class="headerlink" title="Data collection details"></a>Data collection details</h4><p>Google collects the render time of each frame rendered by your app when using the UI Toolkit framework, <strong>not when using OpenGL directly.</strong></p>
+        <hr>
+<blockquote>
+<p>作者： <a href="https://twitter.com/jakewharton" target="_blank" rel="noopener">Jake Wharton</a></p>
+<p>原文引自：<a href="https://academy.realm.io/cn/posts/droidcon-jake-wharton-simple-http-retrofit-2/" target="_blank" rel="noopener">link</a></p>
 </blockquote>
-<p>控制面板</p>
-<ul>
-<li>Impacted sessions——每日会话中，绘制时间&gt;700ms的帧总数超过所有会话帧0.1%的用户占比</li>
-<li>Number of sessions——被记录的帧数量</li>
-<li>90th/99th percentile(ms)——90%/99%的用户的所有帧绘制时间都低于这一值</li>
-</ul>
-<p>图表指标（比率均是针对所有绘制超过16.67ms的帧）</p>
-<ul>
-<li>Missed Vsync——<a href="https://stackoverflow.com/questions/27947848/understanding-necessity-of-android-vsync-signals" target="_blank" rel="noopener">丢失系统Vsync</a>信号的占比（理解<a href="https://www.youtube.com/watch?v=1iaHxmfZGGc&amp;list=PLOU2XLYxmsIKEOXh5TwZEv89aofHzNCiu&amp;index=23" target="_blank" rel="noopener">VSYNC</a>）</li>
-<li>High input latency——这些超过16.67ms的帧中输入法用时超过24ms的帧占比</li>
-<li>Slow UI thread——UI thread用时超过8ms</li>
-<li>Slow draw commands——给GPU发送绘制指令用时超过12ms</li>
-<li>Slow bitmap uploads——bitmap上传至GPU用时超过3.2ms</li>
-</ul>
-<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p>ORG Google play console data</p>
-<h4 id="FF所属大类——SlowRendering"><a href="#FF所属大类——SlowRendering" class="headerlink" title="FF所属大类——SlowRendering"></a>FF所属大类——<a href="https://developer.android.com/topic/performance/vitals/render.html" target="_blank" rel="noopener">SlowRendering</a></h4><ul>
-<li>identifying jank<ul>
-<li><a href="https://developer.android.com/topic/performance/vitals/render.html#visual-inspection" target="_blank" rel="noopener">Visual inspection</a></li>
-<li><a href="https://developer.android.com/topic/performance/vitals/render.html#systrace" target="_blank" rel="noopener">Systrace</a></li>
-<li><a href="https://developer.android.com/topic/performance/vitals/render.html#custom-monitoring" target="_blank" rel="noopener">Custom performance monitoring</a></li>
-</ul>
-</li>
-<li>fixing jank<ul>
-<li>查看常规的反面示例</li>
-<li>如何避免——耗时操作应在非UI线程完成</li>
-<li>UI复杂时<ul>
-<li><a href="https://developer.android.com/training/testing/espresso/index.html" target="_blank" rel="noopener">写UI自动化测试代码</a></li>
-<li><a href="https://codelabs.developers.google.com/codelabs/android-perf-testing/index.html#0" target="_blank" rel="noopener">自动化性能测试UI篇</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Common sources of janks<ul>
-<li>Scrollable lists<ul>
-<li>RecycleView:notifyDataSetChanged</li>
-<li>RecycleView:Nested RecyclerViews</li>
-<li>RecyclerView: Too much inflation / Create taking too long</li>
-<li>RecyclerView: Bind taking too long</li>
-<li>RecyclerView or ListView: layout / draw taking too long</li>
-<li>ListView: Inflation</li>
-</ul>
-</li>
-<li>Layout performance<ul>
-<li>Layout performance: Cost</li>
-<li>Layout performance: Frequency</li>
-</ul>
-</li>
-<li>Rendering performance<ul>
-<li>Rendering performance: UI Thread<ul>
-<li>If <strong>Record View#draw</strong> is taking a long time, it’s often the case that a bitmap is being painted on the UI thread. Painting to a bitmap uses CPU rendering, so should generally should be avoided. 使用<a href="https://developer.android.com/studio/profile/cpu-profiler.html#method_traces" target="_blank" rel="noopener">Android CPU Profiler</a> 确诊问题</li>
-</ul>
-</li>
-<li>Rendering performance: RenderThread<ul>
-<li>Canvas.saveLayer()</li>
-<li>Animating large Paths</li>
-<li>Canvas.clipPath</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Thread scheduling delays</li>
-<li>Object allocation and garbage collection</li>
-</ul>
-</li>
-</ul>
-<h4 id="testing-UI-performance"><a href="#testing-UI-performance" class="headerlink" title="testing UI performance"></a>testing UI performance</h4><ul>
-<li>measuring UI performance</li>
-<li>automating UI performance Tests</li>
-</ul>
-<h3 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h3><p>可能诱因</p>
-<h3 id="How——定位问题"><a href="#How——定位问题" class="headerlink" title="How——定位问题"></a>How——定位问题</h3><h4 id="Visual-inspection"><a href="#Visual-inspection" class="headerlink" title="Visual inspection"></a><a href="https://developer.android.com/topic/performance/vitals/render.html#visual-inspection" target="_blank" rel="noopener">Visual inspection</a></h4><ul>
-<li>Run a <strong>==release==</strong> (or at least non-debuggable) version of your app. <strong>The ART runtime disables several important optimizations in order to support debugging features</strong>, so make sure you’re looking at something similar to what a user will see.</li>
-<li><a href="https://developer.android.com/studio/profile/dev-options-rendering.html#ProfileGPURendering" target="_blank" rel="noopener">Enable Profile GPU Rendering</a>. <strong>Profile GPU Rendering</strong> displays bars on the screen that give you a quick visual representation of how much time it takes to render the frames of a UI window relative to the 16-ms-per-frame benchmark. Each bar has colored components that map to a stage in the rendering pipeline, so you can see which portion is taking the longest. For example, if the frame spends a lot of time handling input, you should look at your app code that handles user input.</li>
-<li>There are certain components, such as <code>RecyclerView</code>, that are a <a href="https://developer.android.com/topic/performance/vitals/render.html#common-jank" target="_blank" rel="noopener">common source of jank</a>. If your app uses those components, it’s a good idea to run through those parts of the app.</li>
-<li>Sometimes, jank can be reproduced only when the app is launched from a <a href="https://developer.android.com/topic/performance/launch-time.html#cold" target="_blank" rel="noopener">cold start</a>.</li>
-<li>Try running your app on a slower device to exacerbate the problem.</li>
-</ul>
-<h4 id="Systrace"><a href="#Systrace" class="headerlink" title="Systrace"></a><a href="https://developer.android.com/topic/performance/vitals/render.html#systrace" target="_blank" rel="noopener">Systrace</a></h4><ul>
-<li>Systrace shows when each frame is drawn and color codes each frame to highlight slow render times. This helps you find individual janky frames more accurately than visual inspection. For more information, see <a href="https://developer.android.com/studio/profile/systrace.html#frames" target="_blank" rel="noopener">Inspecting Frames</a>.</li>
-<li>Systrace detects problems in your app and displays <strong>alerts</strong> both in individual frames and the <a href="https://developer.android.com/studio/profile/systrace.html#alerts" target="_blank" rel="noopener">alerts</a> panel. Following directions in the alert is your best option.</li>
-<li>Parts of the Android framework and libraries, such as <code>RecyclerView</code>, contain trace markers. So, the <strong>systrace timeline </strong>shows when those methods are executed on the UI thread and how long they take to execute.</li>
-</ul>
-<p>If systrace doesn’t show you details about why UI thread work is taking for a long time, then you’ll need to use <a href="https://developer.android.com/studio/profile/cpu-profiler.html#method_traces" target="_blank" rel="noopener">Android CPU Profiler</a> to record either a sampled or instrumented method trace. </p>
-<h4 id="Custom-performance-monitoring"><a href="#Custom-performance-monitoring" class="headerlink" title="Custom performance monitoring"></a><a href="https://developer.android.com/topic/performance/vitals/render.html#custom-monitoring" target="_blank" rel="noopener">Custom performance monitoring</a></h4><p>If you can’t reproduce jank on a local device, you can build custom performance monitoring into your app to help identify the source of jank on devices in the field.</p>
-<p>To do this, collect frame render times from specific parts of your app with <a href="https://developer.android.com/reference/android/support/v4/app/FrameMetricsAggregator.html" target="_blank" rel="noopener"><code>FrameMetricsAggregator</code></a> and record and analyze the data using <a href="https://firebase.google.com/docs/perf-mon/" target="_blank" rel="noopener">Firebase Performance Monitoring</a>.</p>
-<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><ul>
-<li>To fix jank, inspect which frames aren’t completing in 16.7ms, and look for what is going wrong. Is <strong>Record View#draw</strong> taking abnormally long in some frames, or perhaps <strong>Layout</strong>? See the <a href="https://developer.android.com/topic/performance/vitals/render.html#common-jank" target="_blank" rel="noopener">Common sources of jank</a> below for these problems, and others.</li>
-<li>To avoid jank, long running tasks should be run asynchronously outside of the UI thread. Always be aware of what thread you’re code is running on and use caution when posting non-trivial tasks to the main thread.</li>
-<li>If you have a complex and important primary UI for your app (maybe the central scrolling list), consider <a href="https://developer.android.com/training/testing/performance.html#automate" target="_blank" rel="noopener">writing instrumentation tests</a> that can automatically detect slow render times and run the tests frequently to prevent regressions. For more information, see the <a href="https://codelabs.developers.google.com/codelabs/android-perf-testing/index.html" target="_blank" rel="noopener">Automated Performance Testing Codelab</a>.</li>
-</ul>
-<h3 id="Automated-Test-codelab"><a href="#Automated-Test-codelab" class="headerlink" title="Automated Test codelab"></a>Automated Test codelab</h3><h4 id="Topic"><a href="#Topic" class="headerlink" title="Topic"></a>Topic</h4><ul>
-<li>How to quickly navigate some Android Performance tools</li>
-<li>How the Espresso testing framework can be used to write unit and performance tests</li>
-<li>How to use MonkeyRunner and Gradle to automate the testing workflow</li>
-<li>How to review systrace output to understand your app’s performance issues</li>
-</ul>
-<h3 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h3><ul>
-<li><p><a href="https://developer.android.com/studio/profile/systrace-commandline.html" target="_blank" rel="noopener">Systrace</a>、对其说明<a href="http://blog.udinic.com/2015/09/15/speed-up-your-app" target="_blank" rel="noopener">Link</a></p>
-</li>
-<li><p>在traceView中，选中帧后，按M键，可高亮帧</p>
-<ul>
-<li><a href="https://developer.android.com/studio/profile/traceview.html" target="_blank" rel="noopener">Profiling with Traceview and dmtracedump</a></li>
-<li><a href="https://developer.android.com/studio/profile/traceview.html" target="_blank" rel="noopener">代码级traceview</a></li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// start tracing to "/sdcard/calc.trace"</span></span><br><span class="line">Debug.startMethodTracing(<span class="string">"calc"</span>);</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// stop tracing</span></span><br><span class="line">Debug.stopMethodTracing();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>frame dump</p>
-<p><img src="../../pic_resource/frame_dump_example.jpg" alt=""></p>
-</li>
-<li><p><a href="https://developer.android.com/studio/profile/cpu-profiler.html#method_traces" target="_blank" rel="noopener">method trace</a></p>
-</li>
-</ul>
+<p><a href="http://square.github.io/retrofit/" target="_blank" rel="noopener">Retrofit</a> 作为简化 HTTP 请求的库，已经运行多年，2.0版本依然不辱使命的在做这些事情。不过 2.0 版本修复了一些长期影响开发者的设计，还加入了前所未有的强大特性。在 NYC 2015 的这一个分享中，<a href="https://twitter.com/jakewharton" target="_blank" rel="noopener">Jake Wharton</a> 的演讲涵盖了所有 Retrofit 2.0 的新特性，全面介绍了 Retrofit 2.0 工作原理。</p>
+<hr>
+<hr>
+<p><em>Save the date for Droidcon SF in March — a conference with best-in-class presentations from leaders in all parts of the Android ecosystem.</em></p>
+<hr>
+<h3 id="简介-0-00"><a href="#简介-0-00" class="headerlink" title="简介 (0:00);)"></a>简介 <a href="javascript:presentz.changeChapter(0,0,true" target="_blank" rel="noopener">(0:00)</a>;)</h3><p>我叫 <a href="https://twitter.com/jakewharton" target="_blank" rel="noopener">Jake Wharton</a>，现在在 <a href="https://squareup.com/" target="_blank" rel="noopener">Square</a> 工作。一个天真的人曾经说过：”Retrofit 2 将会在今年年底前放出。”，那个人，就是去年在纽约 DroidCon 上表态的我。然而，事实是 Retrofit 2 <strong>将会在今年年底放出</strong>，这次我保证！</p>
+<p><a href="http://square.github.io/retrofit/" target="_blank" rel="noopener">Retrofit</a> 5年前就开源了，是 Square 最早的开源项目之一。一开始的时候，Retrofit 只是我们用在各个开源项目里的福袋：比如说最早里面有晃动检测功能，HTTP Client，还有现在的 tap 库。多数功能都是 Bob Lee 完成的，我大概 3 年前开始接管这些工作。最终历经 3 年，完成了 1.0 版本，然后彻底开源。从那会儿到现在，已经 release 了 18 个版本了。</p>
+<h3 id="Retrofit-1-不错的地方-2-23"><a href="#Retrofit-1-不错的地方-2-23" class="headerlink" title="Retrofit 1 不错的地方 (2:23);)"></a>Retrofit 1 不错的地方 <a href="javascript:presentz.changeChapter(0,11,true" target="_blank" rel="noopener">(2:23)</a>;)</h3><p>Retrofit 里已经有很多不错的特性了。Retrofit 可以利用接口，方法和注解参数（parameter annotations）来声明式定义一个请求应该如何被创建。比如说，下面是一个如何请求 GitHub API 的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  List&lt;Contributor&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Retrofit 背后的 HTTP client，以及序列化机制（JSON/XML 协议）都是可替换（pluggable）的，因此你可以选择合适自己的方案。Retrofit 最早出来的时候，只支持 Apache 的 HTTP client。在 1.0 放出前，我们增加了 URL connection，以及 OkHttp 的支持。如果你想要加入的其他的 HTTP client，都可以简单的加入。这个特性非常赞，让我们有能力去支持不同的自定义 client。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">builder.setClient(new UrlConnectionClient());</span><br><span class="line">builder.setClient(new ApacheClient());</span><br><span class="line">builder.setClient(new OkClient());</span><br><span class="line"></span><br><span class="line">builder.setClient(new CustomClient());</span><br></pre></td></tr></table></figure>
+<p>序列化功能也是可替换的。默认是用的 GSON，你当然也可以用 Jackson 来替换掉。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  List&lt;Contributor&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">builder.setConverter(new GsonConverter());</span><br><span class="line">builder.setConverter(new JacksonConverter());</span><br></pre></td></tr></table></figure>
+<p>如果你在用某些数据交换协议，比如 protocol buffer，Retrofit 也支持 Google 的 <a href="https://github.com/google/protobuf">protobuf</a>，也包括 XML 协议的转换（如果你自己不怕折腾）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  ContributorResponse repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">builder.setConverter(new ProtoConverter());</span><br><span class="line">builder.setConverter(new WireConverter());</span><br><span class="line"></span><br><span class="line">builder.setConverter(new SimpleXMLConverter());</span><br><span class="line"></span><br><span class="line">builder.setConverter(new CustomConverter());</span><br></pre></td></tr></table></figure>
+<p>序列化部分跟 client 部分一样，都是可替换的。你如果想要引入或者实现自己的序列化组件，完全没有问题。</p>
+<p>在发请求的实现上，你可以用的方法有很多，比如：同步发送请求——</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  List&lt;Contributor&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">List&lt;Contributor&gt; contributors =</span><br><span class="line">    gitHubService.repoContributors(&quot;square&quot;, &quot;retrofit&quot;);</span><br></pre></td></tr></table></figure>
+<p>——和异步发送，他们之间的区别就是异步发送要在最后一个参数上声明一个 callback 回调函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  void repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo,</span><br><span class="line">      Callback&lt;List&lt;Contributor&gt;&gt; cb);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">service.repoContributors(&quot;square&quot;, &quot;retrofit&quot;, new Callback&lt;List&lt;Contributor&gt;&gt;() &#123;</span><br><span class="line">  @Override void success(List&lt;Contributor&gt; contributors, Response response) &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override void failure(RetrofitError error) &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>——再到后来 1.0 后，我们还支持了 <a href="https://github.com/ReactiveX/RxJava">RxJava</a> ，被证明真的是个非常受欢迎的功能。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Observable&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">gitHubService.repoContributors(&quot;square&quot;, &quot;retrofit&quot;)</span><br><span class="line">    .subscribe(new Action1&lt;List&lt;Contributor&gt;&gt;() &#123;</span><br><span class="line">      @Override public void call(List&lt;Contributor&gt; contributors) &#123;</span><br><span class="line">        // ...</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Retrofit-1-不够好的地方-4-58"><a href="#Retrofit-1-不够好的地方-4-58" class="headerlink" title="Retrofit 1: 不够好的地方 (4:58);)"></a>Retrofit 1: 不够好的地方 <a href="javascript:presentz.changeChapter(0,28,true" target="_blank" rel="noopener">(4:58)</a>;)</h3><p>不幸的是，没有一个库是完美的，Retrofit 也不例外。为了支持可替换的功能模块，我们必须嵌套大量的组件，类的数量极多以至于成为了一个痛处，一方面是因为整个库非常的脆弱，还有就是因为我们无法修改公开的 API 接口。</p>
+<p>Receive news and updates from Realm straight to your inbox</p>
+<p>订阅Comments</p>
+<p>如果你想要操作某次请求返回的数据，比如说返回的 Header 部分或者 URL，你又同时想要操作序列化后的数据部分，这是 Retrofit 1.0 上是不可能实现的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  List&lt;Contributor&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Response repoContributors2(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面的这个 GitHub 的例子里，我们返回了一个 contributor 的列表，你可以用不同的 converter 去做反序列化。然而，如果说你要读取一个 reponse 的 header 部分。除非你设置一个 endpoint 来接管这个 reponse，不然你没有办法去读取这个 response。 由于 response header 数据里并没有反序列化后的对象，如果不做反序列化操作的话，那你也就无法拿到 contributor 对象了。</p>
+<p>我刚才说过同步和异步，以及用起来非常棒的 RxJava，但是这些用起来却有些刻板。比如：我们在某些场景下既需要异步的调用，又需要同步的调用。在 Retrofit 1.0 里，你必须得声明两次这个方法，像下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  List&lt;Contributor&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  void repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo,</span><br><span class="line">      Callback&lt;List&lt;Contributor&gt;&gt; cb);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>RxJava 也有类似问题。但值得庆幸的是你在用 RxJava 的时候只用声明一次就行，为了实现这个，我们还在核心代码里增加了对 RxJava 的支持，以辅助返回 Observable 的对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Observable&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可能已经熟悉如何在 Retrofit 里创建 Observable 对象。但是如果你需要一些其他对象呢？ 比如，我们没有计划支持用了 Guava 的 ListenableFuture，以及那些用了 Java 8 的 CompleteableFuture。毕竟，Retrofit 1 是基于还在用着 Java 6 的 Android 开发的。</p>
+<p>Retrofit 1 里 Converter 工作的效率并不算是很高。下面是在 Retrofit 1 里创建自定义 Converter 的代码，非常简单：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">interface Converter &#123;</span><br><span class="line">  Object fromBody(TypedInput body, Type type);</span><br><span class="line">  TypedOutput toBody(Object object);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>自定义 Converter 接收一个对象，然后返回一个格式化后的 HTTP 对象。问题是在我们传入了 Response 和一个我们想要转换的格式 Type 参数后，Converter 必须得搞清楚到底应该如何去反序列化，这部分的实现很复杂，而且耗时。尽管一些库做了对象的缓存，但依然效率很低。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/search/repositories&quot;)</span><br><span class="line">  RepositoriesResponse searchRepos(</span><br><span class="line">      @Query(&quot;q&quot;) String query,</span><br><span class="line">      @Query(&quot;since&quot;) Date since);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/search/repositories?q=retrofit&amp;since=2015-08-27</span><br><span class="line">/search/repositories?q=retrofit&amp;since=20150827</span><br></pre></td></tr></table></figure>
+<p>有时候，声明式 API 会遇到一些小问题。比如就像上面的例子一样，你有个接口需要传入一个 Date，但是一个 Date 会有多种不同的格式表示。有的接口可能需要一个字符串，有的可能需要一个分隔开的日期表示（尤其是那些比日期要复杂很多的对象，可能会有更多的表示方法）。</p>
+<p>以上，基本上就是 Retrofit 1 无力解决的需求了，我们要如何修复呢？</p>
+<h3 id="Retrofit-2-10-18"><a href="#Retrofit-2-10-18" class="headerlink" title="Retrofit 2 (10:18);)"></a>Retrofit 2 <a href="javascript:presentz.changeChapter(0,48,true" target="_blank" rel="noopener">(10:18)</a>;)</h3><p>开发 Retrofit2 的时候，我们希望我们定位和解决所有大家多年以来在 Retrofit 1 里遇到的那些问题。</p>
+<h4 id="Call-10-30"><a href="#Call-10-30" class="headerlink" title="Call (10:30);)"></a>Call <a href="javascript:presentz.changeChapter(0,49,true" target="_blank" rel="noopener">(10:30)</a>;)</h4><p>首先得提到的是：Retrofit2 有了新的类型。如果你熟悉用 OkHttp 做 API 请求，你可能比较熟悉其中的一个类：<code>Call</code>。现在， Retrofit 2 里也多了一个 <code>call</code> 方法。语法和 OkHttp 基本一模一样，唯一不同是这个函数知道如何做数据的反序列化。它知道如何将 HTTP 响应转换成对象。</p>
+<p>另外，每一个 call 对象实例只能被用一次，所以说 request 和 response 都是一一对应的。你其实可以通过 <code>Clone</code> 方法来创建一个一模一样的实例，这个开销是很小的。比如说：你可以在每次决定发请求前 <code>clone</code> 一个之前的实例。</p>
+<p>另一个大的进步是 2.0 同时支持了在一个类型中的同步和异步。同时，一个请求也可以被<strong>真正地</strong>终止。终止操作会对底层的 http client 执行 cancel 操作。即便是正在执行的请求，也能立即切断。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Call&lt;List&lt;Contributor&gt;&gt; call =</span><br><span class="line">    gitHubService.repoContributors(&quot;square&quot;, &quot;retrofit&quot;);</span><br></pre></td></tr></table></figure>
+<p>这个 Call 对象是从你的 API 接口返回的参数化后的对象。调用跟接口名相同的函数名，你就会得到一个实例出来。我们可以直接调用它的 execute 方法，但是得留意一下，这个方法只能调用一次。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Call&lt;List&lt;Contributor&gt;&gt; call =</span><br><span class="line">    gitHubService.repoContributors(&quot;square&quot;, &quot;retrofit&quot;);</span><br><span class="line"></span><br><span class="line">response = call.execute();</span><br><span class="line"></span><br><span class="line">// This will throw IllegalStateException:</span><br><span class="line">response = call.execute();</span><br><span class="line"></span><br><span class="line">Call&lt;List&lt;Contributor&gt;&gt; call2 = call.clone();</span><br><span class="line">// This will not throw:</span><br><span class="line">response = call2.execute();</span><br></pre></td></tr></table></figure>
+<p>当你尝试调用第二次的时候，就会出现失败的错误。实际上，可以直接克隆一个实例，代价非常低。当你想要多次请求一个接口的时候，直接用 clone 的方法来生产一个新的，相同的可用对象吧。</p>
+<p>想要实现异步，需要调用 <code>enqueue</code> 方法。现在，我们就能通过一次声明实现同步和异步了！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Call&lt;List&lt;Contributor&gt;&gt; call =</span><br><span class="line">    gitHubService.repoContributors(&quot;square&quot;, &quot;retrofit&quot;);</span><br><span class="line"></span><br><span class="line">call.enqueue(new Callback&lt;List&lt;Contributor&gt;&gt;() &#123;</span><br><span class="line">  @Override void onResponse(/* ... */) &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override void onFailure(Throwable t) &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>当你将一些异步请求压入队列后，甚至你在执行同步请求的时候，你可以随时调用 <code>cancel</code> 方法来取消请求：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Call&lt;List&lt;Contributor&gt;&gt; call =</span><br><span class="line">    gitHubService.repoContributors(&quot;square&quot;, &quot;retrofit&quot;);</span><br><span class="line"></span><br><span class="line">call.enqueue(         );</span><br><span class="line">// or...</span><br><span class="line">call.execute();</span><br><span class="line"></span><br><span class="line">// later...</span><br><span class="line">call.cancel();</span><br></pre></td></tr></table></figure>
+<h4 id="Parameterized-Response-Object-13-48"><a href="#Parameterized-Response-Object-13-48" class="headerlink" title="Parameterized Response Object (13:48);)"></a>Parameterized Response Object <a href="javascript:presentz.changeChapter(0,68,true" target="_blank" rel="noopener">(13:48)</a>;)</h4><p>另一个新的特性是参数化的 Response 类型。 Response 对象增加了曾经一直被我们忽略掉的重要元数据：响应码（the reponse code），响应消息（the response message），以及读取相应头（headers）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Response&lt;T&gt; &#123;</span><br><span class="line">  int code();</span><br><span class="line">  String message();</span><br><span class="line">  Headers headers();</span><br><span class="line"></span><br><span class="line">  boolean isSuccess();</span><br><span class="line">  T body();</span><br><span class="line">  ResponseBody errorBody();</span><br><span class="line">  com.squareup.okhttp.Response raw();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同时还提供了一个很方便的函数来帮助你判断请求是否成功完成，其实就是检查了下响应码是不是 200。然后就拿到了响应的 body 部分，另外有一个单独的方法获取 error body。基本上就是出现一个返回码，然后调用相对应的函数的。只有当响应成功以后，我们会去做反序列化操作，然后将反序列化的结果放到 body 回调中去。如果出现了返回了网络成功响应（返回码：200）却最终返回 false 的情况，我们实际上是无法判断返回到底是什么的，只能将 <code>ResponseBody</code>（简单封装的了 content-type，length，以及 raw body部分） 类型交给你去处理。</p>
+<p>以上是在声明接口时候的两个重大的改变。</p>
+<h4 id="动态-URL-Parameter-16-33"><a href="#动态-URL-Parameter-16-33" class="headerlink" title="动态 URL Parameter (16:33);)"></a>动态 URL Parameter <a href="javascript:presentz.changeChapter(0,101,true" target="_blank" rel="noopener">(16:33)</a>;)</h4><p>动态 URL 参数是让我头疼多年的一个问题，现在我们终于解决了！如果你向 GitHub 发出多个请求，收到一个响应，通常这个响应大概像下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Call&lt;List&lt;Contributor&gt;&gt; call =</span><br><span class="line">    gitHubService.repoContributors(&quot;square&quot;, &quot;retrofit&quot;);</span><br><span class="line">Response&lt;List&lt;Contributor&gt;&gt; response = call.execute();</span><br><span class="line"></span><br><span class="line">// HTTP/1.1 200 OK</span><br><span class="line">// Link: &lt;https://api.github.com/repositories/892275/contributors?</span><br><span class="line">page=2&gt;; rel=&quot;next&quot;, &lt;https://api.github.com/repositories/892275/</span><br><span class="line">contributors?page=3&gt;; rel=&quot;last&quot;</span><br><span class="line">// ...</span><br></pre></td></tr></table></figure>
+<p>要是你想做分页，你就得自己去分析这些 URL 了。GitHub 可能将 header link 地址列表里的数据已经缓存在服务器内存里了，当你去按他们指引的地址去请求的话，他们就不必费劲去从数据库里给你拿数据了，速度上也更快。但是，在 Retrofit 1.0 的时候，我们没有办法去直接执行 GitHub Server 返回在 header 里的请求地址。</p>
+<p>用上我们新的 response 类型后，不止是我刚才提到的那些元数据，我们还可以写一些方法来读出自定义的字段，比如上面例子里的下一页的地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Response&lt;List&lt;Contributor&gt;&gt; response = call.execute();</span><br><span class="line"></span><br><span class="line">// HTTP/1.1 200 OK</span><br><span class="line">// Link: &lt;https://api.github.com/repositories/892275/contributors?</span><br><span class="line">page=2&gt;; rel=&quot;next&quot;, &lt;https://api.github.com/repositories/892275/</span><br><span class="line">contributors?page=3&gt;; rel=&quot;last&quot;</span><br><span class="line">// ...</span><br><span class="line"></span><br><span class="line">String links = response.headers().get(&quot;Link&quot;);</span><br><span class="line">String nextLink = nextFromGitHubLinks(links);</span><br><span class="line"></span><br><span class="line">// https://api.github.com/repositories/892275/contributors?page=2</span><br></pre></td></tr></table></figure>
+<p>这个可能和上面的接口生成地址略有不同。</p>
+<p>动态 URL 地址就是用在连续请求里的。在第一个请求之后，如果返回的结果里有指明下个请求的地址的话，在之前，你可能得单独写个 interface 来处理这种情况，现在就无需那么费事了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line"></span><br><span class="line">  @GET</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributorsPaginate(</span><br><span class="line">      @Url String url);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Retrofit 2.0 有了新的 标注：<code>@Url</code> ，允许你直接传入一个请求的 URL。</p>
+<p>有了这个方法后，我们就可以直接把刚才取出来的下一页的地址传入，是不是一切都流畅了很多：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String nextLink = nextFromGitHubLinks(links);</span><br><span class="line"></span><br><span class="line">// https://api.github.com/repositories/892275/contributors?page=2</span><br><span class="line"></span><br><span class="line">Call&lt;List&lt;Contributor&gt;&gt; nextCall =</span><br><span class="line">    gitHubService.repoContributorsPaginate(nextLink);</span><br></pre></td></tr></table></figure>
+<p>这样的话，我们就能通过调用 <code>repoContributorsPaginate</code> 来获取第二页内容，然后通过第二页的 header 来请求第三页。你可能很多的 API 都见到过类似的设计，这在 Retrofit 1 里确实是个困扰很多人的大麻烦。</p>
+<h4 id="更多更有效的-Converters-19-31"><a href="#更多更有效的-Converters-19-31" class="headerlink" title="更多更有效的 Converters (19:31);)"></a>更多更有效的 Converters <a href="javascript:presentz.changeChapter(0,113,true" target="_blank" rel="noopener">(19:31)</a>;)</h4><p>Retrofit 1 里有一个 converter 的问题。多数人可能没遇到过，是库内部的一个问题。在 Retrofit 2 里，我们已经解决了这个问题，同时开始支持多种 Converter 并存。</p>
+<p>在之前，如果你遇到这种情况：一个 API 请求返回的结果需要通过 JSON 反序列化，另一个 API 请求需要通过 proto 反序列化，唯一的解决方案就是将两个接口分离开声明。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">interface SomeProtoService &#123;</span><br><span class="line">  @GET(&quot;/some/proto/endpoint&quot;)</span><br><span class="line">  Call&lt;SomeProtoResponse&gt; someProtoEndpoint();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface SomeJsonService &#123;</span><br><span class="line">  @GET(&quot;/some/json/endpoint&quot;)</span><br><span class="line">  Call&lt;SomeJsonResponse&gt; someJsonEndpoint();</span><br></pre></td></tr></table></figure>
+<p>之所以搞得这么麻烦是因为一个 REST adapter 只能绑定一个 Converter 对象。我们费工夫去解决这个是因为：接口的声明是要语意化的。API 接口应该通过功能实现分组，比如： account 的接口，user 的接口，或者 Twitter 相关的接口。返回格式的差异不应该成为你分组时候的阻碍。</p>
+<p>现在，你可以把他们都放在一起了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">interface SomeService &#123;</span><br><span class="line">  @GET(&quot;/some/proto/endpoint&quot;)</span><br><span class="line">  Call&lt;SomeProtoResponse&gt; someProtoEndpoint();</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/some/json/endpoint&quot;)</span><br><span class="line">  Call&lt;SomeJsonResponse&gt; someJsonEndpoint();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我大概提一下这个是怎么工作起来的，因为了解 Converter 的调用原理在写代码的时候很重要。</p>
+<p>看我们上面的代码：第一个方法返回了一个 proto 对象。</p>
+<p><code>SomeProtoResponse</code> —&gt; Proto? <strong>Yes!</strong></p>
+<p>原理很简单，其实就是对着每一个 converter 询问他们是否能够处理某种类型。我们问 proto 的 converter： “Hi, 你能处理 <code>SomeProtoResponse</code> 吗？”，然后它尽可能的去判断它是否可以处理这种类型。我们都知道：Protobuff 都是从一个名叫 message 或者 message lite 的类继承而来。所以，判断方法通常就是检查这个类是否继承自 message。</p>
+<p>在面对 JSON 类型的时候，首先问 proto converter，proto converter 会发现这个不是继承子 Message 的，然后回复 no。紧接着移到下一个 JSON converter 上。JSON Converter 会回复说我可以！</p>
+<p><code>SomeJsonResponse</code> —&gt; Proto? <strong>No!</strong> —&gt; JSON? <strong>Yes!</strong></p>
+<p>因为 JSON 并没有什么继承上的约束。所以我们无法通过什么确切的条件来判断一个对象是否是 JSON 对象。以至于 JSON 的 converters 会对任何数据都回复说：我可以处理！这个一定要记住， JSON converter 一定要放在最后，不然会和你的预期不符。</p>
+<p>另一个要注意的是，现在已经不提供默认的 converter 了。如果不显性的声明一个可用的 Converter 的话，Retrofit 是会报错的：提醒你没有可用的 Converter。因为核心代码已经不依赖序列化相关的第三方库了，我们依然提供对 Converter 的支持，不过你需要自己引入这些依赖，同时显性的声明 Retrofit 需要用的 Converter 有哪些。</p>
+<h4 id="更多可替换的执行机制-22-38"><a href="#更多可替换的执行机制-22-38" class="headerlink" title="更多可替换的执行机制 (22:38);)"></a>更多可替换的执行机制 <a href="javascript:presentz.changeChapter(0,121,true" target="_blank" rel="noopener">(22:38)</a>;)</h4><p>在此之前，Retrofit 有一个死板的 execution 流程。在 Retrofit 2 里，我们调整了整个流程，让它变得可替换（pluggable），同时允许多个。跟 converter 的工作原理很像。</p>
+<p>比如说，你有一个方法返回了一个 Call 对象，Call 是内置的 Converter 类型。比如：Retrofit 2　的执行机制：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>现在，你可以自定义这些了。或者用我们提供的一个：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Observable&lt;List&lt;Contributor&gt;&gt; repoContributors2(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Future&lt;List&lt;Contributor&gt;&gt; repoContributors3(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Retrofit 2.0 依然支持 RxJava，但现在是分离的。（你如果想要一些别的特性，你也可以自己写一个）同时支持不同的 execution 是怎么实现的呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(..);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Observable&lt;List&lt;Contributor&gt;&gt; repoContributors2(..);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Future&lt;List&lt;Contributor&gt;&gt; repoContributors3(..);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过返回类型来判断需要调用哪个 exection。比如说：返回为 Call 的类型， 我们的整个执行机制会问：“Hey，你知不知道如何处理 Call ？”　如果是 RxJava，它就会说：“我不知道，我只知道　Observable 的处理方法。”。　随后，我们又问内部的 converter，他刚好回答说：“是的！我会！”。</p>
+<p><code>call</code> —&gt; RxJava? <strong>No!</strong> —&gt; Call? <strong>Yes!</strong></p>
+<p>Observable 也是同样的工作原理。我们同样问 RxJava，它就说：“我能处理这个”：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(..);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Observable&lt;List&lt;Contributor&gt;&gt; repoContributors2(..);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Future&lt;List&lt;Contributor&gt;&gt; repoContributors3(..);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Observable —&gt; RxJava? <strong>Yes!</strong></p>
+<p>如果你没装相对应的 Converter，这就意味着我们无法验证响应的类型。比如：如果询问是否有办法能处理　Future，他们两个都会说：“不行”。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(..);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Observable&lt;List&lt;Contributor&gt;&gt; repoContributors2(..);</span><br><span class="line"></span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Future&lt;List&lt;Contributor&gt;&gt; repoContributors3(..);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Future —&gt; RxJava? <strong>No!</strong> —&gt; Call? <strong>No!</strong> —&gt; Throw!</p>
+<p>这将会返回一个 Exception，意味着这两个以及内置的机制都无法处理这种类型。关于工作原理我们随后会深入讨论。</p>
+<h3 id="OkHttp-提供支持-24-17"><a href="#OkHttp-提供支持-24-17" class="headerlink" title="OkHttp 提供支持 (24:17);)."></a>OkHttp 提供支持 <a href="javascript:presentz.changeChapter(0,135,true" target="_blank" rel="noopener">(24:17)</a>;).</h3><p>Retrofit 2 现在开始依赖了 OkHttp 了，而且这部分不再支持替换。这是一件比较有争议的事情。但是希望我能证明为什么这是一个对的决定。</p>
+<p>OkHttp 现在很小而且很聚焦，有很多好用的 API 接口。我们在 Retrofit 2 里都有对 OkHttp 的接口映射，也基本具备了我们需要的所有的特性，包括提到的所有的抽象类们。这些都超赞！这是压缩 Retrofit 库大小的一个法宝。我们最终减小了Retrofit 60% 的体积，同时又具有了更多的特性。</p>
+<h3 id="OkHttp-提供支持-以及-Okio-26-20"><a href="#OkHttp-提供支持-以及-Okio-26-20" class="headerlink" title="OkHttp 提供支持 (以及 Okio!) (26:20);)"></a>OkHttp 提供支持 (以及 Okio!) <a href="javascript:presentz.changeChapter(0,141,true" target="_blank" rel="noopener">(26:20)</a>;)</h3><p>另一个用 OkHttp 的好处就是我们能够在 Retrofit 2 把 OkHttp 以公开接口的方式直接导出。你可能在 error body 方法或者响应里见到过 response body 的内容。显然，我们在 Retrofit 的 Reponse 对象里直接返回了 OkHttp 的 Response body。我们正在导出这些类型，OkHttp 的类型基本上已经以更好更简洁的 API 替代 Retrofit 1.0 的一些接口。</p>
+<p>OkHttp 的背后是一个叫做 Okio 的库，提供的 IO 支持。我之前在 <a href="https://youtu.be/WvyScM_S88c" target="_blank" rel="noopener">Droidcon Montreal</a> 做过关于这个库的演讲。讨论过为什么它是众多 IO 库中更好的选择，还讨论了它为何极度高效，以及为什么你应该使用它们。演讲中我还提到 Retrofit 2 ，当时它还是脑海里的一个概念。现在 Retrofit 2 已经实现了。</p>
+<h3 id="Retrofit-2-的效率-27-31"><a href="#Retrofit-2-的效率-27-31" class="headerlink" title="Retrofit 2 的效率 (27:31);)"></a>Retrofit 2 的效率 <a href="javascript:presentz.changeChapter(0,142,true" target="_blank" rel="noopener">(27:31)</a>;)</h3><p>我做了这个图表来展示 Retrofit 相比 Retrofit 1 以及其他可能的方案要高效的多，这归功于刚刚提到的硬性依赖和那些抽象。我带大家来看一下上面视频中的这个表。所以一定要看我演讲的这<a href="javascript:presentz.changeChapter(0,142,true" target="_blank" rel="noopener">部分</a>;)噢！</p>
+<h3 id="初始化-Retrofit-类型-31-24"><a href="#初始化-Retrofit-类型-31-24" class="headerlink" title="初始化 - Retrofit 类型 (31:24);)"></a>初始化 - Retrofit 类型 <a href="javascript:presentz.changeChapter(0,164,true" target="_blank" rel="noopener">(31:24)</a>;)</h3><p>现在，让我们来看一下 Retrofit 的类型是如何替代 REST adapter 类型的，以及如何初始化。原来的方法叫做 <code>endpoint</code>, 不过现在我们称之为 <code>baseUrl</code>, <code>baseUrl</code> 就是你所请求的 Server 的 URL，下面是一个请求 GitHub Api 的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">    .baseUrl(&quot;https://api.github.com&quot;)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">GitHubService gitHubService = retrofit.create(GitHubService.class);</span><br></pre></td></tr></table></figure>
+<p>我们声明了自己的接口，我们称作创建方法，跟 Retrofit 1 里的是一致的。接下来，我们来生成一个接口的实现，以使这些接口方法可以直接被调用。</p>
+<p>当我们调用 <code>repoContributors</code> 这个方法的时候，Retrofit 会创建这个 URL。如果我们传入 <code>Square</code> 和 <code>Retrofit</code> 字符串，分别作为 <code>owner</code> 和 <code>repo</code> 参数。我们就会得到这个 URL：<code>https://api.github.com/repos/square/retrofit/contributors</code>。在 Retrofit 内部，Retrofit 会用 OkHttp 的 HTTP URL 类型作为 基础的 URL ，然后 <code>resolve</code> 方法就会取出相对地址和 baseUrl 拼接起来，接着发起请求。接下来给你展示下改变 API 前缀，比如 V3。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">    .baseUrl(&quot;https://api.github.com/v3/&quot;)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;/repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>虽然说这不是 GitHub 真实的 API，但是真实世界里就是有很多 API 是由这样的前缀和路径组成的。调用相同的方法，被解析出来的 URL 将会是是这样的： <code>https://api.github.com/repos/square/retrofit/contributors</code>。可以看到在主机地址之后并没有<code>v3</code> ，这是因为地址的 URL 是以一个斜线开始的，而在 HTTP 里，斜线开始的地址往往是绝对地址后缀路径。Retrofit 1 会因为语义化的约束，强制你加这个前缀斜线, 然后把 baseUrl 和相对地址拼接起来。现在，考虑到规范问题，我们已经对这两种地址加以区分。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果有前缀 <code>/</code> 就代表着是一个绝对路径。删除了那个前缀的 <code>/</code>， 你将会得到正确的、包含了 <code>v3</code> 路径的全 URL。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">    .baseUrl(&quot;https://api.github.com/v3/&quot;)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">interface GitHubService &#123;</span><br><span class="line">  @GET(&quot;repos/&#123;owner&#125;/&#123;repo&#125;/contributors&quot;)</span><br><span class="line">  Call&lt;List&lt;Contributor&gt;&gt; repoContributors(</span><br><span class="line">      @Path(&quot;owner&quot;) String owner,</span><br><span class="line">      @Path(&quot;repo&quot;) String repo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// https://api.github.com/v3/repos/square/retrofit/contributors</span><br></pre></td></tr></table></figure>
+<p>由于现在我们开始依赖 OkHttp， 并没有 Http Client 层的抽象。现在是可以传递一个配置好的 OkHttp 实例的。比如：配置 interceptors, 或者一个 SSL socket 工厂类， 或者 timeouts 的具体数值。 （OkHttp 有默认的超时机制，如果你不需要自定义，实际上不必进行任何设置，但是如果你想要去设置它们，下面是一个例子告诉你来怎么操作。）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">OkHttpClient client = new OkHttpClient();</span><br><span class="line">client.interceptors().add(..);</span><br><span class="line"></span><br><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">    .baseUrl(&quot;https://api.github.com&quot;)</span><br><span class="line">    .client(client)</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure>
+<p>如果你要指明特定的 converter 或者 execute 机制，也是在这个时候加的。比如这会儿：我们可以给 GSON 设置一个或者多个 converter。也可以给 protocol buffer 设置一个 converter。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">    .baseUrl(&quot;https://api.github.com&quot;)</span><br><span class="line">    .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">    .addConverterFactory(ProtoConverterFactory.create())</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure>
+<p>我想要强调的是：<strong>添加 converter 的顺序很重要</strong>。按照这个顺序，我们将依次询问每一个 converter 能否处理一个类型。我上面写的其实是错的。如果我们试图反序列化一个 proto 格式，它其实会被当做 JSON 来对待。这显然不是我们想要的。我们需要调整下顺序，因为我们先要检查 proto buffer 格式，然后才是 JSON。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">    .baseUrl(&quot;https://api.github.com&quot;)</span><br><span class="line">    .addConverterFactory(ProtoConverterFactory.create())</span><br><span class="line">    .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure>
+<p>Retrofit 的文档里可能还没这些，如果你想要使用 RxJava 来代替 call, 你需要一个 Call Adapter Factory:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">    .baseUrl(&quot;https://api.github.com&quot;)</span><br><span class="line">    .addConverterFactory(ProtoConverterFactory.create())</span><br><span class="line">    .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure>
+<p>Call Adapter Factory 是一个知道如何将 call 实例转换成其他类型的工厂类。目前，我们只有 RxJava 的类型，也就是将 Call 类型转换成 Observable 类型。如果你了解 RxJava, 其实还有一种新的 Observable 类型（一次只发射一个 item 的类型）。你可以用这个 call adapter factory 来转换到其中任意一种 Observable。</p>
+<h3 id="扩展性-36-50"><a href="#扩展性-36-50" class="headerlink" title="扩展性 (36:50);)"></a>扩展性 <a href="javascript:presentz.changeChapter(0,187,true" target="_blank" rel="noopener">(36:50)</a>;)</h3><p>刚才提到的 Factory，也是可扩展的。这意味着你可以写属于自己的 Call Adapter Facotry。实现起来其实就是一个方法。传递给它一个类型，返回 null 代表拒绝，或者返回一个 converter 的实例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SomeJsonResponse</span><br><span class="line"></span><br><span class="line">		class ProtoConverterFactory &#123;</span><br><span class="line">  			Converter&lt;?&gt; create(Type type);		null</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		class GsonConverterFactory &#123;</span><br><span class="line">			Converter&lt;?&gt; create(Type type);		Converter&lt;?&gt;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+<p>看上面的例子，如果你给它传递一个 JSON 的 Respnose 类型，这个类型不是从 proto 继承而来，那么它就会说：”我不知道如何传递这个，所以我返回空值 null.』，然而，对于 GSON converter 而言，它通过返回一个实例来表明它可以处理这个类型的。这就是为什么这个类是一个工厂类，因为我们让它生产 converter 实例。</p>
+<p>如果你想要做一些自定义，实现起来是非常容易的。Converter 的实现与之前的实现是非常相似的，尽管代替类型化的输入和输出，我们现在使用的是 OkHttp 的请求body 和相应 body。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">interface Converter&lt;T&gt; &#123;</span><br><span class="line">  interface Factory &#123;</span><br><span class="line">	Converter &lt;?&gt; create(Type type);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  T fromBody(ResponseBody body);</span><br><span class="line">  RequestBody toBody(T value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在这已经高效的多，因为我们实际上可以查询那些 adapter。举个例子，GSON 有一个type adapter, 当我们请求 GSON Converter Factory，询问它是否可以处理某种请求的时候， converter factory 就开始查询这个 adapter, 它将以缓存的形式存在，当我们再次查询的时候，这个 adapter 就可以直接被使用了。这是一个非常小的成功，极力避免了不断地查询带来的损耗。</p>
+<p>call adapter 有相同的模式。我们询问一个 call adapter factory 它是否可以处理某个类型，它将会以相同的方式回应。（例如：它会返回 null 来表达否）。它的API 是非常简单的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">interface CallAdapter&lt;T&gt; &#123;</span><br><span class="line">  interface Factory &#123;</span><br><span class="line">    CallAdapter&lt;?&gt; create(Type type);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Type responseType();</span><br><span class="line">  Object adapt(Call&lt;T&gt; value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们有一个方法来来实现适配。传入一个 call 实例，返回了一个 observable，single 或者 future 等。 还有一种方法来获得这种 response 类型：当我们声明一系列 contributor 调用时， 我们没法自动把那些参数化的类型提取出来，因此我们基本上只是请求这个 call adapter 也返回这个 response type。如果你为这个变量创造了一个实例，我们会请求 call adapter, 它会将 contributor type 列表返回。</p>
+<h3 id="还在建设中-40-05"><a href="#还在建设中-40-05" class="headerlink" title="还在建设中 (40:05);)"></a>还在建设中 <a href="javascript:presentz.changeChapter(0,204,true" target="_blank" rel="noopener">(40:05)</a>;)</h3><p>Retrofit 2 正在完善中！现在还不够完整，但是已经可以用了。我上面提到的点都是已经完成了的，那还有哪些未完成呢？</p>
+<p>关于所谓的“参数 handler”我们现在还没有一个成熟的想法。我们未来想要让它有从 Guava 传递多个 map，或者数据类型及枚举类型。</p>
+<p>日志功能还没有完成，在 Retrofit 1 里是有日志的，但是在 Retrofit 2 里面没有。依赖 OkHttp 的一个优点是你实际上可以使用一个 interceptor 来实现实际的底层的请求和响应日志。因此，对于原始请求和响应，我们并不需要它，但是我们很可能需要日志来记录 Java 类型。</p>
+<p>如果你曾经使用过 mock 模块，你会发现它也还没被完成，但很快会完成的。</p>
+<p>现在文档依然比较缺。</p>
+<p>最后，在我有空的时候，我想在 Retrofit 2 里支持 WebSocket。在 2.0 里很可能无法实现，但是我想在后续的2.1 版本里会加入支持。</p>
+<h3 id="Release-41-31"><a href="#Release-41-31" class="headerlink" title="Release? (41:31);)"></a>Release? <a href="javascript:presentz.changeChapter(0,210,true" target="_blank" rel="noopener">(41:31)</a>;)</h3><p>我保证过 Retrofit 2 今年会和大家见面，今年确实可以。至于具体哪天问世，我们不会做任何承诺。我不想再在 2016 的 DroidCons 上开相同的玩笑。因此今年一定会问世。我保证。至于2015年8月27日，我已经开放了一个2.0的测试版。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">  compile &apos;com.squareup.retrofit:retrofit:2.0.0-beta1&apos;</span><br><span class="line">  compile &apos;com.squareup.retrofit:converter-gson:2.0.0-beta1&apos;</span><br><span class="line">  compile &apos;com.squareup.retrofit:adapter-rxjava:2.0.0-beta1&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你可以依赖它。它已经可以正常工作了，API 接口也相对稳定。Converter 和 converter 工厂方法未来可能会改变，但是总体来说是有用的。要是你有什么不喜欢或者有问题的地方，请联系我！谢谢！</p>
 
       
 
@@ -1406,7 +904,7 @@ c. 更好的debug支持
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/冻结帧/">冻结帧</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/retrofit/">retrofit</a></li></ul>
 
     </footer>
   </div>
@@ -1417,7 +915,7 @@ c. 更好的debug支持
 
 
   
-    <article id="post-技术/程序/Android--Monkey测试"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/【Note-PM】《项目管理修炼之道》提要"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -1425,7 +923,7 @@ c. 更好的debug支持
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Android--Monkey测试/">Android Monkey 测试时防止通知栏下拉</a>
+      <a class="article-title" href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/">【Note-PM】《项目管理修炼之道》提要</a>
     </h1>
   
 
@@ -1433,7 +931,63 @@ c. 更好的debug支持
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/程序/Android--Monkey测试/" class="article-date">
+	<a href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>第18届Jolt生产效率大奖图书<br>作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富</p>
+</blockquote>
+<p><a href="https://pan.baidu.com/s/1cAaOxw" target="_blank" rel="noopener">XMind文档链接</a></p>
+<p><a href="https://pan.baidu.com/s/1mhZO5Fa" target="_blank" rel="noopener">导图PDF版链接</a></p>
+<p><strong>导图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-d20195caa4e17ed9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第一部分：规划与日程"></p>
+<p><strong>文本</strong></p>
+<p> 项目管理修炼之道<br>    Johanna Rothman<br>    规划与日程<br>        启动项目<br>            0.KEY——定义项目、项目约束、决定项目关键驱动因素、章程决策<br>            章程决策<br>                远景、需求、目标、成功标准、ROI<br>        规划项目<br>            0.KEY——足以启动的规划、规划模板、制定发布条件<br>            规划模板<br>                意图<br>                记录<br>                发布条件<br>                目标<br>                项目组织<br>                日程总览<br>                人员配备<br>                建议日程<br>                制订项目风险列表<br>        使用生命周期组织项目<br>            0.KEY——理解生命周期、概览、反馈、大规模项目需要组合多种生命周期、管理架构风险、从瀑布中解脱<br>        安排项目日程<br>            0.KEY——注重实效的日程安排、可选择安排技术、用低技术含量工具安排日程<br>        估算工作<br>            0.KEY——实用估算方式、里程碑切分项目、能不做什么？、多项目时的估算、主动安排人们进行多任务、实用波浪式规划、决定迭代的持续时间、“小石子”<br>            估算<br>                对比历史数据<br>                通过Delphi和宽带Delphi估算<br>                何时不应相信团队的话<br>                    减掉每个任务的缓冲时间、要得到的是更准确的估算结果<br>                用日期范围进行估计<br>                用自信心估计<br>                用三个日期估计：最佳、可能、墨菲<br>            小石子<br>                任务不清时使用<br>                如何得到“小石子”<br>                为什么使用<br>        识别和避免日程安排游戏<br>            0.KEY——“希望”是我们最重要的策略、拒绝女王、把灰扫到地毯下面、幸福日期、分散注意力、日程等于承诺<br>    团队与节奏<br>        创建出色的项目团队<br>            0.KEY——招募需要的人、形成团队凝聚力、让组织配合你的工作、对必必需的团队规模了如指掌、知道何时应该加入、成为出色的项目经理、知道何时全身而退<br>            凝聚力<br>                好工具让团队有更好的发挥<br>                软件配置管理系统应满足的最低要求<br>                缺陷跟踪系统应满足的最低要求<br>                发展5阶段<br>            让组织配合<br>                以项目经理的方式管理单一职能团队<br>                管理矩阵式项目团队<br>                管理跨职能团队<br>            项目经理<br>                人际交往能力<br>                提升功能性技能<br>                专业领域技能<br>                工具和技术的专业技能<br>            退<br>                不适合的组织、团队、产品<br>        掌控项目<br>            0.KEY——节奏、中途回顾、为需求排序、是时间盒限定需求相关的工作、将迭代限制在4周以下、使用波浪式规划和日程安排、创建跨职能团队、根据项目风险选择生命周期模型、保持合理的工作时间、使用“小石子”、管理干扰、管理缺陷<br>            “小石子“<br>                将计划的粒度细化，能提高规划时项目的估算准确率<br>        保持项目节奏<br>            0.KEY——使用持续集成、自动化冒烟测试、按功能实现而不是按架构、盯着产品、准备重构、通过用例、用户故事、角色和场景定义需求、分离需求与GUI设计、尽可能用低保真度原型<br>            按功能而不是按框架<br>                首先实现具有最高价值的功能<br>                按功能调试、测试<br>            低保真原型<br>                “使用低保真度原型，人们可以更全面地评估要解决的问题。高保真度原型会限制反馈。”<br>        管理会议<br>            0.KEY——取消部分会议、举行必要会议、项目启动会议、发布版本规划会议、进度报告会议、向管理层报告进度、项目团队会议、迭代审查会议、会议疑难问题解答、远程电话会议<br>            取消<br>                不需要你解决问题<br>                多人参加的顺序式进度报告会议<br>        创建并使用项目仪表板<br>            0.KEY——测量有风险、根据项目完成度来衡量进度、为出资人创建项目仪表盘、使用项目气象报告<br>            衡量进度<br>                速度图表跟踪日程安排进度<br>                用迭代内容图跟踪总体进度<br>                用图表展示团队统一采用的实践<br>    非简单项目<br>        管理多地点项目<br>            0.KEY——提问成本、识别项目文化差异、团队间培养信任、团队间使用互补实践、寻找潜在问题、外包时的注意事项<br>        在项目中集成测试<br>            0.KEY——“减少技术债”、小规模测试以降低风险、TDD是集成的最简单方法、使用多种测试、确定成员在测试工作中的角色、开发人员测试人员比率、让测试与开发同步进行、为项目制定测试策略、系统测试策略模板、QA与测试的区别<br>        管理项目群<br>            0.KEY——管理项目群、将多个相关项目组织到一个发布版本中、随时间推移组织多个相关项目、管理项目经理、创建项目仪表盘<br>        结束项目<br>            0.KEY——管理发布早期版本的请求、管理beta版本、项目经理何时知道无法按时发布项目、知道项目走向完成、取消项目<br>            何时知道无法按时发布<br>                避免小偏差<br>                承诺新日期<br>                估算系统测试时间<br>        管理项目组合<br>            0.KEY——构建所有项目的组合、评估项目、决定现在为那个项目提供资金、对组合中的项目进行排序、尽快启动项目、使用产品待办事项列表管理新功能需求<br>            答疑<br>                说服管理层：“切换上下文”是个坏主意<br>                如何对多任务说不</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/">【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -1444,7 +998,19 @@ c. 更好的debug支持
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><p>Android monkey test — <a href="http://einverne.github.io/post/2016/09/android-monkey-test.html#防止通知栏下拉" target="_blank" rel="noopener">http://einverne.github.io/post/2016/09/android-monkey-test.html#防止通知栏下拉</a></p>
+        <blockquote>
+<p>工欲善其事必先利其器<br>今天介绍几个plugin工具（奇淫巧技）</p>
+</blockquote>
+<blockquote>
+<p><em>（适用平台：IntelliJ IDEA内核的各类IDE）</em></p>
+</blockquote>
+<hr>
+<p><strong>效果图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5b8d8a86fda8eca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ide_tools.png"></p>
+<p>按图中标示顺序介绍：</p>
+<p>####1.Translation<br>_ 顾名思义是中英翻译，令人意外的是自带英美两种发音（默认快捷键：ALT + 1/3，OSX 不详）_</p>
+<p>####2.Background Image Plus<br><em>可以对IDE背景进行自定义，可以设置图片质量/明暗等，对内存有一定消耗，小霸王请绕道</em></p>
+<p>####3.CodeGlance<br><em>提供一个代码文件的全局概览缩略图，主要可用于快速定位</em></p>
 
       
 
@@ -1454,7 +1020,84 @@ c. 更好的debug支持
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monkey/">Monkey</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SystemBar/">SystemBar</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tool/">Tool</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/GL check point"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/GL check point/">GL check point</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/GL check point/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="调查点："><a href="#调查点：" class="headerlink" title="调查点："></a>调查点：</h2><ol>
+<li><p>纹理是否压缩</p>
+<ul>
+<li>疑问：不同GPU支持的纹理格式不一样，需要对GPU做适配，工作量不小</li>
+</ul>
+<blockquote>
+<p>志文：壁纸或许可以做一些处理（go-org反编译代码未发现类似处理），理想情况下，可以减7-8M内存占用</p>
+</blockquote>
+</li>
+<li><p>Mipmap</p>
+<blockquote>
+<p>虽然Mipmap包会比原始图像多用掉33%的内存，但它不仅可以提升性能，也会提高图像质量</p>
+<blockquote>
+<p>ARM Mali GPU Texture Compression Tool可以生成Mipmap</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>结论：这个功能会更耗内存，适用于游戏场景，org不适用</li>
+</ul>
+</li>
+<li><p>纹理参数设置</p>
+<blockquote>
+<p>基本越慢的函数，视觉质量越高</p>
+<p>参数配置参考链接：<a href="https://www.khronos.org/registry/OpenGL-Refpages/es2.0/" target="_blank" rel="noopener">https://www.khronos.org/registry/OpenGL-Refpages/es2.0/</a></p>
+</blockquote>
+</li>
+<li><p>RenderScript 3D 渲染</p>
+</li>
+</ol>
+<p>高斯模糊之类的优化</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GL/">GL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Performance/">Performance</a></li></ul>
 
     </footer>
   </div>
