@@ -19,13 +19,13 @@
 <meta property="og:site_name" content="KyleCe">
 <meta property="og:description" content="问题起因在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西 下图是项目中内存快照在AndroidStudio2.4中打开看到的样子  可以看到，占用排名第一的类FinalizerReference占用了59M之巨（内存快照前有使用AS强制GC多次） 这就很让人好奇了 FinalizerReference是什么？我们来看源码：  https:">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/finalizerReference.png">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/FinalizerReferenceCode.png">
-<meta property="og:updated_time" content="2018-03-09T15:52:09.914Z">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/finalizerReference.png">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/FinalizerReferenceCode.png">
+<meta property="og:updated_time" content="2019-03-20T14:51:20.218Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Java】神奇的内存占用大户FinalizerReference">
 <meta name="twitter:description" content="问题起因在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西 下图是项目中内存快照在AndroidStudio2.4中打开看到的样子  可以看到，占用排名第一的类FinalizerReference占用了59M之巨（内存快照前有使用AS强制GC多次） 这就很让人好奇了 FinalizerReference是什么？我们来看源码：  https:">
-<meta name="twitter:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/finalizerReference.png">
+<meta name="twitter:image" content="http://kylece.github.io/img/pic_resource/finalizerReference.png">
   
     <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
   
@@ -198,11 +198,11 @@
       
         <h2 id="问题起因"><a href="#问题起因" class="headerlink" title="问题起因"></a>问题起因</h2><p>在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西</p>
 <p>下图是项目中内存快照在AndroidStudio2.4中打开看到的样子</p>
-<p><img src="../../pic_resource/finalizerReference.png" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/finalizerReference.png" alt=""></p>
 <p>可以看到，占用排名第一的类FinalizerReference占用了59M之巨（内存快照前有使用AS强制GC多次）</p>
 <p>这就很让人好奇了</p>
 <h2 id="FinalizerReference是什么？"><a href="#FinalizerReference是什么？" class="headerlink" title="FinalizerReference是什么？"></a>FinalizerReference是什么？</h2><p>我们来看源码：</p>
-<p><img src="../../pic_resource/FinalizerReferenceCode.png" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/FinalizerReferenceCode.png" alt=""></p>
 <p><a href="https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java" target="_blank" rel="noopener">https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java</a></p>
 <p>在讲Java  虚拟机 JVM垃圾回收机制时会涉及到一个概念，即finalize方法，这是Sun公司在Java设计之初，为照顾c++程序员有写析构函数的习惯而做的一种妥协</p>
 <p>在《深入理解Java虚拟机》一书中，讲到GC在最终回收对象之前，会去检查对象是否override了finalize方法，如果有覆盖此方法，对象就会被添加到finalize执行队列中，该书中没有指明是什么队列，实际上finalize执行队列就是我们这里讨论的FinalizerReference（书中还有提到finalize方法只会执行一次，并且有超时保护，因与本文主题无关，不做展开讨论）</p>
@@ -272,19 +272,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/03/09/技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          【Note-程序】HashMap-Integer,-V--SparseArray--
+          【Java-基础系列】Synchronized关键字
         
       </div>
     </a>
   
   
-    <a href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/03/09/技术/程序/gc-pictures/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">【Java-基础系列】Synchronized关键字</div>
+      <div class="article-nav-title">gc-pictures</div>
     </a>
   
 </nav>

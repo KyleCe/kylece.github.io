@@ -19,14 +19,14 @@
 <meta property="og:site_name" content="KyleCe">
 <meta property="og:description" content="适用范围类可以从泛型中受益，静态工具API更适合泛型  Collections 的算法方法都已泛型化(如binarySearch、sort)  优势示例 例1：精简API   代码所示是一个简单的设置字体的Util的static API的泛型化代码； 如果不是使用这种泛型化的API，则需要为TextView的扩展类（Button、CheckBox等等）编写数不清的函数  例2：确保类型安全的情况下">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/GenericMethodEg.png">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/GenericMethodEg2.png">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/GenericMethodEgClass.png">
-<meta property="og:updated_time" content="2018-03-09T15:22:18.163Z">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/GenericMethodEg.png">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/GenericMethodEg2.png">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/GenericMethodEgClass.png">
+<meta property="og:updated_time" content="2019-03-20T14:51:18.421Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java进阶-- 优先考虑泛型方法">
 <meta name="twitter:description" content="适用范围类可以从泛型中受益，静态工具API更适合泛型  Collections 的算法方法都已泛型化(如binarySearch、sort)  优势示例 例1：精简API   代码所示是一个简单的设置字体的Util的static API的泛型化代码； 如果不是使用这种泛型化的API，则需要为TextView的扩展类（Button、CheckBox等等）编写数不清的函数  例2：确保类型安全的情况下">
-<meta name="twitter:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/GenericMethodEg.png">
+<meta name="twitter:image" content="http://kylece.github.io/img/pic_resource/GenericMethodEg.png">
   
     <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
   
@@ -204,18 +204,18 @@
 <h3 id="优势示例"><a href="#优势示例" class="headerlink" title="优势示例"></a>优势示例</h3><ul>
 <li>例1：精简API</li>
 </ul>
-<p><img src="../../pic_resource/GenericMethodEg.png" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEg.png" alt=""></p>
 <p>代码所示是一个简单的设置字体的Util的static API的泛型化代码；</p>
 <p>如果不是使用这种泛型化的API，则需要为TextView的扩展类（Button、CheckBox等等）编写数不清的函数</p>
 <ul>
 <li>例2：确保类型安全的情况下提升API的易用性</li>
 </ul>
-<p><img src="../../pic_resource/GenericMethodEg2.png" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEg2.png" alt=""></p>
 <p>可以看到上面的API可以轻易的操作所有以View为基类的类的集合；</p>
 <ul>
 <li>例3：类级别的泛型化</li>
 </ul>
-<p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEgClass.png" alt=""></p>
 <blockquote>
 <p>在配合集合使用时需要注意类型cast的警告，这些警告实际上是编译时不会有问题，但真正在运行时可能会抛出ClassCastException，我们在实际项目中应该将这些潜在的威胁清除掉；</p>
 <p>对于十分确定不会出问题的类型操作API上，可以用@SuppressWarning(“unckecked”)消除这类警告</p>
@@ -266,19 +266,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/03/09/技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          Java进阶-- 利用有限制通配符来提升API的灵活性
+          Java进阶-- volatile关键字
         
       </div>
     </a>
   
   
-    <a href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/03/09/技术/程序/Java进阶-- 以函数对象代表策略/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Java进阶-- volatile关键字</div>
+      <div class="article-nav-title">Java进阶-- 以函数对象代表策略</div>
     </a>
   
 </nav>

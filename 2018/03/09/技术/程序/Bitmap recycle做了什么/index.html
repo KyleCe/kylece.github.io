@@ -19,17 +19,17 @@
 <meta property="og:site_name" content="KyleCe">
 <meta property="og:description" content="看看Bitmap源码中recycle 做了什么 PS：源码查看工具网站：AndroidXref、grepCode  起因 在Bitmap调用recycle之后再去使用，会有invalid Bitmap的异常导致应用崩溃，实际项目中其实是碰到了tgkill的Native代码崩溃的堆栈信息：  分析Bitmap getGenerationId在源码中的调用情况：（git clone Framewor">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/stacktrace_of_tgkill.png">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/FindResults.png">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/Android6.0_Changes_Notification.png">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/bitmap_cpp_assert_valid.png">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/Java_Bitmap_recycle.png">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/BitmapWatcher.png">
-<meta property="og:updated_time" content="2018-03-09T15:22:18.158Z">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/stacktrace_of_tgkill.png">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/FindResults.png">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/Android6.0_Changes_Notification.png">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/bitmap_cpp_assert_valid.png">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/Java_Bitmap_recycle.png">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/BitmapWatcher.png">
+<meta property="og:updated_time" content="2019-03-20T14:51:19.356Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="看看Bitmap源码中recycle 做了什么">
 <meta name="twitter:description" content="看看Bitmap源码中recycle 做了什么 PS：源码查看工具网站：AndroidXref、grepCode  起因 在Bitmap调用recycle之后再去使用，会有invalid Bitmap的异常导致应用崩溃，实际项目中其实是碰到了tgkill的Native代码崩溃的堆栈信息：  分析Bitmap getGenerationId在源码中的调用情况：（git clone Framewor">
-<meta name="twitter:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/stacktrace_of_tgkill.png">
+<meta name="twitter:image" content="http://kylece.github.io/img/pic_resource/stacktrace_of_tgkill.png">
   
     <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
   
@@ -205,12 +205,12 @@
 <p>PS：源码查看工具网站：AndroidXref、grepCode</p>
 </blockquote>
 <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p> 在Bitmap调用recycle之后再去使用，会有invalid Bitmap的异常导致应用崩溃，实际项目中其实是碰到了tgkill的Native代码崩溃的堆栈信息：</p>
-<p><img src="../../pic_resource/stacktrace_of_tgkill.png" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/stacktrace_of_tgkill.png" alt=""></p>
 <p>分析Bitmap getGenerationId在源码中的调用情况：（git clone Framework 源码之后用sublimeText搜索得如下结果，txt文件已过滤）</p>
-<p><img src="../../pic_resource/FindResults.png" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/FindResults.png" alt=""></p>
 <p>绿色框中的代码因为是surface的API，或者是JavaDoc的注释，可以忽略不计，可以看到有效调用就是关于Notification的调用；</p>
 <p>结合GP后台的崩溃占用情况（&gt;7.0占比较高，6.0亦有发生），查阅AndroidDeveloper的v6.0 changeLog，发现有这么一条：</p>
-<p><img src="../../pic_resource/Android6.0_Changes_Notification.png" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/Android6.0_Changes_Notification.png" alt=""></p>
 <p>看到其中关键信息 ==reuse Notification.Builder instance==，但鉴于其它App没有出现这种级别的问题，所以另谋其它出路；</p>
 <p>剩下的就只剩Bitmap了</p>
 <h2 id="Bitmap-recycle做了什么"><a href="#Bitmap-recycle做了什么" class="headerlink" title="Bitmap recycle做了什么"></a>Bitmap recycle做了什么</h2><h3 id="Bitmap-cpp"><a href="#Bitmap-cpp" class="headerlink" title="Bitmap.cpp"></a>Bitmap.cpp</h3><p>source code on xRef: <a href="http://androidxref.com/6.0.1_r10/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp" target="_blank" rel="noopener">http://androidxref.com/6.0.1_r10/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp</a></p>
@@ -220,17 +220,17 @@
 <p>注意析构函数：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">164</span> Bitmap::~Bitmap() &#123;</span><br><span class="line"><span class="number">165</span>    doFreePixels();</span><br><span class="line"><span class="number">166</span> &#125;</span><br></pre></td></tr></table></figure>
 <p>还需注意到代码：</p>
-<p><img src="../../pic_resource/bitmap_cpp_assert_valid.png" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/bitmap_cpp_assert_valid.png" alt=""></p>
 <p>结合Bitmap.cpp的其它代码，只有在Bitmap recycle之后又拿来使用才会出现这个assertValid断言错误，遂将矛头指向Bitmap recycle</p>
 <h3 id="不调用recycle-会怎样？"><a href="#不调用recycle-会怎样？" class="headerlink" title="不调用recycle()会怎样？"></a>不调用recycle()会怎样？</h3><p>Android2.3（API 11）之前，Bitmap开辟的内存位于native Stack，需要手动调用recycle进行释放，而2.3之后属于VM的heap，系统GC会自动处理。</p>
 <p>而我们在2.3之后的系统中调用Bitmap的recycle，唯一的作用，就是把Bitmap释放的动作提前了，私以为，仅有的效用是会降低OOM发生的概率</p>
 <p>这一点也可以从Bitmap AndroidAPI解释网页上看出一点端倪</p>
-<p><img src="../../pic_resource/Java_Bitmap_recycle.png" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/Java_Bitmap_recycle.png" alt=""></p>
 <blockquote>
 <p>this is an advanced call, and normally need not be called…</p>
 </blockquote>
 <h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><p>在所有会调用Bitmap.recycle()的地方，对相应的recycle状态检查，如果发现有recycle之后仍然在使用的地方，则直接抛出异常，暴露问题，就像这样：</p>
-<p><img src="../../pic_resource/BitmapWatcher.png" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/BitmapWatcher.png" alt=""></p>
 <p>这样，在Monkey测试覆盖面够广时，就可以预期暴露出问题所在了；</p>
 <p>关于Bitmap的检查，还有一种思路是使用hook方式进行，这样还可以对第三方依赖lib进行检查，后期如果应用这种方式，我再补充一篇</p>
 <hr>
@@ -282,19 +282,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/03/09/技术/Android/冻结帧/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/09/技术/Android/由 Java GC 看 Android 内存泄露/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          冻结帧
+          由 Java GC 看 Android 内存泄露
         
       </div>
     </a>
   
   
-    <a href="/2018/03/09/技术/程序/Android--Monkey测试/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/03/09/技术/Android/【Android架构】Android架构初探/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Android Monkey 测试时防止通知栏下拉</div>
+      <div class="article-nav-title">Android架构初探</div>
     </a>
   
 </nav>

@@ -19,12 +19,12 @@
 <meta property="og:site_name" content="KyleCe">
 <meta property="og:description" content="概要基本知识准备 认识冻结帧FrozenFrame（FF） Google Play Console（GPC）针对FF的各项指标含义 FF所属大类——SlowRendering testing UI performance  GPC FF告警解决办法手动测试、自动测试、解决关键问题——后续输出指南/标准  手动测试重要场景，找到问题场景，解决痛点 自动化测试——搭建自动化测试、完善UI测试标准、足够">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/frame_dump_example.jpg">
-<meta property="og:updated_time" content="2018-03-09T15:32:43.092Z">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/frame_dump_example.jpg">
+<meta property="og:updated_time" content="2019-03-20T14:51:23.477Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="冻结帧">
 <meta name="twitter:description" content="概要基本知识准备 认识冻结帧FrozenFrame（FF） Google Play Console（GPC）针对FF的各项指标含义 FF所属大类——SlowRendering testing UI performance  GPC FF告警解决办法手动测试、自动测试、解决关键问题——后续输出指南/标准  手动测试重要场景，找到问题场景，解决痛点 自动化测试——搭建自动化测试、完善UI测试标准、足够">
-<meta name="twitter:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/frame_dump_example.jpg">
+<meta name="twitter:image" content="http://kylece.github.io/img/pic_resource/frame_dump_example.jpg">
   
     <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
   
@@ -297,7 +297,7 @@
 <li>Systrace detects problems in your app and displays <strong>alerts</strong> both in individual frames and the <a href="https://developer.android.com/studio/profile/systrace.html#alerts" target="_blank" rel="noopener">alerts</a> panel. Following directions in the alert is your best option.</li>
 <li>Parts of the Android framework and libraries, such as <code>RecyclerView</code>, contain trace markers. So, the <strong>systrace timeline </strong>shows when those methods are executed on the UI thread and how long they take to execute.</li>
 </ul>
-<p>If systrace doesn’t show you details about why UI thread work is taking for a long time, then you’ll need to use <a href="https://developer.android.com/studio/profile/cpu-profiler.html#method_traces" target="_blank" rel="noopener">Android CPU Profiler</a> to record either a sampled or instrumented method trace. </p>
+<p>If systrace doesn’t show you details about why UI thread work is taking for a long time, then you’ll need to use <a href="https://developer.android.com/studio/profile/cpu-profiler.html#method_traces" target="_blank" rel="noopener">Android CPU Profiler</a> to record either a sampled or instrumented method trace.</p>
 <h4 id="Custom-performance-monitoring"><a href="#Custom-performance-monitoring" class="headerlink" title="Custom performance monitoring"></a><a href="https://developer.android.com/topic/performance/vitals/render.html#custom-monitoring" target="_blank" rel="noopener">Custom performance monitoring</a></h4><p>If you can’t reproduce jank on a local device, you can build custom performance monitoring into your app to help identify the source of jank on devices in the field.</p>
 <p>To do this, collect frame render times from specific parts of your app with <a href="https://developer.android.com/reference/android/support/v4/app/FrameMetricsAggregator.html" target="_blank" rel="noopener"><code>FrameMetricsAggregator</code></a> and record and analyze the data using <a href="https://firebase.google.com/docs/perf-mon/" target="_blank" rel="noopener">Firebase Performance Monitoring</a>.</p>
 <h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><ul>
@@ -322,7 +322,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// start tracing to "/sdcard/calc.trace"</span></span><br><span class="line">Debug.startMethodTracing(<span class="string">"calc"</span>);</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// stop tracing</span></span><br><span class="line">Debug.stopMethodTracing();</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>frame dump</p>
-<p><img src="../../pic_resource/frame_dump_example.jpg" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/frame_dump_example.jpg" alt=""></p>
 </li>
 <li><p><a href="https://developer.android.com/studio/profile/cpu-profiler.html#method_traces" target="_blank" rel="noopener">method trace</a></p>
 </li>
@@ -369,19 +369,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/03/09/技术/程序/GC/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          由 _Java GC_ 看 _Android_ 内存泄露
+          declare-styleable-枚举format简介
         
       </div>
     </a>
   
   
-    <a href="/2018/03/09/技术/程序/Bitmap recycle做了什么/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">看看Bitmap源码中recycle 做了什么</div>
+      <div class="article-nav-title">VectorDrawable介绍</div>
     </a>
   
 </nav>

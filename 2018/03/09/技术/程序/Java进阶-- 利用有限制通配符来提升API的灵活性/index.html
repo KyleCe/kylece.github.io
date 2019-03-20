@@ -19,14 +19,14 @@
 <meta property="og:site_name" content="KyleCe">
 <meta property="og:description" content="词条通配符— ‘?’ 有限制的通配符 —  ? extends E ? super E  PECS — producer-extends, consumer-super 结论输入参数是生产者或消费者时使用’?’ 所有的compare和comparator都是consumer 声明方法时，用’?’取代仅出现一次的的类型参数 优势体现——论其必要性我们先看之前讲 优先考虑泛型时的一个示例：  考虑为它">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/GenericMethodEgClass.png">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/StackPushAll.png">
-<meta property="og:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/StackPopAll.png">
-<meta property="og:updated_time" content="2018-03-09T15:22:18.142Z">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/GenericMethodEgClass.png">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/StackPushAll.png">
+<meta property="og:image" content="http://kylece.github.io/img/pic_resource/StackPopAll.png">
+<meta property="og:updated_time" content="2019-03-20T14:51:17.405Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java进阶-- 利用有限制通配符来提升API的灵活性">
 <meta name="twitter:description" content="词条通配符— ‘?’ 有限制的通配符 —  ? extends E ? super E  PECS — producer-extends, consumer-super 结论输入参数是生产者或消费者时使用’?’ 所有的compare和comparator都是consumer 声明方法时，用’?’取代仅出现一次的的类型参数 优势体现——论其必要性我们先看之前讲 优先考虑泛型时的一个示例：  考虑为它">
-<meta name="twitter:image" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/pic_resource/GenericMethodEgClass.png">
+<meta name="twitter:image" content="http://kylece.github.io/img/pic_resource/GenericMethodEgClass.png">
   
     <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
   
@@ -208,15 +208,15 @@
 <p>所有的compare和comparator都是consumer</p>
 <p>声明方法时，用’?’取代仅出现一次的的类型参数</p>
 <h3 id="优势体现——论其必要性"><a href="#优势体现——论其必要性" class="headerlink" title="优势体现——论其必要性"></a>优势体现——论其必要性</h3><p>我们先看之前讲 <strong>优先考虑泛型</strong>时的一个示例：</p>
-<p><img src="../../pic_resource/GenericMethodEgClass.png" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEgClass.png" alt=""></p>
 <p>考虑为它增加一个方法：</p>
-<p><img src="../../pic_resource/StackPushAll.png" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/StackPushAll.png" alt=""></p>
 <p>这样的定义，在使用中会存在不灵活的问题：因为类型在定义之后就不可变了，如果想要将一个非E类型的Iterable  push到Stack中是不可能的，这样的事实我们显然不能接受，那么该如何修改呢？答案就在本篇的主角——通配符’?’上</p>
 <p>将上述API的参数修改为：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Iterable&lt;? extends E&gt; src</span><br></pre></td></tr></table></figure>
 <p>即可达到目的</p>
 <p>说完? extends，再来看? super，同样考虑Stack的API，这一次是将Stack中的元素全部弹出到目标集合</p>
-<p><img src="../../pic_resource/StackPopAll.png" alt=""></p>
+<p><img src="http://kylece.github.io/img/pic_resource/StackPopAll.png" alt=""></p>
 <p>理想状态下，所有的子类型的Stack都可以弹出到父类型的集合，但上图的API并不能实现这一目的；我们需要这样修改：</p>
 <p>将参数类型修改为：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collection&lt;? <span class="keyword">super</span> E&gt; dst</span><br></pre></td></tr></table></figure>
@@ -293,9 +293,9 @@
     </a>
   
   
-    <a href="/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Java进阶-- 优先考虑泛型方法</div>
+      <div class="article-nav-title">Java进阶-- volatile关键字</div>
     </a>
   
 </nav>
