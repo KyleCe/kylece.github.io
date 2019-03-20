@@ -255,6 +255,82 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/Android/【Android】Clean-Architecture--初析"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】Clean-Architecture--初析/">Clean-Architecture--初析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】Clean-Architecture--初析/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本篇承接 <a href="http://www.jianshu.com/p/43fcba217459" target="_blank" rel="noopener">_上文_</a><br>参考：</p>
+<ol>
+<li><a href="https://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/" target="_blank" rel="noopener">Architecting Android…The clean way?</a></li>
+<li><a href="https://github.com/android10/Android-CleanArchitecture">Clean Architeture Sample -By android10</a></li>
+</ol>
+</blockquote>
+<hr>
+<p>色彩简化后的结构图：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-fe3d6bffa3c4e274.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ease_clean_architecture.png"></p>
+<p>想表达的是依赖层级，从这幅图可以看出，模块之间的依赖关系在理想情况下是清晰的，也不存在多维度相互依赖的问题，最外层UI依赖Presenter层，Presenter层又依赖Use Cases层，以此类推…  （<strong>每层的依赖只能向内收缩</strong>）</p>
+<p><em>当然，这里的层级内涵只是举例示意，在实际业务中需要根据需要设定各层核心，层级数也可适量调整，整个架构强调的只是一种依赖收缩的思想</em></p>
+<hr>
+<blockquote>
+<p>一个例子：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-2b039b1c3b887476.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clean_architecture_android_schema.png"><br>架构分为三层：</p>
+<pre><code>1. Presentation
+2. Domain
+3. Data
+</code></pre><hr>
+<p><strong>Presentation</strong><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d9f5b06f606cdb68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clean_architecture_mvp.png"><br>要点即是大家熟知的MVP一类；<br>Android的代码应该全部都出现在这一层</p>
+</blockquote>
+<blockquote>
+<p><strong>Domain</strong><br><img src="http://upload-images.jianshu.io/upload_images/1481332-f216b0617d67dbdc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clean_architecture_domain.png"><br>业务逻辑层，代码应该是纯粹的JAVA API，与Android无关</p>
+</blockquote>
+<blockquote>
+<p>Data<br><img src="http://upload-images.jianshu.io/upload_images/1481332-e536090a22ea7452.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clean_architecture_data.png"><br>这一层主要是处理数据业务</p>
+</blockquote>
+<p>几张图其实能很清楚地说明Clean Architecture的立意、用法</p>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/【Android】VectorDrawable介绍"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -325,82 +401,6 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VectorDrawable/">VectorDrawable</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android】Clean-Architecture--初析"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】Clean-Architecture--初析/">Clean-Architecture--初析</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】Clean-Architecture--初析/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>本篇承接 <a href="http://www.jianshu.com/p/43fcba217459" target="_blank" rel="noopener">_上文_</a><br>参考：</p>
-<ol>
-<li><a href="https://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/" target="_blank" rel="noopener">Architecting Android…The clean way?</a></li>
-<li><a href="https://github.com/android10/Android-CleanArchitecture">Clean Architeture Sample -By android10</a></li>
-</ol>
-</blockquote>
-<hr>
-<p>色彩简化后的结构图：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-fe3d6bffa3c4e274.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ease_clean_architecture.png"></p>
-<p>想表达的是依赖层级，从这幅图可以看出，模块之间的依赖关系在理想情况下是清晰的，也不存在多维度相互依赖的问题，最外层UI依赖Presenter层，Presenter层又依赖Use Cases层，以此类推…  （<strong>每层的依赖只能向内收缩</strong>）</p>
-<p><em>当然，这里的层级内涵只是举例示意，在实际业务中需要根据需要设定各层核心，层级数也可适量调整，整个架构强调的只是一种依赖收缩的思想</em></p>
-<hr>
-<blockquote>
-<p>一个例子：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-2b039b1c3b887476.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clean_architecture_android_schema.png"><br>架构分为三层：</p>
-<pre><code>1. Presentation
-2. Domain
-3. Data
-</code></pre><hr>
-<p><strong>Presentation</strong><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d9f5b06f606cdb68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clean_architecture_mvp.png"><br>要点即是大家熟知的MVP一类；<br>Android的代码应该全部都出现在这一层</p>
-</blockquote>
-<blockquote>
-<p><strong>Domain</strong><br><img src="http://upload-images.jianshu.io/upload_images/1481332-f216b0617d67dbdc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clean_architecture_domain.png"><br>业务逻辑层，代码应该是纯粹的JAVA API，与Android无关</p>
-</blockquote>
-<blockquote>
-<p>Data<br><img src="http://upload-images.jianshu.io/upload_images/1481332-e536090a22ea7452.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clean_architecture_data.png"><br>这一层主要是处理数据业务</p>
-</blockquote>
-<p>几张图其实能很清楚地说明Clean Architecture的立意、用法</p>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
 
     </footer>
   </div>
@@ -589,153 +589,6 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/QRCode/">QRCode</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/">【Android Tool】内存快照分析，自动抓取dump文件并转换脚本</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>最新得到的Google内部消息，未来谷歌应用商店的排名算法将会把App的性能纳入考量范围（使用的机器学习算法），我们开发者也应该将性能这一指标纳入自己的检查范围</p>
-</blockquote>
-<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>解决抓取内存文件，拉取到电脑，新建文件夹，转换为Eclipse Memory Analyzer 文件操作繁琐的问题</p>
-<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
-<li>clone项目之后，上述流程只需要👇的指令即可完成</li>
-<li>自动将转换的文件存档到新建的同名目录下，避免MAT分析产生的临时文件污染文档目录</li>
-<li>更改目录或进程时，无需修改配置文件，输入即可自动记录上次操作习惯</li>
-<li>重复输入名称时，会自动append 时间到原来名称，避免覆盖历史文件</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python GrabDump.py</span><br></pre></td></tr></table></figure>
-<p>读完本文，你将收获到一个自动化上述流程的简单project</p>
-<blockquote>
-<p>需要了解 Apk包的内存占用各部分组成</p>
-</blockquote>
-<h3 id="GitHub-地址"><a href="#GitHub-地址" class="headerlink" title="GitHub 地址"></a>GitHub 地址</h3><p><a href="https://github.com/KyleCe/PhonePerformanceMeasure">https://github.com/KyleCe/PhonePerformanceMeasure</a></p>
-<h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><p>最终的使用时样式：</p>
-<p><img src="http://kylece.github.io/img/pic_resource/grabDump.png" alt=""></p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
-<li>首先你需要安装Python ^_^</li>
-</ul>
-<ul>
-<li>可以输入的参数包括：  dump文件名、存放目录、需要抓取的进程名</li>
-<li>下次输入时，如果没有完全输入，会自动使用上一次的参数</li>
-</ul>
-<blockquote>
-<p>第一次输入的时候还是需要完全的配置</p>
-</blockquote>
-<h3 id="已知问题"><a href="#已知问题" class="headerlink" title="已知问题"></a>已知问题</h3><p>抓取dump次数过多时会出现adb缓存读写错误的问题，需要重启adb（kill-server | start-server），后续找到解决方案会及时更新到Github repository</p>
-<hr>
-<p>扫描二维码，关注“夕识”，一起学习Android知识、CS知识，努力成为一位  different thinker</p>
-<p><img src="http://kylece.github.io/img/pic_resource/qrcode_for_wechat.jpg" alt=""></p>
-<p>点击“链接”，跳转至repo地址</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dump/">Dump</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
-</blockquote>
-<blockquote>
-<p>这样的话，注意定期检查各lib版本就好</p>
-</blockquote>
-<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
-<p>总结一下步骤：</p>
-<ol>
-<li>获取二维码（QRCode）</li>
-<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
-<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
-</li>
-<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
-</li>
-</ol>
-<p>时序图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
 
     </footer>
   </div>
@@ -936,7 +789,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 
 
   
-    <article id="post-技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -944,7 +797,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/">【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介</a>
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
     </h1>
   
 
@@ -952,7 +805,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/" class="article-date">
+	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -964,18 +817,25 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>工欲善其事必先利其器<br>今天介绍几个plugin工具（奇淫巧技）</p>
+<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
 </blockquote>
 <blockquote>
-<p><em>（适用平台：IntelliJ IDEA内核的各类IDE）</em></p>
+<p>这样的话，注意定期检查各lib版本就好</p>
 </blockquote>
+<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
+<p>总结一下步骤：</p>
+<ol>
+<li>获取二维码（QRCode）</li>
+<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
+<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
+</li>
+<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
+</li>
+</ol>
+<p>时序图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
 <hr>
-<p><strong>效果图</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5b8d8a86fda8eca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ide_tools.png"></p>
-<p>按图中标示顺序介绍：</p>
-<p>####1.Translation<br>_ 顾名思义是中英翻译，令人意外的是自带英美两种发音（默认快捷键：ALT + 1/3，OSX 不详）_</p>
-<p>####2.Background Image Plus<br><em>可以对IDE背景进行自定义，可以设置图片质量/明暗等，对内存有一定消耗，小霸王请绕道</em></p>
-<p>####3.CodeGlance<br><em>提供一个代码文件的全局概览缩略图，主要可用于快速定位</em></p>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
 
@@ -985,7 +845,273 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tool/">Tool</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/">【Android Tool】内存快照分析，自动抓取dump文件并转换脚本</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最新得到的Google内部消息，未来谷歌应用商店的排名算法将会把App的性能纳入考量范围（使用的机器学习算法），我们开发者也应该将性能这一指标纳入自己的检查范围</p>
+</blockquote>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>解决抓取内存文件，拉取到电脑，新建文件夹，转换为Eclipse Memory Analyzer 文件操作繁琐的问题</p>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
+<li>clone项目之后，上述流程只需要👇的指令即可完成</li>
+<li>自动将转换的文件存档到新建的同名目录下，避免MAT分析产生的临时文件污染文档目录</li>
+<li>更改目录或进程时，无需修改配置文件，输入即可自动记录上次操作习惯</li>
+<li>重复输入名称时，会自动append 时间到原来名称，避免覆盖历史文件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python GrabDump.py</span><br></pre></td></tr></table></figure>
+<p>读完本文，你将收获到一个自动化上述流程的简单project</p>
+<blockquote>
+<p>需要了解 Apk包的内存占用各部分组成</p>
+</blockquote>
+<h3 id="GitHub-地址"><a href="#GitHub-地址" class="headerlink" title="GitHub 地址"></a>GitHub 地址</h3><p><a href="https://github.com/KyleCe/PhonePerformanceMeasure">https://github.com/KyleCe/PhonePerformanceMeasure</a></p>
+<h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><p>最终的使用时样式：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/grabDump.png" alt=""></p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>首先你需要安装Python ^_^</li>
+</ul>
+<ul>
+<li>可以输入的参数包括：  dump文件名、存放目录、需要抓取的进程名</li>
+<li>下次输入时，如果没有完全输入，会自动使用上一次的参数</li>
+</ul>
+<blockquote>
+<p>第一次输入的时候还是需要完全的配置</p>
+</blockquote>
+<h3 id="已知问题"><a href="#已知问题" class="headerlink" title="已知问题"></a>已知问题</h3><p>抓取dump次数过多时会出现adb缓存读写错误的问题，需要重启adb（kill-server | start-server），后续找到解决方案会及时更新到Github repository</p>
+<hr>
+<p>扫描二维码，关注“夕识”，一起学习Android知识、CS知识，努力成为一位  different thinker</p>
+<p><img src="http://kylece.github.io/img/pic_resource/qrcode_for_wechat.jpg" alt=""></p>
+<p>点击“链接”，跳转至repo地址</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dump/">Dump</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/【Java-基础系列】Synchronized关键字"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/">【Java-基础系列】Synchronized关键字</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="初识"><a href="#初识" class="headerlink" title="初识"></a>初识</h2><p><code>synchronize</code></p>
+<blockquote>
+<p> 翻译——同步（cause to occur or operate at the same time or rate.）</p>
+</blockquote>
+<p>一般用于多线程操作，保证操作的同步性</p>
+<p>消除线程切换时导致的共享内存的内容不可预测性</p>
+<h2 id="典型应用"><a href="#典型应用" class="headerlink" title="典型应用"></a>典型应用</h2><p>单例模式的<code>double-check</code></p>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.45.47 AM.png" alt="MacGesture MacGesture, Today at 12.45.47 AM"></p>
+<blockquote>
+<p>题外话：单例模式很容易引发内存泄露，在项目中要少用；</p>
+<p>另外单例模式的实现形式中，使用<code>enum</code>枚举是比较简洁的形式</p>
+</blockquote>
+<h2 id="常见使用形式"><a href="#常见使用形式" class="headerlink" title="常见使用形式"></a>常见使用形式</h2><ul>
+<li><p>锁方法</p>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p>
+</li>
+<li><p>锁代码段</p>
+<ul>
+<li>用this关键字 <code>sychronized(this)</code></li>
+</ul>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.21.38 AM.png" alt="MacGesture MacGesture, Today at 12.21.38 AM"></p>
+<ul>
+<li>用锁对象 <code>sychronized(lockObjct)</code></li>
+</ul>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.17.56 AM.png" alt="MacGesture MacGesture, Today at 12.17.56 AM"></p>
+</li>
+</ul>
+<h2 id="官方教程"><a href="#官方教程" class="headerlink" title="官方教程"></a>官方教程</h2><p>在Oracle的Java 文档里头有对Synchronization的详细解释，分为如下五部分展开：</p>
+<ol>
+<li><p>线程接口（Thread Interference）</p>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM.png" alt="【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM"></p>
+<blockquote>
+<p>不同线程对同一份数据的操作如果是穿插进行的，会导致不可预料的结果，这主要是因为CPU会让多个线程分片执行，各个线程对此数据的操作也是互不可知的，这样就很容易引发内存不按照预期改变的情况</p>
+</blockquote>
+</li>
+<li><p>内存连续性错误（Memory Consistency Errors）<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.17 AM.png" alt=""></p>
+<blockquote>
+<p>例子如上图，若三步操作不仅由一个线程执行，就很有可能导致打印出的并不是1而是0</p>
+</blockquote>
+</li>
+<li><p>同步方法（Synchronized Methods)<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.41 AM.png" alt=""></p>
+<blockquote>
+<ul>
+<li>Java中在方法体上添加<code>synchronized</code>关键字，能够保证同一时间仅有一个线程在调用某个对象的该方法；</li>
+</ul>
+<ul>
+<li>同时Java还会为该方法在与对象之间建立一个happens-before关系，保证对象的该状态对所有线程都是可见的</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<ol>
+<li><p>固有锁与同步（Intrinsic Locks and Synchronization)</p>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p>
+<blockquote>
+<p>当一个线程调用<code>synchronized</code>方法时，它会自动获取该方法对象的固有锁，并在方法返回时释放它。即使返回是由未捕获的异常引起的，也会释放锁。</p>
+</blockquote>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.56 AM.png" alt="MacGesture MacGesture, Today at 12.16.56 AM"></p>
+<blockquote>
+<p>直接使用this当做锁的关键字时，改对象的所有使用this当关键字的操作都必须保证同时只有一个线程访问，这样做虽然简便，但时间上有效率浪费，因为该对象的所有操作并不一定要保持完全同步，👇的代码段就解决了这一问题：</p>
+<p>通过细粒度的锁来提高并发性：</p>
+</blockquote>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.22.45 AM.png" alt="MacGesture MacGesture, Today at 12.22.45 AM"></p>
+<blockquote>
+<p>类<code>MsLunch</code>有两个实例字段，<code>c1</code>并且<code>c2</code>从不一起使用。这些字段的所有更新必须同步，但是没有理由阻止c1的更新与c2的更新进行交错 - 这样做会通过创建不必要的阻止来降低并发性。而不是使用同步方法或以其他方式使用与之关联的锁<code>this</code></p>
+</blockquote>
+</li>
+<li><p>原子操作（<code>Atomic</code> Access ）</p>
+<blockquote>
+<p>原子操作保证了操作的完整性：要么不执行，执行的话就一定要完全执行（即使虚拟机GC也不能打断）</p>
+</blockquote>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.35.40 AM.png" alt="MacGesture MacGesture, Today at 12.35.40 AM"></p>
+<p> 第一条指的是我们可以使用<code>Java</code>内附的<code>AtomicInteger</code>、<code>AtomicBoolean</code>等变量来直接利用这一特性</p>
+<p> 第二条引出了另一个关键字<code>volatile</code>，这实际上需要另起一篇进行介绍了</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>synchronize在解决多线程编程问题时有奇效，但有一定的效率牺牲</p>
+<p>使用时应尽量减小锁定的范围</p>
+<p>对并发性有要求的地方需要注意看是否有细化锁粒度的必要</p>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3>
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Synchronized/">Synchronized</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/【Alibaba-Java开发手册】-提要"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/【Alibaba-Java开发手册】-提要/">【Alibaba-Java开发手册】-提要</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【Alibaba-Java开发手册】-提要/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>旨在对手册进行提要<br>关注点： 编程规约</p>
+</blockquote>
+<blockquote>
+<p><a href="http://pan.baidu.com/s/1boHjvxt" target="_blank" rel="noopener">手册源文件点击下载</a></p>
+</blockquote>
+<p><a href="https://www.evernote.com/shard/s283/sh/a8ae54da-157b-4669-97f3-60709e798489/0ab7d45c077516e2fa9845f3acf03b64" target="_blank" rel="noopener">EverNote笔记链接（内含XMind思维导图源文件）</a></p>
+<hr>
+<p>#导图<br><img src="http://upload-images.jianshu.io/upload_images/1481332-f2f67a5b35ab182b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Alibaba Java overview.png"></p>
+<hr>
+<p>文本</p>
+<p>Alibaba Java 开发手册</p>
+<p>1 编程规约<br>  1.1 命名规约<br>    1.1.1 8. POJO类中的布尔型变量不要加is，否则会引起序列化错误<br>  1.2 常量定义<br>    1.2.1 1. 不允许代码中出现任何魔法数<br>        1.2.1.1 （即硬编码变量）<br>    1.2.2 3. 不要再一个常量类中维护所以常量，应按功能归类维护<br>    1.2.3 4. 常量复用有五个层次<br>        1.2.3.1 跨应用、应用内、子工程、包内、类内<br>  1.3 格式规约<br>    1.3.1 一系列Google Java编码规则，不赘述<br>  1.4 OOP规约<br>    1.4.1 1. 避免通过对象引用static域<br>    1.4.2 2. 不可使用 Deprecated方法；自己做弃用注解时也应该 注明替代的新API<br>    1.4.3 10. 序列化新增属性时不要修改serialVersionUID字段；仅在完全不兼容升级避免反序列化混乱时修改<br>    1.4.4 15. 方法排序： public/ protected &gt; private &gt; getter/setter ——为维护者关心的方法展示于前<br>    1.4.5 16. setter/getter 确定为仅有的set get方法，勿要放入业务逻辑<br>    1.4.6 17. 循环体内，字符串联接方式，使用StringBuilder的append方法扩展——String 操作编译后会生成count 个StringBuilder对象，影响程序性能<br>    1.4.7 18. final可提高程序响应效率<br>    1.4.8 20. 访问控制从严（private、protected、public）<br>  1.5 集合处理<br>    1.5.1 1. hashCode equals<br>        1.5.1.1 重写equals时必须重写hashCode<br>        1.5.1.2 Set存储的对象必须重写<br>        1.5.1.3 用作Map的键时必须重写<br>    1.5.2 9. 集合初始化时尽量指定大小<br>        1.5.2.1 注：出于优化内存占用、响应速度考虑；集合默认size为10<br>    1.5.3 10. Map 类集合 K/V 存储null可行性问题<br>        1.5.3.1 HashMap KV均可为null<br>        1.5.3.2 TreeMap仅V可为null<br>        1.5.3.3 其它Map KV一律不可为null<br>    1.5.4 11. 合理利用好集合的有序性和稳定性，避免负面影响<br>  1.6 并发处理<br>    1.6.1 2. 创建线程、线程池时指定有意义的名称，便于出错时回溯<br>    1.6.2 4. 线程池不允许使用Executors创建，而要使用ThreadPoolExecutor<br>        1.6.2.1 Executor创建的几个类型都有大量请求或线程堆积导致OOM的可能<br>    1.6.3 5. SimpleDateFormat 是线程不安全类，一般不要定义为static变量，如果定义为static，必须加锁，或者使用DateUtils工具类<br>    1.6.4 6. 高并发时的同步调用注意锁的性能损耗<br>    1.6.5 10. CountDownLatch异步转同步操作时，每个线程退出前必须调用countDown，避免await超时<br>    1.6.6 11. 避免Random实例被多线程使用，竞争同一seed会导致性能下降；（实例包括Random、Math.random()）<br>    1.6.7 14. HashMap在容量不够进行resize时由于高并发可能出现死链，导致CPU飙升，开发中注意规避<br>  1.7 控制语句<br>    1.7.1 3. if-else 勿超过3层，超过时使用状态设计模式<br>    1.7.2 5. 循环体中考虑性能问题，避免不必要的语句、避免不必要的try-catch<br>    1.7.3 7-8. 注意参数检验的必要性，尽可能提升性能<br>2 日志<br>3 MySQL<br>4 工程规约<br>5 安全规约</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
     </footer>
   </div>
@@ -1063,72 +1189,6 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GL/">GL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Performance/">Performance</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/降低内存占用Route"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/降低内存占用Route/">降低内存占用Route</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/降低内存占用Route/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="已执行"><a href="#已执行" class="headerlink" title="已执行"></a>已执行</h3><ul>
-<li>修复LeakCanary报出的问题（内网、外网）<ul>
-<li>直接检测泄露</li>
-<li>外网beta用户上报</li>
-</ul>
-</li>
-<li>分析dumpheap文件，查内存占用（直接分析、对比分析）<ul>
-<li>占用大户<ul>
-<li>Bitmap</li>
-<li>FinalizerReference</li>
-</ul>
-</li>
-<li>场景分析，进出场景、发现可疑场景，查内存dumpheap文件<ul>
-<li>已有发现：WebView、主题切换泄露</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存/">内存</a></li></ul>
 
     </footer>
   </div>
