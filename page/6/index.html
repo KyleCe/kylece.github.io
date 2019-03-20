@@ -255,7 +255,7 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/程序/Bitmap recycle做了什么"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -263,7 +263,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/">【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介</a>
+      <a class="article-title" href="/2018/03/09/技术/程序/Bitmap recycle做了什么/">看看Bitmap源码中recycle 做了什么</a>
     </h1>
   
 
@@ -271,7 +271,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/" class="article-date">
+	<a href="/2018/03/09/技术/程序/Bitmap recycle做了什么/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -283,18 +283,45 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>工欲善其事必先利其器<br>今天介绍几个plugin工具（奇淫巧技）</p>
+<p>看看Bitmap源码中recycle 做了什么</p>
+<p>PS：源码查看工具网站：AndroidXref、grepCode</p>
 </blockquote>
+<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p> 在Bitmap调用recycle之后再去使用，会有invalid Bitmap的异常导致应用崩溃，实际项目中其实是碰到了tgkill的Native代码崩溃的堆栈信息：</p>
+<p><img src="../../pic_resource/stacktrace_of_tgkill.png" alt=""></p>
+<p>分析Bitmap getGenerationId在源码中的调用情况：（git clone Framework 源码之后用sublimeText搜索得如下结果，txt文件已过滤）</p>
+<p><img src="../../pic_resource/FindResults.png" alt=""></p>
+<p>绿色框中的代码因为是surface的API，或者是JavaDoc的注释，可以忽略不计，可以看到有效调用就是关于Notification的调用；</p>
+<p>结合GP后台的崩溃占用情况（&gt;7.0占比较高，6.0亦有发生），查阅AndroidDeveloper的v6.0 changeLog，发现有这么一条：</p>
+<p><img src="../../pic_resource/Android6.0_Changes_Notification.png" alt=""></p>
+<p>看到其中关键信息 ==reuse Notification.Builder instance==，但鉴于其它App没有出现这种级别的问题，所以另谋其它出路；</p>
+<p>剩下的就只剩Bitmap了</p>
+<h2 id="Bitmap-recycle做了什么"><a href="#Bitmap-recycle做了什么" class="headerlink" title="Bitmap recycle做了什么"></a>Bitmap recycle做了什么</h2><h3 id="Bitmap-cpp"><a href="#Bitmap-cpp" class="headerlink" title="Bitmap.cpp"></a>Bitmap.cpp</h3><p>source code on xRef: <a href="http://androidxref.com/6.0.1_r10/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp" target="_blank" rel="noopener">http://androidxref.com/6.0.1_r10/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp</a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">782</span><span class="function"><span class="keyword">static</span> jboolean <span class="title">Bitmap_recycle</span><span class="params">(JNIEnv* env, jobject, jlong bitmapHandle)</span> </span>&#123;</span><br><span class="line"><span class="number">783</span>    <span class="function">LocalScopedBitmap <span class="title">bitmap</span><span class="params">(bitmapHandle)</span></span>;</span><br><span class="line"><span class="number">784</span>    bitmap-&gt;freePixels();</span><br><span class="line"><span class="number">785</span>    <span class="keyword">return</span> JNI_TRUE;</span><br><span class="line"><span class="number">786</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">168</span><span class="keyword">void</span> Bitmap::freePixels() &#123;</span><br><span class="line"><span class="number">169</span>    AutoMutex _lock(mLock);</span><br><span class="line"><span class="number">170</span>    <span class="keyword">if</span> (mPinnedRefCount == <span class="number">0</span>) &#123;</span><br><span class="line"><span class="number">171</span>        doFreePixels();</span><br><span class="line"><span class="number">172</span>        mPixelStorageType = PixelStorageType::Invalid;</span><br><span class="line"><span class="number">173</span>    &#125;</span><br><span class="line"><span class="number">174</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">176</span><span class="keyword">void</span> Bitmap::doFreePixels() &#123;</span><br><span class="line"><span class="number">177</span>    <span class="keyword">switch</span> (mPixelStorageType) &#123;</span><br><span class="line"><span class="number">178</span>    <span class="keyword">case</span> PixelStorageType::Invalid:</span><br><span class="line"><span class="number">179</span>        <span class="comment">// already free'd, nothing to do</span></span><br><span class="line"><span class="number">180</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">181</span>    <span class="keyword">case</span> PixelStorageType::External:</span><br><span class="line"><span class="number">182</span>        mPixelStorage.external.freeFunc(mPixelStorage.external.address,</span><br><span class="line"><span class="number">183</span>                mPixelStorage.external.context);</span><br><span class="line"><span class="number">184</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">185</span>    <span class="keyword">case</span> PixelStorageType::Ashmem:</span><br><span class="line"><span class="number">186</span>        munmap(mPixelStorage.ashmem.address, mPixelStorage.ashmem.size);</span><br><span class="line"><span class="number">187</span>        close(mPixelStorage.ashmem.fd);</span><br><span class="line"><span class="number">188</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">189</span>    <span class="keyword">case</span> PixelStorageType::Java:</span><br><span class="line"><span class="number">190</span>        JNIEnv* env = jniEnv();</span><br><span class="line"><span class="number">191</span>        LOG_ALWAYS_FATAL_IF(mPixelStorage.java.jstrongRef,</span><br><span class="line"><span class="number">192</span>                <span class="string">"Deleting a bitmap wrapper while there are outstanding strong "</span></span><br><span class="line"><span class="number">193</span>                <span class="string">"references! mPinnedRefCount = %d"</span>, mPinnedRefCount);</span><br><span class="line"><span class="number">194</span>        env-&gt;DeleteWeakGlobalRef(mPixelStorage.java.jweakRef);</span><br><span class="line"><span class="number">195</span>        <span class="keyword">break</span>;</span><br><span class="line"><span class="number">196</span>    &#125;</span><br><span class="line"><span class="number">197</span></span><br><span class="line"><span class="number">198</span>    <span class="keyword">if</span> (android::uirenderer::Caches::hasInstance()) &#123;</span><br><span class="line"><span class="number">199</span>        android::uirenderer::Caches::getInstance().textureCache.releaseTexture(</span><br><span class="line"><span class="number">200</span>                mPixelRef-&gt;getStableID());</span><br><span class="line"><span class="number">201</span>    &#125;</span><br><span class="line"><span class="number">202</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>注意析构函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">164</span> Bitmap::~Bitmap() &#123;</span><br><span class="line"><span class="number">165</span>    doFreePixels();</span><br><span class="line"><span class="number">166</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>还需注意到代码：</p>
+<p><img src="../../pic_resource/bitmap_cpp_assert_valid.png" alt=""></p>
+<p>结合Bitmap.cpp的其它代码，只有在Bitmap recycle之后又拿来使用才会出现这个assertValid断言错误，遂将矛头指向Bitmap recycle</p>
+<h3 id="不调用recycle-会怎样？"><a href="#不调用recycle-会怎样？" class="headerlink" title="不调用recycle()会怎样？"></a>不调用recycle()会怎样？</h3><p>Android2.3（API 11）之前，Bitmap开辟的内存位于native Stack，需要手动调用recycle进行释放，而2.3之后属于VM的heap，系统GC会自动处理。</p>
+<p>而我们在2.3之后的系统中调用Bitmap的recycle，唯一的作用，就是把Bitmap释放的动作提前了，私以为，仅有的效用是会降低OOM发生的概率</p>
+<p>这一点也可以从Bitmap AndroidAPI解释网页上看出一点端倪</p>
+<p><img src="../../pic_resource/Java_Bitmap_recycle.png" alt=""></p>
 <blockquote>
-<p><em>（适用平台：IntelliJ IDEA内核的各类IDE）</em></p>
+<p>this is an advanced call, and normally need not be called…</p>
 </blockquote>
+<h3 id="策略"><a href="#策略" class="headerlink" title="策略"></a>策略</h3><p>在所有会调用Bitmap.recycle()的地方，对相应的recycle状态检查，如果发现有recycle之后仍然在使用的地方，则直接抛出异常，暴露问题，就像这样：</p>
+<p><img src="../../pic_resource/BitmapWatcher.png" alt=""></p>
+<p>这样，在Monkey测试覆盖面够广时，就可以预期暴露出问题所在了；</p>
+<p>关于Bitmap的检查，还有一种思路是使用hook方式进行，这样还可以对第三方依赖lib进行检查，后期如果应用这种方式，我再补充一篇</p>
 <hr>
-<p><strong>效果图</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5b8d8a86fda8eca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ide_tools.png"></p>
-<p>按图中标示顺序介绍：</p>
-<p>####1.Translation<br>_ 顾名思义是中英翻译，令人意外的是自带英美两种发音（默认快捷键：ALT + 1/3，OSX 不详）_</p>
-<p>####2.Background Image Plus<br><em>可以对IDE背景进行自定义，可以设置图片质量/明暗等，对内存有一定消耗，小霸王请绕道</em></p>
-<p>####3.CodeGlance<br><em>提供一个代码文件的全局概览缩略图，主要可用于快速定位</em></p>
+<p>Ref:</p>
+<ol>
+<li>bitmap recycle不当调用引发的问题 <a href="http://www.jianshu.com/p/b5c8e98ff5b0" target="_blank" rel="noopener">http://www.jianshu.com/p/b5c8e98ff5b0</a></li>
+<li>Bitmap source Code：<a href="https://android.googlesource.com/platform/frameworks/base/+/47fb191/core/jni/android/graphics/Bitmap.cpp；（GrepCode网站上5.0r1的Bitmap" target="_blank" rel="noopener">https://android.googlesource.com/platform/frameworks/base/+/47fb191/core/jni/android/graphics/Bitmap.cpp；（GrepCode网站上5.0r1的Bitmap</a> sourcecode）<a href="http://grepcode.com/file/repo1.maven.org/maven2/org.robolectric/android-all/5.0.0_r2-robolectric-0/android/graphics/Bitmap.java；（AndroidXref网站上的Bitmap" target="_blank" rel="noopener">http://grepcode.com/file/repo1.maven.org/maven2/org.robolectric/android-all/5.0.0_r2-robolectric-0/android/graphics/Bitmap.java；（AndroidXref网站上的Bitmap</a> 7.1.1 sourcecode）<a href="http://androidxref.com/7.1.1_r6/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp#896" target="_blank" rel="noopener">http://androidxref.com/7.1.1_r6/xref/frameworks/base/core/jni/android/graphics/Bitmap.cpp#896</a></li>
+<li>Bitmap API 解释on AndroidDeveloper：<a href="https://stuff.mit.edu/afs/sipb/project/android/docs/reference/android/graphics/Bitmap.html#recycle()" target="_blank" rel="noopener">https://stuff.mit.edu/afs/sipb/project/android/docs/reference/android/graphics/Bitmap.html#recycle()</a></li>
+</ol>
 
       
 
@@ -304,7 +331,76 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tool/">Tool</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bitmap/">Bitmap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recycle/">recycle</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/Java进阶--被用烂的&#34;继承&#34;"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶--被用烂的"继承"/">Java进阶——接口优于抽象类</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/Java进阶--被用烂的"继承"/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>继承很强大，但也有问题</p>
+<p>确实是is-a关系时才使用继承</p>
+<p>如果处在不同的包中，并且SuperClass不是为继承设计的，这时会导致脆弱性</p>
+<p>可以使用复合和转发机制来代替继承来避免这种脆弱性</p>
+<p>关键字:</p>
+<p><strong>继承、复合、装饰者模式、包装类、转发</strong></p>
+<blockquote>
+<p>keywords:</p>
+<p>继承(inheritance)、复合(composition)、装饰者模式(decorator)、包装类(WrapperClass)、转发(forwarding)</p>
+</blockquote>
+<p><em>为叙述方便，下文以CC代表子类，SC代表超类，也就是父类</em></p>
+<h3 id="问题体现"><a href="#问题体现" class="headerlink" title="问题体现"></a>问题体现</h3><p><strong>继承打破了封装性</strong></p>
+<p>CC依赖于SC的实现细节，在SC更新换代时，CC会受影响，严重的会导致错误，为了避免出现错误，时常要做的事情是跟着SC的更新而更新CC</p>
+<p>其实你可以直接使用<strong>复合</strong>来避免这一问题出现——也就是，在原来的CC中添加一个SC的实例</p>
+<p>这样新的类中可以直接使用SC的方法逻辑，而不用担心SC更新时要升级API的问题（概念：<strong>转发</strong>）</p>
+<p>这样的类也被称为<strong>包装类</strong></p>
+<p>这也引出了设计模式中的Decorator模式概念（<strong>装饰者模式</strong>）</p>
+<h3 id="强制使用的弊端"><a href="#强制使用的弊端" class="headerlink" title="强制使用的弊端"></a>强制使用的弊端</h3><ul>
+<li>暴露不必要的SC细节</li>
+<li>永远地限制了CC的性能（使用复合模式则可以在需要时更换转发的具体实现）</li>
+<li>导致语义混淆</li>
+</ul>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
     </footer>
   </div>
@@ -546,68 +642,6 @@
 
 
   
-    <article id="post-每周一书/【Note】《软件项目管理》概览提要"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/【Note】《软件项目管理》概览提要/">【Note】《软件项目管理》概览提要</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/每周一书/【Note】《软件项目管理》概览提要/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>《软件项目管理》着眼于软件项目的策划、监督、控制；</p>
-</blockquote>
-<blockquote>
-<p>主要对从项目选择开始，到项目交付整个流程中关键步骤进行释疑解惑，<strong>涵盖项目管理</strong>（评价、策划、评估、实施）、<strong>技术管理</strong>（评审、质量控制、敏捷开发）、<strong>风险管理</strong>（评估、规避、转移）、<strong>合同管理</strong>、<strong>成员管理</strong>（选择、激励、激励）、<strong>团队管理</strong>等几个方面</p>
-</blockquote>
-<hr>
-<p><a href="https://www.evernote.com/l/ARuMImpZpL9FQbiZNC9LGNCYsUd8ITNmmYE" target="_blank" rel="noopener">Evernote链接</a></p>
-<p><a href="https://www.evernote.com/shard/s283/sh/8c226a59-a4bf-4541-b899-342f4b18d098/b1477c2133669981/res/bd8cbb92-d0f3-4149-8d0c-9129765d7537/软件项目管理.xmind" target="_blank" rel="noopener">XMind文档下载</a></p>
-<p><strong>导图</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-43035d3944e2e17c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目管理overview.png"></p>
-<hr>
-<p><strong>文本</strong></p>
-<p>软件项目管理</p>
-<p>1 概述<br>  1.1 合同/技术项目管理<br>    1.1.1 可行性研究、策划、实施<br>  1.2 计划、方法、方法学<br>  1.3 分类方式<br>    1.3.1 用户、系统、目标与产品<br>  1.4 设定目标<br>    1.4.1 目标与子目标<br>    1.4.2 有效性度量<br>  1.5 管理控制<br>    1.5.1 瀑布流控制、反馈迭代直至达成目标<br>2 评价项目与项目集管理<br>  2.1 项目组合管理<br>    2.1.1 新品开发、改进项目<br>    2.1.2 组合优化<br>  2.2 单项目管理<br>    2.2.1 单项目评估<br>        2.2.1.1 技术评估<br>        2.2.1.2 成本效益分析<br>                2.2.1.2.1 评价技术<br>                2.2.1.2.1.1 净利润<br>                2.2.1.2.1.2 回收期<br>                2.2.1.2.1.3 投资回报率<br>                2.2.1.2.1.4 净现值<br>                2.2.1.2.1.5 内部回报率<br>        2.2.1.3 现金流预测<br>    2.2.2 风险评价<br>        2.2.2.1 风险标识与等级<br>        2.2.2.2 风险与净现值<br>        2.2.2.3 风险剖面分析<br>        2.2.2.4 使用决策树<br>  2.3 项目集管理<br>    2.3.1 管理项目集内的资源分配<br>    2.3.2 策略<br>    2.3.3 创建<br>        2.3.3.1 命令（目标）<br>        2.3.3.2 摘要<br>        2.3.3.3 构想<br>        2.3.3.4 蓝图<br>    2.3.4 辅助<br>        2.3.4.1 依赖关系图<br>        2.3.4.2 交付计划<br>  2.4 收益管理<br>    2.4.1 量化收益<br>3 项目策划概述<br>  3.1 步进式策划概述<br>  3.2 步骤<br>    3.2.1 选择<br>    3.2.2 标识范围和目标<br>    3.2.3 标识基础设施<br>    3.2.4 分析特征<br>        3.2.4.1 驱动因素<br>        3.2.4.2 质量特征<br>        3.2.4.3 用户需求<br>        3.2.4.4 开发方法学与生命周期法<br>        3.2.4.5 整体资源需求估计<br>    3.2.5 标识产品与活动<br>        3.2.5.1 可交付物<br>        3.2.5.2 文档化产品流<br>        3.2.5.3 活动图网络<br>    3.2.6 估算每个活动工作量<br>        3.2.6.1 使活动可控<br>    3.2.7 标识活动风险<br>        3.2.7.1 标识、量化基于活动的风险<br>        3.2.7.2 风险缓解策略与应急措施<br>        3.2.7.3 根据风险调整计划与估计<br>    3.2.8 分配资源<br>        3.2.8.1 根据资源约束修改计划与估计<br>    3.2.9 评审/发布计划<br>    3.2.10 执行、细节策划<br>4 选择合适的项目方法<br>  4.1 build or buy<br>  4.2 选择方法学和技术<br>  4.3 过程模型的选择<br>  4.4 结构与交付速度<br>  4.5 模型<br>    4.5.1 瀑布模型<br>    4.5.2 螺旋模型<br>    4.5.3 软件原型开发<br>    4.5.4 其它<br>        4.5.4.1 原型收获<br>        4.5.4.2 具象化程度<br>        4.5.4.3 取舍<br>        4.5.4.4 控制变更<br>  4.6 增量式交付<br>    4.6.1 优缺点<br>    4.6.2 交付计划<br>    4.6.3 系统目标<br>    4.6.4 开放的技术计划<br>    4.6.5 增量式计划<br>  4.7 敏捷<br>    4.7.1 水晶方法<br>    4.7.2 Atern<br>    4.7.3 特性驱动<br>    4.7.4 Scrum<br>    4.7.5 XP<br>5 软件工作量估计<br>  5.1 何处评估<br>    5.1.1 战略策划<br>    5.1.2 可行性研究<br>    5.1.3 项目策划<br>  5.2 过高/过低问题<br>  5.3 软件估计基础<br>    5.3.1 历史数据<br>    5.3.2 工作度量<br>  5.4 估计技术<br>    5.4.1 自底向上<br>    5.4.2 自顶向下<br>    5.4.3 专家判断<br>    5.4.4 类比估计<br>  5.5 功能点分析<br>6 活动策划<br>  6.1 目的<br>    6.1.1 可行性评估、资源分配、成本核算、动机、协调<br>  6.2 何时<br>    6.2.1 逐步细化<br>  6.3 进度表<br>  6.4 项目与活动<br>    6.4.1 甘特图<br>  6.5 确定活动次序与进度<br>  6.6 网络策划模型<br>  6.7 网络模型的公式化表示<br>  6.8 增加时间维<br>  6.9 正向遍历<br>  6.10 反向遍历<br>  6.11 表示关键路径<br>  6.12 活动缓冲期<br>  6.13 标识关键活动<br>  6.14 活动-箭头网络<br>7 风险管理<br>  7.1 风险<br>  7.2 分类<br>  7.3 处理框架<br>  7.4 识别<br>  7.5 评估<br>  7.6 策划<br>    7.6.1 接受、规避、降低与缓解、转移<br>  7.7 管理<br>    7.7.1 应急、应对策略<br>  7.8 评价进度风险<br>  7.9 应用PERT技术<br>    7.9.1 活动评估网络图<br>  7.10 蒙特卡洛仿真<br>  7.11 关键链概念<br>    7.11.1 甘特图<br>8 资源分配<br>  8.1 资源性质<br>  8.2 标识资源需求<br>  8.3 资源调度<br>  8.4 创建关键路径<br>  8.5 计算成本<br>  8.6 特定细节<br>  8.7 发布资源进度表<br>  8.8 成本进度<br>  8.9 调度顺序<br>9 监督与控制<br>  9.1 创建框架<br>    9.1.1 责任<br>    9.1.2 进展评估<br>    9.1.3 设置检查点<br>    9.1.4 取快照<br>  9.2 收集数据<br>    9.2.1 局部完成报告<br>    9.2.2 红黄绿交通灯报告<br>  9.3 进展可视化<br>    9.3.1 甘特图<br>    9.3.2 延迟图<br>    9.3.3 时间线<br>  9.4 成本监督<br>  9.5 优先级控制<br>    9.5.1 关键路径活动、无自由浮动的活动、少于规定浮动的活动、高风险活动、使用关键资源活动<br>  9.6 使项目回归目标<br>    9.6.1 缩短关键路径、重新评估优先需求、异常计划<br>  9.7 变更控制<br>    9.7.1 规程、维度、职责<br>10 管理合同<br>  10.1 合同种类<br>  10.2 部署阶段<br>    10.2.1 需求分析、评估计划、邀请投标、评估提议<br>  10.3 典型合同条款<br>  10.4 管理<br>  10.5 验收<br>11 人员管理<br>  11.1 理解行为<br>    11.1.1 解释主义、实证主义<br>  11.2 组织行为：背景<br>    11.2.1 合适的人、对指导方法择优、薪酬激励<br>  11.3 选择合适人选<br>  11.4 用最好的方法进行教育<br>    11.4.1 培训<br>  11.5 激励<br>    11.5.1 Taylorise模型<br>        11.5.1.1 制造业计件<br>    11.5.2 Maslow需求层次<br>        11.5.2.1 发现个人的需求所处层次<br>    11.5.3 Herzberg双因素理论<br>        11.5.3.1 维护因素、工作热情<br>  11.6 oldham-Hackman工作特征模型<br>    11.6.1 技术多样性、任务鉴别、重要性、自主权、反馈<br>  11.7 压力<br>    11.7.1 任务控制、角色冲突<br>  11.8 健康和安全<br>  11.9 职业道德注意事项<br>12 团队管理<br>  12.1 组成<br>  12.2 决策制定<br>    12.2.1 心里障碍<br>        12.2.1.1 故障启发、恶性增资、信息超载<br>    12.2.2 小组综合制定<br>    12.2.3 主程序组<br>    12.2.4 敏捷<br>  12.3 组织结构<br>  12.4 合作依赖<br>  12.5 分散或虚拟团队<br>  12.6 沟通风格<br>  12.7 沟通计划<br>    12.7.1 what、who、purpose、when、method、responsibility<br>  12.8 领导能力<br>13 软件质量<br>  13.1 质量在项目策划中的位置<br>  13.2 重要性<br>    13.2.1 危险程度、不定因素、缺陷累积<br>  13.3 定义<br>  13.4 产品与过程质量管理<br>  13.5 质量管理体系<br>  13.6 能力过程模型<br>  13.7 助力提高技术<br>    13.7.1 增加可见性<br>    13.7.2 过程性结构<br>    13.7.3 检查中间阶段<br>  13.8 测试<br>  13.9 质量计划<br>（Bob Hunghes &amp; Mike Cotterell 著）</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-社科/荣耀时刻——你和演讲达人之间只差一页纸"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -715,146 +749,6 @@
 
 
   
-    <article id="post-社科/CODEX  创新体系"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/社科/CODEX  创新体系/">CODEX  创新体系</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/社科/CODEX  创新体系/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/效率/">效率</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="点睛"><a href="#点睛" class="headerlink" title="点睛"></a>点睛</h3><p>投资思维、投行思维</p>
-<h3 id="talker"><a href="#talker" class="headerlink" title="talker"></a>talker</h3><p>CODEX国际创新研究院</p>
-<h3 id="PPT"><a href="#PPT" class="headerlink" title="PPT"></a>PPT</h3><p>哪组是贪污犯伪造的</p>
-<p>以下哪种状态在赌场出现概率最高</p>
-<blockquote>
-<p>随机的含义——粒度也是随机的</p>
-</blockquote>
-<p>下面四个快消茶的名称那个“风水”更好</p>
-<p>A 清客  B 徐来 C 唐奴 D 关西大益</p>
-<p>C— 发音里含糖— 刺激“多巴胺”分泌— 引发冲动购买</p>
-<p>注意限定词— 快消茶</p>
-<p>Apple、小米 — 都含糖分</p>
-<p>作为快消品，哪个作为主要logo色调最好</p>
-<p>A 红色   B 蓝色</p>
-<p>红色也会刺激多巴胺分泌</p>
-<p>金融理财 — 不用红色</p>
-<p>创新技术——研究人的思维方式</p>
-<p>几十年的学习研究积累</p>
-<p>“行为经济学” — 中国国内吹风</p>
-<p>骗子一条街 — 中关村创业大街 。。。</p>
-<p>服务对象— 跨十几个行业</p>
-<p>让你创业，你创业会做什么？</p>
-<p>常规思维模式——去中央、降低成本、社群思维、众包思维、大数据（创新的一级、二级）</p>
-<p>公司需要的：</p>
-<p>奴化教育（俗称：执行力），不是创新教育</p>
-<p>大部分人都是庸人</p>
-<h3 id="创新的演变"><a href="#创新的演变" class="headerlink" title="创新的演变"></a>创新的演变</h3><ol>
-<li>逆向、发散、跟踪、结构、水平思考（头脑风暴——其实对创新的贡献极小）</li>
-<li>TRIZ、 SIT两代 （将系统进行按照物、事、关系、功能进行建模，将创新规模化； 效率很高，被西方社会大面积采用）— 苏联冷战时发明、解体后被CIA破获TRIZ  | “微创新” — SIT<ol>
-<li>优势— 效率很高</li>
-<li>弊病— 不能做新产品，只能提升效率、性能完善</li>
-<li>最利于 公司内部创新</li>
-</ol>
-</li>
-<li>CODEX（从人思维的角度入手，按照人的思维成熟度等级来切分，有助于解决开发性问题）</li>
-</ol>
-<h4 id="CODEX-体系"><a href="#CODEX-体系" class="headerlink" title="CODEX 体系"></a>CODEX 体系</h4><ul>
-<li><p>按照人的思维成熟度水平将创新分成五级mapping different mind maturity level to innovation</p>
-<ul>
-<li>例子：万达地产— copy的邵逸夫（逸夫大剧院）</li>
-<li><p>CODEX</p>
-<ul>
-<li>c— copy</li>
-<li>o— optimize（TRIZ与SIT主要处于这阶段）</li>
-<li>d— dimension（维度）（如果开个饭店，你的卖点是什么？）— 功效、人权、体验方式、工艺（雕爷牛腩）、关系（张朝阳的99CEO俱乐部— 退一个才能有新加入）、历史（十五年— 十五年不忘初心）、理念 — 大部分智商题的难题都是维度问题</li>
-<li>e— ecosystem（生态）（最强大脑是个秀，80%都是CODEX培训的）<ul>
-<li>史玉柱、雷军、王选（北大方正创始人）</li>
-<li>做生态最忌讳做平台（环节太多、don’t play god）——做平台死亡概率太高；（人人为我，我为人人— 反人性）</li>
-<li>最好的途径— 做种子，让种子长成生态</li>
-<li>维度感特别强的人爱说树形结构</li>
-<li>生态的人 — 爱说“找关键点”，找核心关键点</li>
-<li>投资思维、投行思维</li>
-</ul>
-</li>
-<li><p>x — （meta-physics元认知（哲学）、元模式）人（心理学）、社会（宗教）</p>
-<ul>
-<li>它是无解的、是不可被竞争的</li>
-<li><p>产品</p>
-<ul>
-<li><p>人最大的需求（元需求）（七宗罪中的五条）</p>
-<ul>
-<li>情色（不是色情）fuck.com（只租不卖）、干爹网、中国文化是由情色支撑的</li>
-<li>贪婪（便宜）</li>
-<li>虚荣</li>
-<li>懒惰（我帮你买是个大生意）</li>
-<li>偷窥</li>
-</ul>
-</li>
-<li><p>人的bug类（十几种）</p>
-<ul>
-<li>游戏的原理、赌博的原理</li>
-</ul>
-</li>
-<li><p>人的归属</p>
-<ul>
-<li>意义（每个人都是一条三文鱼— 你的河流是什么？）规律、意义、业；断生死；幸福9号（幸福频道）；“念经养老”（高端养老院的思维转换）</li>
-</ul>
-<p>​</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>人没有真正的信仰，不会得到真正的幸福</p>
-<p>投资成功概率最高的项目秘诀？</p>
-<p>​    拷贝是创业成功概率最高的</p>
-<p>​    我们要做中国的…</p>
-<p>京东— 要做网上的苏宁</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分享会/">分享会</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-每周一书/周读-- 创业维艰"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -920,7 +814,7 @@
 
 
   
-    <article id="post-每周一书/【读书笔记】《重新认识你自己》——克里希拉穆提"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-日常记录/8.13"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -928,7 +822,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《重新认识你自己》——克里希拉穆提/">【读书笔记】《重新认识你自己》——克里希拉穆提</a>
+      <a class="article-title" href="/2017/08/13/日常记录/8.13/">8.13</a>
     </h1>
   
 
@@ -936,42 +830,51 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/每周一书/【读书笔记】《重新认识你自己》——克里希拉穆提/" class="article-date">
+	<a href="/2017/08/13/日常记录/8.13/" class="article-date">
 	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+    <a class="article-category-link" href="/categories/随笔/">随笔</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>不知道是不是翻译的原因，这本书比《一生的学习》读起来感觉要更接地气，相对也更浅显易懂一些</p>
-</blockquote>
-<blockquote>
-<p>或许是因为是克里较为核心的思想体现</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>书中主题涉及面较广，有：</p>
+        <h2 id="APP发版"><a href="#APP发版" class="headerlink" title="APP发版"></a>APP发版</h2><p> 前两天连续经历了晚上的发版，感受了一下大项目的流程性压力。</p>
 <ul>
-<li>认识自我</li>
-<li>觉察力</li>
-<li>告别恐惧</li>
-<li>爱</li>
-<li>思想的起源</li>
-<li>昨日的重担</li>
-<li>…</li>
+<li>项目规模大了也会限制到人的发挥，还好谷歌后台的分发流程极其智能，能做到分版分类型进行测试</li>
+<li>可以把beta测试的动作再放大一些，see what we will got, or the result will be amazing.</li>
+<li><p>有一些时间是浪费在build/test 上的</p>
+<ul>
+<li>过程是可以优化的，比如build加速，比如Test不要仅仅依赖手工测试，可以为流程引入自动化测试</li>
 </ul>
+<blockquote>
+<p>截止现在，我还是没有完全掌握ORG全部的流程，逻辑相对还是比较复杂的，领导们提倡的文档化在这种问题上就凸显出重要性了</p>
 </blockquote>
-<p><a href="https://www.amazon.cn/gp/product/B003DSI05I/ref=oh_aui_search_detailpage?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接</a></p>
-<p><a href="https://www.evernote.com/l/ARsTf26hwsZABorVzyzxFAdeYPtbL6fc8pU" target="_blank" rel="noopener">印象笔记链接</a></p>
-<p>导图图片：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-bd48a9f516415a7d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="重新认识你自己overview.png"></p>
-<p>笔记文本：</p>
-<p>《重新认识你自己》克里希拉穆提<br>1 一、 没有任何导向<br>  1.1 遍寻不着那冠以千名的无名本体，只得另谋出路，培养自己对救主或某种理想的信念，而这份信念迟早会酿成暴力<br>  1.2 多少世纪以来，我们被老师、尊长、书籍和圣人用汤匙喂大。我们充其量只是“二手货”人类<br>  1.3 传统的方式是由外向内包抄，通过时间、修炼和压离，逐渐才能开化结果，才能培育出内在的美及爱。然而事实上，这种方式反而使人变得更加狭隘、琐碎而低劣<br>  1.4 我们大多人都反对暴君式的专制政体，内心却接受了别人的权威或专断，允许他们来扭曲我们的心智和生活，这真是不可思议<br>  1.5 认识自己才是智慧的开端<br>  1.6 外在的社会结构，就是人际关系心理结构的成果，而个人则是整体人类的经验、知识和行为总结。每个人都是过去历史的库存，因此，个人就是整体人类。人类的历史就写在我们身上。<br>  1.7 其实真理根本是无路可循的，而它的美就在于此，因为它是活生生的<br>  1.8 人生哲学并不重要，重要的是如何观察日常生活中确实在发生的事，不论是内在的或外在的。<br>  1.9 如果我真的愚蠢到给你一套制度，而你也愚蠢到全盘接受的地步，那么你就任然在模仿、顺从与接受，在自己的内心树立另一个权威<br>  1.10 只有死于昨日种种，才能使你内在及外在的所有权威中解脱，你的心才能时时年轻、新鲜、天真无邪、充满热情活力。只有处于这种心境中，人才能观察和学习<br>2 二、 认识自我<br>  2.1 如果你不打算跟随任何导师，你会感到孤单，那么就让自己孤单吧<br>  2.2 我无法独自生存，我自能活在与外在人、事及概念的关系之中，因此观察我与外在人、事及内心种种活动的关系，我才开始认识自己<br>3 三、 觉察力<br>  3.1 只有当你觉察到自己的限制时，你才会明白自己所有层面的意识<br>  3.2 人究竟能否看到完整的意识领域，然后成为一个完整的人？<br>  3.3 我的心不再向外寻求，这就是关键所在<br>  3.4 若想开启那扇门，我们必行每天都保持全观而且充满觉察力，觉察自己的每一个思想和言行<br>  3.5 在没有拣择的心智状态下，也许大门会在刹那间开启，让你一睹那既无挣扎又超越时间的境界<br>4 四、 什么是快感<br>  4.1 你也许会问，那为什么不让快感来引导生活？原因极其简单：快感必定带来痛苦、沮丧、忧伤及恐惧，或是因恐惧而滋生的暴力<br>  4.2 意念只是记忆、经验及知识的反应，毫无创意可言<br>  4.3 好好观察你自己，你会发现，就是这种想重负快感的需求，才不断带给人挣扎及痛苦，因为它绝不可能和昨天的感受一样<br>  4.4 所谓“活在当下”，就是在刹那间领会其中的美及喜悦，而不眷恋它所带来的快感<br>5 五、告别恐惧<br>  5.1 这种对地位、权势的追求，希望在某方面被社会视为卓越的心理，都不过是一种驾驭他人的欲望。这种欲望本身就是某种形式的侵略性<br>  5.2 除非我们从恐惧中彻底解脱，否则我们只有继续追逐最高目标，制造出各种神来解救我们脱离黑暗<br>  5.3 你能不能注释着恐惧，既不加以判断，也不以你所累积的只是来干预它？如果不能，那么你所看到的便只是陈旧往事，而不是恐惧<br>  5.4 你一旦认清自己就是恐惧，和恐惧无二无别，自然会停止所有的斗争，然后恐惧就会完全止息下来<br>6 六、 暴力与愤怒<br>  6.1 我们能不能深入暴力的根源，然后从中解脱出来？<br>  6.2 暴力最通常的表达就是愤怒<br>  6.3 根本没试一试或尽力而为这件事，只有做与不做的选择而已<br>7 七、 人际冲突的真相<br>  7.1 人际关系时常是建立在塑造的假象与方位机制上<br>  7.2 当人心真的从社会的心理结构中解脱出来时，清贫才能变成一件美好的事。一个人应该先致力于内在的简朴，不再追寻，不再要求，也不再渴望，也就是一无所求了<br>  7.3 我们如何才能从社会的心理结构中解脱出来？<br>  7.4 如果你不再和别人比较，你就会接纳自己<br>  7.5 如果我们不能确切地了解欲望的本质，冲突时很难避免的<br>8 八、 与真实的自我相处<br>  8.1 反抗并不是自由，而只是一种反应，它必然又会形成自己的模式，于是你又陷入了那个模式之中。其实只是新瓶装旧酒<br>  8.2 只有当你能真正看清真相而付诸行动时，才有自由可言，反叛是无法带来自由的<br>  8.3 看清真相就是行动，也就是自由<br>  8.4 自由乃是一种心智状态，它不是某种东西挣脱的自由，而是一种自由的意识，一种可以怀疑和追问一切的自由，他强烈、活跃而富有生气，因此能清楚各式各样的依赖、奴役、臣服及逆来顺受的阴影<br>  8.5 这种自由意味着彻底的孤独<br>  8.6 如果你认清自己是如此乏味，充满嫉妒、恐惧，自以为感情丰富，实则相当无情，又这么容易受到伤害，容易得意也容易感到无聊，我们能够与这样的自我相处吗？<br>  8.7 我们不能不能既不接受它，也不排斥它，既不消沉，也不得意，而只是如实地关照？<br>9 九、时间与烦恼<br>  9.1 我们总认为自己将来会有所改变，我们内心所向往的和谐境界也会一点一点、一天一天地实现。事实上，时间并不会带来任何的和谐或平安，我们必行停止这种渐进的想法<br>  9.2 时间乃是观察者与被观察者之间的空隙<br>  9.3 一个人如果能够活得平安和谐，充满了美与爱，必然不会恐惧死亡，因为爱本身即是死亡<br>  9.4 你必行真的死了，才能发现死后究竟是怎么一回事。如果你能毫不勉强，也不讨价还价地死于任何令你快慰的事物，然后你料能了解死亡的意义。死亡就是彻底让心智空掉，把每天的渴望、快感以及痛苦完全空掉。死亡就是一种更新，一种突变<br>  9.5 从已知中解脱便是死亡，然后你才能真正地生活<br>10 十、 懂得爱<br>  10.1 一个人如果能真正地爱，必然享有自由，它不是从对方那里掠夺来的，而是自然由内心生起的<br>  10.2 如果你了解爱，你就不会再追随任何人，爱不是臣服，当你爱的时候，根本没有可敬或不可敬之分<br>  10.3 爱所到之处，既无责任，也无义务可言<br>  10.4 爱是新鲜、活泼而充满着生命力的，它没有昨日，也没有明天，更不受杂念的干扰。只有赤子之心才能人出它来<br>  10.5 所谓的爱，是属于完全不同次元的东西<br>11 十一、时空隔阂<br>  11.1 能够透视自己的内心，而不是外在的人事，是在是最难的事了<br>  11.2 长久相处在一起的伴侣，彼此间必定存有很深的印象，因此阻碍了关系的发展<br>  11.3 当你和所观之物产生空隙时，你就知道爱不存在了<br>12 十二、 观察者与被观察者<br>  12.1 觉察到观者与被观者不二，并不意味着一定要与那被观者认同<br>  12.2 如果他尚未领悟到观察者与被观察者不二的真理，则观察者的任何作为不过是在制造另一个意象而又使自己身陷其中<br>  12.3 从这种强烈的觉知中就会产生不同品质的专注力，这种专注力就会造成全然不同的心智状态。<br>  12.4 因为心智就是觉知本身，它会因此而变得极度敏锐，而且有高度智慧<br>13 十三、 思想的起源<br>  13.1 思想只不过是一些观念，它是积存在脑细胞中的记忆的一种反应<br>  13.2 思想是扭曲的，因为它总是任意发明和看到根本不存在的东西<br>  13.3 然后心智就会一改常态，不再一味强求和征服，它会变得出奇的宁静、柔软、敏感和空寂。在这种境界中，就不会再有任何的自欺欺人<br>14 十四、 昨日的重担<br>  14.1 我们极少有独处的机会，即使独自一人，生活仍然充满着各种外来的影响<br>  14.2 内心享有独处空间是十分重要的，因为那意味着存在的自由、行动的自由以及任意翱翔的自由。<br>  14.3 只有空寂才能滋生出良善，也只有自由才能培育出德行的花朵<br>  14.4 一个人如果总想获取或达成一些什么，这种拼命奋斗的态度，对我来说就是人生最大的绊脚石<br>  14.5 真正的自由乃是从锻炼的强制中解脱出来，能认识这份自由便是极深的修炼<br>  14.6 在地质所有的权威，必须先看清楚为什么我们会服从它们<br>15 十五、 冥想<br>  15.1 一个不听寻找和渴求更深更广经验的心，就是肤浅而迟钝的，因为它其实永远活在自己的记忆里<br>  15.2 冥想就是觉察每个念头和每个感受，绝不加以是非判断，而只是观察，随着它律动，从这份觉察中你会认清思想及感受的所有活动，几经就会在这份觉察中出现<br>  15.3 如果你用一小时全神贯注地读这本书，就是在冥想了<br>16 十六、 彻底革新<br>  16.1 任何有意义的运动或影响深远的行动，都必行从我们每一个人开始<br>  16.2 可惜我们从不质疑，只希望别人告诉我们如何去做。<br>  16.3 我们的心理结构中有一样奇怪的东西，就是喜欢听别人指使，这是上万年以来洗脑的结果</p>
+</li>
+</ul>
+<h2 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h2><p> 好友的老婆今天晚上可能就要生宝宝了，替他开心，不过他不能立刻回到爱人身边，小小遗憾</p>
+<blockquote>
+<p>我似乎也应该开始着手培养爱的能力了，你说对么？</p>
+</blockquote>
+<p>今天邀三位大学同学到家附近小聚，尔后到家中小坐，互通有无，收获还是不小的</p>
+<ul>
+<li><p>BG分享了不少网站前端的知识，还有一些亚历山大与始皇时期的一些历史细节、阳明心学、骑行服务的远大理想等等</p>
+</li>
+<li><p>从院士那了解到学术论文的一些微操，包括论文检索引擎的暴利，老教授的会议空谈惯性，还有一些学术奋斗的故事宏观始末等等</p>
+</li>
+<li><p>中哥的Linux服务号写起来了，你下次多说几句^_^</p>
+</li>
+<li><p>剩下的就是扯淡了，我也不记得我说了啥了，我好像扯淡比较多！</p>
+</li>
+</ul>
+<blockquote>
+<p>朋友的角色还是很重的，会影响思维、想法、拓宽见识</p>
+<p>读书如交友，这也凸显了读好书、交好友的重要性</p>
+</blockquote>
+<h2 id="move-on"><a href="#move-on" class="headerlink" title="move on"></a>move on</h2><p>新的一周又要开始啦，预期工作上的责任与任务会更重，好好努力。</p>
+<p>自己的长期目标也要即刻开始准备，加油。</p>
 
       
 
@@ -981,7 +884,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/日记/">日记</a></li></ul>
 
     </footer>
   </div>
@@ -992,7 +895,7 @@
 
 
   
-    <article id="post-每周一书/【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-日常记录/-【兼职】北京兼职"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -1000,7 +903,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock/">【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock</a>
+      <a class="article-title" href="/2017/08/13/日常记录/-【兼职】北京兼职/">-【兼职】北京兼职</a>
     </h1>
   
 
@@ -1008,39 +911,30 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/每周一书/【读书笔记】《重新定义团队-谷歌如何工作》Laszlo-Bock/" class="article-date">
+	<a href="/2017/08/13/日常记录/-【兼职】北京兼职/" class="article-date">
 	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+    <a class="article-category-link" href="/categories/其它/">其它</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>“谷歌如何超越苹果、微软、亚马逊等公司，成为世界顶尖人才心目中的最佳雇主？<br>谷歌如何培养人才、留住人才，最大限度地发掘人的创造力？”</p>
+        <p> 工作内容：</p>
+<p>项目资料整理，数据处理，报告撰写</p>
+<p>任职需求：</p>
+<p>1、  <strong><u>硕士研究生学历</u></strong>，金融、经济、统计、社会学、情报学专业背景；</p>
+<p>2、  形象端正，为人稳重，有责任心，善于学习；</p>
+<p>3、  熟练使用office软件，擅长ppt撰写；</p>
+<p>4、  每周至少工作<strong><u>2-3</u></strong>天；</p>
+<p>5、  能连续工作2-3个月；</p>
+<p>薪资：2000元/月（全勤）</p>
+<pre><code>感兴趣的同学请发简历到邮箱：474415968@qq.com
+</code></pre><blockquote>
+<p>公司简介：赛诺经典是国内首家金融业独立管理咨询机构，致力于为变革中的中国银行业提供优质、高效的管理咨询服务，以提高金融企业的管理水平、提升金融业的整体竞争力为己任。<br>    公司专注于金融行业的研究，提供集市场调查、金融教学、专项研究、管理咨询、独立评估为一体的顾问式服务，是银行、保险公司、证券公司、基金公司投资公司的数据供应商、研究提供商、咨询服务商和金融教育伙伴。公司致力于建立商业银行竞争力评价体系，向监管机构和金融企业提供独立的政策咨询建议。</p>
 </blockquote>
-<blockquote>
-<p>本书主要谈论：谷歌的人力资源管理，谷歌的招聘</p>
-</blockquote>
-<blockquote>
-<p>虽说谷歌受到的过度关注让它成为光环效应的最好示例，但书中的很多故事都是值得一读的</p>
-</blockquote>
-<blockquote>
-<p>本书实质上是很多实验的总结，从中可以看出谷歌的规章制度都是一点一点尝试、学习、改进不断循环的过程<br>但也不能忘记“盛名之下其实难副”，书中的很多观点或许并不准确</p>
-</blockquote>
-<blockquote>
-<p>书中的很多想法都对管理者或者公司的资源丰富度要求很高，可以参考借鉴的地方还是有一些</p>
-</blockquote>
-<p><a href="https://www.amazon.cn/gp/product/B0151H9SZY/ref=oh_aui_search_detailpage?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接</a></p>
-<hr>
-<p><a href="https://www.evernote.com/l/ARvFNXR8105IyYuow1VvarE9_1iS-6rI400" target="_blank" rel="noopener">印象笔记链接</a></p>
-<p>部分笔记图片：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-3d6811d6b5e1b02d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="重新定义团队 overview.png"></p>
-<p>笔记文本：</p>
-<p>《重新定义团队 谷歌如何工作》Laszlo Bock<br>1 十、 不公平薪酬<br>  1.1 以成就为荣，不以报酬为荣<br>    1.1.1 金钱带来的喜悦转瞬即逝，但是美好的记忆却永远保持<br>  1.2 创造易于传播爱的环境<br>  1.3 精心筹划却遭受失败的同样要奖励<br>  1.4 信念的飞跃<br>    1.4.1 如果你的目标足够有野心，足够疯狂，即使失败了也能有相当不错的成就<br>2 十一、 世界上最好的东西是免费的<br>  2.1 提高职业和个人生活的效率<br>  2.2 一个关联谷歌及周边的社区<br>  2.3 推动创新<br>  2.4 想办法说好<br>  2.5 员工最需要你的时候，请伸出援手<br>3 十二、 助推<br>  3.1 利用助推帮助员工变得更明智<br>  3.2 更富有<br>    3.2.1 激励储蓄<br>  3.3 更健康<br>  3.4 精心设计，用心设计<br>4 十三、 谷歌的教训<br>  4.1 透明的代价<br>  4.2 摒弃应得权利<br>  4.3 一次失败的绩效管理变革<br>  4.4 珍视怪人<br>  4.5 有的放矢<br>    4.5.1 创新因创造力和实验而蓬勃发展，但同时也需要细心地修剪<br>5 十四、 从明天起你可以做些什么<br>  5.1 赋予工作意义<br>  5.2 相信员工<br>  5.3 只聘用比你更优秀的人<br>  5.4 不要将职业发展与管理绩效混为一谈<br>  5.5 关注团队的两端<br>  5.6 既要节俭，又要慷慨<br>  5.7 不公平薪酬<br>  5.8 助推<br>  5.9 管理日益提升的期望<br>  5.10 享受</p>
 
       
 
@@ -1050,7 +944,66 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/福利/">福利</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-日常记录/【工具】流程图-图形标准简介"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/13/日常记录/【工具】流程图-图形标准简介/">【工具】流程图-图形标准简介</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/13/日常记录/【工具】流程图-图形标准简介/" class="article-date">
+	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/效率/">效率</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>流程图可以提供一种简单扼要的“缩略俯瞰图”，帮助观众快速了解业务如何运转。可以极大地提高沟通效率、业务认知速率</p>
+</blockquote>
+<blockquote>
+<p>本篇介绍各个图形的标准含义与用法（基础篇）</p>
+</blockquote>
+<hr>
+<p><strong>图示：</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-faca475f0e621d3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flow_chat_standard_icon.png"></p>
+<p><strong>来个例子</strong></p>
+<p>获取验证码的逻辑流程：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-306faf3145e4e6a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flow_chat_example.png"></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tool/">Tool</a></li></ul>
 
     </footer>
   </div>

@@ -255,6 +255,54 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/Android/GradleKeyword"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/03/20/技术/Android/GradleKeyword/">Gradle keyword</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/03/20/技术/Android/GradleKeyword/" class="article-date">
+	  <time datetime="2019-03-20T06:52:02.000Z" itemprop="datePublished">2019-03-20</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="../../img/gradle_keyword.jpg" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/WebView内存泄露如何规避"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -796,66 +844,6 @@
 </ol>
 <h5 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseHead</span><span class="params">(@Nonnull Node head)</span> </span>&#123;</span><br><span class="line">    Node pre = head;</span><br><span class="line">    Node cur = head.nextNode;</span><br><span class="line">    Node next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</span><br><span class="line">        next = cur.nextNode;</span><br><span class="line">        cur.nextNode = pre;</span><br><span class="line"></span><br><span class="line">        pre = cur;</span><br><span class="line">        cur = next;</span><br><span class="line">    &#125;</span><br><span class="line">    head.nextNode = <span class="keyword">null</span>;</span><br><span class="line">    head = pre;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseByRecur</span><span class="params">(Node current)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (current == <span class="keyword">null</span> || current.nextNode == <span class="keyword">null</span>) <span class="keyword">return</span> current;  </span><br><span class="line">    Node nextNode = current.nextNode;  </span><br><span class="line">    current.nextNode = <span class="keyword">null</span>;  </span><br><span class="line">    Node reverseRest = reverseByRecur(nextNode);  </span><br><span class="line">    nextNode.nextNode = current;  </span><br><span class="line">    <span class="keyword">return</span> reverseRest;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面经/">面经</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/算法/面经--逆转字符串（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/12/技术/算法/面经--逆转字符串（Java）/">面经--逆转字符串</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/12/技术/算法/面经--逆转字符串（Java）/" class="article-date">
-	  <time datetime="2018-03-12T14:50:52.000Z" itemprop="datePublished">2018-03-12</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="面经-逆转字符串（Java）"><a href="#面经-逆转字符串（Java）" class="headerlink" title="[面经] 逆转字符串（Java）"></a>[面经] 逆转字符串（Java）</h3><p>如何逆转字符串呢？本篇介绍几种常见方法：</p>
-<ol>
-<li>暴力解法</li>
-<li>StringBuilder自带的reverse</li>
-<li>reverse源码</li>
-<li>堆栈</li>
-<li>集合的reverse方法</li>
-</ol>
-<h5 id="暴力解法：-利用String-charAt-，倒序地访问-原String的各个char"><a href="#暴力解法：-利用String-charAt-，倒序地访问-原String的各个char" class="headerlink" title="暴力解法： 利用String.charAt()，倒序地访问 原String的各个char"></a>暴力解法： 利用String.charAt()，倒序地访问 原String的各个char</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">reverseIt</span><span class="params">(String source)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, len = source.length();</span><br><span class="line">    StringBuilder dest = <span class="keyword">new</span> StringBuilder(len);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = (len - <span class="number">1</span>); i &gt;= <span class="number">0</span>; i--)&#123; <span class="comment">// key</span></span><br><span class="line">        dest.append(source.charAt(i));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dest.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="最不装的：直接利用自带reverse方法"><a href="#最不装的：直接利用自带reverse方法" class="headerlink" title="最不装的：直接利用自带reverse方法"></a>最不装的：直接利用自带reverse方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> StringBuilder(hi).reverse().toString()</span><br></pre></td></tr></table></figure>
-<h5 id="这显然没什么营养，我们看看StringBuilder的reverse-做了什么："><a href="#这显然没什么营养，我们看看StringBuilder的reverse-做了什么：" class="headerlink" title="这显然没什么营养，我们看看StringBuilder的reverse()做了什么："></a>这显然没什么营养，我们看看StringBuilder的reverse()做了什么：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">reverse</span><span class="params">(String input)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span>[] in = input.toCharArray();</span><br><span class="line">    <span class="keyword">int</span> begin=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> end=in.length-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">char</span> temp;</span><br><span class="line">    <span class="keyword">while</span>(end&gt;begin)&#123; <span class="comment">// key</span></span><br><span class="line">        temp = in[begin];</span><br><span class="line">        in[begin]=in[end];</span><br><span class="line">        in[end] = temp;</span><br><span class="line">        end--;</span><br><span class="line">        begin++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> String(in);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="当然，如果你想被嫌弃，也可以用堆栈："><a href="#当然，如果你想被嫌弃，也可以用堆栈：" class="headerlink" title="当然，如果你想被嫌弃，也可以用堆栈："></a>当然，如果你想被嫌弃，也可以用堆栈：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">reverseString</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">    Stack&lt;Character&gt; stack = <span class="keyword">new</span> Stack&lt;Character&gt;();</span><br><span class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">        stack.push(s.charAt(i));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (!stack.empty()) &#123; <span class="comment">// key</span></span><br><span class="line">        sb.append(stack.pop());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sb.toString();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="或者想被喷出翔，装一下箱，拆一下箱："><a href="#或者想被喷出翔，装一下箱，拆一下箱：" class="headerlink" title="或者想被喷出翔，装一下箱，拆一下箱："></a>或者想被喷出翔，装一下箱，拆一下箱：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">reverseStr</span><span class="params">(String input)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span>[] hello = input.toCharArray();</span><br><span class="line">    List&lt;Character&gt; trial1 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">char</span> c: hello)</span><br><span class="line">        trial1.add(c);</span><br><span class="line"></span><br><span class="line">    Collections.reverse(trial1); <span class="comment">// key</span></span><br><span class="line">    ListIterator li = trial1.listIterator();</span><br><span class="line">    <span class="keyword">while</span> (li.hasNext())</span><br><span class="line">        System.out.print(li.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
