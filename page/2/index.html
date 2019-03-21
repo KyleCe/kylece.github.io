@@ -255,6 +255,59 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/算法/算法--atoi源码"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/17/技术/算法/算法--atoi源码/">atoi源码</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/17/技术/算法/算法--atoi源码/" class="article-date">
+	  <time datetime="2018-03-17T15:16:35.000Z" itemprop="datePublished">2018-03-17</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>面试中比较偏重基础的可能会考察到这一类的具体实现</p>
+</blockquote>
+<h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>atoi：将字符串转换为数字</p>
+<h3 id="如何处理"><a href="#如何处理" class="headerlink" title="如何处理"></a>如何处理</h3><p>字符如何隐式的转换为数字：<br>一个char型的字符减去‘0’就会隐式的转换为数字，一个数字加上‘0’则会隐式的转换为字符，明白了这一点，就可以尝试着写atoi了</p>
+<h3 id="SourceCode-–-C语言"><a href="#SourceCode-–-C语言" class="headerlink" title="SourceCode – C语言"></a>SourceCode – C语言</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> <span class="title">my_atoi</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *c)</span></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> value = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> sign = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>( *c == <span class="string">'+'</span> || *c == <span class="string">'-'</span> )&#123; <span class="comment">//符号判断</span></span><br><span class="line">        <span class="keyword">if</span>( *c == <span class="string">'-'</span> ) sign = <span class="number">-1</span>; <span class="comment">//记录负数</span></span><br><span class="line">        c++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">isdigit</span>(*c))&#123; <span class="comment">//处理所有的数字，非数字字符会被过滤掉</span></span><br><span class="line">        value *= <span class="number">10</span>; <span class="comment">//已经处理过的位左移（* 10实现）</span></span><br><span class="line">        value += (<span class="keyword">int</span>) (*c-<span class="string">'0'</span>); <span class="comment">//加上心的位，通过-'0'实现</span></span><br><span class="line">        c++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (value * sign);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    assert(<span class="number">5</span> == my_atoi(<span class="string">"5"</span>));</span><br><span class="line">    assert(<span class="number">-2</span> == my_atoi(<span class="string">"-2"</span>));</span><br><span class="line">    assert(<span class="number">-1098273980709871235</span> == my_atoi(<span class="string">"-1098273980709871235"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面经/">面经</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/算法/面经--连续最长数字串"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -312,7 +365,7 @@
 
 
   
-    <article id="post-技术/算法/面经--计算一个字节有几比特（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/算法/面经--逆转链表（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -320,7 +373,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/">面经--计算一个字节有几比特（Java）</a>
+      <a class="article-title" href="/2018/03/13/技术/算法/面经--逆转链表（Java）/">面经--逆转链表</a>
     </h1>
   
 
@@ -328,7 +381,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/" class="article-date">
+	<a href="/2018/03/13/技术/算法/面经--逆转链表（Java）/" class="article-date">
 	  <time datetime="2018-03-13T15:27:30.000Z" itemprop="datePublished">2018-03-13</time>
 	</a>
 
@@ -366,7 +419,7 @@
 
 
   
-    <article id="post-技术/算法/面经--逆转链表（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/算法/面经--计算一个字节有几比特（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -374,7 +427,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/13/技术/算法/面经--逆转链表（Java）/">面经--逆转链表</a>
+      <a class="article-title" href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/">面经--计算一个字节有几比特（Java）</a>
     </h1>
   
 
@@ -382,7 +435,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/13/技术/算法/面经--逆转链表（Java）/" class="article-date">
+	<a href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/" class="article-date">
 	  <time datetime="2018-03-13T15:27:30.000Z" itemprop="datePublished">2018-03-13</time>
 	</a>
 
@@ -562,7 +615,7 @@
 
 
   
-    <article id="post-技术/程序/LogFoQATest"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/程序/GC"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -570,7 +623,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/LogFoQATest/">LogFoQATest</a>
+      <a class="article-title" href="/2018/03/09/技术/程序/GC/">由 _Java GC_ 看 _Android_ 内存泄露</a>
     </h1>
   
 
@@ -578,7 +631,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/程序/LogFoQATest/" class="article-date">
+	<a href="/2018/03/09/技术/程序/GC/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -589,28 +642,78 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h3><ol>
-<li>判断手机是否存在指定TXT文件。如果存在开始打印log信息进入TXT文件里面。</li>
-<li>加入是否将ORG设置默认的log。</li>
-<li>是否调起menu的log信息。</li>
-<li>打印menu是否拉去广告的log信息，</li>
-<li>其他网络请求。</li>
-</ol>
-<h3 id="实现记录"><a href="#实现记录" class="headerlink" title="实现记录"></a>实现记录</h3><p>所以日志以 QATestInfo 为log的TAG信息</p>
-<ol>
-<li><p>默认包含此功能；</p>
-</li>
-<li><p>SetDefaultHomeOK</p>
-</li>
-<li><p>InvokeMenuPopUp</p>
-</li>
-<li><p>RequestMenuAD</p>
-</li>
-<li><p>可能较耗内存的场景：</p>
-<p>RequestNearbyApp<br>RequestCommonTool</p>
-<p>ImageLoaderLoadImageFromNet<br>ImageLoaderLoadAdmobImageCore<br>VolleyDisplayImage<br>VolleyDecodeImage<br>VolleyDecodeImageFix</p>
-</li>
-</ol>
+        <h1 id="由-Java-GC-看-Android-内存泄露"><a href="#由-Java-GC-看-Android-内存泄露" class="headerlink" title="由 Java GC 看 Android 内存泄露"></a>由 <em>Java GC</em> 看 <em>Android</em> 内存泄露</h1><p>内存泄露，一个老生常谈的话题，本文将从Java GC的角度出发，一探Android内存泄露的究竟，希望能给读者带来些许启发。</p>
+<p><em>本篇涵盖：</em></p>
+<ul>
+<li><em><strong>准备</strong>——基础知识要求及名字解释</em></li>
+<li><em><strong>背景</strong>——Android内存泄露的本质与危害</em></li>
+<li><em><strong>原因</strong>——为什么会产生泄露</em></li>
+<li><em><strong>基础</strong>——Java内存分配与回收</em></li>
+<li><em><strong>引申</strong>——JVM与Android虚拟机</em></li>
+<li><em><strong>实战</strong>——内存泄露攻防</em></li>
+</ul>
+<h2 id="零、准备"><a href="#零、准备" class="headerlink" title="零、准备"></a>零、准备</h2><h3 id="0-0-要求："><a href="#0-0-要求：" class="headerlink" title="0.0 要求："></a>0.0 要求：</h3><p>  阅读本文，需要读者具有一定的JAVA基础与Android基础</p>
+<h3 id="0-1-名词解释："><a href="#0-1-名词解释：" class="headerlink" title="0.1 名词解释："></a>0.1 名词解释：</h3><ul>
+<li>GC——Garbage Collector垃圾收集器</li>
+<li>MAT——Eclipse  Memory Analyzer Tool 内存分析工具</li>
+<li>LeakCanary——第三方内存泄露监测工具</li>
+<li>StrictMode——Android严格模式，调优时可以参考<h3 id="0-2-演示环境："><a href="#0-2-演示环境：" class="headerlink" title="0.2 演示环境："></a>0.2 演示环境：</h3></li>
+<li>Android Studio——3.0 Canary 8</li>
+<li>Eclipse MAT——V1.7.0</li>
+<li>LeakCanary——V1.5.1</li>
+</ul>
+<h2 id="一、本质与危害"><a href="#一、本质与危害" class="headerlink" title="一、本质与危害"></a>一、本质与危害</h2><h3 id="1-1-何谓内存泄露"><a href="#1-1-何谓内存泄露" class="headerlink" title="1.1 何谓内存泄露"></a>1.1 何谓内存泄露</h3><p>在计算机科学中，内存泄漏指由于疏忽或错误造成程序未能释放已经不再使用的内存。内存泄漏并非指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误，导致在释放该段内存之前就失去了对该段内存的控制，从而造成了内存的浪费。</p>
+<p>在安卓中，内存泄露主要是指应用程序进程在运行过程中有不能释放而不再使用的内存，占用了比实际需要多的空间。</p>
+<p>图1.1.1是使用MAT分析手机内存快照得到的OverView结果：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-ca4c6177eb55ae69.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800#center" alt="图1.1.1 ORG某款应用的Debug版内存泄露OverView"></p>
+<h3 id="1-2-恶劣影响"><a href="#1-2-恶劣影响" class="headerlink" title="1.2 恶劣影响"></a>1.2 恶劣影响</h3><p>内存泄漏会因为减少可用内存的数量从而降低计算机的性能。最终，在最糟糕的情况下，过多的可用内存被分配掉导致全部或部分设备停止正常工作，或者应用程序崩溃。在以下情況，内存泄漏导致较嚴重的后果2：</p>
+<ul>
+<li>程序运行后置之不理，消耗越来越多的内存（比如服务器上的后台任务，尤其是嵌入式系统中的后台任务，这些任务可能被运行后很多年内都置之不理）；</li>
+<li>频繁分配新内存；</li>
+<li>程序能够请求未被释放的内存（比如共享内存）；</li>
+<li>内存非常有限，比如在嵌入式系统或便携设备中；</li>
+<li>…</li>
+</ul>
+<p>针对安卓，内存泄露轻则导致应用占用内存虚高、增加CPU占用、耗电，重则导致应用程序无法开辟所需大小的内存，引发OOM，触发崩溃，这在内存小的机器上尤为明显（我们平时在测试应用内存占用表现时，可以多使用低端机）。<br>结合上一节所举例子，由图1.1可见该应用的泄露足有35M之多，这一内存结果还是应用刚启动时的情况，随着用户使用时间加长，泄露只会越来越多，直到用户杀死应用或者应用主动崩溃（如图1.2.1）。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-b460f38cafbd927b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图1.2.1 AndroidStudio 某OutOfMemory 堆栈"></p>
+<p>下面我们来看内存泄露是如何产生的。</p>
+<h2 id="二、产生缘由"><a href="#二、产生缘由" class="headerlink" title="二、产生缘由"></a>二、产生缘由</h2><p>内存泄露诱因有很多，安卓中比较常见的有：</p>
+<ul>
+<li>静态变量持有引用(集合类、单例造成的内存泄漏)</li>
+<li>匿名内部类/非静态内部类和异步线程</li>
+<li>Handler 、UI线程的post、AnimatorListener等使用不当</li>
+<li>资源未关闭(或在finalize中关闭)</li>
+<li>监听器的使用，在释放对象的同时没有相应删除监听器</li>
+<li>…</li>
+</ul>
+<p>下面针对部分诱因进行说明，具体解决办法此处按下不表。</p>
+<h3 id="2-1-静态变量导致的泄露"><a href="#2-1-静态变量导致的泄露" class="headerlink" title="2.1 静态变量导致的泄露"></a>2.1 静态变量导致的泄露</h3><p>静态集合导致的泄露可以分析为：长生命周期的对象，持有了短生命周期对象的引用，在后者生命周期结束时未释放长周期对象对它的引用，导致对象无法被GC回收。图2.1.1为一示例，即使在循环内有设置集合对象为null，但集合中的对象还是存在，GC并不能回收它（这种在集合中不断创建新对象的写法也是极其臭名昭著的）。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-03be10fdf312be61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.1.1  静态集合的泄露示例"></p>
+<p>图2.1.2为某APP静态集合泄露的对象汇总，可以看到总大小有11.7M之大。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5a2e015b3d5de3b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.1.2 某静态泄露的汇总结果"></p>
+<h3 id="2-2-匿名内部类引发的内存泄露"><a href="#2-2-匿名内部类引发的内存泄露" class="headerlink" title="2.2 匿名内部类引发的内存泄露"></a>2.2 匿名内部类引发的内存泄露</h3><p>匿名内部类极易引发内存泄露，纵使这样的写法在代码层面会简洁很多，但在涉及到匿名内部类生命周期不依附于外部类时，需要我们谨慎处理，不然就很有可能引发泄露，图2.2.1 为AppsFlayer SDK 4.7.1 Forground.java中某段代码的近似版本（该泄露在SDK v4.7.4中已修复）：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-d8c4f55edc053536.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.2.1 匿名内部类引发的内存泄露示例"><br>图2.2.1 匿名内部类引发的内存泄露示例</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-32baef0d6d1e22c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.2.2 匿名内部类引发的内存泄露示例2"><br>图2.2.2展示了常见的Handler写法可能引发的内存泄露（Android Studio）</p>
+<p>图2.2.2 匿名内部类引发的内存泄露示例2</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-0270c0fdc04b6d26.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.2.3 匿名内部类引发的内存泄露示例3"><br>图2.2.3 匿名内部类引发的内存泄露示例3</p>
+<p>一般在一个质量欠佳的工程中，匿名内部类或异步线程操作导致的内存泄露随处可见。</p>
+<h3 id="2-3-Handler任务管理不当"><a href="#2-3-Handler任务管理不当" class="headerlink" title="2.3 Handler任务管理不当"></a>2.3 Handler任务管理不当</h3><p>Handler、AnimationListener、AnimatorUpdateListener使用不当也极易导致泄露，图2.3.1即为有泄露隐患的示例</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-518f810be8d5eea2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.3.1 Handler操作潜在泄露示例"><br>图2.3.1 Handler操作潜在泄露示例</p>
+<h3 id="2-4-资源未及时关闭"><a href="#2-4-资源未及时关闭" class="headerlink" title="2.4 资源未及时关闭"></a>2.4 资源未及时关闭</h3><p>Android资源不及时关闭会出现内存泄露的地方有很多，诸如在使用I/O流、Cursor（图2.4.1展示了在APP开启StrictMode时会收到的FileIO未close的异常Throwable）</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-cbf5aa5529865f5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.4.1 closable close未调用"><br>图2.4.1 closable close未调用</p>
+<h3 id="2-5-绑定-解绑、注册-反注册未成对调用"><a href="#2-5-绑定-解绑、注册-反注册未成对调用" class="headerlink" title="2.5 绑定/解绑、注册/反注册未成对调用"></a>2.5 绑定/解绑、注册/反注册未成对调用</h3><p>绑定/解绑、注册/反注册同时出现这一点毋庸置疑，但实际工程中发现有开发者对于成对调用的理解不够透彻，会有前后条件不一致的情况，导致内存泄露（如注册时无条件注册，反注册时加入不能100%保证成立的判定条件）</p>
+<h2 id="三、Java内存分配与垃圾回收策略"><a href="#三、Java内存分配与垃圾回收策略" class="headerlink" title="三、Java内存分配与垃圾回收策略"></a>三、Java内存分配与垃圾回收策略</h2><h3 id="内存分配"><a href="#内存分配" class="headerlink" title="内存分配"></a>内存分配</h3><h3 id="内存空间划分"><a href="#内存空间划分" class="headerlink" title="内存空间划分"></a>内存空间划分</h3><ul>
+<li>方法区</li>
+<li>堆区</li>
+<li>虚拟机栈</li>
+<li>程序计数器 </li>
+<li>本地方法栈</li>
+</ul>
+<h3 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h3><h2 id="四、JVM与Android虚拟机的异同"><a href="#四、JVM与Android虚拟机的异同" class="headerlink" title="四、JVM与Android虚拟机的异同"></a>四、JVM与Android虚拟机的异同</h2><h3 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h3><h3 id="安卓虚拟机"><a href="#安卓虚拟机" class="headerlink" title="安卓虚拟机"></a>安卓虚拟机</h3><h3 id="两者异同"><a href="#两者异同" class="headerlink" title="两者异同"></a>两者异同</h3><h2 id="五、如何“防治”"><a href="#五、如何“防治”" class="headerlink" title="五、如何“防治”"></a>五、如何“防治”</h2><h3 id="攻"><a href="#攻" class="headerlink" title="攻"></a>攻</h3><h3 id="防"><a href="#防" class="headerlink" title="防"></a>防</h3><blockquote>
+<p>参考文献：</p>
+<pre><code>1. https://zh.wikipedia.org/wiki/内存泄漏
+2. https://zh.wikipedia.org/wiki/内存泄漏
+</code></pre></blockquote>
 
       
 
@@ -620,7 +723,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GC/">GC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
 
     </footer>
   </div>
@@ -631,7 +734,7 @@
 
 
   
-    <article id="post-技术/程序/Java进阶——接口优于抽象类"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/【Note-PM】《项目管理修炼之道》提要"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -639,7 +742,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶——接口优于抽象类/">Java进阶——接口优于抽象类</a>
+      <a class="article-title" href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/">【Note-PM】《项目管理修炼之道》提要</a>
     </h1>
   
 
@@ -647,7 +750,63 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/程序/Java进阶——接口优于抽象类/" class="article-date">
+	<a href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>第18届Jolt生产效率大奖图书<br>作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富</p>
+</blockquote>
+<p><a href="https://pan.baidu.com/s/1cAaOxw" target="_blank" rel="noopener">XMind文档链接</a></p>
+<p><a href="https://pan.baidu.com/s/1mhZO5Fa" target="_blank" rel="noopener">导图PDF版链接</a></p>
+<p><strong>导图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-d20195caa4e17ed9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第一部分：规划与日程"></p>
+<p><strong>文本</strong></p>
+<p> 项目管理修炼之道<br>    Johanna Rothman<br>    规划与日程<br>        启动项目<br>            0.KEY——定义项目、项目约束、决定项目关键驱动因素、章程决策<br>            章程决策<br>                远景、需求、目标、成功标准、ROI<br>        规划项目<br>            0.KEY——足以启动的规划、规划模板、制定发布条件<br>            规划模板<br>                意图<br>                记录<br>                发布条件<br>                目标<br>                项目组织<br>                日程总览<br>                人员配备<br>                建议日程<br>                制订项目风险列表<br>        使用生命周期组织项目<br>            0.KEY——理解生命周期、概览、反馈、大规模项目需要组合多种生命周期、管理架构风险、从瀑布中解脱<br>        安排项目日程<br>            0.KEY——注重实效的日程安排、可选择安排技术、用低技术含量工具安排日程<br>        估算工作<br>            0.KEY——实用估算方式、里程碑切分项目、能不做什么？、多项目时的估算、主动安排人们进行多任务、实用波浪式规划、决定迭代的持续时间、“小石子”<br>            估算<br>                对比历史数据<br>                通过Delphi和宽带Delphi估算<br>                何时不应相信团队的话<br>                    减掉每个任务的缓冲时间、要得到的是更准确的估算结果<br>                用日期范围进行估计<br>                用自信心估计<br>                用三个日期估计：最佳、可能、墨菲<br>            小石子<br>                任务不清时使用<br>                如何得到“小石子”<br>                为什么使用<br>        识别和避免日程安排游戏<br>            0.KEY——“希望”是我们最重要的策略、拒绝女王、把灰扫到地毯下面、幸福日期、分散注意力、日程等于承诺<br>    团队与节奏<br>        创建出色的项目团队<br>            0.KEY——招募需要的人、形成团队凝聚力、让组织配合你的工作、对必必需的团队规模了如指掌、知道何时应该加入、成为出色的项目经理、知道何时全身而退<br>            凝聚力<br>                好工具让团队有更好的发挥<br>                软件配置管理系统应满足的最低要求<br>                缺陷跟踪系统应满足的最低要求<br>                发展5阶段<br>            让组织配合<br>                以项目经理的方式管理单一职能团队<br>                管理矩阵式项目团队<br>                管理跨职能团队<br>            项目经理<br>                人际交往能力<br>                提升功能性技能<br>                专业领域技能<br>                工具和技术的专业技能<br>            退<br>                不适合的组织、团队、产品<br>        掌控项目<br>            0.KEY——节奏、中途回顾、为需求排序、是时间盒限定需求相关的工作、将迭代限制在4周以下、使用波浪式规划和日程安排、创建跨职能团队、根据项目风险选择生命周期模型、保持合理的工作时间、使用“小石子”、管理干扰、管理缺陷<br>            “小石子“<br>                将计划的粒度细化，能提高规划时项目的估算准确率<br>        保持项目节奏<br>            0.KEY——使用持续集成、自动化冒烟测试、按功能实现而不是按架构、盯着产品、准备重构、通过用例、用户故事、角色和场景定义需求、分离需求与GUI设计、尽可能用低保真度原型<br>            按功能而不是按框架<br>                首先实现具有最高价值的功能<br>                按功能调试、测试<br>            低保真原型<br>                “使用低保真度原型，人们可以更全面地评估要解决的问题。高保真度原型会限制反馈。”<br>        管理会议<br>            0.KEY——取消部分会议、举行必要会议、项目启动会议、发布版本规划会议、进度报告会议、向管理层报告进度、项目团队会议、迭代审查会议、会议疑难问题解答、远程电话会议<br>            取消<br>                不需要你解决问题<br>                多人参加的顺序式进度报告会议<br>        创建并使用项目仪表板<br>            0.KEY——测量有风险、根据项目完成度来衡量进度、为出资人创建项目仪表盘、使用项目气象报告<br>            衡量进度<br>                速度图表跟踪日程安排进度<br>                用迭代内容图跟踪总体进度<br>                用图表展示团队统一采用的实践<br>    非简单项目<br>        管理多地点项目<br>            0.KEY——提问成本、识别项目文化差异、团队间培养信任、团队间使用互补实践、寻找潜在问题、外包时的注意事项<br>        在项目中集成测试<br>            0.KEY——“减少技术债”、小规模测试以降低风险、TDD是集成的最简单方法、使用多种测试、确定成员在测试工作中的角色、开发人员测试人员比率、让测试与开发同步进行、为项目制定测试策略、系统测试策略模板、QA与测试的区别<br>        管理项目群<br>            0.KEY——管理项目群、将多个相关项目组织到一个发布版本中、随时间推移组织多个相关项目、管理项目经理、创建项目仪表盘<br>        结束项目<br>            0.KEY——管理发布早期版本的请求、管理beta版本、项目经理何时知道无法按时发布项目、知道项目走向完成、取消项目<br>            何时知道无法按时发布<br>                避免小偏差<br>                承诺新日期<br>                估算系统测试时间<br>        管理项目组合<br>            0.KEY——构建所有项目的组合、评估项目、决定现在为那个项目提供资金、对组合中的项目进行排序、尽快启动项目、使用产品待办事项列表管理新功能需求<br>            答疑<br>                说服管理层：“切换上下文”是个坏主意<br>                如何对多任务说不</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/算法/【算法】BinarySearch--二分搜索-折半查找法"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/">【算法】BinarySearch--二分搜索-折半查找法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -659,25 +818,85 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>本篇系Java进阶系列 篇4.18，介绍<strong>接口</strong>相较于<strong>抽象类</strong>的优点</p>
-<p>跑题1——一直牢记的一点“100%的坚持比百分之九十几的坚持更容易”又一次体会到，上周跟随部门团建出去旅游，一旦停更就是将近一周，希望能把原则秉持下来</p>
-<p>跑题2——今天看了new iPhone的发布会，依旧很精致，不知何时Android能有赶上iPhone水准的机器面世</p>
+<p>前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下</p>
 </blockquote>
-<h3 id="两者区别"><a href="#两者区别" class="headerlink" title="两者区别"></a>两者区别</h3><p>抽象类可以包含部分实现，接口不可以（Java8接口中可以定义默认方法，但不推荐如此使用接口）</p>
-<p>为了实现抽象类定义的类型，必须extends 抽象类，限制了其可扩展性</p>
-<h3 id="接口的优势"><a href="#接口的优势" class="headerlink" title="接口的优势"></a>接口的优势</h3><ul>
-<li>已有类可以很容易被更新，以实现新接口</li>
-<li>接口是定义mixin（像中文“迷信”，实则取自此词，代表混合类型）的理想选择</li>
-<li>允许我们构造非层次结构的类型框架（就像我们每个人身怀多技一样，每个类也可能有多种特性）</li>
-<li>使得增强类的功能更加安全</li>
-</ul>
-<h3 id="pay-attention"><a href="#pay-attention" class="headerlink" title="pay attention"></a>pay attention</h3><ul>
-<li><p>公共接口一旦被公开，修改起来就极其麻烦，所谓牵一发而动全身，所以设计接口时要谨慎；</p>
+<p>wiki 图示：(<a href="https://zh.wikipedia.org/wiki/二分搜索算法" target="_blank" rel="noopener">Link</a>)</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c0e03f78ac559fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search wiki pic.png"></p>
+<p>Android中util.ContainerHelpers中的实现api：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-53135a5bb2e3e281.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search.png"></p>
+<p><em>排序前提：array本身已为有序数组</em></p>
+<p>查找过程：<br>0.向右无符号移位1位，得到middle位值；<br>1.以mid为准比对midIndex位置值与参数value大小，大则hi位移至现mid位前一位，小则lo位移至现mid位后一位，相等则返回mid；<br>2.重复以上过程直至不满足循环条件或是又查找结果</p>
+<p>从low、high可以看出，结果返回的是value在数组中对应的index，如果为负则代表不存在（最后一行，返回~lo会得到一个负数，因为lo计算结果一定为正，个人感觉直接返回一个负数可以连按位取反都省略掉，是不是性能更优？）</p>
+<hr>
 <blockquote>
-<p>实际项目中发现这个点其实是一个经验问题，又要最小化接口，又要把接口设计得符合<strong>SOLID</strong>设计模式五大原则，就要求我们在实际工作中训练好这个技能，把握好接口设计的度</p>
+<p>Java 位操作符：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-a2c49bbb981fa6c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Java bit calculate.png"></p>
 </blockquote>
+<hr>
+<p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="夕识.jpeg"></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/降低内存占用Route"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/降低内存占用Route/">降低内存占用Route</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/降低内存占用Route/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="已执行"><a href="#已执行" class="headerlink" title="已执行"></a>已执行</h3><ul>
+<li>修复LeakCanary报出的问题（内网、外网）<ul>
+<li>直接检测泄露</li>
+<li>外网beta用户上报</li>
+</ul>
 </li>
-<li><p>抽象类也并非一无是处，它的改变就比接口要简易的多，实际使用时也是体验很好的一种设计方法，不过抽象类的使用也要有所衡量，只有在确实是属于一个类别的类时才好去使用抽象类，否则就违背了我们的编程原则</p>
+<li>分析dumpheap文件，查内存占用（直接分析、对比分析）<ul>
+<li>占用大户<ul>
+<li>Bitmap</li>
+<li>FinalizerReference</li>
+</ul>
+</li>
+<li>场景分析，进出场景、发现可疑场景，查内存dumpheap文件<ul>
+<li>已有发现：WebView、主题切换泄露</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 
@@ -689,222 +908,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/Java进阶--for-each与传统for"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶--for-each与传统for/">Java进阶--for-each与传统for</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Java进阶--for-each与传统for/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>for-each 相较于 传统的 for-i更优</p>
-<p>自己编写的类在代表一组元素时，即使不实现Collection也要让它实现Iterable</p>
-<h3 id="体现"><a href="#体现" class="headerlink" title="体现"></a>体现</h3><p>for-each循环在预防bug方面与传统for循环有着无可比拟的优势</p>
-<ul>
-<li>传统for</li>
-<li>for-each</li>
-</ul>
-<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>implement Iterable接口，示例：</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/for-each/">for-each</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/Java进阶--被用烂的&#34;继承&#34;"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶--被用烂的"继承"/">Java进阶——接口优于抽象类</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Java进阶--被用烂的"继承"/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="摘要与关键字"><a href="#摘要与关键字" class="headerlink" title="摘要与关键字"></a>摘要与关键字</h3><p>继承很强大，但也有问题</p>
-<p>确实是is-a关系时才使用继承</p>
-<p>如果处在不同的包中，并且SuperClass不是为继承设计的，这时会导致脆弱性</p>
-<p>可以使用复合和转发机制来代替继承来避免这种脆弱性</p>
-<p>关键字:</p>
-<p><strong>继承、复合、装饰者模式、包装类、转发</strong></p>
-<blockquote>
-<p>keywords:</p>
-<p>继承(inheritance)、复合(composition)、装饰者模式(decorator)、包装类(WrapperClass)、转发(forwarding)</p>
-</blockquote>
-<p><em>为叙述方便，下文以CC代表子类，SC代表超类，也就是父类</em></p>
-<h3 id="问题体现"><a href="#问题体现" class="headerlink" title="问题体现"></a>问题体现</h3><p><strong>继承打破了封装性</strong></p>
-<p>CC依赖于SC的实现细节，在SC更新换代时，CC会受影响，严重的会导致错误，为了避免出现错误，时常要做的事情是跟着SC的更新而更新CC</p>
-<p>其实你可以直接使用<strong>复合</strong>来避免这一问题出现——也就是，在原来的CC中添加一个SC的实例</p>
-<p>这样新的类中可以直接使用SC的方法逻辑，而不用担心SC更新时要升级API的问题（概念：<strong>转发</strong>）</p>
-<p>这样的类也被称为<strong>包装类</strong></p>
-<p>这也引出了设计模式中的Decorator模式概念（<strong>装饰者模式</strong>）</p>
-<h3 id="强制使用的弊端"><a href="#强制使用的弊端" class="headerlink" title="强制使用的弊端"></a>强制使用的弊端</h3><ul>
-<li>暴露不必要的SC细节</li>
-<li>永远地限制了CC的性能（使用复合模式则可以在需要时更换转发的具体实现）</li>
-<li>导致语义混淆</li>
-</ul>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性/">Java进阶-- 利用有限制通配符来提升API的灵活性</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="词条"><a href="#词条" class="headerlink" title="词条"></a>词条</h3><p>通配符— ‘?’</p>
-<p>有限制的通配符 —</p>
-<ul>
-<li>? extends E</li>
-<li>? super E</li>
-</ul>
-<p>PECS — producer-extends, consumer-super</p>
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>输入参数是生产者或消费者时使用’?’</p>
-<p>所有的compare和comparator都是consumer</p>
-<p>声明方法时，用’?’取代仅出现一次的的类型参数</p>
-<h3 id="优势体现——论其必要性"><a href="#优势体现——论其必要性" class="headerlink" title="优势体现——论其必要性"></a>优势体现——论其必要性</h3><p>我们先看之前讲 <strong>优先考虑泛型</strong>时的一个示例：</p>
-<p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEgClass.png" alt=""></p>
-<p>考虑为它增加一个方法：</p>
-<p><img src="http://kylece.github.io/img/pic_resource/StackPushAll.png" alt=""></p>
-<p>这样的定义，在使用中会存在不灵活的问题：因为类型在定义之后就不可变了，如果想要将一个非E类型的Iterable  push到Stack中是不可能的，这样的事实我们显然不能接受，那么该如何修改呢？答案就在本篇的主角——通配符’?’上</p>
-<p>将上述API的参数修改为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Iterable&lt;? extends E&gt; src</span><br></pre></td></tr></table></figure>
-<p>即可达到目的</p>
-<p>说完? extends，再来看? super，同样考虑Stack的API，这一次是将Stack中的元素全部弹出到目标集合</p>
-<p><img src="http://kylece.github.io/img/pic_resource/StackPopAll.png" alt=""></p>
-<p>理想状态下，所有的子类型的Stack都可以弹出到父类型的集合，但上图的API并不能实现这一目的；我们需要这样修改：</p>
-<p>将参数类型修改为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collection&lt;? <span class="keyword">super</span> E&gt; dst</span><br></pre></td></tr></table></figure>
-<p>这样一来，任意继承自父类型的Stack就都可以pop到父类型集合了，是不是很带感</p>
-<p>有的同学可能会产生疑惑了，一会儿extends，一会儿super，好晕</p>
-<p>还好有规律可总结：</p>
-<p>PECS——producer-extends, consumer-super</p>
-<p>即参数列表中  生产者总是使用? extends，而消费者则总是使用 ? super（不了解生产者、消费者设计模式的同学请自行翻书）</p>
-<h3 id="高级应用"><a href="#高级应用" class="headerlink" title="高级应用"></a>高级应用</h3><p>原始API声明：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;T&gt;&gt; <span class="function">T <span class="title">max1</span><span class="params">(List&lt;T&gt; list)</span></span></span><br></pre></td></tr></table></figure>
-<p>修改后的API声明：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;? <span class="keyword">super</span> T&gt;&gt; <span class="function">T <span class="title">max2</span><span class="params">(List&lt;? extends T&gt; list)</span></span></span><br></pre></td></tr></table></figure>
-<p>这一修改后的API，pecs都用上了，真有必要弄这么复杂了？</p>
-<p>答案是肯定的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;ScheduleFuture&lt;?&gt;&gt; futures = ...;</span><br></pre></td></tr></table></figure>
-<p>这一futures不能调用max1方法，原因在于ScheduleFuture扩展的是Compare接口的Delayed接口的子接口，它可以与任意Delayed进行compare；而max2方法这样的声明就不会有这问题</p>
-<h3 id="E-与-‘-’"><a href="#E-与-‘-’" class="headerlink" title="E 与 ‘?’"></a>E 与 ‘?’</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br></pre></td></tr></table></figure>
-<p>你看上哪个了呢？</p>
-<p>从灵活性的角度考虑，肯定是第二种好一些，但在类型参数不止一个时，就不能用’?’ 而要用类型参数了</p>
-<p>使用第二种时需要注意：</p>
-<p>只能把null放入List&lt;?&gt;中，这时为了保证灵活性，就需要写一个辅助捕捉类型的方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">  swapTrick(list, i, j);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swapTrick</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    list.set(i, list.set(j, list.get(i)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>这一篇看起来似乎有点绕，但我们真正在项目中写公共库API时，其实是需要用到’?’的，不是为了装，是真的能提升API的适用范围，减少工作量</p>
-<p>不过任何收获都是要付出代价的，在写出高适用度的API时，一定记得写单元测试，进行高覆盖度的验证，保证准确性</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存/">内存</a></li></ul>
 
     </footer>
   </div>
