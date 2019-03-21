@@ -578,6 +578,153 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 
 
   
+    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
+</blockquote>
+<blockquote>
+<p>这样的话，注意定期检查各lib版本就好</p>
+</blockquote>
+<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
+<p>总结一下步骤：</p>
+<ol>
+<li>获取二维码（QRCode）</li>
+<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
+<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
+</li>
+<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
+</li>
+</ol>
+<p>时序图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
+<hr>
+<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/">【Android Tool】内存快照分析，自动抓取dump文件并转换脚本</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最新得到的Google内部消息，未来谷歌应用商店的排名算法将会把App的性能纳入考量范围（使用的机器学习算法），我们开发者也应该将性能这一指标纳入自己的检查范围</p>
+</blockquote>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>解决抓取内存文件，拉取到电脑，新建文件夹，转换为Eclipse Memory Analyzer 文件操作繁琐的问题</p>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
+<li>clone项目之后，上述流程只需要👇的指令即可完成</li>
+<li>自动将转换的文件存档到新建的同名目录下，避免MAT分析产生的临时文件污染文档目录</li>
+<li>更改目录或进程时，无需修改配置文件，输入即可自动记录上次操作习惯</li>
+<li>重复输入名称时，会自动append 时间到原来名称，避免覆盖历史文件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python GrabDump.py</span><br></pre></td></tr></table></figure>
+<p>读完本文，你将收获到一个自动化上述流程的简单project</p>
+<blockquote>
+<p>需要了解 Apk包的内存占用各部分组成</p>
+</blockquote>
+<h3 id="GitHub-地址"><a href="#GitHub-地址" class="headerlink" title="GitHub 地址"></a>GitHub 地址</h3><p><a href="https://github.com/KyleCe/PhonePerformanceMeasure">https://github.com/KyleCe/PhonePerformanceMeasure</a></p>
+<h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><p>最终的使用时样式：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/grabDump.png" alt=""></p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>首先你需要安装Python ^_^</li>
+</ul>
+<ul>
+<li>可以输入的参数包括：  dump文件名、存放目录、需要抓取的进程名</li>
+<li>下次输入时，如果没有完全输入，会自动使用上一次的参数</li>
+</ul>
+<blockquote>
+<p>第一次输入的时候还是需要完全的配置</p>
+</blockquote>
+<h3 id="已知问题"><a href="#已知问题" class="headerlink" title="已知问题"></a>已知问题</h3><p>抓取dump次数过多时会出现adb缓存读写错误的问题，需要重启adb（kill-server | start-server），后续找到解决方案会及时更新到Github repository</p>
+<hr>
+<p>扫描二维码，关注“夕识”，一起学习Android知识、CS知识，努力成为一位  different thinker</p>
+<p><img src="http://kylece.github.io/img/pic_resource/qrcode_for_wechat.jpg" alt=""></p>
+<p>点击“链接”，跳转至repo地址</p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dump/">Dump</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/retrofit2"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -768,7 +915,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 
 
   
-    <article id="post-技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/程序/【Java】神奇的内存占用大户FinalizerReference"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -776,7 +923,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/">【Android Tool】内存快照分析，自动抓取dump文件并转换脚本</a>
+      <a class="article-title" href="/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/">【Java】神奇的内存占用大户FinalizerReference</a>
     </h1>
   
 
@@ -784,7 +931,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/【Android Tool】内存快照分析，自动抓取dump文件并转换脚本/" class="article-date">
+	<a href="/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -795,106 +942,40 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>最新得到的Google内部消息，未来谷歌应用商店的排名算法将会把App的性能纳入考量范围（使用的机器学习算法），我们开发者也应该将性能这一指标纳入自己的检查范围</p>
-</blockquote>
-<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>解决抓取内存文件，拉取到电脑，新建文件夹，转换为Eclipse Memory Analyzer 文件操作繁琐的问题</p>
-<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ul>
-<li>clone项目之后，上述流程只需要👇的指令即可完成</li>
-<li>自动将转换的文件存档到新建的同名目录下，避免MAT分析产生的临时文件污染文档目录</li>
-<li>更改目录或进程时，无需修改配置文件，输入即可自动记录上次操作习惯</li>
-<li>重复输入名称时，会自动append 时间到原来名称，避免覆盖历史文件</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python GrabDump.py</span><br></pre></td></tr></table></figure>
-<p>读完本文，你将收获到一个自动化上述流程的简单project</p>
+        <h2 id="问题起因"><a href="#问题起因" class="headerlink" title="问题起因"></a>问题起因</h2><p>在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西</p>
+<p>下图是项目中内存快照在AndroidStudio2.4中打开看到的样子</p>
+<p><img src="http://kylece.github.io/img/pic_resource/finalizerReference.png" alt=""></p>
+<p>可以看到，占用排名第一的类FinalizerReference占用了59M之巨（内存快照前有使用AS强制GC多次）</p>
+<p>这就很让人好奇了</p>
+<h2 id="FinalizerReference是什么？"><a href="#FinalizerReference是什么？" class="headerlink" title="FinalizerReference是什么？"></a>FinalizerReference是什么？</h2><p>我们来看源码：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/FinalizerReferenceCode.png" alt=""></p>
+<p><a href="https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java" target="_blank" rel="noopener">https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java</a></p>
+<p>在讲Java  虚拟机 JVM垃圾回收机制时会涉及到一个概念，即finalize方法，这是Sun公司在Java设计之初，为照顾c++程序员有写析构函数的习惯而做的一种妥协</p>
+<p>在《深入理解Java虚拟机》一书中，讲到GC在最终回收对象之前，会去检查对象是否override了finalize方法，如果有覆盖此方法，对象就会被添加到finalize执行队列中，该书中没有指明是什么队列，实际上finalize执行队列就是我们这里讨论的FinalizerReference（书中还有提到finalize方法只会执行一次，并且有超时保护，因与本文主题无关，不做展开讨论）</p>
+<p>也就是说，有重写Java根基类Object的finalize方法的所有对象，在被最终被GC回收之前，都会被添加到这个队列中，等待被执行</p>
+<h2 id="为什么不能被GC"><a href="#为什么不能被GC" class="headerlink" title="为什么不能被GC"></a>为什么不能被GC</h2><p>这里要谈到JVM设计的一个基本标准</p>
+<p>GC的finalize执行队列会在一个单独的守护线程中运行，这一线程的优先级极低；</p>
+<p>一旦用户创建的对象速度过快，含finalize的对象速度快于finalize队列移除各元素的速度，FinalizerReference就会越来越大，而它获取CPU时间又少的可怜</p>
+<p>测试中发现，1~2h过去后，FinalizerReference的大小并没有按照预计的回落到较低水准</p>
+<p>这就迫使我们一定要解决这一问题，否则，随着应用开辟的内存越来越大，很容易引发喜闻乐见的OutOfMemoryError</p>
+<h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><ol>
+<li>不要重写finalize()方法，实在要释放资源，请到其它destroy一类函数中处理</li>
+</ol>
 <blockquote>
-<p>需要了解 Apk包的内存占用各部分组成</p>
+<p>实际上Java库中不少方法都有重写finalize方法（如Input/outputStream、Canvas、Paint）</p>
+<p>这就引出了第二条指导原则：</p>
 </blockquote>
-<h3 id="GitHub-地址"><a href="#GitHub-地址" class="headerlink" title="GitHub 地址"></a>GitHub 地址</h3><p><a href="https://github.com/KyleCe/PhonePerformanceMeasure">https://github.com/KyleCe/PhonePerformanceMeasure</a></p>
-<h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><p>最终的使用时样式：</p>
-<p><img src="http://kylece.github.io/img/pic_resource/grabDump.png" alt=""></p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
-<li>首先你需要安装Python ^_^</li>
-</ul>
-<ul>
-<li>可以输入的参数包括：  dump文件名、存放目录、需要抓取的进程名</li>
-<li>下次输入时，如果没有完全输入，会自动使用上一次的参数</li>
-</ul>
-<blockquote>
-<p>第一次输入的时候还是需要完全的配置</p>
-</blockquote>
-<h3 id="已知问题"><a href="#已知问题" class="headerlink" title="已知问题"></a>已知问题</h3><p>抓取dump次数过多时会出现adb缓存读写错误的问题，需要重启adb（kill-server | start-server），后续找到解决方案会及时更新到Github repository</p>
-<hr>
-<p>扫描二维码，关注“夕识”，一起学习Android知识、CS知识，努力成为一位  different thinker</p>
-<p><img src="http://kylece.github.io/img/pic_resource/qrcode_for_wechat.jpg" alt=""></p>
-<p>点击“链接”，跳转至repo地址</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dump/">Dump</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MemoryLeak/">MemoryLeak</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/">AndroidAS-依赖lib建议、微信QRCode登陆</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】AS-依赖lib建议、微信QRCode登陆/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>只有一条：<br>能download lib就download之后放到libs dir吧，不然伙伴们sync起来太费时间了；</p>
-</blockquote>
-<blockquote>
-<p>这样的话，注意定期检查各lib版本就好</p>
-</blockquote>
-<p>今日入坑：微信登陆（扫描二维码登陆）<br><a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&amp;t=resource/res_list&amp;verify=1&amp;id=open1419317851&amp;token=&amp;lang=zh_CN" target="_blank" rel="noopener">参考链接：官方API doc</a></p>
-<p>总结一下步骤：</p>
 <ol>
-<li>获取二维码（QRCode）</li>
-<li>用户授权后，重定向接口会接受到带code的请求<code>--&gt;code [get]</code></li>
-<li><p>拿着上一步的<code>code</code>，连带在微信注册时的appid、secret一起去请求access_token <code>--&gt;access_token、openid[get]</code></p>
+<li><p>重复利用资源（避免反复创建）</p>
 </li>
-<li><p><strong>大功告成</strong>：拿着上一步得到的token跟openid，就可以请求你想要的数据啦</p>
+<li><p>杀器FinalizerHelper</p>
+<ul>
+<li>此工具来源于公司同事的技术分享</li>
+<li>指导思想：在场景退出的安全节点，利用反射强制调用FinalizerReference的remove方法，将对象从队列中移除掉</li>
+<li>对具体实施细节的同学联系我</li>
+</ul>
 </li>
 </ol>
-<p>时序图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c7db4bd0ffa26d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="wechat.png"></p>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 
       
 
@@ -904,63 +985,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/【Note-PM】《项目管理修炼之道》提要"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/">【Note-PM】《项目管理修炼之道》提要</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>第18届Jolt生产效率大奖图书<br>作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富</p>
-</blockquote>
-<p><a href="https://pan.baidu.com/s/1cAaOxw" target="_blank" rel="noopener">XMind文档链接</a></p>
-<p><a href="https://pan.baidu.com/s/1mhZO5Fa" target="_blank" rel="noopener">导图PDF版链接</a></p>
-<p><strong>导图</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-d20195caa4e17ed9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第一部分：规划与日程"></p>
-<p><strong>文本</strong></p>
-<p> 项目管理修炼之道<br>    Johanna Rothman<br>    规划与日程<br>        启动项目<br>            0.KEY——定义项目、项目约束、决定项目关键驱动因素、章程决策<br>            章程决策<br>                远景、需求、目标、成功标准、ROI<br>        规划项目<br>            0.KEY——足以启动的规划、规划模板、制定发布条件<br>            规划模板<br>                意图<br>                记录<br>                发布条件<br>                目标<br>                项目组织<br>                日程总览<br>                人员配备<br>                建议日程<br>                制订项目风险列表<br>        使用生命周期组织项目<br>            0.KEY——理解生命周期、概览、反馈、大规模项目需要组合多种生命周期、管理架构风险、从瀑布中解脱<br>        安排项目日程<br>            0.KEY——注重实效的日程安排、可选择安排技术、用低技术含量工具安排日程<br>        估算工作<br>            0.KEY——实用估算方式、里程碑切分项目、能不做什么？、多项目时的估算、主动安排人们进行多任务、实用波浪式规划、决定迭代的持续时间、“小石子”<br>            估算<br>                对比历史数据<br>                通过Delphi和宽带Delphi估算<br>                何时不应相信团队的话<br>                    减掉每个任务的缓冲时间、要得到的是更准确的估算结果<br>                用日期范围进行估计<br>                用自信心估计<br>                用三个日期估计：最佳、可能、墨菲<br>            小石子<br>                任务不清时使用<br>                如何得到“小石子”<br>                为什么使用<br>        识别和避免日程安排游戏<br>            0.KEY——“希望”是我们最重要的策略、拒绝女王、把灰扫到地毯下面、幸福日期、分散注意力、日程等于承诺<br>    团队与节奏<br>        创建出色的项目团队<br>            0.KEY——招募需要的人、形成团队凝聚力、让组织配合你的工作、对必必需的团队规模了如指掌、知道何时应该加入、成为出色的项目经理、知道何时全身而退<br>            凝聚力<br>                好工具让团队有更好的发挥<br>                软件配置管理系统应满足的最低要求<br>                缺陷跟踪系统应满足的最低要求<br>                发展5阶段<br>            让组织配合<br>                以项目经理的方式管理单一职能团队<br>                管理矩阵式项目团队<br>                管理跨职能团队<br>            项目经理<br>                人际交往能力<br>                提升功能性技能<br>                专业领域技能<br>                工具和技术的专业技能<br>            退<br>                不适合的组织、团队、产品<br>        掌控项目<br>            0.KEY——节奏、中途回顾、为需求排序、是时间盒限定需求相关的工作、将迭代限制在4周以下、使用波浪式规划和日程安排、创建跨职能团队、根据项目风险选择生命周期模型、保持合理的工作时间、使用“小石子”、管理干扰、管理缺陷<br>            “小石子“<br>                将计划的粒度细化，能提高规划时项目的估算准确率<br>        保持项目节奏<br>            0.KEY——使用持续集成、自动化冒烟测试、按功能实现而不是按架构、盯着产品、准备重构、通过用例、用户故事、角色和场景定义需求、分离需求与GUI设计、尽可能用低保真度原型<br>            按功能而不是按框架<br>                首先实现具有最高价值的功能<br>                按功能调试、测试<br>            低保真原型<br>                “使用低保真度原型，人们可以更全面地评估要解决的问题。高保真度原型会限制反馈。”<br>        管理会议<br>            0.KEY——取消部分会议、举行必要会议、项目启动会议、发布版本规划会议、进度报告会议、向管理层报告进度、项目团队会议、迭代审查会议、会议疑难问题解答、远程电话会议<br>            取消<br>                不需要你解决问题<br>                多人参加的顺序式进度报告会议<br>        创建并使用项目仪表板<br>            0.KEY——测量有风险、根据项目完成度来衡量进度、为出资人创建项目仪表盘、使用项目气象报告<br>            衡量进度<br>                速度图表跟踪日程安排进度<br>                用迭代内容图跟踪总体进度<br>                用图表展示团队统一采用的实践<br>    非简单项目<br>        管理多地点项目<br>            0.KEY——提问成本、识别项目文化差异、团队间培养信任、团队间使用互补实践、寻找潜在问题、外包时的注意事项<br>        在项目中集成测试<br>            0.KEY——“减少技术债”、小规模测试以降低风险、TDD是集成的最简单方法、使用多种测试、确定成员在测试工作中的角色、开发人员测试人员比率、让测试与开发同步进行、为项目制定测试策略、系统测试策略模板、QA与测试的区别<br>        管理项目群<br>            0.KEY——管理项目群、将多个相关项目组织到一个发布版本中、随时间推移组织多个相关项目、管理项目经理、创建项目仪表盘<br>        结束项目<br>            0.KEY——管理发布早期版本的请求、管理beta版本、项目经理何时知道无法按时发布项目、知道项目走向完成、取消项目<br>            何时知道无法按时发布<br>                避免小偏差<br>                承诺新日期<br>                估算系统测试时间<br>        管理项目组合<br>            0.KEY——构建所有项目的组合、评估项目、决定现在为那个项目提供资金、对组合中的项目进行排序、尽快启动项目、使用产品待办事项列表管理新功能需求<br>            答疑<br>                说服管理层：“切换上下文”是个坏主意<br>                如何对多任务说不</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FinalizerReference/">FinalizerReference</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
     </footer>
   </div>
@@ -1031,7 +1056,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
 
 
   
-    <article id="post-技术/Android/GL check point"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/【Note-PM】《项目管理修炼之道》提要"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -1039,7 +1064,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/GL check point/">GL check point</a>
+      <a class="article-title" href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/">【Note-PM】《项目管理修炼之道》提要</a>
     </h1>
   
 
@@ -1047,47 +1072,26 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/GL check point/" class="article-date">
+	<a href="/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/技术/">技术</a>
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="调查点："><a href="#调查点：" class="headerlink" title="调查点："></a>调查点：</h2><ol>
-<li><p>纹理是否压缩</p>
-<ul>
-<li>疑问：不同GPU支持的纹理格式不一样，需要对GPU做适配，工作量不小</li>
-</ul>
-<blockquote>
-<p>志文：壁纸或许可以做一些处理（go-org反编译代码未发现类似处理），理想情况下，可以减7-8M内存占用</p>
+        <blockquote>
+<p>第18届Jolt生产效率大奖图书<br>作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富</p>
 </blockquote>
-</li>
-<li><p>Mipmap</p>
-<blockquote>
-<p>虽然Mipmap包会比原始图像多用掉33%的内存，但它不仅可以提升性能，也会提高图像质量</p>
-<blockquote>
-<p>ARM Mali GPU Texture Compression Tool可以生成Mipmap</p>
-</blockquote>
-</blockquote>
-<ul>
-<li>结论：这个功能会更耗内存，适用于游戏场景，org不适用</li>
-</ul>
-</li>
-<li><p>纹理参数设置</p>
-<blockquote>
-<p>基本越慢的函数，视觉质量越高</p>
-<p>参数配置参考链接：<a href="https://www.khronos.org/registry/OpenGL-Refpages/es2.0/" target="_blank" rel="noopener">https://www.khronos.org/registry/OpenGL-Refpages/es2.0/</a></p>
-</blockquote>
-</li>
-<li><p>RenderScript 3D 渲染</p>
-</li>
-</ol>
-<p>高斯模糊之类的优化</p>
+<p><a href="https://pan.baidu.com/s/1cAaOxw" target="_blank" rel="noopener">XMind文档链接</a></p>
+<p><a href="https://pan.baidu.com/s/1mhZO5Fa" target="_blank" rel="noopener">导图PDF版链接</a></p>
+<p><strong>导图</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-d20195caa4e17ed9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第一部分：规划与日程"></p>
+<p><strong>文本</strong></p>
+<p> 项目管理修炼之道<br>    Johanna Rothman<br>    规划与日程<br>        启动项目<br>            0.KEY——定义项目、项目约束、决定项目关键驱动因素、章程决策<br>            章程决策<br>                远景、需求、目标、成功标准、ROI<br>        规划项目<br>            0.KEY——足以启动的规划、规划模板、制定发布条件<br>            规划模板<br>                意图<br>                记录<br>                发布条件<br>                目标<br>                项目组织<br>                日程总览<br>                人员配备<br>                建议日程<br>                制订项目风险列表<br>        使用生命周期组织项目<br>            0.KEY——理解生命周期、概览、反馈、大规模项目需要组合多种生命周期、管理架构风险、从瀑布中解脱<br>        安排项目日程<br>            0.KEY——注重实效的日程安排、可选择安排技术、用低技术含量工具安排日程<br>        估算工作<br>            0.KEY——实用估算方式、里程碑切分项目、能不做什么？、多项目时的估算、主动安排人们进行多任务、实用波浪式规划、决定迭代的持续时间、“小石子”<br>            估算<br>                对比历史数据<br>                通过Delphi和宽带Delphi估算<br>                何时不应相信团队的话<br>                    减掉每个任务的缓冲时间、要得到的是更准确的估算结果<br>                用日期范围进行估计<br>                用自信心估计<br>                用三个日期估计：最佳、可能、墨菲<br>            小石子<br>                任务不清时使用<br>                如何得到“小石子”<br>                为什么使用<br>        识别和避免日程安排游戏<br>            0.KEY——“希望”是我们最重要的策略、拒绝女王、把灰扫到地毯下面、幸福日期、分散注意力、日程等于承诺<br>    团队与节奏<br>        创建出色的项目团队<br>            0.KEY——招募需要的人、形成团队凝聚力、让组织配合你的工作、对必必需的团队规模了如指掌、知道何时应该加入、成为出色的项目经理、知道何时全身而退<br>            凝聚力<br>                好工具让团队有更好的发挥<br>                软件配置管理系统应满足的最低要求<br>                缺陷跟踪系统应满足的最低要求<br>                发展5阶段<br>            让组织配合<br>                以项目经理的方式管理单一职能团队<br>                管理矩阵式项目团队<br>                管理跨职能团队<br>            项目经理<br>                人际交往能力<br>                提升功能性技能<br>                专业领域技能<br>                工具和技术的专业技能<br>            退<br>                不适合的组织、团队、产品<br>        掌控项目<br>            0.KEY——节奏、中途回顾、为需求排序、是时间盒限定需求相关的工作、将迭代限制在4周以下、使用波浪式规划和日程安排、创建跨职能团队、根据项目风险选择生命周期模型、保持合理的工作时间、使用“小石子”、管理干扰、管理缺陷<br>            “小石子“<br>                将计划的粒度细化，能提高规划时项目的估算准确率<br>        保持项目节奏<br>            0.KEY——使用持续集成、自动化冒烟测试、按功能实现而不是按架构、盯着产品、准备重构、通过用例、用户故事、角色和场景定义需求、分离需求与GUI设计、尽可能用低保真度原型<br>            按功能而不是按框架<br>                首先实现具有最高价值的功能<br>                按功能调试、测试<br>            低保真原型<br>                “使用低保真度原型，人们可以更全面地评估要解决的问题。高保真度原型会限制反馈。”<br>        管理会议<br>            0.KEY——取消部分会议、举行必要会议、项目启动会议、发布版本规划会议、进度报告会议、向管理层报告进度、项目团队会议、迭代审查会议、会议疑难问题解答、远程电话会议<br>            取消<br>                不需要你解决问题<br>                多人参加的顺序式进度报告会议<br>        创建并使用项目仪表板<br>            0.KEY——测量有风险、根据项目完成度来衡量进度、为出资人创建项目仪表盘、使用项目气象报告<br>            衡量进度<br>                速度图表跟踪日程安排进度<br>                用迭代内容图跟踪总体进度<br>                用图表展示团队统一采用的实践<br>    非简单项目<br>        管理多地点项目<br>            0.KEY——提问成本、识别项目文化差异、团队间培养信任、团队间使用互补实践、寻找潜在问题、外包时的注意事项<br>        在项目中集成测试<br>            0.KEY——“减少技术债”、小规模测试以降低风险、TDD是集成的最简单方法、使用多种测试、确定成员在测试工作中的角色、开发人员测试人员比率、让测试与开发同步进行、为项目制定测试策略、系统测试策略模板、QA与测试的区别<br>        管理项目群<br>            0.KEY——管理项目群、将多个相关项目组织到一个发布版本中、随时间推移组织多个相关项目、管理项目经理、创建项目仪表盘<br>        结束项目<br>            0.KEY——管理发布早期版本的请求、管理beta版本、项目经理何时知道无法按时发布项目、知道项目走向完成、取消项目<br>            何时知道无法按时发布<br>                避免小偏差<br>                承诺新日期<br>                估算系统测试时间<br>        管理项目组合<br>            0.KEY——构建所有项目的组合、评估项目、决定现在为那个项目提供资金、对组合中的项目进行排序、尽快启动项目、使用产品待办事项列表管理新功能需求<br>            答疑<br>                说服管理层：“切换上下文”是个坏主意<br>                如何对多任务说不</p>
 
       
 
@@ -1097,7 +1101,7 @@ Inner: Business logic layer 业务逻辑层（——应可用独立于Android的
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GL/">GL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Performance/">Performance</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
 
     </footer>
   </div>

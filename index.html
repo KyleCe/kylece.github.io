@@ -255,6 +255,54 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/Android/ThreadPoolExecutor"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/03/21/技术/Android/ThreadPoolExecutor/">ThreadPoolExecutor</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/03/21/技术/Android/ThreadPoolExecutor/" class="article-date">
+	  <time datetime="2019-03-21T01:59:39.000Z" itemprop="datePublished">2019-03-21</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://kylece.github.io/img/thread_pool_executor.jpg" alt="Memory"></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/JavaMemoryModel"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -775,63 +823,6 @@
 <h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>atoi：将字符串转换为数字</p>
 <h3 id="如何处理"><a href="#如何处理" class="headerlink" title="如何处理"></a>如何处理</h3><p>字符如何隐式的转换为数字：<br>一个char型的字符减去‘0’就会隐式的转换为数字，一个数字加上‘0’则会隐式的转换为字符，明白了这一点，就可以尝试着写atoi了</p>
 <h3 id="SourceCode-–-C语言"><a href="#SourceCode-–-C语言" class="headerlink" title="SourceCode – C语言"></a>SourceCode – C语言</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> <span class="title">my_atoi</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *c)</span></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> value = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> sign = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>( *c == <span class="string">'+'</span> || *c == <span class="string">'-'</span> )&#123; <span class="comment">//符号判断</span></span><br><span class="line">        <span class="keyword">if</span>( *c == <span class="string">'-'</span> ) sign = <span class="number">-1</span>; <span class="comment">//记录负数</span></span><br><span class="line">        c++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">isdigit</span>(*c))&#123; <span class="comment">//处理所有的数字，非数字字符会被过滤掉</span></span><br><span class="line">        value *= <span class="number">10</span>; <span class="comment">//已经处理过的位左移（* 10实现）</span></span><br><span class="line">        value += (<span class="keyword">int</span>) (*c-<span class="string">'0'</span>); <span class="comment">//加上心的位，通过-'0'实现</span></span><br><span class="line">        c++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (value * sign);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    assert(<span class="number">5</span> == my_atoi(<span class="string">"5"</span>));</span><br><span class="line">    assert(<span class="number">-2</span> == my_atoi(<span class="string">"-2"</span>));</span><br><span class="line">    assert(<span class="number">-1098273980709871235</span> == my_atoi(<span class="string">"-1098273980709871235"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面经/">面经</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/算法/面经--连续最长数字串"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/15/技术/算法/面经--连续最长数字串/">面经--连续最长数字串</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/15/技术/算法/面经--连续最长数字串/" class="article-date">
-	  <time datetime="2018-03-15T15:50:55.000Z" itemprop="datePublished">2018-03-15</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>如何连续最长数字串呢？本篇介绍一种C语言实现：</p>
-<h4 id="题"><a href="#题" class="headerlink" title="题"></a>题</h4><p>   在字符串中找出连续最长的数字串，返回最长长度，并把这个最长数字串赋值给其中一个函数参数outputStr所指内存</p>
-<h4 id="例"><a href="#例" class="headerlink" title="例"></a>例</h4><p>   “abcd12345ed125ss123456789”的首地址传给intputStr后，函数将返回9，outputStr所指的值为123456789</p>
-<h4 id="析"><a href="#析" class="headerlink" title="析"></a>析</h4><pre><code>我们可以对字符串中的每个数字串计数，然后比较得到最大的。这就是我们所要求的最大连续数字串。需要记住这个最大串的开始位置，还有最大串的长度。
-</code></pre><ol>
-<li>遍历字符串</li>
-<li>如果遇到数字，则将计数器+1；否则，我们应该统计刚才的数字串的长度和最大长度比较，如果大于最大长度，则重新设置最大长度，并记住数字串开始位置</li>
-<li>返回我们所需要的最大长度和数字串</li>
-</ol>
-<h4 id="code"><a href="#code" class="headerlink" title="code"></a>code</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">find_max_number</span><span class="params">(<span class="keyword">char</span> <span class="built_in">string</span>[],<span class="keyword">int</span> length,<span class="keyword">int</span> &amp;count, <span class="keyword">char</span> *result )</span></span>&#123;</span><br><span class="line">   <span class="comment">/* max_length represents the max length of number string. */</span></span><br><span class="line">   <span class="keyword">int</span> max_length = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">/* start means first character's position of number string */</span></span><br><span class="line">   <span class="keyword">int</span> start = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">/* i represents iterator of string array */</span></span><br><span class="line">   <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">   <span class="comment">// here we scan the character array.</span></span><br><span class="line">   <span class="keyword">for</span>( ; i &lt; length; i++ )&#123;</span><br><span class="line">      <span class="comment">// if character belongs to 0~9 we add counter.</span></span><br><span class="line">      <span class="comment">// otherwise we set counter as 0.</span></span><br><span class="line">      <span class="keyword">if</span>( <span class="built_in">string</span>[i] &gt;= <span class="string">'0'</span> &amp;&amp; <span class="built_in">string</span>[i] &lt;= <span class="string">'9'</span> )&#123;</span><br><span class="line">         count ++;</span><br><span class="line">      &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">         <span class="keyword">if</span>( count &gt; max_length )&#123;</span><br><span class="line">            max_length = count;</span><br><span class="line">            start = i - count + <span class="number">1</span>;</span><br><span class="line">         &#125;</span><br><span class="line">         count  = <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// finally we should set max_length and the position again.</span></span><br><span class="line">   <span class="keyword">if</span>( count &gt; max_length )&#123;</span><br><span class="line">      max_length = count;</span><br><span class="line">      start = i - count;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// the last, we return counter and the string we need.</span></span><br><span class="line">   count = max_length;</span><br><span class="line">   <span class="built_in">memcpy</span>( result, &amp;<span class="built_in">string</span>[start], count*<span class="keyword">sizeof</span>(<span class="keyword">char</span>) );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">( <span class="keyword">int</span> argc, <span class="keyword">char</span> ** argv )</span></span>&#123;</span><br><span class="line">   <span class="keyword">char</span> <span class="built_in">string</span>[] = <span class="string">"iabcd12345ed125ss123456789"</span>;</span><br><span class="line">   <span class="keyword">char</span> result[<span class="number">20</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">   <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">   find_max_number( <span class="built_in">string</span>, <span class="built_in">strlen</span>(<span class="built_in">string</span>), count, result );</span><br><span class="line">   <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; count &lt;&lt; <span class="string">" "</span> &lt;&lt; result &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 

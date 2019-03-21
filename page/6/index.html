@@ -255,6 +255,132 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/程序/【Java-基础系列】Synchronized关键字"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/">【Java-基础系列】Synchronized关键字</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/【Java-基础系列】Synchronized关键字/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="初识"><a href="#初识" class="headerlink" title="初识"></a>初识</h2><p><code>synchronize</code></p>
+<blockquote>
+<p> 翻译——同步（cause to occur or operate at the same time or rate.）</p>
+</blockquote>
+<p>一般用于多线程操作，保证操作的同步性</p>
+<p>消除线程切换时导致的共享内存的内容不可预测性</p>
+<h2 id="典型应用"><a href="#典型应用" class="headerlink" title="典型应用"></a>典型应用</h2><p>单例模式的<code>double-check</code></p>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.45.47 AM.png" alt="MacGesture MacGesture, Today at 12.45.47 AM"></p>
+<blockquote>
+<p>题外话：单例模式很容易引发内存泄露，在项目中要少用；</p>
+<p>另外单例模式的实现形式中，使用<code>enum</code>枚举是比较简洁的形式</p>
+</blockquote>
+<h2 id="常见使用形式"><a href="#常见使用形式" class="headerlink" title="常见使用形式"></a>常见使用形式</h2><ul>
+<li><p>锁方法</p>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p>
+</li>
+<li><p>锁代码段</p>
+<ul>
+<li>用this关键字 <code>sychronized(this)</code></li>
+</ul>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.21.38 AM.png" alt="MacGesture MacGesture, Today at 12.21.38 AM"></p>
+<ul>
+<li>用锁对象 <code>sychronized(lockObjct)</code></li>
+</ul>
+<p><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.17.56 AM.png" alt="MacGesture MacGesture, Today at 12.17.56 AM"></p>
+</li>
+</ul>
+<h2 id="官方教程"><a href="#官方教程" class="headerlink" title="官方教程"></a>官方教程</h2><p>在Oracle的Java 文档里头有对Synchronization的详细解释，分为如下五部分展开：</p>
+<ol>
+<li><p>线程接口（Thread Interference）</p>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM.png" alt="【Java-揭面系列】Synchronized关键字.md Typora, Today at 12.14.14 AM"></p>
+<blockquote>
+<p>不同线程对同一份数据的操作如果是穿插进行的，会导致不可预料的结果，这主要是因为CPU会让多个线程分片执行，各个线程对此数据的操作也是互不可知的，这样就很容易引发内存不按照预期改变的情况</p>
+</blockquote>
+</li>
+<li><p>内存连续性错误（Memory Consistency Errors）<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.17 AM.png" alt=""></p>
+<blockquote>
+<p>例子如上图，若三步操作不仅由一个线程执行，就很有可能导致打印出的并不是1而是0</p>
+</blockquote>
+</li>
+<li><p>同步方法（Synchronized Methods)<br><img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.19.41 AM.png" alt=""></p>
+<blockquote>
+<ul>
+<li>Java中在方法体上添加<code>synchronized</code>关键字，能够保证同一时间仅有一个线程在调用某个对象的该方法；</li>
+</ul>
+<ul>
+<li>同时Java还会为该方法在与对象之间建立一个happens-before关系，保证对象的该状态对所有线程都是可见的</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<ol>
+<li><p>固有锁与同步（Intrinsic Locks and Synchronization)</p>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.25 AM.png" alt="MacGesture MacGesture, Today at 12.16.25 AM"></p>
+<blockquote>
+<p>当一个线程调用<code>synchronized</code>方法时，它会自动获取该方法对象的固有锁，并在方法返回时释放它。即使返回是由未捕获的异常引起的，也会释放锁。</p>
+</blockquote>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.16.56 AM.png" alt="MacGesture MacGesture, Today at 12.16.56 AM"></p>
+<blockquote>
+<p>直接使用this当做锁的关键字时，改对象的所有使用this当关键字的操作都必须保证同时只有一个线程访问，这样做虽然简便，但时间上有效率浪费，因为该对象的所有操作并不一定要保持完全同步，👇的代码段就解决了这一问题：</p>
+<p>通过细粒度的锁来提高并发性：</p>
+</blockquote>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.22.45 AM.png" alt="MacGesture MacGesture, Today at 12.22.45 AM"></p>
+<blockquote>
+<p>类<code>MsLunch</code>有两个实例字段，<code>c1</code>并且<code>c2</code>从不一起使用。这些字段的所有更新必须同步，但是没有理由阻止c1的更新与c2的更新进行交错 - 这样做会通过创建不必要的阻止来降低并发性。而不是使用同步方法或以其他方式使用与之关联的锁<code>this</code></p>
+</blockquote>
+</li>
+<li><p>原子操作（<code>Atomic</code> Access ）</p>
+<blockquote>
+<p>原子操作保证了操作的完整性：要么不执行，执行的话就一定要完全执行（即使虚拟机GC也不能打断）</p>
+</blockquote>
+<p> <img src="/var/folders/rm/tb3yd3t951bdk6h1y_70556m0000gn/T/ro.nextwave.Snappy/ro.nextwave.Snappy/MacGesture MacGesture, Today at 12.35.40 AM.png" alt="MacGesture MacGesture, Today at 12.35.40 AM"></p>
+<p> 第一条指的是我们可以使用<code>Java</code>内附的<code>AtomicInteger</code>、<code>AtomicBoolean</code>等变量来直接利用这一特性</p>
+<p> 第二条引出了另一个关键字<code>volatile</code>，这实际上需要另起一篇进行介绍了</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>synchronize在解决多线程编程问题时有奇效，但有一定的效率牺牲</p>
+<p>使用时应尽量减小锁定的范围</p>
+<p>对并发性有要求的地方需要注意看是否有细化锁粒度的必要</p>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3>
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Synchronized/">Synchronized</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/GL Launcher memory consume test report"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -342,7 +468,7 @@
 
 
   
-    <article id="post-技术/算法/【算法】BinarySearch--二分搜索-折半查找法"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/Android/GL check point"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -350,7 +476,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/">【算法】BinarySearch--二分搜索-折半查找法</a>
+      <a class="article-title" href="/2018/03/09/技术/Android/GL check point/">GL check point</a>
     </h1>
   
 
@@ -358,7 +484,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/" class="article-date">
+	<a href="/2018/03/09/技术/Android/GL check point/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -369,22 +495,36 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下</p>
-</blockquote>
-<p>wiki 图示：(<a href="https://zh.wikipedia.org/wiki/二分搜索算法" target="_blank" rel="noopener">Link</a>)</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c0e03f78ac559fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search wiki pic.png"></p>
-<p>Android中util.ContainerHelpers中的实现api：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-53135a5bb2e3e281.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search.png"></p>
-<p><em>排序前提：array本身已为有序数组</em></p>
-<p>查找过程：<br>0.向右无符号移位1位，得到middle位值；<br>1.以mid为准比对midIndex位置值与参数value大小，大则hi位移至现mid位前一位，小则lo位移至现mid位后一位，相等则返回mid；<br>2.重复以上过程直至不满足循环条件或是又查找结果</p>
-<p>从low、high可以看出，结果返回的是value在数组中对应的index，如果为负则代表不存在（最后一行，返回~lo会得到一个负数，因为lo计算结果一定为正，个人感觉直接返回一个负数可以连按位取反都省略掉，是不是性能更优？）</p>
-<hr>
+        <h2 id="调查点："><a href="#调查点：" class="headerlink" title="调查点："></a>调查点：</h2><ol>
+<li><p>纹理是否压缩</p>
+<ul>
+<li>疑问：不同GPU支持的纹理格式不一样，需要对GPU做适配，工作量不小</li>
+</ul>
 <blockquote>
-<p>Java 位操作符：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-a2c49bbb981fa6c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Java bit calculate.png"></p>
+<p>志文：壁纸或许可以做一些处理（go-org反编译代码未发现类似处理），理想情况下，可以减7-8M内存占用</p>
 </blockquote>
-<hr>
-<p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="夕识.jpeg"></p>
+</li>
+<li><p>Mipmap</p>
+<blockquote>
+<p>虽然Mipmap包会比原始图像多用掉33%的内存，但它不仅可以提升性能，也会提高图像质量</p>
+<blockquote>
+<p>ARM Mali GPU Texture Compression Tool可以生成Mipmap</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>结论：这个功能会更耗内存，适用于游戏场景，org不适用</li>
+</ul>
+</li>
+<li><p>纹理参数设置</p>
+<blockquote>
+<p>基本越慢的函数，视觉质量越高</p>
+<p>参数配置参考链接：<a href="https://www.khronos.org/registry/OpenGL-Refpages/es2.0/" target="_blank" rel="noopener">https://www.khronos.org/registry/OpenGL-Refpages/es2.0/</a></p>
+</blockquote>
+</li>
+<li><p>RenderScript 3D 渲染</p>
+</li>
+</ol>
+<p>高斯模糊之类的优化</p>
 
       
 
@@ -394,7 +534,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GL/">GL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Performance/">Performance</a></li></ul>
 
     </footer>
   </div>
@@ -405,7 +545,7 @@
 
 
   
-    <article id="post-技术/程序/降低内存占用Route"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/程序/gc-pictures"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -413,7 +553,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/降低内存占用Route/">降低内存占用Route</a>
+      <a class="article-title" href="/2018/03/09/技术/程序/gc-pictures/">gc-pictures</a>
     </h1>
   
 
@@ -421,7 +561,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/程序/降低内存占用Route/" class="article-date">
+	<a href="/2018/03/09/技术/程序/gc-pictures/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -432,25 +572,9 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="已执行"><a href="#已执行" class="headerlink" title="已执行"></a>已执行</h3><ul>
-<li>修复LeakCanary报出的问题（内网、外网）<ul>
-<li>直接检测泄露</li>
-<li>外网beta用户上报</li>
-</ul>
-</li>
-<li>分析dumpheap文件，查内存占用（直接分析、对比分析）<ul>
-<li>占用大户<ul>
-<li>Bitmap</li>
-<li>FinalizerReference</li>
-</ul>
-</li>
-<li>场景分析，进出场景、发现可疑场景，查内存dumpheap文件<ul>
-<li>已有发现：WebView、主题切换泄露</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+        <p><img src="http://upload-images.jianshu.io/upload_images/1481332-7061db0196475abb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Hotspot JVM components.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-1bf9a615abb8e4d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Structure.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-c29f25476bbacbe2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Leak by MAT.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-783169a523910316.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AppsFlyer leak and resolution.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-ca53c4d2e0fd72d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AS分析出的泄露现场.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-962ab459822c3a93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CMS运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-50f18bb588311844.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Coping Referenced Object.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a4320ea3b641d3cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Example Allocation Code.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d3f472e8f57f4507.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="G1 运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-473f69299d0029a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="GC Roots reachable analyze.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a5848042f2a13510.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="GC收集器.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-5def65145209ff4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Heap Usage ratio.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0cc80185075e1e36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Heap Structure.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-01af30bab5fb201f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HotSpot Structure.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a252ca7dcb958038.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JVM Architecture.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-35782e1de1365e82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Key JVM Components.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-dffef12d27e0440c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Marking.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-facf61f82cf12b67.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MinorGC &amp; MajorGC.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-7d913bf3a474dcd0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Normal Deletion.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-3d1db4efd09b12db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Parallel Old运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-8c509f9d210e2339.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Parallel Scavenge运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0ba80f3d07039584.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ParNew运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-8927a9cb7340b35b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial Old运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-0d5f648b819bd823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial收集器与CMS收集器操作线程比较.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-26a178b15d61c0d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Serial运行示意图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-351394496f49338a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="static collection cause leak.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d44647bb58bf7c2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="串并行收集.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-65c85ce0940865cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="从年轻代晋升到老年代.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-242a868f2c4d6c45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="写入年轻代Eden区.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-e57595176a60153f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="删除整理.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-d2c22b62ee39e595.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图2.2.1 匿名内部类引发的内存泄露示例.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-099ba10858c1daac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象年龄.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-f1b583b94f371c44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象年龄的增长示例.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-09da3e69c1e7de12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象空间分配.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-a9b46c9c1ef158eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="收集器策略.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-2540999a7248fa74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="晋升概览图.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-97d976558b387970.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="未反注册及未取消动画更新监听的泄露GC-Root引用路径.png"><br><img src="http://upload-images.jianshu.io/upload_images/1481332-c09be6dd982fbba3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="部分GVM常规参数一览表.png"></p>
 
       
 
@@ -460,7 +584,7 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存/">内存</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GC/">GC</a></li></ul>
 
     </footer>
   </div>
@@ -771,7 +895,7 @@
 
 
   
-    <article id="post-每周一书/【Note】《软件项目管理》概览提要"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-每周一书/《Effective-Java》"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -779,7 +903,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/【Note】《软件项目管理》概览提要/">【Note】《软件项目管理》概览提要</a>
+      <a class="article-title" href="/2017/08/13/每周一书/《Effective-Java》/">《Effective-Java》</a>
     </h1>
   
 
@@ -787,237 +911,109 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/每周一书/【Note】《软件项目管理》概览提要/" class="article-date">
+	<a href="/2017/08/13/每周一书/《Effective-Java》/" class="article-date">
 	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+    <a class="article-category-link" href="/categories/技术/">技术</a>
 
       
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>《软件项目管理》着眼于软件项目的策划、监督、控制；</p>
-</blockquote>
-<blockquote>
-<p>主要对从项目选择开始，到项目交付整个流程中关键步骤进行释疑解惑，<strong>涵盖项目管理</strong>（评价、策划、评估、实施）、<strong>技术管理</strong>（评审、质量控制、敏捷开发）、<strong>风险管理</strong>（评估、规避、转移）、<strong>合同管理</strong>、<strong>成员管理</strong>（选择、激励、激励）、<strong>团队管理</strong>等几个方面</p>
-</blockquote>
+        <p>经典重读——<a href="https://www.amazon.cn/gp/product/B001PTGR52/ref=oh_aui_search_detailpage?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接</a></p>
 <hr>
-<p><a href="https://www.evernote.com/l/ARuMImpZpL9FQbiZNC9LGNCYsUd8ITNmmYE" target="_blank" rel="noopener">Evernote链接</a></p>
-<p><a href="https://www.evernote.com/shard/s283/sh/8c226a59-a4bf-4541-b899-342f4b18d098/b1477c2133669981/res/bd8cbb92-d0f3-4149-8d0c-9129765d7537/软件项目管理.xmind" target="_blank" rel="noopener">XMind文档下载</a></p>
-<p><strong>导图</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-43035d3944e2e17c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目管理overview.png"></p>
+<p><a href="https://www.evernote.com/l/ARv2VKlxd59DkIwV8_vaUhtw0JNvBqZoXqg" target="_blank" rel="noopener">笔记链接</a></p>
 <hr>
-<p><strong>文本</strong></p>
-<p>软件项目管理</p>
-<p>1 概述<br>  1.1 合同/技术项目管理<br>    1.1.1 可行性研究、策划、实施<br>  1.2 计划、方法、方法学<br>  1.3 分类方式<br>    1.3.1 用户、系统、目标与产品<br>  1.4 设定目标<br>    1.4.1 目标与子目标<br>    1.4.2 有效性度量<br>  1.5 管理控制<br>    1.5.1 瀑布流控制、反馈迭代直至达成目标<br>2 评价项目与项目集管理<br>  2.1 项目组合管理<br>    2.1.1 新品开发、改进项目<br>    2.1.2 组合优化<br>  2.2 单项目管理<br>    2.2.1 单项目评估<br>        2.2.1.1 技术评估<br>        2.2.1.2 成本效益分析<br>                2.2.1.2.1 评价技术<br>                2.2.1.2.1.1 净利润<br>                2.2.1.2.1.2 回收期<br>                2.2.1.2.1.3 投资回报率<br>                2.2.1.2.1.4 净现值<br>                2.2.1.2.1.5 内部回报率<br>        2.2.1.3 现金流预测<br>    2.2.2 风险评价<br>        2.2.2.1 风险标识与等级<br>        2.2.2.2 风险与净现值<br>        2.2.2.3 风险剖面分析<br>        2.2.2.4 使用决策树<br>  2.3 项目集管理<br>    2.3.1 管理项目集内的资源分配<br>    2.3.2 策略<br>    2.3.3 创建<br>        2.3.3.1 命令（目标）<br>        2.3.3.2 摘要<br>        2.3.3.3 构想<br>        2.3.3.4 蓝图<br>    2.3.4 辅助<br>        2.3.4.1 依赖关系图<br>        2.3.4.2 交付计划<br>  2.4 收益管理<br>    2.4.1 量化收益<br>3 项目策划概述<br>  3.1 步进式策划概述<br>  3.2 步骤<br>    3.2.1 选择<br>    3.2.2 标识范围和目标<br>    3.2.3 标识基础设施<br>    3.2.4 分析特征<br>        3.2.4.1 驱动因素<br>        3.2.4.2 质量特征<br>        3.2.4.3 用户需求<br>        3.2.4.4 开发方法学与生命周期法<br>        3.2.4.5 整体资源需求估计<br>    3.2.5 标识产品与活动<br>        3.2.5.1 可交付物<br>        3.2.5.2 文档化产品流<br>        3.2.5.3 活动图网络<br>    3.2.6 估算每个活动工作量<br>        3.2.6.1 使活动可控<br>    3.2.7 标识活动风险<br>        3.2.7.1 标识、量化基于活动的风险<br>        3.2.7.2 风险缓解策略与应急措施<br>        3.2.7.3 根据风险调整计划与估计<br>    3.2.8 分配资源<br>        3.2.8.1 根据资源约束修改计划与估计<br>    3.2.9 评审/发布计划<br>    3.2.10 执行、细节策划<br>4 选择合适的项目方法<br>  4.1 build or buy<br>  4.2 选择方法学和技术<br>  4.3 过程模型的选择<br>  4.4 结构与交付速度<br>  4.5 模型<br>    4.5.1 瀑布模型<br>    4.5.2 螺旋模型<br>    4.5.3 软件原型开发<br>    4.5.4 其它<br>        4.5.4.1 原型收获<br>        4.5.4.2 具象化程度<br>        4.5.4.3 取舍<br>        4.5.4.4 控制变更<br>  4.6 增量式交付<br>    4.6.1 优缺点<br>    4.6.2 交付计划<br>    4.6.3 系统目标<br>    4.6.4 开放的技术计划<br>    4.6.5 增量式计划<br>  4.7 敏捷<br>    4.7.1 水晶方法<br>    4.7.2 Atern<br>    4.7.3 特性驱动<br>    4.7.4 Scrum<br>    4.7.5 XP<br>5 软件工作量估计<br>  5.1 何处评估<br>    5.1.1 战略策划<br>    5.1.2 可行性研究<br>    5.1.3 项目策划<br>  5.2 过高/过低问题<br>  5.3 软件估计基础<br>    5.3.1 历史数据<br>    5.3.2 工作度量<br>  5.4 估计技术<br>    5.4.1 自底向上<br>    5.4.2 自顶向下<br>    5.4.3 专家判断<br>    5.4.4 类比估计<br>  5.5 功能点分析<br>6 活动策划<br>  6.1 目的<br>    6.1.1 可行性评估、资源分配、成本核算、动机、协调<br>  6.2 何时<br>    6.2.1 逐步细化<br>  6.3 进度表<br>  6.4 项目与活动<br>    6.4.1 甘特图<br>  6.5 确定活动次序与进度<br>  6.6 网络策划模型<br>  6.7 网络模型的公式化表示<br>  6.8 增加时间维<br>  6.9 正向遍历<br>  6.10 反向遍历<br>  6.11 表示关键路径<br>  6.12 活动缓冲期<br>  6.13 标识关键活动<br>  6.14 活动-箭头网络<br>7 风险管理<br>  7.1 风险<br>  7.2 分类<br>  7.3 处理框架<br>  7.4 识别<br>  7.5 评估<br>  7.6 策划<br>    7.6.1 接受、规避、降低与缓解、转移<br>  7.7 管理<br>    7.7.1 应急、应对策略<br>  7.8 评价进度风险<br>  7.9 应用PERT技术<br>    7.9.1 活动评估网络图<br>  7.10 蒙特卡洛仿真<br>  7.11 关键链概念<br>    7.11.1 甘特图<br>8 资源分配<br>  8.1 资源性质<br>  8.2 标识资源需求<br>  8.3 资源调度<br>  8.4 创建关键路径<br>  8.5 计算成本<br>  8.6 特定细节<br>  8.7 发布资源进度表<br>  8.8 成本进度<br>  8.9 调度顺序<br>9 监督与控制<br>  9.1 创建框架<br>    9.1.1 责任<br>    9.1.2 进展评估<br>    9.1.3 设置检查点<br>    9.1.4 取快照<br>  9.2 收集数据<br>    9.2.1 局部完成报告<br>    9.2.2 红黄绿交通灯报告<br>  9.3 进展可视化<br>    9.3.1 甘特图<br>    9.3.2 延迟图<br>    9.3.3 时间线<br>  9.4 成本监督<br>  9.5 优先级控制<br>    9.5.1 关键路径活动、无自由浮动的活动、少于规定浮动的活动、高风险活动、使用关键资源活动<br>  9.6 使项目回归目标<br>    9.6.1 缩短关键路径、重新评估优先需求、异常计划<br>  9.7 变更控制<br>    9.7.1 规程、维度、职责<br>10 管理合同<br>  10.1 合同种类<br>  10.2 部署阶段<br>    10.2.1 需求分析、评估计划、邀请投标、评估提议<br>  10.3 典型合同条款<br>  10.4 管理<br>  10.5 验收<br>11 人员管理<br>  11.1 理解行为<br>    11.1.1 解释主义、实证主义<br>  11.2 组织行为：背景<br>    11.2.1 合适的人、对指导方法择优、薪酬激励<br>  11.3 选择合适人选<br>  11.4 用最好的方法进行教育<br>    11.4.1 培训<br>  11.5 激励<br>    11.5.1 Taylorise模型<br>        11.5.1.1 制造业计件<br>    11.5.2 Maslow需求层次<br>        11.5.2.1 发现个人的需求所处层次<br>    11.5.3 Herzberg双因素理论<br>        11.5.3.1 维护因素、工作热情<br>  11.6 oldham-Hackman工作特征模型<br>    11.6.1 技术多样性、任务鉴别、重要性、自主权、反馈<br>  11.7 压力<br>    11.7.1 任务控制、角色冲突<br>  11.8 健康和安全<br>  11.9 职业道德注意事项<br>12 团队管理<br>  12.1 组成<br>  12.2 决策制定<br>    12.2.1 心里障碍<br>        12.2.1.1 故障启发、恶性增资、信息超载<br>    12.2.2 小组综合制定<br>    12.2.3 主程序组<br>    12.2.4 敏捷<br>  12.3 组织结构<br>  12.4 合作依赖<br>  12.5 分散或虚拟团队<br>  12.6 沟通风格<br>  12.7 沟通计划<br>    12.7.1 what、who、purpose、when、method、responsibility<br>  12.8 领导能力<br>13 软件质量<br>  13.1 质量在项目策划中的位置<br>  13.2 重要性<br>    13.2.1 危险程度、不定因素、缺陷累积<br>  13.3 定义<br>  13.4 产品与过程质量管理<br>  13.5 质量管理体系<br>  13.6 能力过程模型<br>  13.7 助力提高技术<br>    13.7.1 增加可见性<br>    13.7.2 过程性结构<br>    13.7.3 检查中间阶段<br>  13.8 测试<br>  13.9 质量计划<br>（Bob Hunghes &amp; Mike Cotterell 著）</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目管理/">项目管理</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-社科/CODEX  创新体系"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/社科/CODEX  创新体系/">CODEX  创新体系</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/社科/CODEX  创新体系/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/效率/">效率</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="点睛"><a href="#点睛" class="headerlink" title="点睛"></a>点睛</h3><p>投资思维、投行思维</p>
-<h3 id="talker"><a href="#talker" class="headerlink" title="talker"></a>talker</h3><p>CODEX国际创新研究院</p>
-<h3 id="PPT"><a href="#PPT" class="headerlink" title="PPT"></a>PPT</h3><p>哪组是贪污犯伪造的</p>
-<p>以下哪种状态在赌场出现概率最高</p>
-<blockquote>
-<p>随机的含义——粒度也是随机的</p>
-</blockquote>
-<p>下面四个快消茶的名称那个“风水”更好</p>
-<p>A 清客  B 徐来 C 唐奴 D 关西大益</p>
-<p>C— 发音里含糖— 刺激“多巴胺”分泌— 引发冲动购买</p>
-<p>注意限定词— 快消茶</p>
-<p>Apple、小米 — 都含糖分</p>
-<p>作为快消品，哪个作为主要logo色调最好</p>
-<p>A 红色   B 蓝色</p>
-<p>红色也会刺激多巴胺分泌</p>
-<p>金融理财 — 不用红色</p>
-<p>创新技术——研究人的思维方式</p>
-<p>几十年的学习研究积累</p>
-<p>“行为经济学” — 中国国内吹风</p>
-<p>骗子一条街 — 中关村创业大街 。。。</p>
-<p>服务对象— 跨十几个行业</p>
-<p>让你创业，你创业会做什么？</p>
-<p>常规思维模式——去中央、降低成本、社群思维、众包思维、大数据（创新的一级、二级）</p>
-<p>公司需要的：</p>
-<p>奴化教育（俗称：执行力），不是创新教育</p>
-<p>大部分人都是庸人</p>
-<h3 id="创新的演变"><a href="#创新的演变" class="headerlink" title="创新的演变"></a>创新的演变</h3><ol>
-<li>逆向、发散、跟踪、结构、水平思考（头脑风暴——其实对创新的贡献极小）</li>
-<li>TRIZ、 SIT两代 （将系统进行按照物、事、关系、功能进行建模，将创新规模化； 效率很高，被西方社会大面积采用）— 苏联冷战时发明、解体后被CIA破获TRIZ  | “微创新” — SIT<ol>
-<li>优势— 效率很高</li>
-<li>弊病— 不能做新产品，只能提升效率、性能完善</li>
-<li>最利于 公司内部创新</li>
-</ol>
-</li>
-<li>CODEX（从人思维的角度入手，按照人的思维成熟度等级来切分，有助于解决开发性问题）</li>
-</ol>
-<h4 id="CODEX-体系"><a href="#CODEX-体系" class="headerlink" title="CODEX 体系"></a>CODEX 体系</h4><ul>
-<li><p>按照人的思维成熟度水平将创新分成五级mapping different mind maturity level to innovation</p>
-<ul>
-<li>例子：万达地产— copy的邵逸夫（逸夫大剧院）</li>
-<li><p>CODEX</p>
-<ul>
-<li>c— copy</li>
-<li>o— optimize（TRIZ与SIT主要处于这阶段）</li>
-<li>d— dimension（维度）（如果开个饭店，你的卖点是什么？）— 功效、人权、体验方式、工艺（雕爷牛腩）、关系（张朝阳的99CEO俱乐部— 退一个才能有新加入）、历史（十五年— 十五年不忘初心）、理念 — 大部分智商题的难题都是维度问题</li>
-<li>e— ecosystem（生态）（最强大脑是个秀，80%都是CODEX培训的）<ul>
-<li>史玉柱、雷军、王选（北大方正创始人）</li>
-<li>做生态最忌讳做平台（环节太多、don’t play god）——做平台死亡概率太高；（人人为我，我为人人— 反人性）</li>
-<li>最好的途径— 做种子，让种子长成生态</li>
-<li>维度感特别强的人爱说树形结构</li>
-<li>生态的人 — 爱说“找关键点”，找核心关键点</li>
-<li>投资思维、投行思维</li>
-</ul>
-</li>
-<li><p>x — （meta-physics元认知（哲学）、元模式）人（心理学）、社会（宗教）</p>
-<ul>
-<li>它是无解的、是不可被竞争的</li>
-<li><p>产品</p>
-<ul>
-<li><p>人最大的需求（元需求）（七宗罪中的五条）</p>
-<ul>
-<li>情色（不是色情）fuck.com（只租不卖）、干爹网、中国文化是由情色支撑的</li>
-<li>贪婪（便宜）</li>
-<li>虚荣</li>
-<li>懒惰（我帮你买是个大生意）</li>
-<li>偷窥</li>
-</ul>
-</li>
-<li><p>人的bug类（十几种）</p>
-<ul>
-<li>游戏的原理、赌博的原理</li>
-</ul>
-</li>
-<li><p>人的归属</p>
-<ul>
-<li>意义（每个人都是一条三文鱼— 你的河流是什么？）规律、意义、业；断生死；幸福9号（幸福频道）；“念经养老”（高端养老院的思维转换）</li>
-</ul>
-<p>​</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>人没有真正的信仰，不会得到真正的幸福</p>
-<p>投资成功概率最高的项目秘诀？</p>
-<p>​    拷贝是创业成功概率最高的</p>
-<p>​    我们要做中国的…</p>
-<p>京东— 要做网上的苏宁</p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分享会/">分享会</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-每周一书/周读-- 创业维艰"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/13/每周一书/周读-- 创业维艰/">周读-- 创业维艰</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/13/每周一书/周读-- 创业维艰/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><blockquote>
-<p>分类——管理</p>
-<p>推荐指数——三星半</p>
-</blockquote>
-<blockquote>
-<p>这是一本关于<strong>创业</strong>的书，读起来更像是一本回忆录，不一样的是会有一些比较实操的逆境中求生的经验总结归纳</p>
-</blockquote>
-<blockquote>
-<p>作者系 Loadcloud及Opsware创始人（后者被惠普以15.6亿美元收购），真正实现了从0到0.1，再到1的转变，这些创业之后又开始涉入风险投资，比较符合现在流行的“企投家”标准</p>
-</blockquote>
-<p>虽然是一位CEO关于创业的经验总结，我们大家也没有那么多人创业，但读来感觉会对像我这样“一般员工”的认识产生影响，会更能体会老板是怎么想的，领导是怎么想的</p>
-<p>如果我们能够把平时的工作真正当成自己的事业来做，拿出那份责任感、使命感，我相信最后的结果不会坏</p>
-<p>当然，书中还谈到了很多具体的诸如如何组织、如何就平时的棘手问题进行沟通的细节，纵使作者的故事是在硅谷，但最本质的东西是相通的，虽书中论述不及专业的管理专家（如格鲁夫）之谈，但也具有相当的启发意义，毕竟他的故事算是逆境生长的极其成功的典范，能够在互联网经济泡沫时力挽狂澜，作者的各方面能力可略知一二</p>
-<p>说了这么多好，该扒一扒缺点了。因为是英文翻译过来的，所以有些语义语境读来不那么舒服，再加上中美文化本身的差异，书中描述的一些细节有时看来比较离谱，部分事情可能在我们看来天经地义。还有一点，总结的理论算不上太专业，不太成体系，真正想钻研企业管理，还是得看大师之作（格鲁夫的《给经理人的第一课》拿来当入门就不错）</p>
-<h3 id="部分小结、摘录"><a href="#部分小结、摘录" class="headerlink" title="部分小结、摘录"></a>部分小结、摘录</h3><p>印象笔记 图文链接：</p>
-<p><a href="https://www.evernote.com/l/ARvmQ23Tvs5JKZAmlWM9hqdhqTouO4fRyO8" target="_blank" rel="noopener">https://www.evernote.com/l/ARvmQ23Tvs5JKZAmlWM9hqdhqTouO4fRyO8</a> </p>
 <p>导图：</p>
-<p><img src="../pic_resource/创业维艰overview.png" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9bd9895c1b3e285e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Effective  Java  overview.png"></p>
+<hr>
+<p>笔记文本：</p>
+<blockquote>
+<p>Effective Java<br>1 第2章 创建和销毁对象<br>  1.1 1. 考虑用静态工厂方法代替构造器<br>    1.1.1 优点<br>        1.1.1.1 优势一：有名称<br>        1.1.1.2 优势二：不必在每次调用它们的时候都创建一个新对象<br>        1.1.1.3 优势三：可以返回原返回类型的任何子类型的对象<br>        1.1.1.4 优势四：在创建参数化类型实例时，它们使代码变得更简洁<br>    1.1.2 缺点<br>        1.1.2.1 类如果不含有公有的或者受保护的构造器，就不能被子类化<br>        1.1.2.2 它们与其他静态方法实际上没有任何区别<br>  1.2 2. 遇到多个构造器参数时要考虑用构建器<br>    1.2.1 Builder<br>    1.2.2 与构造器相比的略微优势在于：builder可以有多个可变参数<br>    1.2.3 虽然创建builder的开销在实践中可能不那么明显，但是在某些十分注重性能的情况下，可能就成问题<br>    1.2.4 builder比重叠构造器更冗长，因此只在很多参数时才使用<br>  1.3 3. 用私有构造器或者枚举类型强化Singleton属性<br>    1.3.1 单元素的枚举类型已经成为实现Singleton的最佳方法<br>  1.4 4. 通过私有构造器强化不可实例化的能力<br>    1.4.1 弊端：使得其不能被子类化<br>  1.5 5. 避免创建不必要的对象<br>    1.5.1 对于同时提供了静态工厂方法和构造器的不可变类，通常可以使用静态工厂方法而不是构造器，以避免创建不必要的对象<br>    1.5.2 除了重用不可变的对象之外，也可以重用那些已知不会被修改的可变对象<br>    1.5.3 要优先使用基本类型而不是装箱基本类型，要当心无意识的自动装箱<br>    1.5.4 自己维护对象池只在对象非常重量级时才显得必要，比如数据库连接池，线程池<br>  1.6 6. 消除过期的对象引用<br>    1.6.1 一旦对象引用已经过期，只需清空这些引用即可<br>    1.6.2 缓存导致的内存泄露<br>        1.6.2.1 一种是确认在缓存之外存在对某几个项的键的引用，该项就有意义 ——可以用WeakHashMap代表缓存<br>        1.6.2.2 针对“缓存项生命周期是否有意义”难以确认的情况 ——缓存应该时不时地清除掉没用的项。这项清除工作可以由一个后台线程来完成，或者也可以在给缓存添加新条目时顺便清理（LinkedHashMap类利用它的removeEldestEntry方法可以很容易实现）<br>        1.6.2.3 第三种引发来源是：监听器和其他回调。 确保回调立即被当做垃圾回收的最佳方法是只保存它们的弱引用 weak reference<br>  1.7 7. 避免使用finalizer方法<br>    1.7.1 通常是不可预测的<br>        1.7.1.1 一个对象从不可用开始，到它的终结方法被执行，这段时间是任意长的<br>    1.7.2 使用它有一个非常严重的性能损失<br>    1.7.3 显示的终止方法通常与try-finally结合使用，以确保及时终止<br>    1.7.4 用途：充当安全网、本地对等体<br>    1.7.5 结论：不应该依赖终结方法来更新重要的持久状态<br>    1.7.6 结论：除非是作为安全网，或者是为了终止非关键的本地资源，否则不要使用<br>2 第3章 对所有对象都通用的方法<br>  2.1 8. 覆盖equals时请遵守通用约定<br>    2.1.1 建议：能不覆盖就不要覆盖<br>    2.1.2 不用覆盖的情形<br>        2.1.2.1 类的每个实例本质上都是唯一的<br>        2.1.2.2 不关心类是否提供了“逻辑相等”<br>        2.1.2.3 超类已经覆盖了equals，从超类继承过来的行为对于子类也是合适的<br>        2.1.2.4 类是私有的或是包级私有的，可以确定它的equals方法永远不会被调用<br>    2.1.3 覆盖的约定<br>        2.1.3.1 自反性<br>        2.1.3.2 对称性<br>        2.1.3.3 传递性<br>        2.1.3.4 一致性<br>        2.1.3.5 非空性<br>                2.1.3.5.1 对于任何非null的引用值，x.equals(null)必须返回false<br>    2.1.4 诀窍<br>        2.1.4.1 使用== 检查参数是否为这个对象的引用<br>        2.1.4.2 使用instanceof检查 参数是否为正确的类型<br>        2.1.4.3 把参数转换为正确的类型<br>        2.1.4.4 对于该类中的每个关键域，检查参数中的域是否与该对象中对应的域相匹配<br>        2.1.4.5 是否满足：对称、传递、一致<br>        2.1.4.6 覆盖equals时总要覆盖hashCode<br>        2.1.4.7 不要企图让equals方法过于智能<br>        2.1.4.8 不要将equals声明中的Object对象替换为其他类型<br>  2.2 9. 覆盖 equals时总要覆盖 hashCode<br>    2.2.1 最佳实践：<br>        2.2.1.1 @Override public int hashCode(){ int result = 17; result = 31 <em> result + areaCode; result = 31 </em> result + prefix; result = 31 <em> result + lineNumber; }<br>  2.3 10. 总要覆盖 toString<br>    2.3.1 toString方法应该返回对象中包含的所有值得关注的信息<br>  2.4 11. 谨慎地覆盖clone<br>    2.4.1 通则：永远不要让客户去做任何类库能够替客户完成的事情<br>    2.4.2 最好提供某些其他途径来代替对象拷贝，或者干脆不提供这样的功能<br>    2.4.3 另一个实现对象拷贝的好方法是提供一个拷贝构造器或拷贝工厂<br>    2.4.4 由于它有这么多缺点，有些专家级的程序员干脆从来不去覆盖clone方法，也从来不去调用它，除非拷贝数组<br>  2.5 12. 考虑实现comparable接口<br>    2.5.1 compareTo不但允许进行简单的等同性比较，而且允许执行顺序比较<br>    2.5.2 如果你在编写一个值类，它具有非常明显的内在排序关系，比如按字母顺序、按数值顺序或者按年代顺序，那你就应该坚决考虑实现这个接口<br>    2.5.3 如果一个类有多个关键域，那么你必须从最关键的域开始，逐步进行到所有的重要域<br>3 第4章 类和接口<br>  3.1 13. 使类和成员的可访问性最小化<br>    3.1.1 信息隐藏 或 封装<br>    3.1.2 尽可能地使每个类或者成员不被外界访问<br>    3.1.3 有一条规则限制了降低方法的可访问性能力：如果方法覆盖了超类中的一个方法，子类中的访问级别就不允许低于超类中的访问级别<br>    3.1.4 注意：长度非零的数组总是可变的，所以，类具有公有的静态final数组域或者返回这种域的访问方法总是会出错<br>  3.2 14. 在公有类中使用访问方法而非公有域<br>    3.2.1 如果类可以在它所在的包的外部进行访问，就提供访问方法<br>    3.2.2 如果类是包级私有的，或者是私有的嵌套类，直接暴露它的数据域并没有本质错误<br>    3.2.3 Java类库的反面典型：Point和Dimension，暴露dimension类的内部数据造成了严重的性能问题，而且这个问题依然存在<br>  3.3 15. 使可变性最小化<br>    3.3.1 理由：比可变类更加易于设计、实现和使用。它们不容易出错，且更加安全<br>    3.3.2 使类成为不可变需要遵循五条规则<br>        3.3.2.1 1 不要提供任何会修改对象状态的方法<br>        3.3.2.2 2 保证类不会被扩展<br>        3.3.2.3 使所有的域都是final的<br>        3.3.2.4 使所有的域都成为私有的<br>        3.3.2.5 确保对于任何可变组件的互斥访问<br>    3.3.3 不可变对象的优势<br>        3.3.3.1 不可变对象本质上是线程安全的，它们不要求同步<br>        3.3.3.2 不仅可以共享不可变对象，甚至可以共享它们的内部信息<br>        3.3.3.3 不可变对象为其他对象提供了大量的构件<br>        3.3.3.4 不可变对象真正唯一的缺点是，对于每个不同的值都需要一个单独的对象<br>    3.3.4 使类成为不可变的方法 （绝不允许自身被子类化）<br>        3.3.4.1 1 使类成为final<br>        3.3.4.2 2 让类的所有构造器都变成私有的或者包级私有的，并添加公有的静态工厂来替代公有的构造器<br>        3.3.4.3 静态工厂方法除了允许多个实现类的灵活性之外，这种方法还使得有可能通过改善静态工厂的对象缓存能力，在后续的发行版中改进该类的性能<br>        3.3.4.4 还有许多其他优势，比如，提供一种其他功能的 构造器 ，只需添加第二个静态工厂，并且工厂的名字清楚地表明它的功能<br>    3.3.5 如果你选择让自己的不可变类实现Serializable接口，并且包含一个或多个指向可变对象的域，就必须提供一个显式的readObject或者readResolve方法<br>    3.3.6 除非有很好的理由要让类成为一个可变的类，否则就应该是不可变的<br>    3.3.7 如果类不能被做成不可变的，仍然应该尽可能地限制它的可变性。降低对象可存在的状态数，可以更容易地分析该对象的行为，同时降低出错的可能性<br>  3.4 16. 复合优先于继承<br>    3.4.1 继承是实现代码重用的有力手段，但它并非永远是完成这项工作的最佳工具<br>    3.4.2 与方法调用不同的是，继承打破了封装性<br>    3.4.3 新类中的每个实例方法都可以调用被包含的现有类实例中对应的方法，并返回它的结果，这被称为“转发”，新类中的方法被称为转发方法<br>    3.4.4 使用复合的类也被称为包装类，这也正是“装饰模式”<br>    3.4.5 包装类不适合用在回调框架中。 编写转发方法倒是有点琐碎，但是只需要给每个接口编写一次构造器，转发类则可以通过包含接口的包替你提供<br>    3.4.6 只有当子类真正是超类的子类型时，才适合用继承<br>    3.4.7 如果在适合于使用复合的地方使用继承，则会不必要地暴露实现细节。这样得到的API会把你限制在原始的实现上，永远限定了类的性能<br>  3.5 17. 要么为继承而设计，并提供文档说明，要么就禁止继承<br>    3.5.1 说明可覆盖方法的自用性<br>    3.5.2 好的文档应该描述一个给定的方法做了什么，而不是如何做到的<br>    3.5.3 对于为了继承而设计的类，唯一的测试方法就是编写子类<br>    3.5.4 构造器决不能调用可被覆盖的方法<br>    3.5.5 为了继承而设计的类，对于这个类会有一些实质性的限制<br>    3.5.6 对于那些并非为了安全地进行子类化而设计和编写文档的类，要禁止子类化<br>  3.6 18. 接口优于抽象类<br>    3.6.1 现有的类可以很容易被更新，以实现新的接口<br>    3.6.2 接口是定义mixin（混合类型）的理想选择<br>    3.6.3 接口允许我们构造非层次结构的类型框架<br>    3.6.4 接口使得安全地增强类的功能成为可能<br>    3.6.5 通过对你导出的每个重要接口都提供一个抽象的骨架实现类，把接口和抽象类的优点结合起来<br>    3.6.6 抽象类与接口相比有一个明显优势：抽象类的演变比接口的演变要容易得多。如果在后续发行版中，你希望在抽象类中增加新的方法，始终可以增加具体方法，它包含合理的默认实现。然后，该抽象类的所有实现都将提供这个新方法。对于接口，这样做是行不通的<br>    3.6.7 设计公有接口要非常谨慎。接口一旦被公开发行，并且已被广泛实现，再想改变这个接口几乎是不可能的<br>  3.7 19. 接口只用于定义类型<br>    3.7.1 有一种接口被称为 常量接口。这种接口不包含任何方法，它只包含静态final域，每个域都导出一个常量。使用这些常量的类实现这个接口，以避免用类名来修饰常量名。<br>    3.7.2 应该将这种量导出<br>  3.8 20. 类层次优于标签类<br>    3.8.1 缺点<br>        3.8.1.1 充斥着样板代码，包括枚举声明、标签域以及条件语句<br>        3.8.1.2 标签类过于冗长、容易出错，并且效率低下<br>  3.9 21. 用函数对象表示策略<br>    3.9.1 比较器函数代表一种为元素排序的策略<br>    3.9.2 我们在设计具体的策略类时，还需要定义一个策略接口<br>  3.10 22. 优先考虑静态成员类<br>    3.10.1 嵌套类是指被定义在另一个类的内部的类。嵌套类有四种<br>        3.10.1.1 静态成员类<br>        3.10.1.2 非静态成员类<br>        3.10.1.3 匿名类<br>        3.10.1.4 局部类<br>    3.10.2 如果声明成员类不要求访问外围实例，就要始终把static修饰符放在它的声明中<br>4 第5章 泛型<br>  4.1 23. 请不要在新代码中使用原生态类型<br>  4.2 24. 消除非受检警告<br>    4.2.1 要尽可能消除每一个非受检警告<br>    4.2.2 如果无法消除警告，同时可以证明引起警告的代码是类型安全的，（只有在这种情况下才）可以用一个@SuppressWarning(“uncheck”)注解来禁止这条警告<br>  4.3 25. 列表优先于数组<br>    4.3.1 数组与泛型相比，有两个重要不同点<br>        4.3.1.1 1 数组是协变的<br>        4.3.1.2 2 数组是具体化的<br>  4.4 26. 优先考虑泛型<br>    4.4.1 编写自己的泛型会比较困难，但是值得花些时间去学习如何编写<br>  4.5 27. 优先考虑泛型方法<br>    4.5.1 泛型方法就像泛型一样，使用起来比要求客户端转换输入参数并返回值的方法来得更加安全，也更加容易。<br>    4.5.2 就像泛型一样，你应该确保新方法可以不用转换就能使用，这通常意味着要将它们泛型化<br>  4.6 28. 利用有限制通配符来提升API的灵活性<br>    4.6.1 &lt;？ Extends E&gt;<br>    4.6.2 &lt;? super E&gt;<br>    4.6.3 PECS 表示： producer-extends, consumer-super<br>    4.6.4 所有的comparable和comparator都是消费者<br>  4.7 29. 优先考虑类型安全的异构容器<br>5 第6章 枚举和注解<br>  5.1 第30条 用enum代替int常量<br>    5.1.1 因为没有可访问的构造器，枚举类型是真正的final<br>    5.1.2 枚举是实例受控的<br>    5.1.3 它们是单例的泛型化，本质上是单元素的枚举<br>    5.1.4 你可以增加或重新排列枚举类型中的常量，而无需重新编译它的客户端代码，因为导出常量的域在枚举类型和它的客户端之间提供了一个隔离层：常量值并没有被编译到客户端代码中，而是在int枚举模式之中<br>    5.1.5 最终，可以通过调用toString方法将枚举转化成可打印的字符串<br>    5.1.6 除了完善了int枚举模式不足之外，枚举类型还允许添加任意的方法和域，并实现任意接口<br>    5.1.7 将不同的行为与每个枚举常量关联起来：在枚举类型中声明一个抽象的方法<br>        5.1.7.1 pubic enum Operation{ PLUS{double apply(double x, double y){return x + y;}}, MINUS{double apply(double x, double y){return x - y;}}, TIMES{double apply(double x, double y){return x </em> y;}}, DIVIDE{double apply(double x, double y){return x / y;}}; abstract double apply(double x, double y); }<br>        5.1.7.2 如果给第二版添加新常量，你就不可能会忘记提供apply方法<br>    5.1.8 特定于常量的方法实现可以与特定于常量的数据结合起来<br>        5.1.8.1 pubic enum Operation{ PLUS(“+”) {double apply(double x, double y){return x + y;}}, MINUS(“-“) {double apply(double x, double y){return x - y;}}, TIMES(“<em>“) {double apply(double x, double y){return x </em> y;}}, DIVIDE(“/“) {double apply(double x, double y){return x / y;}}; private final String symbol; Operation(String symbol) {this.symbol = symbol;} @Override public String toString(){ return this.sybol;} abstract double apply(double x, double y); }<br>    5.1.9 枚举类型有一个自动产生的valueOf(String )方法，它将常量的名字转变成常量本身<br>    5.1.10 策略枚举<br>        5.1.10.1 嵌套策略枚举之后，枚举中就不需要switch语句或者特定于常量的方法实现了。虽然这种模式没有switch语句那么简洁，但更加安全，也更加灵活<br>  5.2 第31条 用实例域代替序数<br>    5.2.1 永远不要根据枚举的序数导出与它关联的值，而是要将它保存在一个实例域中<br>    5.2.2 ordinal()——大多数程序员都不需要这个方法，它是设计成用于像EnumSet和EnumMap这种基于枚举的通用数据结构的<br>  5.3 第32条 用EnumSet代替位域<br>    5.3.1 枚举类型要用于集合中，没有理由用位域来表示它们<br>  5.4 第33条 用EnumMap代替序数索引<br>    5.4.1 使用EnumMap，运行速度可以与使用序数的程序相媲美，没有不安全的转换，不必手工标注这些索引的输出；计算数组索引时也不可能出错<br>    5.4.2 之所以能与通过序数索引的数组相媲美，是因为EnumMap在内部使用了这种数组<br>    5.4.3 最好不要用序数来索引数组，而要使用EnumMap<br>  5.5 第34条 用接口模拟可伸缩的枚举<br>    5.5.1 虽然无法编写可扩展的枚举类型，却可以通过编写接口以及实现该接口的基础枚举类型，对它进行模拟<br>  5.6 第35条 注解优先于命名模式<br>    5.6.1 示例<br>        5.6.1.1 @Retention(RetentionPolicy.RUNTIME) @Target(ElementType.METHOD) public @interface Test{ }<br>        5.6.1.2 这种注解称为元注解<br>  5.7 第36条 坚持使用Override注解<br>    5.7.1 能够避免疏漏的 重载<br>  5.8 第37条 用标记接口定义类型<br>    5.8.1 定义：没有包含方法声明的接口，而只是指明一个类实现了具有某种属性的接口<br>6 第7章 方法<br>  6.1 第38条 检查参数的有效性<br>  6.2 第39条 必要时进行保护性拷贝<br>    6.2.1 假设类的客户端会尽其所能来破坏这个类的约束条件，因此你必须保护性地设计程序<br>    6.2.2 为了保护类的内部信息免受直接访问修改的攻击，对于构造器的每个可变参数进行保护性拷贝是必要的<br>    6.2.3 对与参数类型可以被不可信任方子类化的参数，请不要使用clone方法进行保护性拷贝<br>    6.2.4 虽然替换构造器就可以成功地避免上述攻击，但是改变Period实例仍然是有可能的，因为它的访问方法提供了对其可变内部成员的访问能力 为了防御这种攻击，只需要修改访问方法，使它返回可变内部域的保护性拷贝即可<br>  6.3 第40条 谨慎设计方法签名<br>    6.3.1 谨慎选择方法的名称<br>    6.3.2 不要过于追求提供便利的方法<br>        6.3.2.1 每个方法都应该尽其所能。<br>        6.3.2.2 方法太多会使类难以学习、使用、文档化、测试和维护<br>        6.3.2.3 只有当一项操作被经常使用时，才考虑为它提供快捷方法，如果不能确定，还是不提供为好<br>    6.3.3 避免过长的参数列表<br>        6.3.3.1 相同类型的长参数列表格外有害<br>        6.3.3.2 例如，List接口提供了subList方法，返回子列表的视图(view)<br>        6.3.3.3 解决方法<br>                6.3.3.3.1 1 分解为多个方法<br>                6.3.3.3.2 2 创建辅助类<br>                6.3.3.3.3 3 采用builder模式<br>        6.3.3.4 对参数类型，要优先使用接口而不是类<br>        6.3.3.5 对于boolean参数，要优先使用两个元素的枚举类型<br>  6.4 第41条 慎用重载<br>    6.4.1 对于重载方法的选择是静态的，而对于被覆盖的方法的选择则是动态的<br>    6.4.2 安全而保守的策略是，永远不要导出两个具有相同参数数目的重载方法<br>  6.5 第42条 慎用可变参数<br>    6.5.1 EnumSet类对它的静态工厂使用这种方法，最大限度地减少创建枚举集合的成本。枚举集合为位域提供在性能方面有竞争力的替代方法<br>  6.6 第43条 返回零长度的数组或者集合，而不是null<br>    6.6.1 对于不返回任何元素的调用，每次都返回同一个零长度数组是有可能的，因为零长度数组是不可变的<br>  6.7 第44条 为所有导出的API元素编写文档注释<br>    6.7.1 为了正确地编写API文档，必须在每个被导出的 类、接口、构造器、方法和域声明之前增加一个文档注释<br>    6.7.2 方法的文档注释应该简洁地描述出它和客户端之间的约定<br>        6.7.2.1 precondition<br>        6.7.2.2 postcondition<br>        6.7.2.3 side effect<br>        6.7.2.4 thread safety<br>    6.7.3 可以使用HTML标签<br>    6.7.4 使用{@code}标签<br>    6.7.5 {@literal}<br>7 第8章 通用程序设计<br>  7.1 第45条 将局部变量的作用域最小化<br>    7.1.1 几乎每个局部变量的声明都应该包含一个初始化表达式<br>    7.1.2 使用for循环，可以大大降低 “剪切-粘贴”错误<br>    7.1.3 使用for循环与使用while相比还有另外一个优势：更简短，从而增强可读性<br>  7.2 第46条 for-each循环优先于传统的for循环<br>    7.2.1 for-each循环不仅让你遍历集合和数组，还让你遍历任何实现Iterable接口的对象<br>    7.2.2 如果你在编写的类型表示的是一组元素，即使你选择不让它实现Collection，也要让它实现Iterable。这样可以允许用户利用for-each循环遍历你的类型<br>    7.2.3 有三种常见情况无法使用for-each循环<br>        7.2.3.1 过滤<br>        7.2.3.2 转换<br>        7.2.3.3 平行迭代<br>  7.3 第47条 了解和使用类库<br>  7.4 第48条 如果需要精确答案，请避免使用float和double<br>    7.4.1 二进制浮点运算<br>    7.4.2 float和double不适合货币计算<br>    7.4.3 使用BigDecimal、int或者long进行<br>  7.5 第49条 基本类型优先于装箱基本类型<br>    7.5.1 装箱类型的合理用处<br>        7.5.1.1 作为集合中的元素、键和值<br>        7.5.1.2 在参数化类型中，必须使用装箱基本类型作为类型参数<br>        7.5.1.3 在反射调用时，必须使用装箱基本类型<br>  7.6 第50条 如果其他类型更合适，则尽量避免使用字符串<br>    7.6.1 字符串不适合代替其他的值类型<br>    7.6.2 字符串不适合代替枚举类型<br>    7.6.3 字符串不适合代替聚集类型<br>    7.6.4 字符串不适合代替能力表<br>  7.7 第51条 当心字符串连接的性能<br>    7.7.1 使用StringBuilder替代<br>  7.8 第52条 通过接口引用对象<br>    7.8.1 如果你养成了用接口作为类型的习惯，你的程序将更加灵活<br>    7.8.2 如果没有合适的接口存在，完全可以用类而不是接口来引用对象<br>  7.9 第53条 接口优先于反射机制<br>    7.9.1 反射<br>        7.9.1.1 丧失了编译时类型检查的好处<br>        7.9.1.2 执行反射访问所需要的代码非常笨拙和冗长<br>        7.9.1.3 性能损失<br>  7.10 第54条 谨慎地使用本地方法<br>    7.10.1 使用本地方法提升性能的做法不值得提倡<br>  7.11 第55条 谨慎地进行优化<br>    7.11.1 优化的弊大于利<br>    7.11.2 要努力编写好的程序而不是快的程序<br>    7.11.3 努力避免那些限制性能的设计决策<br>    7.11.4 要考虑API设计决策的性能后果<br>    7.11.5 为了获得好的性能而对API进行包装，这是一种非常不好的想法<br>  7.12 第56条 遵守普遍接受的命名规则<br>8 第9章 异常<br>  8.1 第57条 只针对异常的情况才使用异常<br>    8.1.1 基于异常的模式比标准模式要慢得多<br>  8.2 第58条 对可恢复的情况使用受检异常，对编程错误使用运行时异常<br>    8.2.1 受检异常<br>    8.2.2 用运行时异常来表明编程错误<br>  8.3 第59条 避免不必要地使用受检异常<br>  8.4 第60条 优先使用标准异常<br>  8.5 第61条 抛出与抽象相对应的异常<br>    8.5.1 更高层的实现应该捕获低层的异常，同时抛出可以按照高层抽象进行解释的异常<br>    8.5.2 异常链<br>  8.6 第62条 每个方法抛出的异常都要有文档<br>    8.6.1 单独声明受检异常，使用Javadoc的@throws标记<br>    8.6.2 不要在非受检异常上使用@throws<br>  8.7 第63条 在细节消息中包含能捕获失败的信息<br>    8.7.1 为了捕获失败，异常的细节信息应该包含所有“对该异常有贡献”的参数和域的值<br>  8.8 第64条 努力使失败保持原子性<br>    8.8.1 失败的方法调用应该使对象保持在被调用之前的状态<br>  8.9 第65条 不要忽略异常<br>    8.9.1 空的catch块达不到应有的目的<br>    8.9.2 至少包含一条忽略的说明<br>9 第10章 并发<br>  9.1 第66条 同步访问共享的可变数据<br>    9.1.1 Java语言规范保证读或者写一个变量是原子性的<br>    9.1.2 volatile修饰符不执行互斥访问，但它可以保证任一线程在读取该域时都将看到最近刚被写入的值<br>    9.1.3 使用volatile时，务必要小心，++操作并不是原子性的<br>    9.1.4 AtomicInt、AtomicLong<br>        9.1.4.1 getAndIncrement<br>    9.1.5 多线程共享可变数据时，每个读或者写数据的线程都必行执行同步<br>  9.2 第67条 避免过度同步<br>  9.3 第68条 executor和task优先于线程<br>    9.3.1 Executor FrameWork中有一个可以替代Timer的东西，即ScheduleThreadPoolExecutor 虽然就Timer更加容易，但executor更灵活。Timer对于长期运行任务时会影响到定时准确性。 如果Timer唯一的线程抛出未被捕获异常，Timer就会停止执行，而executor支持多个线程，并且优雅地从抛出的未受检异常的任务中恢复<br>  9.4 第69条 并发工具优先于wait和notify<br>    9.4.1 既然正确地使用wait和notify比较困难，就应该用更高级的并发工具来代替<br>    9.4.2 concurrent工具分三类：Executor Framework、并发集合 以及 同步器<br>        9.4.2.1 并发集合为标准的集合接口（如List、Queue和Map）<br>                9.4.2.1.1 ConcurrentHashMap出了提供卓越的并发性之外，速度也非常快<br>                9.4.2.1.2 优先使用ConcurrentHashMap而不是Hashtable或者Collections.synchronizedMap<br>        9.4.2.2 有些集合接口已经通过阻塞操作进行了扩展，他们会一直等待可以成功执行为止<br>                9.4.2.2.1 如BlockingQueue<br>                9.4.2.2.2 不出所料，大多数ExecutorService实现（包括ThreadPoolExecutor）都使用BlockingQueue<br>        9.4.2.3 同步器 是一些使线程能够等待另一个线程的对象，允许它们协调动作<br>                9.4.2.3.1 最常用的是CountDownLatch和Semaphore<br>                9.4.2.3.2 对于间歇式定时，应该使用System.nanoTime，更加精准<br>                9.4.2.3.3 传递给Timer方法的executor必须允许创建至少与指定并发级别一样多的线程，否则这个测试就永远不会结束，这就是线程饥饿死锁<br>    9.4.3 使用wait和notify就像用“并发汇编语言”进行编程一样<br>    9.4.4 维护时：一般情况下你应该优先使用notifyAll，而不是notify<br>  9.5 第70条 线程安全性的文档化<br>  9.6 第71条 慎用延迟初始化<br>    9.6.1 除非绝对必要，否则就不要这么做<br>    9.6.2 在大多数情况下，正常的初始化要优先于延迟初始化<br>    9.6.3 如果处于性能考虑需要对实例域使用延迟初始化，就使用双重检查模式<br>  9.7 第72条 不要依赖于线程调度器<br>    9.7.1 任何依赖于线程调度器来达到正确性或者性能要求的程序，很有可能都是不可移植的<br>    9.7.2 不要依赖Thread.yield或者线程优先级。这些设施仅仅对调度器作些按时<br>    9.7.3 线程优先级可以用来提高一个已经能够正常工作的程序的服务质量，但永远不应该用来“修正”一个原本不能正常工作的程序<br>  9.8 第73条 避免使用线程组<br>10 第11章 序列化<br>  10.1 第74条 谨慎实现Serializable接口<br>    10.1.1 代价<br>        10.1.1.1 降低了改变这个类的实现的灵活性<br>        10.1.1.2 增加了出现Bug和安全漏洞的可能性<br>        10.1.1.3 相关的测试负担增加<br>  10.2 第75条 考虑使用自定义的序列化形式<br>  10.3 第76条 保护性地编写readObject方法<br>  10.4 第77条 对于实例控制，枚举类型优先于readResolve<br>  10.5 第78条 考虑用序列化代理代替序列化实例</p>
+</blockquote>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-每周一书/《褚时健传》"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/13/每周一书/《褚时健传》/">《褚时健传》</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/13/每周一书/《褚时健传》/" class="article-date">
+	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>“回想这么多年来，我自己做的最问心无愧的就是：‘没有庸庸碌碌地生活’”<br>“我不期望别人在说起我的人生时有多少褒奖，我只希望人家说起我时，会说上一句：‘褚时健这个人，还是做了一些事。’”<br>——褚时健</p>
+<p>不积跬步无以至千里，一屋不扫何以扫天下。<br>真正从小事做起，精益求精态度的践行者，他之所以能走这么远，按照友人常说的，“必定不是运气”。</p>
+<p>想起《苦难辉煌》，苦难并不一定会带来辉煌，但辉煌，必定是由苦难锻造的。</p>
+<p>听起来稍显鸡汤，不过这本传记虽说文笔谈不上优美，但确实是王石传记的同一撰写者，文中细节还原或许有一定可信度。</p>
+<p>值得一提的是，他背后也俗套地有一位贤内助。</p>
+<p>老年丧女，白发人送黑发人的撕心裂肺或许只有当事人能够体会吧。</p>
+<blockquote>
+<p>父亲早逝后，一度辍学，幸有堂兄指引，遂得续造</p>
+</blockquote>
+<blockquote>
+<p>找准关键点，精益求精，一步一个脚印，才有红塔山的传奇</p>
+</blockquote>
+<blockquote>
+<p>波澜起伏，一度失女入狱，耳后自困荒山，东山再起，褚橙横空出世</p>
+</blockquote>
+<blockquote>
+<p>父亲早逝、少年参军、后被打为右派，沉着冷静，脚踏实地，才有再起之势</p>
+</blockquote>
+<blockquote>
+<p>这不是一部普通的传记，它描写了一个人如何在17年时间里缔造了一个商业王国，然后如何陨落、自困荒山，然后又如何用17年时间走出心理和职业的巨大困局。</p>
+</blockquote>
+<blockquote>
+<p>正如尼采所言，一个伟大的人格，可以在自己的身上克服这个时代</p>
+</blockquote>
+<hr>
+<p><a href="https://www.amazon.cn/gp/product/B017SAZAD6/ref=oh_aui_detailpage_o03_s00?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接</a></p>
+<hr>
+<p>导图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-6433421a9297d513.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="褚时健传  overview.png"></p>
+<hr>
+<p>笔记文本：</p>
+<blockquote>
+<p>褚时健传<br>1 第一篇 早年故事<br>  1.1 第一章 起始<br>    1.1.1 褚姓人家<br>    1.1.2 矣则<br>  1.2 第二章 童年浪花<br>  1.3 第三章 少年故事<br>    1.3.1 年少逝父<br>  1.4 第四章 离家的日子<br>  1.5 第五章 所谓长大<br>  1.6 第六章 思变<br>2 第二篇 激情的青春十年<br>  2.1 第一章 当上了游击队员<br>  2.2 第二章 战火纷飞<br>  2.3 第三章 迎来解放<br>  2.4 第四章 革命意味着牺牲<br>  2.5 第五章 平静或不平静的生活<br>  2.6 第六章 波澜骤起<br>3 第三篇 生活的断层<br>  3.1 第一章 跌入生活底层<br>  3.2 第二章 一家人要在一起<br>  3.3 第三章 到了另一个农场<br>  3.4 第四章 新平、新平<br>  3.5 第五章 迅速进入角色<br>  3.6 第六章 戛洒缘分<br>  3.7 第七章 动乱岁月中的平静生活<br>  3.8 第八章 希望的光就要来了<br>4 第四篇 华彩人生篇章<br>  4.1 第一章 预备<br>  4.2 第二章 完事开头难<br>  4.3 第三章 启动改革<br>  4.4 第四章 出手改革<br>  4.5 第五章 设备之战<br>  4.6 第六章 烟叶的故事<br>  4.7 第七章 内部管理大小事<br>5 第五篇 行在人生巅峰时期<br>  5.1 第一章 名烟翻番<br>  5.2 第二章 关索坝工程<br>  5.3 第三章 快马加鞭<br>  5.4 第四章 谢幕<br>  5.5 第五章 人生间隙<br>6 第六篇 果夺锦标<br>  6.1 第一章 是结束，也是开始<br>  6.2 第二章 土地、水和树<br>  6.3 第三章 橙树在长大<br>  6.4 第四章 一年比一年丰收<br>  6.5 第五章 每一条路都指向未来<br>  6.6 第六章 江山无限<br>这不是一部普通的传记，它描写了一个人如何在17年时间里缔造了一个商业王国，然后如何陨落、自困荒山，然后又如何用17年时间走出心理和职业的巨大困局。 正如尼采所言，一个伟大的人格，可以在自己的身上克服这个时代</p>
+</blockquote>
 
       
 

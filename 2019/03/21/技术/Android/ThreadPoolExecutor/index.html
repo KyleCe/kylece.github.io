@@ -3,35 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>应用架构演进 | KyleCe</title>
+  <title>threadpoolexecutor | KyleCe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="AndroidArchitecture" />
+  <meta name="keywords" content="Java" />
   
   
   
   
-  <meta name="description" content="预则立应用演进过程中可能出现混乱局面，对架构的考量应该放在项目开始之前参考：Android架构思考(模块化、多进程)   适用范围：中型项目，小项目就不需要杀鸡用牛刀了   不进行设计时应用可能出现极度混乱的局面：  跳过广受诟病的插件化思路，考虑应用路由框架设计组件化框架：   这样的路由框架，在模块解耦的同时，提高了模块的可测性和复用性。还可以在router与各路由之间加入 Common-B">
-<meta name="keywords" content="Android,Architecture">
+  <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="应用架构演进">
-<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/Android/【Android】应用架构演进/index.html">
+<meta property="og:title" content="ThreadPoolExecutor">
+<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2019/03/21/技术/Android/ThreadPoolExecutor/index.html">
 <meta property="og:site_name" content="KyleCe">
-<meta property="og:description" content="预则立应用演进过程中可能出现混乱局面，对架构的考量应该放在项目开始之前参考：Android架构思考(模块化、多进程)   适用范围：中型项目，小项目就不需要杀鸡用牛刀了   不进行设计时应用可能出现极度混乱的局面：  跳过广受诟病的插件化思路，考虑应用路由框架设计组件化框架：   这样的路由框架，在模块解耦的同时，提高了模块的可测性和复用性。还可以在router与各路由之间加入 Common-B">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-75c426d6709ddced.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-782c8d1af71d2448.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-07c676326694ac24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-f7692235ff980e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-4250238e45f0a1f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-2b216709e992978b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-9366cc7cb9bb15d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-03-09T15:15:42.568Z">
+<meta property="og:image" content="http://kylece.github.io/img/thread_pool_executor.jpg">
+<meta property="og:updated_time" content="2019-03-21T01:59:42.687Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="应用架构演进">
-<meta name="twitter:description" content="预则立应用演进过程中可能出现混乱局面，对架构的考量应该放在项目开始之前参考：Android架构思考(模块化、多进程)   适用范围：中型项目，小项目就不需要杀鸡用牛刀了   不进行设计时应用可能出现极度混乱的局面：  跳过广受诟病的插件化思路，考虑应用路由框架设计组件化框架：   这样的路由框架，在模块解耦的同时，提高了模块的可测性和复用性。还可以在router与各路由之间加入 Common-B">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1481332-75c426d6709ddced.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="ThreadPoolExecutor">
+<meta name="twitter:image" content="http://kylece.github.io/img/thread_pool_executor.jpg">
   
     <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
   
@@ -169,7 +159,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-技术/Android/【Android】应用架构演进" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-技术/Android/ThreadPoolExecutor" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -177,7 +167,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      应用架构演进
+      ThreadPoolExecutor
     </h1>
   
 
@@ -185,8 +175,8 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/【Android】应用架构演进/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	<a href="/2019/03/21/技术/Android/ThreadPoolExecutor/" class="article-date">
+	  <time datetime="2019-03-21T01:59:39.000Z" itemprop="datePublished">2019-03-21</time>
 	</a>
 
       
@@ -202,41 +192,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>预则立<br>应用演进过程中可能出现混乱局面，对架构的考量应该放在项目开始之前<br>参考：<br><a href="http://blog.spinytech.com/2016/12/28/android_modularization/" target="_blank" rel="noopener">Android架构思考(模块化、多进程)</a></p>
-</blockquote>
-<blockquote>
-<p>适用范围：中型项目，小项目就不需要杀鸡用牛刀了</p>
-</blockquote>
-<hr>
-<p>不进行设计时应用可能出现极度混乱的局面：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-75c426d6709ddced.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>跳过广受诟病的插件化思路，考虑应用<strong>路由框架</strong>设计<strong>组件化</strong>框架：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-782c8d1af71d2448.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-1.png"></p>
-<blockquote>
-<p>这样的路由框架，在模块解耦的同时，提高了模块的可测性和复用性。<br><img src="http://upload-images.jianshu.io/upload_images/1481332-07c676326694ac24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-3.png"><br>还可以在router与各路由之间加入 Common-Base层，作为公共library：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-f7692235ff980e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-Common Base.png"></p>
-</blockquote>
-<p>在调用API时，路由机制的调用时序图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-4250238e45f0a1f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Router时序图.png"></p>
-<p>这样的路由架构存在一个访问域问题，在多进程时需要进行格外处理</p>
-<blockquote>
-<p>多进程优势：</p>
-<ol>
-<li>独立各进程；</li>
-<li>提高内存控制权；</li>
-<li>模块解耦</li>
-<li>守护</li>
-</ol>
-</blockquote>
-<p>Router是单例模式，在多进程时直接使用会在每个JVM实例中生成，跨进程时需要将Router链接起来：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2b216709e992978b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多进程路由连接图.png"></p>
-<p>这时，调用时序图层级就略微有点深了：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9366cc7cb9bb15d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="广域事件传递时序图.png"></p>
-<blockquote>
-<p><strong>总结</strong>：<br>路由架构可以高度解耦，提升可测试性，也便于项目组进行任务划分、并行开发；<br>缺点是调用层级略微有点深，会有一定的性能损耗，但与其带来的优势相比可以忽略；此设计也没有考虑到MVP架构设计的融合问题，需要考虑应用场景的引用和适度</p>
-</blockquote>
-<hr>
-<p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+        <p><img src="http://kylece.github.io/img/thread_pool_executor.jpg" alt="Memory"></p>
 
       
 
@@ -271,7 +227,7 @@
 
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
     </footer>
   </div>
@@ -279,19 +235,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          declare-styleable-枚举format简介
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/03/21/技术/Android/JavaMemoryModel/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">VectorDrawable介绍</div>
+      <div class="article-nav-title">Java Memory Model</div>
     </a>
   
 </nav>
