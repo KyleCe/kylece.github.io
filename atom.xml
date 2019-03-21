@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/KyleCe/kylece.github.io/"/>
-  <updated>2019-03-20T15:19:28.064Z</updated>
+  <updated>2019-03-20T23:59:51.331Z</updated>
   <id>https://github.com/KyleCe/kylece.github.io/</id>
   
   <author>
@@ -17,19 +17,19 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Gradle keyword</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2019/03/20/%E6%8A%80%E6%9C%AF/Android/GradleKeyword/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2019/03/20/技术/Android/GradleKeyword/</id>
-    <published>2019-03-20T06:52:02.000Z</published>
-    <updated>2019-03-20T15:19:28.064Z</updated>
+    <title>Java Memory Model</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2019/03/21/%E6%8A%80%E6%9C%AF/Android/JavaMemoryModel/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2019/03/21/技术/Android/JavaMemoryModel/</id>
+    <published>2019-03-20T23:58:42.000Z</published>
+    <updated>2019-03-20T23:59:51.331Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="http://kylece.github.io/img/gradle_keyword.jpg" alt=""></p>]]></content>
+    <content type="html"><![CDATA[<p><img src="http://kylece.github.io/img/java_memory_model.jpg" alt="Memory"></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;&lt;img src=&quot;http://kylece.github.io/img/gradle_keyword.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;img src=&quot;http://kylece.github.io/img/java_memory_model.jpg&quot; alt=&quot;Memory&quot;&gt;&lt;/p&gt;
 
       
     
@@ -40,7 +40,7 @@
     
       <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
     
-      <category term="AndroidStudio" scheme="https://github.com/KyleCe/kylece.github.io/tags/AndroidStudio/"/>
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
     
   </entry>
   
@@ -71,6 +71,34 @@
       <category term="Kotlin" scheme="https://github.com/KyleCe/kylece.github.io/tags/Kotlin/"/>
     
       <category term="Coroutine" scheme="https://github.com/KyleCe/kylece.github.io/tags/Coroutine/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Gradle keyword</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2019/03/20/%E6%8A%80%E6%9C%AF/Android/GradleKeyword/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2019/03/20/技术/Android/GradleKeyword/</id>
+    <published>2019-03-20T06:52:02.000Z</published>
+    <updated>2019-03-20T15:19:28.064Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://kylece.github.io/img/gradle_keyword.jpg" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;http://kylece.github.io/img/gradle_keyword.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
+    
+      <category term="AndroidStudio" scheme="https://github.com/KyleCe/kylece.github.io/tags/AndroidStudio/"/>
     
   </entry>
   
@@ -277,11 +305,11 @@
   </entry>
   
   <entry>
-    <title>面经--计算一个字节有几比特（Java）</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/13/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E9%9D%A2%E7%BB%8F--%E8%AE%A1%E7%AE%97%E4%B8%80%E4%B8%AA%E5%AD%97%E8%8A%82%E6%9C%89%E5%87%A0%E6%AF%94%E7%89%B9%EF%BC%88Java%EF%BC%89/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/</id>
+    <title>面经--逆转链表</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/13/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E9%9D%A2%E7%BB%8F--%E9%80%86%E8%BD%AC%E9%93%BE%E8%A1%A8%EF%BC%88Java%EF%BC%89/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/13/技术/算法/面经--逆转链表（Java）/</id>
     <published>2018-03-13T15:27:30.000Z</published>
-    <updated>2018-03-14T15:14:02.843Z</updated>
+    <updated>2018-03-14T15:14:08.055Z</updated>
     
     <content type="html"><![CDATA[<p>如何逆转链表呢？本篇介绍两种常见方法：</p><ol><li>遍历</li><li>递归</li></ol><h5 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseHead</span><span class="params">(@Nonnull Node head)</span> </span>&#123;</span><br><span class="line">    Node pre = head;</span><br><span class="line">    Node cur = head.nextNode;</span><br><span class="line">    Node next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</span><br><span class="line">        next = cur.nextNode;</span><br><span class="line">        cur.nextNode = pre;</span><br><span class="line"></span><br><span class="line">        pre = cur;</span><br><span class="line">        cur = next;</span><br><span class="line">    &#125;</span><br><span class="line">    head.nextNode = <span class="keyword">null</span>;</span><br><span class="line">    head = pre;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseByRecur</span><span class="params">(Node current)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (current == <span class="keyword">null</span> || current.nextNode == <span class="keyword">null</span>) <span class="keyword">return</span> current;  </span><br><span class="line">    Node nextNode = current.nextNode;  </span><br><span class="line">    current.nextNode = <span class="keyword">null</span>;  </span><br><span class="line">    Node reverseRest = reverseByRecur(nextNode);  </span><br><span class="line">    nextNode.nextNode = current;  </span><br><span class="line">    <span class="keyword">return</span> reverseRest;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -309,11 +337,11 @@
   </entry>
   
   <entry>
-    <title>面经--逆转链表</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/13/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E9%9D%A2%E7%BB%8F--%E9%80%86%E8%BD%AC%E9%93%BE%E8%A1%A8%EF%BC%88Java%EF%BC%89/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/13/技术/算法/面经--逆转链表（Java）/</id>
+    <title>面经--计算一个字节有几比特（Java）</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/13/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E9%9D%A2%E7%BB%8F--%E8%AE%A1%E7%AE%97%E4%B8%80%E4%B8%AA%E5%AD%97%E8%8A%82%E6%9C%89%E5%87%A0%E6%AF%94%E7%89%B9%EF%BC%88Java%EF%BC%89/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/</id>
     <published>2018-03-13T15:27:30.000Z</published>
-    <updated>2018-03-14T15:14:08.055Z</updated>
+    <updated>2018-03-14T15:14:02.843Z</updated>
     
     <content type="html"><![CDATA[<p>如何逆转链表呢？本篇介绍两种常见方法：</p><ol><li>遍历</li><li>递归</li></ol><h5 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseHead</span><span class="params">(@Nonnull Node head)</span> </span>&#123;</span><br><span class="line">    Node pre = head;</span><br><span class="line">    Node cur = head.nextNode;</span><br><span class="line">    Node next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</span><br><span class="line">        next = cur.nextNode;</span><br><span class="line">        cur.nextNode = pre;</span><br><span class="line"></span><br><span class="line">        pre = cur;</span><br><span class="line">        cur = next;</span><br><span class="line">    &#125;</span><br><span class="line">    head.nextNode = <span class="keyword">null</span>;</span><br><span class="line">    head = pre;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseByRecur</span><span class="params">(Node current)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (current == <span class="keyword">null</span> || current.nextNode == <span class="keyword">null</span>) <span class="keyword">return</span> current;  </span><br><span class="line">    Node nextNode = current.nextNode;  </span><br><span class="line">    current.nextNode = <span class="keyword">null</span>;  </span><br><span class="line">    Node reverseRest = reverseByRecur(nextNode);  </span><br><span class="line">    nextNode.nextNode = current;  </span><br><span class="line">    <span class="keyword">return</span> reverseRest;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -395,36 +423,6 @@
   </entry>
   
   <entry>
-    <title>降低内存占用Route</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E9%99%8D%E4%BD%8E%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8Route/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/降低内存占用Route/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.089Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="已执行"><a href="#已执行" class="headerlink" title="已执行"></a>已执行</h3><ul><li>修复LeakCanary报出的问题（内网、外网）<ul><li>直接检测泄露</li><li>外网beta用户上报</li></ul></li><li>分析dumpheap文件，查内存占用（直接分析、对比分析）<ul><li>占用大户<ul><li>Bitmap</li><li>FinalizerReference</li></ul></li><li>场景分析，进出场景、发现可疑场景，查内存dumpheap文件<ul><li>已有发现：WebView、主题切换泄露</li></ul></li></ul></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;已执行&quot;&gt;&lt;a href=&quot;#已执行&quot; class=&quot;headerlink&quot; title=&quot;已执行&quot;&gt;&lt;/a&gt;已执行&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;修复LeakCanary报出的问题（内网、外网）&lt;ul&gt;
-&lt;li&gt;直接检测泄露&lt;/li&gt;
-&lt;li&gt;外网beta用户上报&lt;
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
-    
-      <category term="内存" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E5%86%85%E5%AD%98/"/>
-    
-  </entry>
-  
-  <entry>
     <title>枚举enum必知必会</title>
     <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E6%9E%9A%E4%B8%BEenum%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"/>
     <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/枚举enum必知必会/</id>
@@ -484,6 +482,35 @@
   </entry>
   
   <entry>
+    <title>【Note-程序】变量类型</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Note-%E7%A8%8B%E5%BA%8F%E3%80%91%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Note-程序】变量类型/</id>
+    <published>2018-03-08T16:35:35.000Z</published>
+    <updated>2018-03-09T15:32:43.077Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>最近考了部分面试者关于变量访问的一些问题，总结一下</p></blockquote><hr><p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325" target="_blank" rel="noopener"><em>EverNote链接</em></a></p><p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325/res/b21eeb36-a66c-488e-a682-5af7f7b7a990/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B.xmind" target="_blank" rel="noopener"><em>XMind文档</em></a></p><p><strong>导图</strong></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-2e270ca767cdba41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="parameter type overview.png"></p><p><strong>文本</strong></p><p>变量类型</p><p>1 static<br>  1.1 随着类的加载而加载<br>  1.2 附注：Java 类操作流程<br>2 volitale<br>  2.1 从内存中读取（并不能保证原子性）<br>  2.2 使用原则<br>    2.2.1 写入变量不依赖此变量的值(或者只有一个线程修改此变量)<br>    2.2.2 变量的状态不需要与其它变量共同参与不变约束<br>    2.2.3 访问变量不需要加锁<br>3 Atomic<br>  3.1 原子性变量<br>  3.2 缺点<br>    3.2.1 必须用特定API对变量进行操作<br>    3.2.2 只有有限的几种类型<br>4 synchronized<br>  4.1 缺点<br>    4.1.1 性能考量<br>  4.2 注意点<br>    4.2.1 尽量减小锁的范围与程度<br>    4.2.2 多锁时保证操作顺序以防死锁<br>5 concurrent工具包<br>  5.1 CountDownLatch<br>  5.2 ConcurrentHashMap<br>  5.3 CopyOnWriteArrayList/CopyOnWriteArraySet<br>  5.4 ReadWriteLock/ReentrantReadWriteLock<br>  5.5 LinkedBlockingQueue<br>  5.6 CyclicBarrier<br>  5.7 …</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;最近考了部分面试者关于变量访问的一些问题，总结一下&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>【Program】性能考量</title>
     <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Program%E3%80%91%E6%80%A7%E8%83%BD%E8%80%83%E9%87%8F/"/>
     <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Program】性能考量/</id>
@@ -510,35 +537,6 @@
       <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
     
       <category term="编程珠玑" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E7%BC%96%E7%A8%8B%E7%8F%A0%E7%8E%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Note-程序】变量类型</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Note-%E7%A8%8B%E5%BA%8F%E3%80%91%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Note-程序】变量类型/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.077Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>最近考了部分面试者关于变量访问的一些问题，总结一下</p></blockquote><hr><p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325" target="_blank" rel="noopener"><em>EverNote链接</em></a></p><p><a href="https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-7adf1110dd0a/52327fcabac7b1b7fddab50cccfe0325/res/b21eeb36-a66c-488e-a682-5af7f7b7a990/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B.xmind" target="_blank" rel="noopener"><em>XMind文档</em></a></p><p><strong>导图</strong></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-2e270ca767cdba41.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="parameter type overview.png"></p><p><strong>文本</strong></p><p>变量类型</p><p>1 static<br>  1.1 随着类的加载而加载<br>  1.2 附注：Java 类操作流程<br>2 volitale<br>  2.1 从内存中读取（并不能保证原子性）<br>  2.2 使用原则<br>    2.2.1 写入变量不依赖此变量的值(或者只有一个线程修改此变量)<br>    2.2.2 变量的状态不需要与其它变量共同参与不变约束<br>    2.2.3 访问变量不需要加锁<br>3 Atomic<br>  3.1 原子性变量<br>  3.2 缺点<br>    3.2.1 必须用特定API对变量进行操作<br>    3.2.2 只有有限的几种类型<br>4 synchronized<br>  4.1 缺点<br>    4.1.1 性能考量<br>  4.2 注意点<br>    4.2.1 尽量减小锁的范围与程度<br>    4.2.2 多锁时保证操作顺序以防死锁<br>5 concurrent工具包<br>  5.1 CountDownLatch<br>  5.2 ConcurrentHashMap<br>  5.3 CopyOnWriteArrayList/CopyOnWriteArraySet<br>  5.4 ReadWriteLock/ReentrantReadWriteLock<br>  5.5 LinkedBlockingQueue<br>  5.6 CyclicBarrier<br>  5.7 …</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;最近考了部分面试者关于变量访问的一些问题，总结一下&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.evernote.com/shard/s283/sh/8b251288-1d18-4d46-baa4-
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
     
   </entry>
   
