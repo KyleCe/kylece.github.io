@@ -255,6 +255,54 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/Android/ActivityLaunchMode"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/03/22/技术/Android/ActivityLaunchMode/">ActivityLaunchMode</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/03/22/技术/Android/ActivityLaunchMode/" class="article-date">
+	  <time datetime="2019-03-22T08:38:05.000Z" itemprop="datePublished">2019-03-22</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://kylece.github.io/img/activity_launch_mode.jpg" alt="ActivityLaunchMode"></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/TheadLocal"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -784,65 +832,11 @@
 
 
   
-    <article id="post-技术/算法/算法--itoa源码"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/18/技术/算法/算法--itoa源码/">itoa源码</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/18/技术/算法/算法--itoa源码/" class="article-date">
-	  <time datetime="2018-03-18T15:10:20.000Z" itemprop="datePublished">2018-03-18</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>  atoi     把字符串转换成整型数<br>  itoa     把一整数转换为字符串</p>
-<h3 id="如何处理"><a href="#如何处理" class="headerlink" title="如何处理"></a>如何处理</h3><ol>
-<li>如果是负数，先转为正数</li>
-<li><p>从各位开始变为字符，直到最高位，最后反转</p>
-<h3 id="SourceCode-–-C语言"><a href="#SourceCode-–-C语言" class="headerlink" title="SourceCode – C语言"></a>SourceCode – C语言</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">my_itoa</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;  </span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>,isNegative = <span class="number">0</span>;  </span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">char</span> s[<span class="number">100</span>];      <span class="comment">//必须为static变量，或者是全局变量  </span></span><br><span class="line">    <span class="keyword">if</span>((isNegative = n) &lt; <span class="number">0</span>)&#123; <span class="comment">//先将负数转为正数  </span></span><br><span class="line">        n = -n;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">do</span> &#123;    <span class="comment">//从各位开始变为字符，直到最高位，最后反转  </span></span><br><span class="line">        s[i++] = n%<span class="number">10</span> + <span class="string">'0'</span>;  </span><br><span class="line">        n = n/<span class="number">10</span>;  </span><br><span class="line">    &#125; <span class="keyword">while</span>(n &gt; <span class="number">0</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(isNegative &lt; <span class="number">0</span>) &#123;  <span class="comment">//如果是负数，补上负号  </span></span><br><span class="line">        s[i++] = <span class="string">'-'</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">    s[i] = <span class="string">'\0'</span>;    <span class="comment">//最后加上字符串结束符  </span></span><br><span class="line">    <span class="keyword">return</span> reverse(s);    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面经/">面经</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
 
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
   </nav>
 
 </section>

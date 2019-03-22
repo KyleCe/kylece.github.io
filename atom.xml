@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/KyleCe/kylece.github.io/"/>
-  <updated>2019-03-21T14:02:18.643Z</updated>
+  <updated>2019-03-22T08:38:29.546Z</updated>
   <id>https://github.com/KyleCe/kylece.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ActivityLaunchMode</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2019/03/22/%E6%8A%80%E6%9C%AF/Android/ActivityLaunchMode/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2019/03/22/技术/Android/ActivityLaunchMode/</id>
+    <published>2019-03-22T08:38:05.000Z</published>
+    <updated>2019-03-22T08:38:29.546Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://kylece.github.io/img/activity_launch_mode.jpg" alt="ActivityLaunchMode"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;http://kylece.github.io/img/activity_launch_mode.jpg&quot; alt=&quot;ActivityLaunchMode&quot;&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
+    
+  </entry>
   
   <entry>
     <title>ThreadLocal</title>
@@ -475,19 +501,21 @@
   </entry>
   
   <entry>
-    <title>由 _Java GC_ 看 _Android_ 内存泄露</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/GC/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/GC/</id>
+    <title>Java进阶-- 优先考虑泛型方法</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E6%B3%9B%E5%9E%8B%E6%96%B9%E6%B3%95/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/</id>
     <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.067Z</updated>
+    <updated>2019-03-20T14:51:18.421Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="由-Java-GC-看-Android-内存泄露"><a href="#由-Java-GC-看-Android-内存泄露" class="headerlink" title="由 Java GC 看 Android 内存泄露"></a>由 <em>Java GC</em> 看 <em>Android</em> 内存泄露</h1><p>内存泄露，一个老生常谈的话题，本文将从Java GC的角度出发，一探Android内存泄露的究竟，希望能给读者带来些许启发。</p><p><em>本篇涵盖：</em></p><ul><li><em><strong>准备</strong>——基础知识要求及名字解释</em></li><li><em><strong>背景</strong>——Android内存泄露的本质与危害</em></li><li><em><strong>原因</strong>——为什么会产生泄露</em></li><li><em><strong>基础</strong>——Java内存分配与回收</em></li><li><em><strong>引申</strong>——JVM与Android虚拟机</em></li><li><em><strong>实战</strong>——内存泄露攻防</em></li></ul><h2 id="零、准备"><a href="#零、准备" class="headerlink" title="零、准备"></a>零、准备</h2><h3 id="0-0-要求："><a href="#0-0-要求：" class="headerlink" title="0.0 要求："></a>0.0 要求：</h3><p>  阅读本文，需要读者具有一定的JAVA基础与Android基础</p><h3 id="0-1-名词解释："><a href="#0-1-名词解释：" class="headerlink" title="0.1 名词解释："></a>0.1 名词解释：</h3><ul><li>GC——Garbage Collector垃圾收集器</li><li>MAT——Eclipse  Memory Analyzer Tool 内存分析工具</li><li>LeakCanary——第三方内存泄露监测工具</li><li>StrictMode——Android严格模式，调优时可以参考<h3 id="0-2-演示环境："><a href="#0-2-演示环境：" class="headerlink" title="0.2 演示环境："></a>0.2 演示环境：</h3></li><li>Android Studio——3.0 Canary 8</li><li>Eclipse MAT——V1.7.0</li><li>LeakCanary——V1.5.1</li></ul><h2 id="一、本质与危害"><a href="#一、本质与危害" class="headerlink" title="一、本质与危害"></a>一、本质与危害</h2><h3 id="1-1-何谓内存泄露"><a href="#1-1-何谓内存泄露" class="headerlink" title="1.1 何谓内存泄露"></a>1.1 何谓内存泄露</h3><p>在计算机科学中，内存泄漏指由于疏忽或错误造成程序未能释放已经不再使用的内存。内存泄漏并非指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误，导致在释放该段内存之前就失去了对该段内存的控制，从而造成了内存的浪费。</p><p>在安卓中，内存泄露主要是指应用程序进程在运行过程中有不能释放而不再使用的内存，占用了比实际需要多的空间。</p><p>图1.1.1是使用MAT分析手机内存快照得到的OverView结果：</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-ca4c6177eb55ae69.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800#center" alt="图1.1.1 ORG某款应用的Debug版内存泄露OverView"></p><h3 id="1-2-恶劣影响"><a href="#1-2-恶劣影响" class="headerlink" title="1.2 恶劣影响"></a>1.2 恶劣影响</h3><p>内存泄漏会因为减少可用内存的数量从而降低计算机的性能。最终，在最糟糕的情况下，过多的可用内存被分配掉导致全部或部分设备停止正常工作，或者应用程序崩溃。在以下情況，内存泄漏导致较嚴重的后果2：</p><ul><li>程序运行后置之不理，消耗越来越多的内存（比如服务器上的后台任务，尤其是嵌入式系统中的后台任务，这些任务可能被运行后很多年内都置之不理）；</li><li>频繁分配新内存；</li><li>程序能够请求未被释放的内存（比如共享内存）；</li><li>内存非常有限，比如在嵌入式系统或便携设备中；</li><li>…</li></ul><p>针对安卓，内存泄露轻则导致应用占用内存虚高、增加CPU占用、耗电，重则导致应用程序无法开辟所需大小的内存，引发OOM，触发崩溃，这在内存小的机器上尤为明显（我们平时在测试应用内存占用表现时，可以多使用低端机）。<br>结合上一节所举例子，由图1.1可见该应用的泄露足有35M之多，这一内存结果还是应用刚启动时的情况，随着用户使用时间加长，泄露只会越来越多，直到用户杀死应用或者应用主动崩溃（如图1.2.1）。</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-b460f38cafbd927b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图1.2.1 AndroidStudio 某OutOfMemory 堆栈"></p><p>下面我们来看内存泄露是如何产生的。</p><h2 id="二、产生缘由"><a href="#二、产生缘由" class="headerlink" title="二、产生缘由"></a>二、产生缘由</h2><p>内存泄露诱因有很多，安卓中比较常见的有：</p><ul><li>静态变量持有引用(集合类、单例造成的内存泄漏)</li><li>匿名内部类/非静态内部类和异步线程</li><li>Handler 、UI线程的post、AnimatorListener等使用不当</li><li>资源未关闭(或在finalize中关闭)</li><li>监听器的使用，在释放对象的同时没有相应删除监听器</li><li>…</li></ul><p>下面针对部分诱因进行说明，具体解决办法此处按下不表。</p><h3 id="2-1-静态变量导致的泄露"><a href="#2-1-静态变量导致的泄露" class="headerlink" title="2.1 静态变量导致的泄露"></a>2.1 静态变量导致的泄露</h3><p>静态集合导致的泄露可以分析为：长生命周期的对象，持有了短生命周期对象的引用，在后者生命周期结束时未释放长周期对象对它的引用，导致对象无法被GC回收。图2.1.1为一示例，即使在循环内有设置集合对象为null，但集合中的对象还是存在，GC并不能回收它（这种在集合中不断创建新对象的写法也是极其臭名昭著的）。</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-03be10fdf312be61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.1.1  静态集合的泄露示例"></p><p>图2.1.2为某APP静态集合泄露的对象汇总，可以看到总大小有11.7M之大。</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-5a2e015b3d5de3b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.1.2 某静态泄露的汇总结果"></p><h3 id="2-2-匿名内部类引发的内存泄露"><a href="#2-2-匿名内部类引发的内存泄露" class="headerlink" title="2.2 匿名内部类引发的内存泄露"></a>2.2 匿名内部类引发的内存泄露</h3><p>匿名内部类极易引发内存泄露，纵使这样的写法在代码层面会简洁很多，但在涉及到匿名内部类生命周期不依附于外部类时，需要我们谨慎处理，不然就很有可能引发泄露，图2.2.1 为AppsFlayer SDK 4.7.1 Forground.java中某段代码的近似版本（该泄露在SDK v4.7.4中已修复）：</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-d8c4f55edc053536.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.2.1 匿名内部类引发的内存泄露示例"><br>图2.2.1 匿名内部类引发的内存泄露示例</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-32baef0d6d1e22c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.2.2 匿名内部类引发的内存泄露示例2"><br>图2.2.2展示了常见的Handler写法可能引发的内存泄露（Android Studio）</p><p>图2.2.2 匿名内部类引发的内存泄露示例2</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-0270c0fdc04b6d26.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.2.3 匿名内部类引发的内存泄露示例3"><br>图2.2.3 匿名内部类引发的内存泄露示例3</p><p>一般在一个质量欠佳的工程中，匿名内部类或异步线程操作导致的内存泄露随处可见。</p><h3 id="2-3-Handler任务管理不当"><a href="#2-3-Handler任务管理不当" class="headerlink" title="2.3 Handler任务管理不当"></a>2.3 Handler任务管理不当</h3><p>Handler、AnimationListener、AnimatorUpdateListener使用不当也极易导致泄露，图2.3.1即为有泄露隐患的示例</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-518f810be8d5eea2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.3.1 Handler操作潜在泄露示例"><br>图2.3.1 Handler操作潜在泄露示例</p><h3 id="2-4-资源未及时关闭"><a href="#2-4-资源未及时关闭" class="headerlink" title="2.4 资源未及时关闭"></a>2.4 资源未及时关闭</h3><p>Android资源不及时关闭会出现内存泄露的地方有很多，诸如在使用I/O流、Cursor（图2.4.1展示了在APP开启StrictMode时会收到的FileIO未close的异常Throwable）</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-cbf5aa5529865f5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="图2.4.1 closable close未调用"><br>图2.4.1 closable close未调用</p><h3 id="2-5-绑定-解绑、注册-反注册未成对调用"><a href="#2-5-绑定-解绑、注册-反注册未成对调用" class="headerlink" title="2.5 绑定/解绑、注册/反注册未成对调用"></a>2.5 绑定/解绑、注册/反注册未成对调用</h3><p>绑定/解绑、注册/反注册同时出现这一点毋庸置疑，但实际工程中发现有开发者对于成对调用的理解不够透彻，会有前后条件不一致的情况，导致内存泄露（如注册时无条件注册，反注册时加入不能100%保证成立的判定条件）</p><h2 id="三、Java内存分配与垃圾回收策略"><a href="#三、Java内存分配与垃圾回收策略" class="headerlink" title="三、Java内存分配与垃圾回收策略"></a>三、Java内存分配与垃圾回收策略</h2><h3 id="内存分配"><a href="#内存分配" class="headerlink" title="内存分配"></a>内存分配</h3><h3 id="内存空间划分"><a href="#内存空间划分" class="headerlink" title="内存空间划分"></a>内存空间划分</h3><ul><li>方法区</li><li>堆区</li><li>虚拟机栈</li><li>程序计数器 </li><li>本地方法栈</li></ul><h3 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h3><h2 id="四、JVM与Android虚拟机的异同"><a href="#四、JVM与Android虚拟机的异同" class="headerlink" title="四、JVM与Android虚拟机的异同"></a>四、JVM与Android虚拟机的异同</h2><h3 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h3><h3 id="安卓虚拟机"><a href="#安卓虚拟机" class="headerlink" title="安卓虚拟机"></a>安卓虚拟机</h3><h3 id="两者异同"><a href="#两者异同" class="headerlink" title="两者异同"></a>两者异同</h3><h2 id="五、如何“防治”"><a href="#五、如何“防治”" class="headerlink" title="五、如何“防治”"></a>五、如何“防治”</h2><h3 id="攻"><a href="#攻" class="headerlink" title="攻"></a>攻</h3><h3 id="防"><a href="#防" class="headerlink" title="防"></a>防</h3><blockquote><p>参考文献：</p><pre><code>1. https://zh.wikipedia.org/wiki/内存泄漏2. https://zh.wikipedia.org/wiki/内存泄漏</code></pre></blockquote>]]></content>
+    <content type="html"><![CDATA[<h3 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h3><p>类可以从泛型中受益，静态工具API更适合泛型</p><blockquote><p>Collections 的算法方法都已泛型化(如binarySearch、sort)</p></blockquote><h3 id="优势示例"><a href="#优势示例" class="headerlink" title="优势示例"></a>优势示例</h3><ul><li>例1：精简API</li></ul><p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEg.png" alt=""></p><p>代码所示是一个简单的设置字体的Util的static API的泛型化代码；</p><p>如果不是使用这种泛型化的API，则需要为TextView的扩展类（Button、CheckBox等等）编写数不清的函数</p><ul><li>例2：确保类型安全的情况下提升API的易用性</li></ul><p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEg2.png" alt=""></p><p>可以看到上面的API可以轻易的操作所有以View为基类的类的集合；</p><ul><li>例3：类级别的泛型化</li></ul><p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEgClass.png" alt=""></p><blockquote><p>在配合集合使用时需要注意类型cast的警告，这些警告实际上是编译时不会有问题，但真正在运行时可能会抛出ClassCastException，我们在实际项目中应该将这些潜在的威胁清除掉；</p><p>对于十分确定不会出问题的类型操作API上，可以用@SuppressWarning(“unckecked”)消除这类警告</p></blockquote><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>赶紧用起来吧，你的小伙伴会爱上你写的极简API的</p><blockquote><p>源码里的代码有很多写的极好的点，同学们平时可以扒一扒</p></blockquote>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;由-Java-GC-看-Android-内存泄露&quot;&gt;&lt;a href=&quot;#由-Java-GC-看-Android-内存泄露&quot; class=&quot;headerlink&quot; title=&quot;由 Java GC 看 Android 内存泄露&quot;&gt;&lt;/a&gt;由 &lt;em&gt;Java GC&lt;
+        &lt;h3 id=&quot;适用范围&quot;&gt;&lt;a href=&quot;#适用范围&quot; class=&quot;headerlink&quot; title=&quot;适用范围&quot;&gt;&lt;/a&gt;适用范围&lt;/h3&gt;&lt;p&gt;类可以从泛型中受益，静态工具API更适合泛型&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Collections 的算法方法都已
       
     
     </summary>
@@ -495,13 +523,7 @@
       <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
-    
       <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
-    
-      <category term="MemoryLeak" scheme="https://github.com/KyleCe/kylece.github.io/tags/MemoryLeak/"/>
-    
-      <category term="GC" scheme="https://github.com/KyleCe/kylece.github.io/tags/GC/"/>
     
   </entry>
   
@@ -560,36 +582,6 @@
     
     
       <category term="算法" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>降低内存占用Route</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E9%99%8D%E4%BD%8E%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8Route/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/降低内存占用Route/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.089Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="已执行"><a href="#已执行" class="headerlink" title="已执行"></a>已执行</h3><ul><li>修复LeakCanary报出的问题（内网、外网）<ul><li>直接检测泄露</li><li>外网beta用户上报</li></ul></li><li>分析dumpheap文件，查内存占用（直接分析、对比分析）<ul><li>占用大户<ul><li>Bitmap</li><li>FinalizerReference</li></ul></li><li>场景分析，进出场景、发现可疑场景，查内存dumpheap文件<ul><li>已有发现：WebView、主题切换泄露</li></ul></li></ul></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;已执行&quot;&gt;&lt;a href=&quot;#已执行&quot; class=&quot;headerlink&quot; title=&quot;已执行&quot;&gt;&lt;/a&gt;已执行&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;修复LeakCanary报出的问题（内网、外网）&lt;ul&gt;
-&lt;li&gt;直接检测泄露&lt;/li&gt;
-&lt;li&gt;外网beta用户上报&lt;
-      
-    
-    </summary>
-    
-      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Android" scheme="https://github.com/KyleCe/kylece.github.io/tags/Android/"/>
-    
-      <category term="内存" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E5%86%85%E5%AD%98/"/>
     
   </entry>
   
