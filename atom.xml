@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://github.com/KyleCe/kylece.github.io/"/>
-  <updated>2019-03-22T08:38:29.546Z</updated>
+  <updated>2019-03-22T10:44:19.017Z</updated>
   <id>https://github.com/KyleCe/kylece.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux pipe/poll/epoll</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2019/03/22/%E6%8A%80%E6%9C%AF/base/pipe_poll_epoll/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2019/03/22/技术/base/pipe_poll_epoll/</id>
+    <published>2019-03-22T10:43:53.000Z</published>
+    <updated>2019-03-22T10:44:19.017Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://kylece.github.io/img/pipe_poll_epoll.jpg" alt="pipe_poll_epoll"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;http://kylece.github.io/img/pipe_poll_epoll.jpg&quot; alt=&quot;pipe_poll_epoll&quot;&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Linux" scheme="https://github.com/KyleCe/kylece.github.io/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>ActivityLaunchMode</title>
@@ -383,11 +409,11 @@
   </entry>
   
   <entry>
-    <title>面经--逆转链表</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/13/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E9%9D%A2%E7%BB%8F--%E9%80%86%E8%BD%AC%E9%93%BE%E8%A1%A8%EF%BC%88Java%EF%BC%89/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/13/技术/算法/面经--逆转链表（Java）/</id>
+    <title>面经--计算一个字节有几比特（Java）</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/13/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E9%9D%A2%E7%BB%8F--%E8%AE%A1%E7%AE%97%E4%B8%80%E4%B8%AA%E5%AD%97%E8%8A%82%E6%9C%89%E5%87%A0%E6%AF%94%E7%89%B9%EF%BC%88Java%EF%BC%89/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/</id>
     <published>2018-03-13T15:27:30.000Z</published>
-    <updated>2018-03-14T15:14:08.055Z</updated>
+    <updated>2018-03-14T15:14:02.843Z</updated>
     
     <content type="html"><![CDATA[<p>如何逆转链表呢？本篇介绍两种常见方法：</p><ol><li>遍历</li><li>递归</li></ol><h5 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseHead</span><span class="params">(@Nonnull Node head)</span> </span>&#123;</span><br><span class="line">    Node pre = head;</span><br><span class="line">    Node cur = head.nextNode;</span><br><span class="line">    Node next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</span><br><span class="line">        next = cur.nextNode;</span><br><span class="line">        cur.nextNode = pre;</span><br><span class="line"></span><br><span class="line">        pre = cur;</span><br><span class="line">        cur = next;</span><br><span class="line">    &#125;</span><br><span class="line">    head.nextNode = <span class="keyword">null</span>;</span><br><span class="line">    head = pre;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseByRecur</span><span class="params">(Node current)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (current == <span class="keyword">null</span> || current.nextNode == <span class="keyword">null</span>) <span class="keyword">return</span> current;  </span><br><span class="line">    Node nextNode = current.nextNode;  </span><br><span class="line">    current.nextNode = <span class="keyword">null</span>;  </span><br><span class="line">    Node reverseRest = reverseByRecur(nextNode);  </span><br><span class="line">    nextNode.nextNode = current;  </span><br><span class="line">    <span class="keyword">return</span> reverseRest;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -415,11 +441,11 @@
   </entry>
   
   <entry>
-    <title>面经--计算一个字节有几比特（Java）</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/13/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E9%9D%A2%E7%BB%8F--%E8%AE%A1%E7%AE%97%E4%B8%80%E4%B8%AA%E5%AD%97%E8%8A%82%E6%9C%89%E5%87%A0%E6%AF%94%E7%89%B9%EF%BC%88Java%EF%BC%89/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/</id>
+    <title>面经--逆转链表</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/13/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E9%9D%A2%E7%BB%8F--%E9%80%86%E8%BD%AC%E9%93%BE%E8%A1%A8%EF%BC%88Java%EF%BC%89/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/13/技术/算法/面经--逆转链表（Java）/</id>
     <published>2018-03-13T15:27:30.000Z</published>
-    <updated>2018-03-14T15:14:02.843Z</updated>
+    <updated>2018-03-14T15:14:08.055Z</updated>
     
     <content type="html"><![CDATA[<p>如何逆转链表呢？本篇介绍两种常见方法：</p><ol><li>遍历</li><li>递归</li></ol><h5 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseHead</span><span class="params">(@Nonnull Node head)</span> </span>&#123;</span><br><span class="line">    Node pre = head;</span><br><span class="line">    Node cur = head.nextNode;</span><br><span class="line">    Node next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</span><br><span class="line">        next = cur.nextNode;</span><br><span class="line">        cur.nextNode = pre;</span><br><span class="line"></span><br><span class="line">        pre = cur;</span><br><span class="line">        cur = next;</span><br><span class="line">    &#125;</span><br><span class="line">    head.nextNode = <span class="keyword">null</span>;</span><br><span class="line">    head = pre;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">reverseByRecur</span><span class="params">(Node current)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (current == <span class="keyword">null</span> || current.nextNode == <span class="keyword">null</span>) <span class="keyword">return</span> current;  </span><br><span class="line">    Node nextNode = current.nextNode;  </span><br><span class="line">    current.nextNode = <span class="keyword">null</span>;  </span><br><span class="line">    Node reverseRest = reverseByRecur(nextNode);  </span><br><span class="line">    nextNode.nextNode = current;  </span><br><span class="line">    <span class="keyword">return</span> reverseRest;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -501,21 +527,23 @@
   </entry>
   
   <entry>
-    <title>Java进阶-- 优先考虑泛型方法</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/Java%E8%BF%9B%E9%98%B6--%20%E4%BC%98%E5%85%88%E8%80%83%E8%99%91%E6%B3%9B%E5%9E%8B%E6%96%B9%E6%B3%95/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/</id>
+    <title>【Note-程序】HashMap-Integer,-V--SparseArray--</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Note-%E7%A8%8B%E5%BA%8F%E3%80%91HashMap-Integer,-V--SparseArray--/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Note-程序】HashMap-Integer,-V--SparseArray--/</id>
     <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2019-03-20T14:51:18.421Z</updated>
+    <updated>2018-03-09T15:32:43.079Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h3><p>类可以从泛型中受益，静态工具API更适合泛型</p><blockquote><p>Collections 的算法方法都已泛型化(如binarySearch、sort)</p></blockquote><h3 id="优势示例"><a href="#优势示例" class="headerlink" title="优势示例"></a>优势示例</h3><ul><li>例1：精简API</li></ul><p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEg.png" alt=""></p><p>代码所示是一个简单的设置字体的Util的static API的泛型化代码；</p><p>如果不是使用这种泛型化的API，则需要为TextView的扩展类（Button、CheckBox等等）编写数不清的函数</p><ul><li>例2：确保类型安全的情况下提升API的易用性</li></ul><p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEg2.png" alt=""></p><p>可以看到上面的API可以轻易的操作所有以View为基类的类的集合；</p><ul><li>例3：类级别的泛型化</li></ul><p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEgClass.png" alt=""></p><blockquote><p>在配合集合使用时需要注意类型cast的警告，这些警告实际上是编译时不会有问题，但真正在运行时可能会抛出ClassCastException，我们在实际项目中应该将这些潜在的威胁清除掉；</p><p>对于十分确定不会出问题的类型操作API上，可以用@SuppressWarning(“unckecked”)消除这类警告</p></blockquote><h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>赶紧用起来吧，你的小伙伴会爱上你写的极简API的</p><blockquote><p>源码里的代码有很多写的极好的点，同学们平时可以扒一扒</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>众所周知，基础数组的处理效率要比集合的处理效率高出指数倍（内存寻址优势，指哪打哪，直截了当）</p></blockquote><blockquote><p>在HashMap&lt;K, V&gt; 中K为Integer类型时，简单考虑，使用K作为数组下标可以使用基础数组替代HashMap，但这样处理的话会有一个问题，那就是K值较大时，直接使用数组会导致极大的内存空间浪费（很多数组内容都由null填充）——由此想到“稀疏数组”</p></blockquote><p><strong>SparseArray</strong>就是针对这一场景设计的<br><em>数组中仅仅保存有内容的空间</em> 这样一来，就既可以利用数组高效的优势，又避免了内存空间的浪费。</p><p><strong>取android.util.SparseArray源码中的put API如下：</strong></p><pre><code>/** * Adds a mapping from the specified key to the specified value, * replacing the previous mapping from the specified key if there * was one. */public void put(int key, E value) {    int i = ContainerHelpers.binarySearch(mKeys, mSize, key);    if (i &gt;= 0) {        mValues[i] = value;    } else {        i = ~i;        if (i &lt; mSize &amp;&amp; mValues[i] == DELETED) {            mKeys[i] = key;            mValues[i] = value;            return;        }        if (mGarbage &amp;&amp; mSize &gt;= mKeys.length) {            gc();            // Search again because indices may have changed.            i = ~ContainerHelpers.binarySearch(mKeys, mSize, key);        }        mKeys = GrowingArrayUtils.insert(mKeys, mSize, i, key);        mValues = GrowingArrayUtils.insert(mValues, mSize, i, value);        mSize++;    }}</code></pre><blockquote><p><em>可以看到，在查找是否包含时使用了BinarySearch（二分搜索），在插入时又做了一次容量、size检查，有无用内存时手动gc，此gc为private函数，只是对内存进行了整理，无效内容置为null</em></p></blockquote><blockquote><p>查看DELETED定义：<br>private static final Object DELETED = new Object();<br>在删除时，只是将有效索引的内容至为DELETED，将mGarbage至为true，在下次有增/改操作时进行统一的容量整理；个人感觉这一api逻辑是经验设计，为的是避免连续删除时的频繁容量整理；</p></blockquote><p><strong>结论：</strong></p><blockquote><p>使用HashMap&lt;Integer, V&gt;时，用SparseArray替代，可以极大地提高性能</p></blockquote>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h3 id=&quot;适用范围&quot;&gt;&lt;a href=&quot;#适用范围&quot; class=&quot;headerlink&quot; title=&quot;适用范围&quot;&gt;&lt;/a&gt;适用范围&lt;/h3&gt;&lt;p&gt;类可以从泛型中受益，静态工具API更适合泛型&lt;/p&gt;
+        &lt;blockquote&gt;
+&lt;p&gt;众所周知，基础数组的处理效率要比集合的处理效率高出指数倍（内存寻址优势，指哪打哪，直截了当）&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Collections 的算法方法都已
+&lt;p&gt;在HashMap&amp;lt;K, V&amp;gt; 中K为Integer类型时，简单考虑，使用K
       
     
     </summary>
@@ -525,55 +553,27 @@
     
       <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
     
+      <category term="HashMap-Integer" scheme="https://github.com/KyleCe/kylece.github.io/tags/HashMap-Integer/"/>
+    
+      <category term="SparseArray" scheme="https://github.com/KyleCe/kylece.github.io/tags/SparseArray/"/>
+    
   </entry>
   
   <entry>
-    <title>【Note-PM】《项目管理修炼之道》提要</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E3%80%90Note-PM%E3%80%91%E3%80%8A%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93%E3%80%8B%E6%8F%90%E8%A6%81/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/【Note-PM】《项目管理修炼之道》提要/</id>
+    <title>【Java】神奇的内存占用大户FinalizerReference</title>
+    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%A8%8B%E5%BA%8F/%E3%80%90Java%E3%80%91%E7%A5%9E%E5%A5%87%E7%9A%84%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E5%A4%A7%E6%88%B7FinalizerReference/"/>
+    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/</id>
     <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.048Z</updated>
+    <updated>2019-03-20T14:51:20.218Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>第18届Jolt生产效率大奖图书<br>作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富</p></blockquote><p><a href="https://pan.baidu.com/s/1cAaOxw" target="_blank" rel="noopener">XMind文档链接</a></p><p><a href="https://pan.baidu.com/s/1mhZO5Fa" target="_blank" rel="noopener">导图PDF版链接</a></p><p><strong>导图</strong></p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-d20195caa4e17ed9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第一部分：规划与日程"></p><p><strong>文本</strong></p><p> 项目管理修炼之道<br>    Johanna Rothman<br>    规划与日程<br>        启动项目<br>            0.KEY——定义项目、项目约束、决定项目关键驱动因素、章程决策<br>            章程决策<br>                远景、需求、目标、成功标准、ROI<br>        规划项目<br>            0.KEY——足以启动的规划、规划模板、制定发布条件<br>            规划模板<br>                意图<br>                记录<br>                发布条件<br>                目标<br>                项目组织<br>                日程总览<br>                人员配备<br>                建议日程<br>                制订项目风险列表<br>        使用生命周期组织项目<br>            0.KEY——理解生命周期、概览、反馈、大规模项目需要组合多种生命周期、管理架构风险、从瀑布中解脱<br>        安排项目日程<br>            0.KEY——注重实效的日程安排、可选择安排技术、用低技术含量工具安排日程<br>        估算工作<br>            0.KEY——实用估算方式、里程碑切分项目、能不做什么？、多项目时的估算、主动安排人们进行多任务、实用波浪式规划、决定迭代的持续时间、“小石子”<br>            估算<br>                对比历史数据<br>                通过Delphi和宽带Delphi估算<br>                何时不应相信团队的话<br>                    减掉每个任务的缓冲时间、要得到的是更准确的估算结果<br>                用日期范围进行估计<br>                用自信心估计<br>                用三个日期估计：最佳、可能、墨菲<br>            小石子<br>                任务不清时使用<br>                如何得到“小石子”<br>                为什么使用<br>        识别和避免日程安排游戏<br>            0.KEY——“希望”是我们最重要的策略、拒绝女王、把灰扫到地毯下面、幸福日期、分散注意力、日程等于承诺<br>    团队与节奏<br>        创建出色的项目团队<br>            0.KEY——招募需要的人、形成团队凝聚力、让组织配合你的工作、对必必需的团队规模了如指掌、知道何时应该加入、成为出色的项目经理、知道何时全身而退<br>            凝聚力<br>                好工具让团队有更好的发挥<br>                软件配置管理系统应满足的最低要求<br>                缺陷跟踪系统应满足的最低要求<br>                发展5阶段<br>            让组织配合<br>                以项目经理的方式管理单一职能团队<br>                管理矩阵式项目团队<br>                管理跨职能团队<br>            项目经理<br>                人际交往能力<br>                提升功能性技能<br>                专业领域技能<br>                工具和技术的专业技能<br>            退<br>                不适合的组织、团队、产品<br>        掌控项目<br>            0.KEY——节奏、中途回顾、为需求排序、是时间盒限定需求相关的工作、将迭代限制在4周以下、使用波浪式规划和日程安排、创建跨职能团队、根据项目风险选择生命周期模型、保持合理的工作时间、使用“小石子”、管理干扰、管理缺陷<br>            “小石子“<br>                将计划的粒度细化，能提高规划时项目的估算准确率<br>        保持项目节奏<br>            0.KEY——使用持续集成、自动化冒烟测试、按功能实现而不是按架构、盯着产品、准备重构、通过用例、用户故事、角色和场景定义需求、分离需求与GUI设计、尽可能用低保真度原型<br>            按功能而不是按框架<br>                首先实现具有最高价值的功能<br>                按功能调试、测试<br>            低保真原型<br>                “使用低保真度原型，人们可以更全面地评估要解决的问题。高保真度原型会限制反馈。”<br>        管理会议<br>            0.KEY——取消部分会议、举行必要会议、项目启动会议、发布版本规划会议、进度报告会议、向管理层报告进度、项目团队会议、迭代审查会议、会议疑难问题解答、远程电话会议<br>            取消<br>                不需要你解决问题<br>                多人参加的顺序式进度报告会议<br>        创建并使用项目仪表板<br>            0.KEY——测量有风险、根据项目完成度来衡量进度、为出资人创建项目仪表盘、使用项目气象报告<br>            衡量进度<br>                速度图表跟踪日程安排进度<br>                用迭代内容图跟踪总体进度<br>                用图表展示团队统一采用的实践<br>    非简单项目<br>        管理多地点项目<br>            0.KEY——提问成本、识别项目文化差异、团队间培养信任、团队间使用互补实践、寻找潜在问题、外包时的注意事项<br>        在项目中集成测试<br>            0.KEY——“减少技术债”、小规模测试以降低风险、TDD是集成的最简单方法、使用多种测试、确定成员在测试工作中的角色、开发人员测试人员比率、让测试与开发同步进行、为项目制定测试策略、系统测试策略模板、QA与测试的区别<br>        管理项目群<br>            0.KEY——管理项目群、将多个相关项目组织到一个发布版本中、随时间推移组织多个相关项目、管理项目经理、创建项目仪表盘<br>        结束项目<br>            0.KEY——管理发布早期版本的请求、管理beta版本、项目经理何时知道无法按时发布项目、知道项目走向完成、取消项目<br>            何时知道无法按时发布<br>                避免小偏差<br>                承诺新日期<br>                估算系统测试时间<br>        管理项目组合<br>            0.KEY——构建所有项目的组合、评估项目、决定现在为那个项目提供资金、对组合中的项目进行排序、尽快启动项目、使用产品待办事项列表管理新功能需求<br>            答疑<br>                说服管理层：“切换上下文”是个坏主意<br>                如何对多任务说不</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="问题起因"><a href="#问题起因" class="headerlink" title="问题起因"></a>问题起因</h2><p>在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西</p><p>下图是项目中内存快照在AndroidStudio2.4中打开看到的样子</p><p><img src="http://kylece.github.io/img/pic_resource/finalizerReference.png" alt=""></p><p>可以看到，占用排名第一的类FinalizerReference占用了59M之巨（内存快照前有使用AS强制GC多次）</p><p>这就很让人好奇了</p><h2 id="FinalizerReference是什么？"><a href="#FinalizerReference是什么？" class="headerlink" title="FinalizerReference是什么？"></a>FinalizerReference是什么？</h2><p>我们来看源码：</p><p><img src="http://kylece.github.io/img/pic_resource/FinalizerReferenceCode.png" alt=""></p><p><a href="https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java" target="_blank" rel="noopener">https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java</a></p><p>在讲Java  虚拟机 JVM垃圾回收机制时会涉及到一个概念，即finalize方法，这是Sun公司在Java设计之初，为照顾c++程序员有写析构函数的习惯而做的一种妥协</p><p>在《深入理解Java虚拟机》一书中，讲到GC在最终回收对象之前，会去检查对象是否override了finalize方法，如果有覆盖此方法，对象就会被添加到finalize执行队列中，该书中没有指明是什么队列，实际上finalize执行队列就是我们这里讨论的FinalizerReference（书中还有提到finalize方法只会执行一次，并且有超时保护，因与本文主题无关，不做展开讨论）</p><p>也就是说，有重写Java根基类Object的finalize方法的所有对象，在被最终被GC回收之前，都会被添加到这个队列中，等待被执行</p><h2 id="为什么不能被GC"><a href="#为什么不能被GC" class="headerlink" title="为什么不能被GC"></a>为什么不能被GC</h2><p>这里要谈到JVM设计的一个基本标准</p><p>GC的finalize执行队列会在一个单独的守护线程中运行，这一线程的优先级极低；</p><p>一旦用户创建的对象速度过快，含finalize的对象速度快于finalize队列移除各元素的速度，FinalizerReference就会越来越大，而它获取CPU时间又少的可怜</p><p>测试中发现，1~2h过去后，FinalizerReference的大小并没有按照预计的回落到较低水准</p><p>这就迫使我们一定要解决这一问题，否则，随着应用开辟的内存越来越大，很容易引发喜闻乐见的OutOfMemoryError</p><h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><ol><li>不要重写finalize()方法，实在要释放资源，请到其它destroy一类函数中处理</li></ol><blockquote><p>实际上Java库中不少方法都有重写finalize方法（如Input/outputStream、Canvas、Paint）</p><p>这就引出了第二条指导原则：</p></blockquote><ol><li><p>重复利用资源（避免反复创建）</p></li><li><p>杀器FinalizerHelper</p><ul><li>此工具来源于公司同事的技术分享</li><li>指导思想：在场景退出的安全节点，利用反射强制调用FinalizerReference的remove方法，将对象从队列中移除掉</li><li>对具体实施细节的同学联系我</li></ul></li></ol>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;blockquote&gt;
-&lt;p&gt;第18届Jolt生产效率大奖图书&lt;br&gt;作者是一名著名的管理顾问，擅长高课件产品开发管理，经验极其丰富&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;https://pan.baidu.com/s/1cAaOxw&quot; target=&quot;_
-      
-    
-    </summary>
-    
-      <category term="阅读" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E9%98%85%E8%AF%BB/"/>
-    
-    
-      <category term="项目管理" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
-    
-      <category term="读书" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E8%AF%BB%E4%B9%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【算法】BinarySearch--二分搜索-折半查找法</title>
-    <link href="https://github.com/KyleCe/kylece.github.io/2018/03/09/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91BinarySearch--%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2-%E6%8A%98%E5%8D%8A%E6%9F%A5%E6%89%BE%E6%B3%95/"/>
-    <id>https://github.com/KyleCe/kylece.github.io/2018/03/09/技术/算法/【算法】BinarySearch--二分搜索-折半查找法/</id>
-    <published>2018-03-08T16:35:35.000Z</published>
-    <updated>2018-03-09T15:32:43.084Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下</p></blockquote><p>wiki 图示：(<a href="https://zh.wikipedia.org/wiki/二分搜索算法" target="_blank" rel="noopener">Link</a>)</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-c0e03f78ac559fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search wiki pic.png"></p><p>Android中util.ContainerHelpers中的实现api：</p><p><img src="http://upload-images.jianshu.io/upload_images/1481332-53135a5bb2e3e281.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="binary search.png"></p><p><em>排序前提：array本身已为有序数组</em></p><p>查找过程：<br>0.向右无符号移位1位，得到middle位值；<br>1.以mid为准比对midIndex位置值与参数value大小，大则hi位移至现mid位前一位，小则lo位移至现mid位后一位，相等则返回mid；<br>2.重复以上过程直至不满足循环条件或是又查找结果</p><p>从low、high可以看出，结果返回的是value在数组中对应的index，如果为负则代表不存在（最后一行，返回~lo会得到一个负数，因为lo计算结果一定为正，个人感觉直接返回一个负数可以连按位取反都省略掉，是不是性能更优？）</p><hr><blockquote><p>Java 位操作符：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-a2c49bbb981fa6c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Java bit calculate.png"></p></blockquote><hr><p>识别二维码，关注公众号“夕识”<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="夕识.jpeg"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;前两天阅读SparseArray时看到里面查找数组中是否已经包含某key时使用了binary search方法，其中还使用了一些位操作，今天简单分析一下&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;wiki 图示：(&lt;a href=&quot;https://
+        &lt;h2 id=&quot;问题起因&quot;&gt;&lt;a href=&quot;#问题起因&quot; class=&quot;headerlink&quot; title=&quot;问题起因&quot;&gt;&lt;/a&gt;问题起因&lt;/h2&gt;&lt;p&gt;在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西&lt;/p&gt;
+&lt;p&gt;
       
     
     </summary>
@@ -581,7 +581,9 @@
       <category term="技术" scheme="https://github.com/KyleCe/kylece.github.io/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="算法" scheme="https://github.com/KyleCe/kylece.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+      <category term="Java" scheme="https://github.com/KyleCe/kylece.github.io/tags/Java/"/>
+    
+      <category term="FinalizerReference" scheme="https://github.com/KyleCe/kylece.github.io/tags/FinalizerReference/"/>
     
   </entry>
   

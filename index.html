@@ -255,6 +255,54 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/base/pipe_poll_epoll"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/03/22/技术/base/pipe_poll_epoll/">Linux pipe/poll/epoll</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/03/22/技术/base/pipe_poll_epoll/" class="article-date">
+	  <time datetime="2019-03-22T10:43:53.000Z" itemprop="datePublished">2019-03-22</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://kylece.github.io/img/pipe_poll_epoll.jpg" alt="pipe_poll_epoll"></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/ActivityLaunchMode"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -745,73 +793,6 @@
 <p>用递归的方式分析动态规划问题，最终都是使用循环解决</p>
 </blockquote>
 <h3 id="SourceCode-–-C"><a href="#SourceCode-–-C" class="headerlink" title="SourceCode – C++"></a>SourceCode – C++</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> g_invalideINput = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FindGreatestSumOfSubArray</span><span class="params">(<span class="keyword">int</span>* pData, <span class="keyword">int</span> nLength)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(pData == <span class="literal">NULL</span> || nLength &lt;= <span class="number">0</span>)&#123;</span><br><span class="line">    g_invalideINput = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  g_invalideINput = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> nCurSum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> nGreatestSum = <span class="number">0x80000000</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nLength; ++i)&#123;</span><br><span class="line">    <span class="keyword">if</span>(nCurSum &lt;= <span class="number">0</span>) nCurSum = pData[i];</span><br><span class="line">    <span class="keyword">else</span> nCurSum += pData[i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(nCurSum &gt; nGreatestSum)</span><br><span class="line">      nGreatestSum = nCurSum;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> nGreatestSum;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面经/">面经</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/算法/算法--最小的k个数"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/19/技术/算法/算法--最小的k个数/">最小的k个数</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/19/技术/算法/算法--最小的k个数/" class="article-date">
-	  <time datetime="2018-03-19T15:13:18.000Z" itemprop="datePublished">2018-03-19</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="题"><a href="#题" class="headerlink" title="题"></a>题</h3><p> 输入n个整数，找出其中最小的k个数<br> 例：输入4、5、1、6、2、7、3、8<br> 则最小的3个数是1、2、3</p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>首先想到最直观的解法是：将数组排序（正序），然后前面k个数字就是最小的k个数<br>时间复杂度就完全取决于所采用的排序算法，并且不借助辅助空间的话，排序也会对原数组的内容造成影响</p>
-<h4 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h4><p>递归地进行如下操作：<br>基于数组的第k个数来调整，比k小的数都位于数组左边，比k大的数字都位于数组右边——这样就可以使得数组前的k个数字就是最小的k个数字</p>
-<h4 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h4><p>创建一个大小为k的数据容器来存储最小的k个数字，接下来每次从输入的n个整数中读入一个数。如果容器中已有的数字少于k个，则直接放入；若容器中已满，则将容器中最大值与读入数字进行比较，保留更小的数在容器中</p>
-<p>当容器满时，我们需要做3件事：</p>
-<ol>
-<li>找到max</li>
-<li>可能需要删除这个max</li>
-<li>可能插入一个新数字</li>
-</ol>
-<p>如果用一个二叉树来当容器，那么我们能在O(logk)时间内完成上述3步</p>
-<p>我们可以选用不同的二叉树来实现。鉴于每次都要找到Max，可以使用最大堆</p>
-<blockquote>
-<p>在最大堆中，根节点总是大于它的任意结点——可以在O(1)时间内找到Max（即为根节点）</p>
-</blockquote>
-<p>亦可以用红黑树来实现。</p>
-<blockquote>
-<p>红黑树通过把结点分为红、黑两种颜色并根据一些规则来保证树在一定程度上是平衡的，从而确保在红黑树中查找、删除、插入操作都只需要O(logk)时间<br>在STL中 set与 meltiset都是基于红黑树实现的，可以直接利用</p>
-</blockquote>
-<h3 id="SourceCode-–-C"><a href="#SourceCode-–-C" class="headerlink" title="SourceCode – C++"></a>SourceCode – C++</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">multiset</span>&lt;<span class="keyword">int</span>, greater&lt;<span class="keyword">int</span>&gt;&gt; intSet;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">multiset</span>&lt;<span class="keyword">int</span>, greater&lt;<span class="keyword">int</span>&gt;&gt;::iterator setIterator;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GetLeastNumber</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; data, intSet&amp; leastNumvers, <span class="keyword">int</span> k)</span></span>&#123;  </span><br><span class="line">    leastNumvers.clear();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(k &lt; <span class="number">1</span> || data.size() &lt; k)&#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::const_iterator iter = data.begin();</span><br><span class="line">    <span class="keyword">for</span>(; iter != data.end(); ++iter)&#123;</span><br><span class="line">      <span class="keyword">if</span>(leastNumvers.size() &lt; k)&#123;</span><br><span class="line">        leastNumvers.insert(*iter);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span>&#123;</span><br><span class="line">        setIterator iterGreatest = leastNumvers.begin();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>( *iter &lt; *(leastNumvers.begin()))&#123;</span><br><span class="line">          leastNumvers.erase(iterGreatest);</span><br><span class="line">          leastNumvers.insert(*iter);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 

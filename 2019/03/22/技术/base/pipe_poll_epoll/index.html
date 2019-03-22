@@ -3,28 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>《褚时健传》 | KyleCe</title>
+  <title>linux pipe/poll/epoll | KyleCe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="读书社科" />
+  <meta name="keywords" content="Linux" />
   
   
   
   
-  <meta name="description" content="“回想这么多年来，我自己做的最问心无愧的就是：‘没有庸庸碌碌地生活’”“我不期望别人在说起我的人生时有多少褒奖，我只希望人家说起我时，会说上一句：‘褚时健这个人，还是做了一些事。’”——褚时健 不积跬步无以至千里，一屋不扫何以扫天下。真正从小事做起，精益求精态度的践行者，他之所以能走这么远，按照友人常说的，“必定不是运气”。 想起《苦难辉煌》，苦难并不一定会带来辉煌，但辉煌，必定是由苦难锻造的。">
-<meta name="keywords" content="读书,社科">
+  <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《褚时健传》">
-<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2017/08/13/每周一书/《褚时健传》/index.html">
+<meta property="og:title" content="Linux pipe&#x2F;poll&#x2F;epoll">
+<meta property="og:url" content="https://github.com/KyleCe/kylece.github.io/2019/03/22/技术/base/pipe_poll_epoll/index.html">
 <meta property="og:site_name" content="KyleCe">
-<meta property="og:description" content="“回想这么多年来，我自己做的最问心无愧的就是：‘没有庸庸碌碌地生活’”“我不期望别人在说起我的人生时有多少褒奖，我只希望人家说起我时，会说上一句：‘褚时健这个人，还是做了一些事。’”——褚时健 不积跬步无以至千里，一屋不扫何以扫天下。真正从小事做起，精益求精态度的践行者，他之所以能走这么远，按照友人常说的，“必定不是运气”。 想起《苦难辉煌》，苦难并不一定会带来辉煌，但辉煌，必定是由苦难锻造的。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1481332-6433421a9297d513.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-03-09T15:44:28.787Z">
+<meta property="og:image" content="http://kylece.github.io/img/pipe_poll_epoll.jpg">
+<meta property="og:updated_time" content="2019-03-22T10:44:19.017Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《褚时健传》">
-<meta name="twitter:description" content="“回想这么多年来，我自己做的最问心无愧的就是：‘没有庸庸碌碌地生活’”“我不期望别人在说起我的人生时有多少褒奖，我只希望人家说起我时，会说上一句：‘褚时健这个人，还是做了一些事。’”——褚时健 不积跬步无以至千里，一屋不扫何以扫天下。真正从小事做起，精益求精态度的践行者，他之所以能走这么远，按照友人常说的，“必定不是运气”。 想起《苦难辉煌》，苦难并不一定会带来辉煌，但辉煌，必定是由苦难锻造的。">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1481332-6433421a9297d513.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="Linux pipe&#x2F;poll&#x2F;epoll">
+<meta name="twitter:image" content="http://kylece.github.io/img/pipe_poll_epoll.jpg">
   
     <link rel="alternate" href="/atom.xml" title="KyleCe" type="application/atom+xml">
   
@@ -162,7 +159,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-每周一书/《褚时健传》" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-技术/base/pipe_poll_epoll" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -170,7 +167,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      《褚时健传》
+      Linux pipe/poll/epoll
     </h1>
   
 
@@ -178,12 +175,12 @@
     
     <div class="article-meta">
       
-	<a href="/2017/08/13/每周一书/《褚时健传》/" class="article-date">
-	  <time datetime="2017-08-12T16:35:35.000Z" itemprop="datePublished">2017-08-13</time>
+	<a href="/2019/03/22/技术/base/pipe_poll_epoll/" class="article-date">
+	  <time datetime="2019-03-22T10:43:53.000Z" itemprop="datePublished">2019-03-22</time>
 	</a>
 
       
-    <a class="article-category-link" href="/categories/阅读/">阅读</a>
+    <a class="article-category-link" href="/categories/技术/">技术</a>
 
       
 	<a class="article-views">
@@ -195,40 +192,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>“回想这么多年来，我自己做的最问心无愧的就是：‘没有庸庸碌碌地生活’”<br>“我不期望别人在说起我的人生时有多少褒奖，我只希望人家说起我时，会说上一句：‘褚时健这个人，还是做了一些事。’”<br>——褚时健</p>
-<p>不积跬步无以至千里，一屋不扫何以扫天下。<br>真正从小事做起，精益求精态度的践行者，他之所以能走这么远，按照友人常说的，“必定不是运气”。</p>
-<p>想起《苦难辉煌》，苦难并不一定会带来辉煌，但辉煌，必定是由苦难锻造的。</p>
-<p>听起来稍显鸡汤，不过这本传记虽说文笔谈不上优美，但确实是王石传记的同一撰写者，文中细节还原或许有一定可信度。</p>
-<p>值得一提的是，他背后也俗套地有一位贤内助。</p>
-<p>老年丧女，白发人送黑发人的撕心裂肺或许只有当事人能够体会吧。</p>
-<blockquote>
-<p>父亲早逝后，一度辍学，幸有堂兄指引，遂得续造</p>
-</blockquote>
-<blockquote>
-<p>找准关键点，精益求精，一步一个脚印，才有红塔山的传奇</p>
-</blockquote>
-<blockquote>
-<p>波澜起伏，一度失女入狱，耳后自困荒山，东山再起，褚橙横空出世</p>
-</blockquote>
-<blockquote>
-<p>父亲早逝、少年参军、后被打为右派，沉着冷静，脚踏实地，才有再起之势</p>
-</blockquote>
-<blockquote>
-<p>这不是一部普通的传记，它描写了一个人如何在17年时间里缔造了一个商业王国，然后如何陨落、自困荒山，然后又如何用17年时间走出心理和职业的巨大困局。</p>
-</blockquote>
-<blockquote>
-<p>正如尼采所言，一个伟大的人格，可以在自己的身上克服这个时代</p>
-</blockquote>
-<hr>
-<p><a href="https://www.amazon.cn/gp/product/B017SAZAD6/ref=oh_aui_detailpage_o03_s00?ie=UTF8&amp;psc=1" target="_blank" rel="noopener">亚马逊链接</a></p>
-<hr>
-<p>导图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-6433421a9297d513.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="褚时健传  overview.png"></p>
-<hr>
-<p>笔记文本：</p>
-<blockquote>
-<p>褚时健传<br>1 第一篇 早年故事<br>  1.1 第一章 起始<br>    1.1.1 褚姓人家<br>    1.1.2 矣则<br>  1.2 第二章 童年浪花<br>  1.3 第三章 少年故事<br>    1.3.1 年少逝父<br>  1.4 第四章 离家的日子<br>  1.5 第五章 所谓长大<br>  1.6 第六章 思变<br>2 第二篇 激情的青春十年<br>  2.1 第一章 当上了游击队员<br>  2.2 第二章 战火纷飞<br>  2.3 第三章 迎来解放<br>  2.4 第四章 革命意味着牺牲<br>  2.5 第五章 平静或不平静的生活<br>  2.6 第六章 波澜骤起<br>3 第三篇 生活的断层<br>  3.1 第一章 跌入生活底层<br>  3.2 第二章 一家人要在一起<br>  3.3 第三章 到了另一个农场<br>  3.4 第四章 新平、新平<br>  3.5 第五章 迅速进入角色<br>  3.6 第六章 戛洒缘分<br>  3.7 第七章 动乱岁月中的平静生活<br>  3.8 第八章 希望的光就要来了<br>4 第四篇 华彩人生篇章<br>  4.1 第一章 预备<br>  4.2 第二章 完事开头难<br>  4.3 第三章 启动改革<br>  4.4 第四章 出手改革<br>  4.5 第五章 设备之战<br>  4.6 第六章 烟叶的故事<br>  4.7 第七章 内部管理大小事<br>5 第五篇 行在人生巅峰时期<br>  5.1 第一章 名烟翻番<br>  5.2 第二章 关索坝工程<br>  5.3 第三章 快马加鞭<br>  5.4 第四章 谢幕<br>  5.5 第五章 人生间隙<br>6 第六篇 果夺锦标<br>  6.1 第一章 是结束，也是开始<br>  6.2 第二章 土地、水和树<br>  6.3 第三章 橙树在长大<br>  6.4 第四章 一年比一年丰收<br>  6.5 第五章 每一条路都指向未来<br>  6.6 第六章 江山无限<br>这不是一部普通的传记，它描写了一个人如何在17年时间里缔造了一个商业王国，然后如何陨落、自困荒山，然后又如何用17年时间走出心理和职业的巨大困局。 正如尼采所言，一个伟大的人格，可以在自己的身上克服这个时代</p>
-</blockquote>
+        <p><img src="http://kylece.github.io/img/pipe_poll_epoll.jpg" alt="pipe_poll_epoll"></p>
 
       
 
@@ -263,7 +227,7 @@
 
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/社科/">社科</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书/">读书</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
 
     </footer>
   </div>
@@ -271,19 +235,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/08/13/每周一书/【读书笔记】《一生的学习》--印度哲学家--克里希拉穆提/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          【读书笔记】《一生的学习》--印度哲学家--克里希拉穆提
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/08/13/每周一书/【读书笔记】《Android开发艺术探索》/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/03/22/技术/Android/ActivityLaunchMode/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">【读书笔记】《Android开发艺术探索》</div>
+      <div class="article-nav-title">ActivityLaunchMode</div>
     </a>
   
 </nav>
