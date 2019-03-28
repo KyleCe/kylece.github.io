@@ -255,7 +255,7 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-技术/程序/Java进阶-- volatile关键字"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -263,7 +263,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/">Java进阶-- volatile关键字</a>
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性/">Java进阶-- 利用有限制通配符来提升API的灵活性</a>
     </h1>
   
 
@@ -271,7 +271,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/程序/Java进阶-- volatile关键字/" class="article-date">
+	<a href="/2018/03/09/技术/程序/Java进阶-- 利用有限制通配符来提升API的灵活性/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -282,36 +282,50 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>volatile含有部分synchronized的特性，效率更高，但使用时需要注意细节，不然容易出错</p>
-<h3 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h3><p>Java中被volatile修饰的变量，每次读写都会直接使用“内存”介质，而不是使用CPU缓存</p>
-<blockquote>
-<p>音 — UK <strong> /ˈvɒl.ə.taɪl/  US </strong> /ˈvɑː.lə.t̬əl/</p>
-<p>英 — <strong>likely to change suddenly and unexpectedly or suddenly become violent or angry</strong></p>
-<p>中 — 易变的</p>
-</blockquote>
-<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
-<li>保证变量可见性</li>
-<li>禁止指令进行重排序</li>
+        <h3 id="词条"><a href="#词条" class="headerlink" title="词条"></a>词条</h3><p>通配符— ‘?’</p>
+<p>有限制的通配符 —</p>
+<ul>
+<li>? extends E</li>
+<li>? super E</li>
 </ul>
-<blockquote>
-<p>基础概念：可见性、有序性、原子性</p>
-<ol>
-<li>可见性：对所有线程来说，任一线程对变量的改动都立即可见</li>
-<li>有序性：代码可能会被编译器混编，有序性即指代码按顺序执行</li>
-<li>原子性：所有操作不会被打断，谁也不行（除非断电）</li>
-</ol>
-</blockquote>
-<p>实际上我们对变量的修改，虽然可能Java就一行代码（如 y=x），但被解释成汇编语言会变成多行（y=x就需要进行两步操作：读x值，写入y所在内存，学过汇编的同学应该比较清楚）</p>
-<h3 id="与synchronized的区别"><a href="#与synchronized的区别" class="headerlink" title="与synchronized的区别"></a>与synchronized的区别</h3><p>按字面理解，volatile关键字只是标记变量为易变的，并不能保证对变量的所有操作都是同步的，即不能保证具有synchronized一样的效果</p>
-<p>实际上，对volatile修饰的变量的读/写操作是可以保证其原子性的，但还要注意一个问题，即同时写变量的线程可能不止一个，如此一来，其中部分的写操作就有可能丢失</p>
-<p>听起来好像volatile使用起来很危险，但它也是有它的用途的</p>
-<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><ul>
-<li>对于写不依赖历史状态的变量，可以考虑使用volatile修饰字代替synchronized来提高程序效率</li>
-<li>保证代码的有序性：volatile变量的读写操作之前的代码，编译器是不会进行重排序的</li>
-</ul>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在volatile满足不了要求的场景可以考虑使用synchronized、lock、Atomic变量来保证特性</p>
-<p>对变量的写不依赖历史状态的变量使用volatile修饰可以提高效率</p>
-<p>对于需要保证部分程序语句有序性的场景可以考虑使用volatile代替锁定整个代码块，提高效率</p>
+<p>PECS — producer-extends, consumer-super</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>输入参数是生产者或消费者时使用’?’</p>
+<p>所有的compare和comparator都是consumer</p>
+<p>声明方法时，用’?’取代仅出现一次的的类型参数</p>
+<h3 id="优势体现——论其必要性"><a href="#优势体现——论其必要性" class="headerlink" title="优势体现——论其必要性"></a>优势体现——论其必要性</h3><p>我们先看之前讲 <strong>优先考虑泛型</strong>时的一个示例：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEgClass.png" alt=""></p>
+<p>考虑为它增加一个方法：</p>
+<p><img src="http://kylece.github.io/img/pic_resource/StackPushAll.png" alt=""></p>
+<p>这样的定义，在使用中会存在不灵活的问题：因为类型在定义之后就不可变了，如果想要将一个非E类型的Iterable  push到Stack中是不可能的，这样的事实我们显然不能接受，那么该如何修改呢？答案就在本篇的主角——通配符’?’上</p>
+<p>将上述API的参数修改为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Iterable&lt;? extends E&gt; src</span><br></pre></td></tr></table></figure>
+<p>即可达到目的</p>
+<p>说完? extends，再来看? super，同样考虑Stack的API，这一次是将Stack中的元素全部弹出到目标集合</p>
+<p><img src="http://kylece.github.io/img/pic_resource/StackPopAll.png" alt=""></p>
+<p>理想状态下，所有的子类型的Stack都可以弹出到父类型的集合，但上图的API并不能实现这一目的；我们需要这样修改：</p>
+<p>将参数类型修改为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collection&lt;? <span class="keyword">super</span> E&gt; dst</span><br></pre></td></tr></table></figure>
+<p>这样一来，任意继承自父类型的Stack就都可以pop到父类型集合了，是不是很带感</p>
+<p>有的同学可能会产生疑惑了，一会儿extends，一会儿super，好晕</p>
+<p>还好有规律可总结：</p>
+<p>PECS——producer-extends, consumer-super</p>
+<p>即参数列表中  生产者总是使用? extends，而消费者则总是使用 ? super（不了解生产者、消费者设计模式的同学请自行翻书）</p>
+<h3 id="高级应用"><a href="#高级应用" class="headerlink" title="高级应用"></a>高级应用</h3><p>原始API声明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;T&gt;&gt; <span class="function">T <span class="title">max1</span><span class="params">(List&lt;T&gt; list)</span></span></span><br></pre></td></tr></table></figure>
+<p>修改后的API声明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;T extends Comparable&lt;? <span class="keyword">super</span> T&gt;&gt; <span class="function">T <span class="title">max2</span><span class="params">(List&lt;? extends T&gt; list)</span></span></span><br></pre></td></tr></table></figure>
+<p>这一修改后的API，pecs都用上了，真有必要弄这么复杂了？</p>
+<p>答案是肯定的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;ScheduleFuture&lt;?&gt;&gt; futures = ...;</span><br></pre></td></tr></table></figure>
+<p>这一futures不能调用max1方法，原因在于ScheduleFuture扩展的是Compare接口的Delayed接口的子接口，它可以与任意Delayed进行compare；而max2方法这样的声明就不会有这问题</p>
+<h3 id="E-与-‘-’"><a href="#E-与-‘-’" class="headerlink" title="E 与 ‘?’"></a>E 与 ‘?’</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br></pre></td></tr></table></figure>
+<p>你看上哪个了呢？</p>
+<p>从灵活性的角度考虑，肯定是第二种好一些，但在类型参数不止一个时，就不能用’?’ 而要用类型参数了</p>
+<p>使用第二种时需要注意：</p>
+<p>只能把null放入List&lt;?&gt;中，这时为了保证灵活性，就需要写一个辅助捕捉类型的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;?&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">  swapTrick(list, i, j);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">swapTrick</span><span class="params">(List&lt;E&gt; list, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    list.set(i, list.set(j, list.get(i)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>这一篇看起来似乎有点绕，但我们真正在项目中写公共库API时，其实是需要用到’?’的，不是为了装，是真的能提升API的适用范围，减少工作量</p>
+<p>不过任何收获都是要付出代价的，在写出高适用度的API时，一定记得写单元测试，进行高覆盖度的验证，保证准确性</p>
 
       
 
@@ -321,7 +335,81 @@
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/volatile/">volatile</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/程序/Java进阶-- 优先考虑泛型方法"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/">Java进阶-- 优先考虑泛型方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/Java进阶-- 优先考虑泛型方法/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h3><p>类可以从泛型中受益，静态工具API更适合泛型</p>
+<blockquote>
+<p>Collections 的算法方法都已泛型化(如binarySearch、sort)</p>
+</blockquote>
+<h3 id="优势示例"><a href="#优势示例" class="headerlink" title="优势示例"></a>优势示例</h3><ul>
+<li>例1：精简API</li>
+</ul>
+<p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEg.png" alt=""></p>
+<p>代码所示是一个简单的设置字体的Util的static API的泛型化代码；</p>
+<p>如果不是使用这种泛型化的API，则需要为TextView的扩展类（Button、CheckBox等等）编写数不清的函数</p>
+<ul>
+<li>例2：确保类型安全的情况下提升API的易用性</li>
+</ul>
+<p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEg2.png" alt=""></p>
+<p>可以看到上面的API可以轻易的操作所有以View为基类的类的集合；</p>
+<ul>
+<li>例3：类级别的泛型化</li>
+</ul>
+<p><img src="http://kylece.github.io/img/pic_resource/GenericMethodEgClass.png" alt=""></p>
+<blockquote>
+<p>在配合集合使用时需要注意类型cast的警告，这些警告实际上是编译时不会有问题，但真正在运行时可能会抛出ClassCastException，我们在实际项目中应该将这些潜在的威胁清除掉；</p>
+<p>对于十分确定不会出问题的类型操作API上，可以用@SuppressWarning(“unckecked”)消除这类警告</p>
+</blockquote>
+<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><p>赶紧用起来吧，你的小伙伴会爱上你写的极简API的</p>
+<blockquote>
+<p>源码里的代码有很多写的极好的点，同学们平时可以扒一扒</p>
+</blockquote>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
     </footer>
   </div>
@@ -451,6 +539,54 @@
 
 
   
+    <article id="post-技术/程序/Android--Monkey测试"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/Android--Monkey测试/">Android Monkey 测试时防止通知栏下拉</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/Android--Monkey测试/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><p>Android monkey test — <a href="http://einverne.github.io/post/2016/09/android-monkey-test.html#防止通知栏下拉" target="_blank" rel="noopener">http://einverne.github.io/post/2016/09/android-monkey-test.html#防止通知栏下拉</a></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monkey/">Monkey</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SystemBar/">SystemBar</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/程序/Bitmap recycle做了什么"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -528,114 +664,6 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bitmap/">Bitmap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recycle/">recycle</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/Android--Monkey测试"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/Android--Monkey测试/">Android Monkey 测试时防止通知栏下拉</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/Android--Monkey测试/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><p>Android monkey test — <a href="http://einverne.github.io/post/2016/09/android-monkey-test.html#防止通知栏下拉" target="_blank" rel="noopener">http://einverne.github.io/post/2016/09/android-monkey-test.html#防止通知栏下拉</a></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monkey/">Monkey</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SystemBar/">SystemBar</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/">【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/【工具-程序专供】IntelliJ-IDEA-Android-Studio-Plugin推介/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>工欲善其事必先利其器<br>今天介绍几个plugin工具（奇淫巧技）</p>
-</blockquote>
-<blockquote>
-<p><em>（适用平台：IntelliJ IDEA内核的各类IDE）</em></p>
-</blockquote>
-<hr>
-<p><strong>效果图</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-5b8d8a86fda8eca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ide_tools.png"></p>
-<p>按图中标示顺序介绍：</p>
-<p>####1.Translation<br>_ 顾名思义是中英翻译，令人意外的是自带英美两种发音（默认快捷键：ALT + 1/3，OSX 不详）_</p>
-<p>####2.Background Image Plus<br><em>可以对IDE背景进行自定义，可以设置图片质量/明暗等，对内存有一定消耗，小霸王请绕道</em></p>
-<p>####3.CodeGlance<br><em>提供一个代码文件的全局概览缩略图，主要可用于快速定位</em></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tool/">Tool</a></li></ul>
 
     </footer>
   </div>
@@ -1108,6 +1136,72 @@
 
 
   
+    <article id="post-技术/程序/降低内存占用Route"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/09/技术/程序/降低内存占用Route/">降低内存占用Route</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/09/技术/程序/降低内存占用Route/" class="article-date">
+	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="已执行"><a href="#已执行" class="headerlink" title="已执行"></a>已执行</h3><ul>
+<li>修复LeakCanary报出的问题（内网、外网）<ul>
+<li>直接检测泄露</li>
+<li>外网beta用户上报</li>
+</ul>
+</li>
+<li>分析dumpheap文件，查内存占用（直接分析、对比分析）<ul>
+<li>占用大户<ul>
+<li>Bitmap</li>
+<li>FinalizerReference</li>
+</ul>
+</li>
+<li>场景分析，进出场景、发现可疑场景，查内存dumpheap文件<ul>
+<li>已有发现：WebView、主题切换泄露</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存/">内存</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/Android/冻结帧"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -1372,7 +1466,7 @@ c. 更好的debug支持
 
 
   
-    <article id="post-技术/Android/【Android】declare-styleable-枚举format简介"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/Android/【Android】应用架构演进"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -1380,7 +1474,7 @@ c. 更好的debug支持
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/">declare-styleable-枚举format简介</a>
+      <a class="article-title" href="/2018/03/09/技术/Android/【Android】应用架构演进/">应用架构演进</a>
     </h1>
   
 
@@ -1388,7 +1482,7 @@ c. 更好的debug支持
     
     <div class="article-meta">
       
-	<a href="/2018/03/09/技术/Android/【Android】declare-styleable-枚举format简介/" class="article-date">
+	<a href="/2018/03/09/技术/Android/【Android】应用架构演进/" class="article-date">
 	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
 	</a>
 
@@ -1400,102 +1494,37 @@ c. 更好的debug支持
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>旨：介绍styleable enum format的使用方法</p>
+<p>预则立<br>应用演进过程中可能出现混乱局面，对架构的考量应该放在项目开始之前<br>参考：<br><a href="http://blog.spinytech.com/2016/12/28/android_modularization/" target="_blank" rel="noopener">Android架构思考(模块化、多进程)</a></p>
 </blockquote>
 <blockquote>
-<p>技术含量：低<br>（项目中对字体的自定义类型较多，考虑将字体设置属性定义成styleable，方便直接在xml中设置）</p>
-</blockquote>
-<p>首先定义attr.xml中的styleable：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-11adc1f8df53f3dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_define.png"></p>
-<blockquote>
-<p>Code Glance （类型设置为enum）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"Font"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"font_type"</span> <span class="attr">format</span>=<span class="string">"enum"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"msyh"</span> <span class="attr">value</span>=<span class="string">"0"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"unidream_led"</span> <span class="attr">value</span>=<span class="string">"1"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"helvetica"</span> <span class="attr">value</span>=<span class="string">"2"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"bank"</span> <span class="attr">value</span>=<span class="string">"3"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"ping_fang"</span> <span class="attr">value</span>=<span class="string">"4"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">attr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p>之后就可以在xml中直接利用font_type属性了：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-a2fae41d6f9e84cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_enum.png"></p>
-<p>在具体的类中解析：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-64bf23e9b4fd9a56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="attr_parse.png"></p>
-<blockquote>
-<p>Code Glance<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (attrs != <span class="keyword">null</span>) &#123;</span><br><span class="line">    TypedArray ar = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Font, defStyleAttr, <span class="number">0</span>);</span><br><span class="line">    <span class="meta">@FontMaster</span>.Type</span><br><span class="line">    <span class="keyword">int</span> fontType = ar.getInteger(R.styleable.Font_type, FontMaster.Type.Default);</span><br><span class="line">    FontMaster.font(fontType).set(<span class="keyword">this</span>);</span><br><span class="line">    ar.recycle();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    FontMaster.font(FontMaster.Type.MSYH).set(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>适用范围：中型项目，小项目就不需要杀鸡用牛刀了</p>
 </blockquote>
 <hr>
-<p>关注公众号“夕识”，雕刻时光，不负流年<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/Android/【Android】VectorDrawable介绍"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/">VectorDrawable介绍</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/Android/【Android】VectorDrawable介绍/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>引<br>今天视频处理中碰到一些简单图片的vector绘制方案<br>调研结果：</p>
-</blockquote>
-<p>效果：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9a7da5968fccb57a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="vector paint eg.png"></p>
-<p><strong>优点</strong>：Vector与PNG文件相比，能极大地缩小文件占用空间；<br><strong>弱势</strong>：</p>
-<ol>
-<li>兼容性处理起来需要花费一些心思；</li>
-<li>复杂图片不适合运用vector绘制，一个是初始化效率，第二个是重复使用时bitmap在GPU中会有缓存，而vector没有；</li>
-<li>需要额外的一些辅助工具协作生成path；</li>
-</ol>
+<p>不进行设计时应用可能出现极度混乱的局面：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-75c426d6709ddced.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>跳过广受诟病的插件化思路，考虑应用<strong>路由框架</strong>设计<strong>组件化</strong>框架：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-782c8d1af71d2448.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-1.png"></p>
 <blockquote>
-<p>例注：</p>
+<p>这样的路由框架，在模块解耦的同时，提高了模块的可测性和复用性。<br><img src="http://upload-images.jianshu.io/upload_images/1481332-07c676326694ac24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-3.png"><br>还可以在router与各路由之间加入 Common-Base层，作为公共library：<br><img src="http://upload-images.jianshu.io/upload_images/1481332-f7692235ff980e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="路由-Common Base.png"></p>
+</blockquote>
+<p>在调用API时，路由机制的调用时序图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-4250238e45f0a1f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Router时序图.png"></p>
+<p>这样的路由架构存在一个访问域问题，在多进程时需要进行格外处理</p>
+<blockquote>
+<p>多进程优势：</p>
 <ol>
-<li>使用：<br>需要在Gradle 中添加：android.defaultConfig域<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vectorDrawables.useSupportLibrary = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>独立各进程；</li>
+<li>提高内存控制权；</li>
+<li>模块解耦</li>
+<li>守护</li>
 </ol>
 </blockquote>
-<ol>
-<li>XML attributes:  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">viewportHeight \ viewportWidth</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>划分的比例大小（图片中的例子：36dp大小的图像划分成24份，Path中的坐标建立在划分后的坐标系统之上）<br><code>意义--&gt;将大小与path分离</code></p>
-<hr>
-<p>Path指令：<br>M = moveto(M X,Y)<br>L = lineto(L X,Y)<br>H = horizontal lineto(H X)<br>V = vertical lineto(V Y)<br>C = curveto(C X1,Y1,X2,Y2,ENDX,ENDY)：三次贝赛曲线<br>S = smooth curveto(S X2,Y2,ENDX,ENDY)<br>Q = quadratic Belzier curve(Q X,Y,ENDX,ENDY)：二次贝赛曲线<br>T = smooth quadratic Belzier curveto(T ENDX,ENDY)：映射<br>A = elliptical Arc(A RX,RY,XROTATION,FLAG1,FLAG2,X,Y)：弧线<br>Z = closepath()</p>
-<hr>
-<p>工具：<br><a href="http://inloop.github.io/svg2android/" target="_blank" rel="noopener">to vector</a><br><a href="http://editor.method.ac/" target="_blank" rel="noopener">SVG editor</a></p>
-<hr>
+<p>Router是单例模式，在多进程时直接使用会在每个JVM实例中生成，跨进程时需要将Router链接起来：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-2b216709e992978b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多进程路由连接图.png"></p>
+<p>这时，调用时序图层级就略微有点深了：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1481332-9366cc7cb9bb15d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="广域事件传递时序图.png"></p>
 <blockquote>
-<p>参考：(涵盖由头、Vector语法、转换工具、原理、兼容处理、性能考量等方面知识，良心之作)<br><a href="http://www.jianshu.com/p/e3614e7abc03" target="_blank" rel="noopener">Android Vector曲折的兼容之路</a></p>
+<p><strong>总结</strong>：<br>路由架构可以高度解耦，提升可测试性，也便于项目组进行任务划分、并行开发；<br>缺点是调用层级略微有点深，会有一定的性能损耗，但与其带来的优势相比可以忽略；此设计也没有考虑到MVP架构设计的融合问题，需要考虑应用场景的引用和适度</p>
 </blockquote>
 <hr>
 <p>关注公众号“夕识”，雕刻时光，雕刻思维<br><img src="http://upload-images.jianshu.io/upload_images/1481332-c461a8ddbf8cf08e.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
@@ -1508,7 +1537,7 @@ c. 更好的debug支持
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VectorDrawable/">VectorDrawable</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li></ul>
 
     </footer>
   </div>

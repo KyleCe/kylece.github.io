@@ -255,6 +255,77 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/算法/算法--连续子数组的最大和"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/03/20/技术/算法/算法--连续子数组的最大和/">算法--连续子数组的最大和</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/20/技术/算法/算法--连续子数组的最大和/" class="article-date">
+	  <time datetime="2018-03-20T14:48:11.000Z" itemprop="datePublished">2018-03-20</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="题"><a href="#题" class="headerlink" title="题"></a>题</h3><p> 输入一个整型数组（正、负数均有），数组中一个或连续的多个整数组成一个子数组，求所有子数组的最大值。<br> 要求时间复杂度为 <strong>O(n)</strong><br> 例：输入数组为{1, -2, 3, 10, -4, 7, 2, -5}, 和最大的子数组为{3, 10, -4, 7, 2}, 因此输出为该子数组的和为18</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>最直接的解法：枚举所有子数组并求它们的和。长为n的数组，共有 <strong>n*(n + 1)/2</strong> 个子数组。计算出所有子数组之和，最快需要 <strong>O(n^2)</strong>，显然不符合要求</p>
+<h4 id="思路一-举例分析数组规律"><a href="#思路一-举例分析数组规律" class="headerlink" title="思路一 举例分析数组规律"></a>思路一 举例分析数组规律</h4><blockquote>
+<p>通常，举例能够具象化算法，让你能够更直观的看到问题，解算法题时，碰到不好解决的问题，可以尝试举例分析问题规律，降低问题难度</p>
+</blockquote>
+<p>从头到尾逐个累加例中每个数字。初始化和为0：</p>
+<ol>
+<li>加1 和为1</li>
+<li>加-2 和为-1</li>
+<li>加3 上一步的累积和为负数，那么我们不用考虑之前的累积和，从第一个数字开始的子数组也不用考虑 —— 从第三个数开始重新累加 和为3</li>
+<li>加10 和为13</li>
+<li>加-4 和为9 —— 因为-4为负，加上-4后会是累加和变小，所以可以把上一步的13当做暂时发现的最大子和值</li>
+<li>加7 和为16，比之前的最大值13大，更新Result为16</li>
+<li>加2 和为18，更新Result为18</li>
+<li>加-5 和为13</li>
+</ol>
+<p>依据上述步骤，可以确定最大子和是18</p>
+<h4 id="思路二-应用动态规划"><a href="#思路二-应用动态规划" class="headerlink" title="思路二 应用动态规划"></a>思路二 应用动态规划</h4><p>应用递归思想</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f(i) = pData[i] <span class="keyword">if</span> i == <span class="number">0</span> <span class="keyword">or</span> f(i - <span class="number">1</span>) &lt;= <span class="number">0</span></span><br><span class="line">      <span class="keyword">else</span> f(i - <span class="number">1</span>) + pData[i]</span><br></pre></td></tr></table></figure>
+<p>当以第i-1个数字结尾的子数组中所有数字之和小于0时，如果把这个负数与i个数累加，得到的结果比第i个数本身还要小，所以这种清空下以第i个数字结尾的子数组就是第i个数字本身；<br>如果以第i-1个数字结尾子数组中所有数字的和大于0，与第i个数字累加就得到以第i个数字结尾的子数组中所有数字的和</p>
+<blockquote>
+<p>用递归的方式分析动态规划问题，最终都是使用循环解决</p>
+</blockquote>
+<h3 id="SourceCode-–-C"><a href="#SourceCode-–-C" class="headerlink" title="SourceCode – C++"></a>SourceCode – C++</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> g_invalideINput = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FindGreatestSumOfSubArray</span><span class="params">(<span class="keyword">int</span>* pData, <span class="keyword">int</span> nLength)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(pData == <span class="literal">NULL</span> || nLength &lt;= <span class="number">0</span>)&#123;</span><br><span class="line">    g_invalideINput = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  g_invalideINput = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> nCurSum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> nGreatestSum = <span class="number">0x80000000</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nLength; ++i)&#123;</span><br><span class="line">    <span class="keyword">if</span>(nCurSum &lt;= <span class="number">0</span>) nCurSum = pData[i];</span><br><span class="line">    <span class="keyword">else</span> nCurSum += pData[i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(nCurSum &gt; nGreatestSum)</span><br><span class="line">      nGreatestSum = nCurSum;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> nGreatestSum;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面经/">面经</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/算法/算法--最小的k个数"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -486,7 +557,7 @@
 
 
   
-    <article id="post-技术/算法/面经--计算一个字节有几比特（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/算法/面经--逆转链表（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -494,7 +565,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/">面经--计算一个字节有几比特（Java）</a>
+      <a class="article-title" href="/2018/03/13/技术/算法/面经--逆转链表（Java）/">面经--逆转链表</a>
     </h1>
   
 
@@ -502,7 +573,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/" class="article-date">
+	<a href="/2018/03/13/技术/算法/面经--逆转链表（Java）/" class="article-date">
 	  <time datetime="2018-03-13T15:27:30.000Z" itemprop="datePublished">2018-03-13</time>
 	</a>
 
@@ -540,7 +611,7 @@
 
 
   
-    <article id="post-技术/算法/面经--逆转链表（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-技术/算法/面经--计算一个字节有几比特（Java）"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -548,7 +619,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/13/技术/算法/面经--逆转链表（Java）/">面经--逆转链表</a>
+      <a class="article-title" href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/">面经--计算一个字节有几比特（Java）</a>
     </h1>
   
 
@@ -556,7 +627,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/03/13/技术/算法/面经--逆转链表（Java）/" class="article-date">
+	<a href="/2018/03/13/技术/算法/面经--计算一个字节有几比特（Java）/" class="article-date">
 	  <time datetime="2018-03-13T15:27:30.000Z" itemprop="datePublished">2018-03-13</time>
 	</a>
 
@@ -822,87 +893,6 @@ public void put(int key, E value) {
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashMap-Integer/">HashMap-Integer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SparseArray/">SparseArray</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/程序/【Java】神奇的内存占用大户FinalizerReference"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/">【Java】神奇的内存占用大户FinalizerReference</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/09/技术/程序/【Java】神奇的内存占用大户FinalizerReference/" class="article-date">
-	  <time datetime="2018-03-08T16:35:35.000Z" itemprop="datePublished">2018-03-09</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="问题起因"><a href="#问题起因" class="headerlink" title="问题起因"></a>问题起因</h2><p>在解决应用内存占用久高不下的问题时，常常会发现排名第一的是一个叫做FinalizerReference的东西</p>
-<p>下图是项目中内存快照在AndroidStudio2.4中打开看到的样子</p>
-<p><img src="http://kylece.github.io/img/pic_resource/finalizerReference.png" alt=""></p>
-<p>可以看到，占用排名第一的类FinalizerReference占用了59M之巨（内存快照前有使用AS强制GC多次）</p>
-<p>这就很让人好奇了</p>
-<h2 id="FinalizerReference是什么？"><a href="#FinalizerReference是什么？" class="headerlink" title="FinalizerReference是什么？"></a>FinalizerReference是什么？</h2><p>我们来看源码：</p>
-<p><img src="http://kylece.github.io/img/pic_resource/FinalizerReferenceCode.png" alt=""></p>
-<p><a href="https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java" target="_blank" rel="noopener">https://android.googlesource.com/platform/libcore/+/master/luni/src/main/java/java/lang/ref/FinalizerReference.java</a></p>
-<p>在讲Java  虚拟机 JVM垃圾回收机制时会涉及到一个概念，即finalize方法，这是Sun公司在Java设计之初，为照顾c++程序员有写析构函数的习惯而做的一种妥协</p>
-<p>在《深入理解Java虚拟机》一书中，讲到GC在最终回收对象之前，会去检查对象是否override了finalize方法，如果有覆盖此方法，对象就会被添加到finalize执行队列中，该书中没有指明是什么队列，实际上finalize执行队列就是我们这里讨论的FinalizerReference（书中还有提到finalize方法只会执行一次，并且有超时保护，因与本文主题无关，不做展开讨论）</p>
-<p>也就是说，有重写Java根基类Object的finalize方法的所有对象，在被最终被GC回收之前，都会被添加到这个队列中，等待被执行</p>
-<h2 id="为什么不能被GC"><a href="#为什么不能被GC" class="headerlink" title="为什么不能被GC"></a>为什么不能被GC</h2><p>这里要谈到JVM设计的一个基本标准</p>
-<p>GC的finalize执行队列会在一个单独的守护线程中运行，这一线程的优先级极低；</p>
-<p>一旦用户创建的对象速度过快，含finalize的对象速度快于finalize队列移除各元素的速度，FinalizerReference就会越来越大，而它获取CPU时间又少的可怜</p>
-<p>测试中发现，1~2h过去后，FinalizerReference的大小并没有按照预计的回落到较低水准</p>
-<p>这就迫使我们一定要解决这一问题，否则，随着应用开辟的内存越来越大，很容易引发喜闻乐见的OutOfMemoryError</p>
-<h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><ol>
-<li>不要重写finalize()方法，实在要释放资源，请到其它destroy一类函数中处理</li>
-</ol>
-<blockquote>
-<p>实际上Java库中不少方法都有重写finalize方法（如Input/outputStream、Canvas、Paint）</p>
-<p>这就引出了第二条指导原则：</p>
-</blockquote>
-<ol>
-<li><p>重复利用资源（避免反复创建）</p>
-</li>
-<li><p>杀器FinalizerHelper</p>
-<ul>
-<li>此工具来源于公司同事的技术分享</li>
-<li>指导思想：在场景退出的安全节点，利用反射强制调用FinalizerReference的remove方法，将对象从队列中移除掉</li>
-<li>对具体实施细节的同学联系我</li>
-</ul>
-</li>
-</ol>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FinalizerReference/">FinalizerReference</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
     </footer>
   </div>

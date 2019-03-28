@@ -255,6 +255,63 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-技术/算法/complement_of_base_10_integer"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/03/28/技术/算法/complement_of_base_10_integer/">complement_of_base_10_integer</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/03/28/技术/算法/complement_of_base_10_integer/" class="article-date">
+	  <time datetime="2019-03-28T15:47:24.000Z" itemprop="datePublished">2019-03-28</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Question"><a href="#Question" class="headerlink" title="Question:"></a>Question:</h3><p><img src="http://kylece.github.io/img/complement_of_base_10_integer.jpg" alt="complement_of_base_10_integer"></p>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution:"></a>Solution:</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">bitwiseComplement</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(N == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> (Integer.highestOneBit(N)&lt;&lt;<span class="number">1</span>) - N -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>eg:<br>    N=10, ans = 5 =    16 - 10 - 1<br>    N=7, ans = 0 = 8 - 7 -1<br>    N=5, ans = 2 = 6 -5 -1</p>
+</blockquote>
+<h3 id="Analyze"><a href="#Analyze" class="headerlink" title="Analyze:"></a>Analyze:</h3><pre><code>N = 10, binaryN 1010
+ans = 5,binaryA 0101
+binaryN + binaryA = 1111
+binaryN + binaryA + 1= 10000
+so, binaryA = 10000 - binaryN - 1
+</code></pre>
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-技术/base/pipe_poll_epoll"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -495,54 +552,6 @@
 
 
   
-    <article id="post-技术/Android/CorountineJob"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/03/20/技术/Android/CorountineJob/">Coroutine Job</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/03/20/技术/Android/CorountineJob/" class="article-date">
-	  <time datetime="2019-03-20T06:52:02.000Z" itemprop="datePublished">2019-03-20</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://kylece.github.io/img/coroutine_job.jpg" alt="Job"></p>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Coroutine/">Coroutine</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kotlin/">Kotlin</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
     <article id="post-技术/Android/GradleKeyword"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -581,6 +590,54 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidStudio/">AndroidStudio</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
+    <article id="post-技术/Android/CorountineJob"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/03/20/技术/Android/CorountineJob/">Coroutine Job</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/03/20/技术/Android/CorountineJob/" class="article-date">
+	  <time datetime="2019-03-20T06:52:02.000Z" itemprop="datePublished">2019-03-20</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://kylece.github.io/img/coroutine_job.jpg" alt="Job"></p>
+
+      
+
+    </div>
+    <footer class="article-footer">
+
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Coroutine/">Coroutine</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kotlin/">Kotlin</a></li></ul>
 
     </footer>
   </div>
@@ -722,77 +779,6 @@
 <p>先将数字转换成字符串</p>
 </blockquote>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">NumberOf1Between1AndN</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(n &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">char</span> strN[<span class="number">50</span>];</span><br><span class="line">  <span class="built_in">sprintf</span>(strN, <span class="string">"%d"</span>, n);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> NumberOf1(strN);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">NumberOf1</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* strN)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!strN || *strN &lt; <span class="string">'0'</span> || *strN &gt; <span class="string">'9'</span> || *strN == <span class="string">'\0'</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> first = *strN - <span class="string">'0'</span>;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> length = <span class="keyword">static_cast</span>&lt;<span class="keyword">unsigned</span> <span class="keyword">int</span>&gt;(<span class="built_in">strlen</span>(strN));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(length == <span class="number">1</span> &amp;&amp; first == <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(length == <span class="number">1</span> &amp;&amp; first &gt; <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> numberFirstDigit = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span>(first &gt; <span class="number">1</span>)</span><br><span class="line">    numberFirstDigit = PoserBase10(length - <span class="number">1</span>);</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(first = <span class="number">1</span>)</span><br><span class="line">    numberFirstDigit = atoi(strN + <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> numOtherDigits = first * (length - <span class="number">1</span>) * PoserBase10(length <span class="number">-2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> numRecursive = NumberOf1(strN + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> numberFirstDigit + numOtherDigits + numRecursive;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">PoserBase10</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> result = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">unsigned</span> <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">    result *= <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-    </div>
-    <footer class="article-footer">
-
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面经/">面经</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-技术/算法/算法--连续子数组的最大和"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/03/20/技术/算法/算法--连续子数组的最大和/">算法--连续子数组的最大和</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/03/20/技术/算法/算法--连续子数组的最大和/" class="article-date">
-	  <time datetime="2018-03-20T14:48:11.000Z" itemprop="datePublished">2018-03-20</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/技术/">技术</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="题"><a href="#题" class="headerlink" title="题"></a>题</h3><p> 输入一个整型数组（正、负数均有），数组中一个或连续的多个整数组成一个子数组，求所有子数组的最大值。<br> 要求时间复杂度为 <strong>O(n)</strong><br> 例：输入数组为{1, -2, 3, 10, -4, 7, 2, -5}, 和最大的子数组为{3, 10, -4, 7, 2}, 因此输出为该子数组的和为18</p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>最直接的解法：枚举所有子数组并求它们的和。长为n的数组，共有 <strong>n*(n + 1)/2</strong> 个子数组。计算出所有子数组之和，最快需要 <strong>O(n^2)</strong>，显然不符合要求</p>
-<h4 id="思路一-举例分析数组规律"><a href="#思路一-举例分析数组规律" class="headerlink" title="思路一 举例分析数组规律"></a>思路一 举例分析数组规律</h4><blockquote>
-<p>通常，举例能够具象化算法，让你能够更直观的看到问题，解算法题时，碰到不好解决的问题，可以尝试举例分析问题规律，降低问题难度</p>
-</blockquote>
-<p>从头到尾逐个累加例中每个数字。初始化和为0：</p>
-<ol>
-<li>加1 和为1</li>
-<li>加-2 和为-1</li>
-<li>加3 上一步的累积和为负数，那么我们不用考虑之前的累积和，从第一个数字开始的子数组也不用考虑 —— 从第三个数开始重新累加 和为3</li>
-<li>加10 和为13</li>
-<li>加-4 和为9 —— 因为-4为负，加上-4后会是累加和变小，所以可以把上一步的13当做暂时发现的最大子和值</li>
-<li>加7 和为16，比之前的最大值13大，更新Result为16</li>
-<li>加2 和为18，更新Result为18</li>
-<li>加-5 和为13</li>
-</ol>
-<p>依据上述步骤，可以确定最大子和是18</p>
-<h4 id="思路二-应用动态规划"><a href="#思路二-应用动态规划" class="headerlink" title="思路二 应用动态规划"></a>思路二 应用动态规划</h4><p>应用递归思想</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f(i) = pData[i] <span class="keyword">if</span> i == <span class="number">0</span> <span class="keyword">or</span> f(i - <span class="number">1</span>) &lt;= <span class="number">0</span></span><br><span class="line">      <span class="keyword">else</span> f(i - <span class="number">1</span>) + pData[i]</span><br></pre></td></tr></table></figure>
-<p>当以第i-1个数字结尾的子数组中所有数字之和小于0时，如果把这个负数与i个数累加，得到的结果比第i个数本身还要小，所以这种清空下以第i个数字结尾的子数组就是第i个数字本身；<br>如果以第i-1个数字结尾子数组中所有数字的和大于0，与第i个数字累加就得到以第i个数字结尾的子数组中所有数字的和</p>
-<blockquote>
-<p>用递归的方式分析动态规划问题，最终都是使用循环解决</p>
-</blockquote>
-<h3 id="SourceCode-–-C"><a href="#SourceCode-–-C" class="headerlink" title="SourceCode – C++"></a>SourceCode – C++</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> g_invalideINput = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FindGreatestSumOfSubArray</span><span class="params">(<span class="keyword">int</span>* pData, <span class="keyword">int</span> nLength)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(pData == <span class="literal">NULL</span> || nLength &lt;= <span class="number">0</span>)&#123;</span><br><span class="line">    g_invalideINput = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  g_invalideINput = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> nCurSum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> nGreatestSum = <span class="number">0x80000000</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nLength; ++i)&#123;</span><br><span class="line">    <span class="keyword">if</span>(nCurSum &lt;= <span class="number">0</span>) nCurSum = pData[i];</span><br><span class="line">    <span class="keyword">else</span> nCurSum += pData[i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(nCurSum &gt; nGreatestSum)</span><br><span class="line">      nGreatestSum = nCurSum;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> nGreatestSum;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
